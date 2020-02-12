@@ -1,0 +1,15 @@
+.box{
+  border: 2px outset;
+  width: 60%;
+  height: 1.4em;
+  float: right;
+  display: inline;
+}
+
+.filler{
+  border: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #4CAF50;
+}
+

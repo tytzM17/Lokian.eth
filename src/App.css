@@ -36,3 +36,134 @@
     transform: rotate(360deg);
   }
 }
+.myMon{
+  display: block;
+  float: left;
+  padding: 0;
+  margin: 2%;
+  width: 16em;
+  /*border: 1px solid black;*/
+}
+
+.buyMon{
+  display: block;
+  float: left;
+  padding: 0;
+  margin: 2%;
+  width: 16em;
+  /*border: 1px solid black;*/
+}
+
+.my-figure{
+  border: 2px outset;
+  margin: 0;
+  padding: 3%;
+  background-color: #ffe6b3;
+}
+
+.monBox {
+  border: 2px inset;
+  background-color: #ffe;
+}
+
+.monImg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 8em;
+  height: 8em;
+}
+
+.stat-area {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1em;
+}
+
+.selling-area{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1em;
+  border: 2px outset;
+}
+
+.stat-line {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stat-label {
+  display: inline;
+  float: none;
+  width: 40%;
+}
+
+.add-for-sale-label {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.add-for-sale-input {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.add-for-sale-btn{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.sale-price{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.sale-owner{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.sale-btn{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+
+
+
+.breedMon{
+  float: left;
+  padding: 1%;
+  margin: 1%;
+  border: 2px outset;
+  background-color: #ffe6b3;
+}
+
+button {
+  background-color: #4CAF50; /* Green */
+  border: 2px outset;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+

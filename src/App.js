@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Tab, Tabs, TabList, TabPanel } from 'react-bootstrap';
+import {Tab, Tabs} from 'react-bootstrap';
+import StatBar from './StatBar'
 
 import Web3 from 'web3';    // Library to work with Etherium blockchain
 import contrInterface from './interface.json';
 
-const CONTRACT_ADDRESS = '0xf71057AaF6204aFa1D5Abd7F0a1034FcfDC612Be'
+const CONTRACT_ADDRESS = '0xd1e131032CD17A749eb97166F2Cb92F0e77915A0'
 
 //const I = [...Array(151).keys()].map( x => x+".png");
 
@@ -16,13 +17,13 @@ async function getAccounts() {
   return window.ethereum.enable() // Returns a promise with the account that logged in
 }
 
-async function getCards(web3, account) {
+async function getMons(web3, account) {
   const contr = new web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
-  const totalCards = parseInt(await contr.methods.totalCards().call())
+  const totalMons = parseInt(await contr.methods.totalMons().call())
 
   return Promise.all(
-    [...Array(totalCards).keys()].map(
-      id => contr.methods.cards(id).call()
+    [...Array(totalMons).keys()].map(
+      id => contr.methods.mons(id).call()
     )
   )
 }
@@ -32,12 +33,18 @@ class Cryptomons extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      cards: [],
-      myCards:[],
-      otherCards:[]
+      cryptomons: [],
+      myCryptomons:[],
+      otherCryptomons:[],
+      value: 0,             // Used in My Cryptomons tab for input in price text
+
+      breedchoice1: null,   // Used in breeding tab
+      breedchoice2: null,   // Used in breeding tab
     };
     this._getAccounts = null;
-    this._getCards = null;
+    this._getMons = null;
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -58,7 +65,7 @@ class Cryptomons extends Component{
         //console.log(accounts);
         //console.log(this._account);
         
-        this.refreshCards()
+        this.refreshMons()
       }
     );
     
@@ -69,77 +76,177 @@ class Cryptomons extends Component{
       this._getAccounts.cancel();
     }
 
-    if (this._getCards) {
-      this._getCards.cancel();
+    if (this._getMons) {
+      this._getMons.cancel();
     }
   }
 
-  refreshCards() {
-    this._getCards = getCards(this._web3, this._account).then((_cards)=> {
-        this._getCards = null;
-        this.setState({cards: _cards});
-        this.setState({myCards: _cards.filter(card => card.owner.toLowerCase() === this._account)})
-        this.setState({otherCards: _cards.filter(card => card.owner.toLowerCase() !== this._account)})
-      
+  refreshMons() {
+    this._getMons = getMons(this._web3, this._account).then((_mons)=> {
+        this._getMons = null;
+        this.setState({cryptomons: _mons});
+        this.setState({myCryptomons: _mons.filter(mon => mon.owner.toLowerCase() === this._account)})
+        this.setState({otherCryptomons: _mons.filter( mon =>
+          (mon.owner.toLowerCase() !== this._account) && (mon.forSale) 
+        )})
       }
     )
   }
 
-  buyCard(id, price) {
+  buyMon(id, price) {
     const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account })
-    console.log(contr.options)
-    contr.methods.buyCard(id).send({value: price+1}).on('confirmation', () => {
-      this.refreshCards();
-      this.render();
+    contr.methods.buyMon(id).send({value: price+1}).on('confirmation', () => {
+      this.refreshMons();
     })
+  }
+
+  addForSale(id, price) {
+    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account })
+    console.log(price)
+    contr.methods.addForSale(id, price+"").send().on('confirmation', () => {
+      this.refreshMons();
+    })
+  }
+
+  removeFromSale(id) {
+    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account })
+    contr.methods.removeFromSale(id).send().on('confirmation', () => {
+      this.refreshMons();
+    })
+  }
+
+  breedMons(id1, id2){
+    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account })
+    contr.methods.breedMons(id1, id2).send().on('confirmation', () => {
+      this.refreshMons();
+    })
+  }
+
+  handleChange(id, event) {
+    this.setState({value: event.target.value});
+    //console.log(this.state.value[id], event.target.value)
   }
 
   render() {
 
-    /*const cards = this.state.cards.map(card =>
-      <React.Fragment key={card.id}>
-        <figure>
-          <img src={require("./sprites/"+(parseInt(card.species)+1)+".png")} alt={card.species} />
-          <figcaption>Price: {card.price} | Owner: {card.owner} |
-            <button onClick={()=> this.buyCard(card.id, parseInt(card.price))}>Buy</button>
-          </figcaption>
-        </figure>
-      </React.Fragment>
-    )*/
+    var imgDiv = (mon) => {
+      return <div class="monBox"> <img class="monImg" src={require("./sprites/"+(parseInt(mon.species)+1)+".png")} alt={mon.species} /></div>
+    }
 
-    const myCards = this.state.myCards.map(card =>
-      <React.Fragment key={card.id}>
-        <figure>
-          <img src={require("./sprites/"+(parseInt(card.species)+1)+".png")} alt={card.species} />
-          <figcaption>Price: {card.price} | Owner: {card.owner} |
-            <button onClick={()=> this.buyCard(card.id, parseInt(card.price))}>Buy</button>
-          </figcaption>
-        </figure>
+    var statDiv = (mon) => {
+      return (<div class="stat-area">
+        <div class="stat-line"><label class="stat-label">Hp: </label><StatBar percentage={mon.hp*100/140} /></div>
+        <div class="stat-line"><label class="stat-label">Attack: </label><StatBar percentage={mon.atk*100/140} /></div>
+        <div class="stat-line"><label class="stat-label">Defense: </label><StatBar percentage={mon.def*100/140} /></div>
+        <div class="stat-line"><label class="stat-label">Speed: </label><StatBar percentage={mon.speed*100/140} /></div>
+      </div>)
+    }
+
+    // Create the div with add for sale button
+    var addForSaleDiv = (mon) => {
+      return (<div class="selling-area">
+        <label class="add-for-sale-label">Set cryptomons price to:</label>
+        <input type="number" class="add-for-sale-input" value={this.state.value} onChange={(e) => this.handleChange(mon.id, e)} />
+        <button class="add-for-sale-btn" onClick={()=> this.addForSale(mon.id, this.state.value)}>Add for sale</button>
+      </div>)
+    }
+
+    // Create the div with remove from sale button
+    var removeFromSaleDiv = (mon) => {
+      return (<div class="selling-area">
+        <label class="add-for-sale-label">Price: {mon.price}</label>
+        <button class="add-for-sale-btn" onClick={()=> this.removeFromSale(mon.id)}>Remove from sale</button>
+      </div>)
+    }
+
+    var buyDiv = (mon) =>{
+      return( <div class="selling-area">
+        <label class="sale-price">Price: {mon.price} </label>
+        <label class="sale-owner">Cryptomon Owner: {mon.owner} </label>
+        <button class="sale-btn" onClick={()=> this.buyMon(mon.id, mon.price)}>Buy</button>
+      </div>)
+    }
+
+    const myCryptomons = this.state.myCryptomons.filter( mon => (!mon.forSale)).map(mon =>
+      <React.Fragment key={mon.id}>
+        <div class="myMon">
+          <figure class="my-figure">
+            {imgDiv(mon)}
+            <figcaption>
+              {statDiv(mon)}
+            </figcaption>
+          </figure>
+          {addForSaleDiv(mon)}
+        </div>
       </React.Fragment>
     )
 
-    const otherCards = this.state.otherCards.map(card =>
-      <React.Fragment key={card.id}>
-        <figure>
-          <img src={require("./sprites/"+(parseInt(card.species)+1)+".png")} alt={card.species} />
-          <figcaption>Price: {card.price} | Owner: {card.owner} |
-            <button onClick={()=> this.buyCard(card.id, parseInt(card.price))}>Buy</button>
+    const forSale = this.state.myCryptomons.filter( mon => (mon.forSale)).map(mon =>
+      <React.Fragment key={mon.id}>
+        <div class="myMon">
+          <figure class="my-figure">
+            {imgDiv(mon)}
+            <figcaption>
+              {statDiv(mon)}
+            </figcaption>
+          </figure>
+          {removeFromSaleDiv(mon)}
+        </div>
+      </React.Fragment>
+    )
+
+    const otherCryptomons = this.state.otherCryptomons.map(mon =>
+      <React.Fragment key={mon.id} >
+        <div class="myMon">
+          <figure class="my-figure">
+            {imgDiv(mon)}
+            <figcaption>
+              {statDiv(mon)}
+            </figcaption>
+          </figure>
+          {buyDiv(mon)}
+        </div>
+      </React.Fragment>
+    )
+
+    const forBreedCryptomons = this.state.myCryptomons.filter( mon => (!mon.forSale)).map(mon =>
+      <React.Fragment key={mon.id}>
+        <figure class="breedMon">
+          {imgDiv(mon)}
+          <figcaption>
+            {statDiv(mon)}
+            <button onClick={()=> {
+              this.setState({breedchoice1: mon.id});
+            }} >Breed 1</button>
+            <button onClick={()=> {
+              this.setState({breedchoice2: mon.id});
+            }} >Breed 2</button>
           </figcaption>
         </figure>
       </React.Fragment>
     )
 
     return (
-      <Tabs defaultActiveKey="myCards" id="uncontrolled-tab-example">
-        <Tab eventKey="myCards" title="My Cards">
-          {myCards}
+      <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example">
+        <Tab eventKey="myCryptomons" title="My Cryptomons">
+          {myCryptomons}
         </Tab>
-        <Tab eventKey="buyCards" title="Buy Cards">
-          {otherCards}
+        <Tab eventKey="forSale" title="For sale">
+          {forSale}
         </Tab>
-        <Tab eventKey="breedCards" title="Breed Cards">
+        <Tab eventKey="buyCryptomons" title="Buy Cryptomons">
+          {otherCryptomons}
+        </Tab>
+        <Tab eventKey="breedCryptomons" title="Breed Cryptomons">
+          <button onClick={()=> this.breedMons(this.state.breedchoice1, this.state.breedchoice2)}>Breed choosen cryptomons</button>
+          <div>
+            {this.state.cryptomons.filter( mon => (mon.id === this.state.breedchoice1)).map(mon => mon.id)}
+            {this.state.cryptomons.filter( mon => (mon.id === this.state.breedchoice2)).map(mon => mon.id)}
+          </div>
+          {forBreedCryptomons}
         </Tab>
         <Tab eventKey="fight" title="Fight">
+          
         </Tab>
       </Tabs>
 
