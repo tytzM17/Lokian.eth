@@ -149,38 +149,17 @@
 				"type": "uint256"
 			}
 		],
-		"name": "damage",
-		"outputs": [
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "id1",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "id2",
-				"type": "uint256"
-			}
-		],
 		"name": "fight",
 		"outputs": [
 			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			},
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
 			}
 		],
 		"payable": false,

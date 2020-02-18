@@ -3,7 +3,7 @@
   width: 60%;
   height: 1.4em;
   float: right;
-  display: inline;
+  display: block;
 }
 
 .filler{
@@ -12,4 +12,3 @@
   height: 100%;
   background-color: #4CAF50;
 }
-
