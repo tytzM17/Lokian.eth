@@ -1,12 +1,18 @@
+#Cryptomons: A DApp Collectible Card Game with a React Front-end.
+
+This project was developed as a module coursework.
+
+**Imperial College London:** MSc in Computing course
+**Module:** Deep Learning
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Steps for deployment and use of our Cryptomons App.
+**Steps for deployment and use of our Cryptomons DApp**
 
--First deploy our smart contract found in src/cryptomons.sol.
-
--In the main file of our user interface src/App.js specify the address where you deployed the contract in the constant CONTRACT_ADDRESS.
-
--In the project directory run:
+- Firstly, deploy our smart contract found in src/cryptomons.sol. We tested this localy on a private blockchain using [Ganache](https://www.trufflesuite.com/ganache)
+- In the main file of our user interface src/App.js specify the address where you deployed the contract in the constant CONTRACT_ADDRESS.
+- Install the [metamask](https://metamask.io/) extension on your browser to handle your provate blockchain account. the project has been tested with the Chrome and Mozilla browsers.
+- In the project directory run:
 
 ### `npm install`
 
@@ -14,7 +20,6 @@ This installs all the necessary dependencies to build our application
 
 ### `npm start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Runs the app in development mode.<br />
 
--If you use the metamask extension in the browser that you opened the User Interface with "npm start" you can see all the Cryptomons owned by your account and play the game.
+- Open [http://localhost:3000](http://localhost:3000) to view it in the browser. You can see all the Cryptomons owned by the current metamask account and play the game.
