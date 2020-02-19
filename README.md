@@ -1,14 +1,14 @@
 # Cryptomons: A DApp Collectible Card Game with a React Front-end.
 
-<img src="./screenshots/fighting_tab.png" alt="alt text" width="1000em" height="500em">
+<img src="./screenshots/fighting_tab.png" alt="" width="1000em" height="500em">
 
 ***
 
 This project was developed as a module coursework.
 
-**Imperial College London:** MSc in Computing course
-**Module:** Deep Learning
-**Project Description:** Found in included [report](./report.pdf)
+**Imperial College London:** MSc in Computing course.<br />
+**Module:** Deep Learning.<br />
+**Project Description:** Found in included [report](./report.pdf)<br />
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
