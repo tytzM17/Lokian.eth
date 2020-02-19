@@ -16,10 +16,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Install the [metamask](https://metamask.io/) extension on your browser to handle your provate blockchain account. the project has been tested with the Chrome and Mozilla browsers.
 - In the project directory run:
 
-    ###`npm install`
+    ### `npm install`
 
-This installs all the necessary dependencies to build our application
-
+    This installs all the necessary dependencies to build our application
+    
     ### `npm start`
 
 Runs the app in development mode.<br />
