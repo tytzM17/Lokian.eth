@@ -1,6 +1,6 @@
 # Cryptomons: A DApp Collectible Card Game with a React Front-end.
 
-<img src="./screenshots/fighting_tab.png" alt="alt text" width="200em" height="20em">
+<img src="./screenshots/fighting_tab.png" alt="alt text" width="2000em" height="1000em">
 
 This project was developed as a module coursework.
 
