@@ -2,6 +2,8 @@
 
 <img src="./screenshots/fighting_tab.png" alt="alt text" width="1000em" height="500em">
 
+***
+
 This project was developed as a module coursework.
 
 **Imperial College London:** MSc in Computing course
