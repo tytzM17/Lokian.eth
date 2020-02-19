@@ -1,4 +1,4 @@
-#Cryptomons: A DApp Collectible Card Game with a React Front-end.
+# Cryptomons: A DApp Collectible Card Game with a React Front-end.
 
 This project was developed as a module coursework.
 
