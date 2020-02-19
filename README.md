@@ -7,6 +7,8 @@ This project was developed as a module coursework.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+***
+
 **Steps for deployment and use of our Cryptomons DApp**
 
 - Firstly, deploy our smart contract found in src/cryptomons.sol. We tested this localy on a private blockchain using [Ganache](https://www.trufflesuite.com/ganache)
@@ -14,13 +16,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Install the [metamask](https://metamask.io/) extension on your browser to handle your provate blockchain account. the project has been tested with the Chrome and Mozilla browsers.
 - In the project directory run:
 
-```
-`npm install`
-```
+    ###`npm install`
 
 This installs all the necessary dependencies to build our application
 
-### `npm start`
+    ### `npm start`
 
 Runs the app in development mode.<br />
 
