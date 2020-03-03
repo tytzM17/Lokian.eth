@@ -6,8 +6,8 @@
 
 This project was developed as a module coursework.
 
-**Imperial College London:** MSc in Computing course.<br />
-**Module:** Deep Learning.<br />
+**Imperial College London:** MSc in Computing (Software Engineering)<br />
+**Module:** Principless of Distributed Ledgers<br />
 **Project Description:** Found in included [report](./report.pdf)<br />
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
