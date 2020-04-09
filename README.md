@@ -19,12 +19,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Install the [metamask](https://metamask.io/) extension on your browser to handle your provate blockchain account. the project has been tested with the Chrome and Mozilla browsers.
 - In the project directory run:
 
-    **`npm install`**
-
-    This installs all the necessary dependencies to build our application
+    **`npm install`** This installs all the necessary dependencies to build our application
     
-    ### `npm start`
-
-    This runs the app in development mode.<br />
+    **`npm start`** This runs the app in development mode.<br />
 
 - Open [http://localhost:3000](http://localhost:3000) to view it in the browser. You can see all the Cryptomons owned by the current metamask account and play the game.
