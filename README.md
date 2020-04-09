@@ -12,9 +12,7 @@ This project was developed as a module coursework.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-***
-
-**Steps for deployment and use of our Cryptomons DApp**
+##Steps for deployment and use of our Cryptomons DApp
 
 - Firstly, deploy our smart contract found in src/cryptomons.sol. We tested this localy on a private blockchain using [Ganache](https://www.trufflesuite.com/ganache)
 - In the main file of our user interface src/App.js specify the address where you deployed the contract in the constant CONTRACT_ADDRESS.
