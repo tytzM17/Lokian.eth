@@ -1,4 +1,4 @@
-# Cryptomons: A DApp Collectible Card Game with a React Front-end.
+# CryptoShips: A DApp Collectible Card Game featuring spaceship nfts with a React Front-end.
 
 <img src="./screenshots/fighting_tab.png" alt="" width="1000em" height="500em">
 
@@ -6,6 +6,7 @@
 
 This project was developed as a module coursework.
 
+Thanks to
 **Imperial College London:** MSc in Computing (Software Engineering)<br />
 **Module:** Principless of Distributed Ledgers<br />
 **Project Description:** Found in included [report](./report.pdf)<br />
@@ -14,7 +15,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Steps for deployment and use of our Cryptomons DApp
 
-- Firstly, deploy our smart contract found in src/cryptomons.sol. We tested this localy on a private blockchain using [Ganache](https://www.trufflesuite.com/ganache)
+- Firstly, deploy our smart contract found in src/cryptoships.sol. We tested this localy on a private blockchain using [Ganache](https://www.trufflesuite.com/ganache)
 - In the main file of our user interface src/App.js specify the address where you deployed the contract in the constant CONTRACT_ADDRESS.
 - Install the [metamask](https://metamask.io/) extension on your browser to handle your provate blockchain account. the project has been tested with the Chrome and Mozilla browsers.
 - In the project directory run:
