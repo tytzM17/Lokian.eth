@@ -23,7 +23,7 @@ import bg9 from './sprites/background/9.png';
 import bg10 from './sprites/background/10.png';
 
 // The contact deployment address in Etherium blockchain
-const CONTRACT_ADDRESS = '0xEe251300Ff6e22d7FB188C2e6AD2061b741FEe04'
+const CONTRACT_ADDRESS = '0xd5B8bF76A51B0e0EeE12516199a6B70883519F81'
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
@@ -32,13 +32,19 @@ const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
 const names = ['Bulbasaur', 'Ivysaur', 'Venusaur', 'Charmander', 'Charmeleon', 'Charizard', 'Squirtle', 'Wartortle', 'Blastoise', 'Caterpie', 'Metapod', 'Butterfree', 'Weedle', 'Kakuna', 'Beedrill', 'Pidgey', 'Pidgeotto', 'Pidgeot', 'Rattata', 'Raticate', 'Spearow', 'Fearow', 'Ekans', 'Arbok', 'Pikachu', 'Raichu', 'Sandshrew', 'Sandslash', 'Nidoran_f', 'Nidorina', 'Nidoqueen', 'Nidoran_m', 'Nidorino', 'Nidoking', 'Clefairy', 'Clefable', 'Vulpix', 'Ninetales', 'Jigglypuff', 'Wigglytuff', 'Zubat', 'Golbat', 'Oddish', 'Gloom', 'Vileplume', 'Paras', 'Parasect', 'Venonat', 'Venomoth', 'Diglett', 'Dugtrio', 'Meowth', 'Persian', 'Psyduck', 'Golduck', 'Mankey', 'Primeape', 'Growlithe', 'Arcanine', 'Poliwag', 'Poliwhirl', 'Poliwrath', 'Abra', 'Kadabra', 'Alakazam', 'Machop', 'Machoke', 'Machamp', 'Bellsprout', 'Weepinbell', 'Victreebel', 'Tentacool', 'Tentacruel', 'Geodude', 'Graveler', 'Golem', 'Ponyta', 'Rapidash', 'Slowpoke', 'Slowbro', 'Magnemite', 'Magneton', 'Farfetch_d', 'Doduo', 'Dodrio', 'Seel', 'Dewgong', 'Grimer', 'Muk', 'Shellder', 'Cloyster', 'Gastly', 'Haunter', 'Gengar', 'Onix', 'Drowzee', 'Hypno', 'Krabby', 'Kingler', 'Voltorb', 'Electrode', 'Exeggcute', 'Exeggutor', 'Cubone', 'Marowak', 'Hitmonlee', 'Hitmonchan', 'Lickitung', 'Koffing', 'Weezing', 'Rhyhorn', 'Rhydon', 'Chansey', 'Tangela', 'Kangaskhan', 'Horsea', 'Seadra', 'Goldeen', 'Seaking', 'Staryu', 'Starmie', 'Mr_mime', 'Scyther', 'Jynx', 'Electabuzz', 'Magmar', 'Pinsir', 'Tauros', 'Magikarp', 'Gyarados', 'Lapras', 'Ditto', 'Eevee', 'Vaporeon', 'Jolteon', 'Flareon', 'Porygon', 'Omanyte', 'Omastar', 'Kabuto', 'Kabutops', 'Aerodactyl', 'Snorlax', 'Articuno', 'Zapdos', 'Moltres', 'Dratini', 'Dragonair', 'Dragonite', 'Mew', 'Mewtwo'];
 
 async function getAccounts() {
-  return window.ethereum.enable() // Returns a promise with the account that logged in
+      let web3 = new Web3(window.ethereum);
+console.log(web3);
+// web3.setProvider('http://localhost:7545');
+
+  console.log('req accts', web3.eth.getAccounts()  );
+  return await web3.eth.getAccounts() // Returns a promise with the account that logged in
 }
 
 async function getMons(web3, account) {
   const contr = new web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
+  console.log('contr', contr);
   const totalMons = parseInt(await contr.methods.totalMons().call())
-
+console.log('totmons', totalMons);
   return Promise.all(
     [...Array(totalMons).keys()].map(
       id => contr.methods.mons(id).call()
@@ -76,9 +82,14 @@ class Cryptomons extends Component{
   }
 
   componentDidMount() {
+    // let web3 = new Web3('ws://localhost:7545');
+
+    // Web3.setProvider('ws://localhost:8546');
+console.log(getAccounts());
     this._getAccounts = getAccounts().then(
-      
       accounts => {
+        console.log(accounts);
+
         this._getAccounts = null;
         this._web3 = new Web3(window.ethereum);
 
@@ -424,7 +435,7 @@ class Cryptomons extends Component{
     return (
       // Creation of the different tabs of the UI
       <div>
-      <label className="AppTitle">Cryptomons</label>
+      <label className="AppTitle">CryptoBots</label>
       <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example">
         <Tab className="x" eventKey="myCryptomons" title="My Cryptomons">
           <label className="p1">Your Entries</label>
