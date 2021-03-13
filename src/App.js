@@ -435,9 +435,9 @@ console.log(getAccounts());
     return (
       // Creation of the different tabs of the UI
       <div>
-      <label className="AppTitle">CryptoBots</label>
+      <label className="AppTitle">Crypto 🚀 Ships</label>
       <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example">
-        <Tab className="x" eventKey="myCryptomons" title="My Cryptomons">
+        <Tab className="x" eventKey="myCryptomons" title="My Cryptoships">
           <label className="p1">Your Entries</label>
           {myCryptomons}
         </Tab>
@@ -445,11 +445,11 @@ console.log(getAccounts());
           <label className="p1">Selling Management</label>
           {forSaleCryptomons}
         </Tab>
-        <Tab eventKey="buyCryptomons" title="Buy Cryptomons">
+        <Tab eventKey="buyCryptomons" title="Buy Cryptoships">
           <label className="p1">Shop</label>
           {buyCryptomons}
         </Tab>
-        <Tab eventKey="breedCryptomons" title="Breed Cryptomons">
+        <Tab eventKey="breedCryptomons" title="Breed Cryptoships">
           <label className="p1">Breeding Grounds</label>
           <div className="breeding-area">
             {breedOption(this.state.breedChoice1)}
@@ -478,7 +478,7 @@ console.log(getAccounts());
             </div>
           </div>
         </Tab>
-        <Tab eventKey="share" title="Share Cryptomons">
+        <Tab eventKey="share" title="Share Cryptoships">
           <label className="p1">Sharing Management</label>
           <div className="sharing-area">
             <div className="form-line">
