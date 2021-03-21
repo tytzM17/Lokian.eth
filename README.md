@@ -6,7 +6,7 @@
 
 This project was developed as a module coursework.
 
-Thanks to
+Thanks to Stamatis Kourkotas from...
 **Imperial College London:** MSc in Computing (Software Engineering)<br />
 **Module:** Principless of Distributed Ledgers<br />
 **Project Description:** Found in included [report](./report.pdf)<br />
@@ -24,4 +24,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
     
     **`npm start`** This runs the app in development mode.<br />
 
-- Open [http://localhost:3000](http://localhost:3000) to view it in the browser. You can see all the Cryptomons owned by the current metamask account and play the game.
+- Open [http://localhost:3000](http://localhost:3000) to view it in the browser. You can see all the Cryptoships owned by the current metamask account and play the game.
