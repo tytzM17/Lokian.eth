@@ -23,7 +23,7 @@ import bg9 from './sprites/background/9.png';
 import bg10 from './sprites/background/10.png';
 
 // The contact deployment address in Etherium blockchain
-const CONTRACT_ADDRESS = '0xd5B8bF76A51B0e0EeE12516199a6B70883519F81'
+const CONTRACT_ADDRESS = '0x28596bF0a936181224E714993Bf867CA09baD983'
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
@@ -449,31 +449,31 @@ console.log(getAccounts());
           <label className="p1">Shop</label>
           {buyCryptomons}
         </Tab>
-        <Tab eventKey="breedCryptomons" title="Breed Cryptoships">
-          <label className="p1">Breeding Grounds</label>
+        <Tab eventKey="breedCryptomons" title="Modify Cryptoships">
+          <label className="p1">Modification Bay</label>
           <div className="breeding-area">
             {breedOption(this.state.breedChoice1)}
             {breedOption(this.state.breedChoice2)}
-            <button className="breed-btn" onClick={()=> this.breedMons(this.state.breedChoice1, this.state.breedChoice2)}>Breed choosen cryptomons</button>
+            <button className="breed-btn" onClick={()=> this.breedMons(this.state.breedChoice1, this.state.breedChoice2)}>Modify choosen cryptoships</button>
           </div>
           {forBreedCryptomons}
         </Tab>
         <Tab eventKey="fight" title="Fight">
-          <label className="p1">Fighting Arena</label>
+          <label className="p1">Space Fight Arena</label>
           <div className="fighting-area">
             {breedOption(this.state.fightChoice1)}
             {breedOption(this.state.fightChoice2)}
-            <label className="winner-label">Winner Cryptomon's Id: {this.state.winner}</label><br/>
+            <label className="winner-label">Winner Cryptoship's Id: {this.state.winner}</label><br/>
             <label className="winner-label">Rounds the fight lasted: {this.state.rounds}</label>
-            <button className="fight-btn" onClick={()=> this.fight(this.state.fightChoice1, this.state.fightChoice2)}>Fight with choosen cryptomons</button>
+            <button className="fight-btn" onClick={()=> this.fight(this.state.fightChoice1, this.state.fightChoice2)}>Fight with choosen cryptoships</button>
           </div>
           <div className="fight-mons-<h1>Sharing Management</h1>area">
             <div className="fightWith-area">
-              <label className="p2">Your Cryptomons</label>
+              <label className="p2">Your Cryptoships</label>
               {forFightWithCryptomons}
             </div>
             <div className="fightAgainst-area">
-            <label className="p2">Opponent Cryptomons</label>
+            <label className="p2">Opponent Cryptoships</label>
               {forFightAgainstCryptomons}
             </div>
           </div>
@@ -482,7 +482,7 @@ console.log(getAccounts());
           <label className="p1">Sharing Management</label>
           <div className="sharing-area">
             <div className="form-line">
-              <label className="form-label">Cryptomon Id:</label>
+              <label className="form-label">Cryptoship Id:</label>
               <input className="form-input" value={this.state.shareId} onChange={(e) => this.handleShareId(e)} />
             </div>
             <div className="form-line">
