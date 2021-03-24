@@ -89,6 +89,7 @@ class Cryptomons extends Component {
 
         this._getAccounts = null;
         this._web3 = new Web3(window.ethereum);
+        this._web3.setProvider('http://localhost:7545');
 
         // We only have one element in accounts but we need just the value
         // not the array accounts with the one element.
