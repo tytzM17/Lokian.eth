@@ -117,7 +117,7 @@ class Cryptomons extends Component {
     this._getMons = getMons(this._web3, this._account).then((_mons) => {
       this._getMons = null;
       this.setState({ cryptomons: _mons });
-      this.setState({ myCryptomons: _mons.filter(mon => mon.owner.toLowerCase() === this._account) })
+      this.setState({ myCryptomons: _mons.filter(mon => mon.owner.toString().toLowerCase() === this._account.toString().toLowerCase()) })
       this.setState({
         otherCryptomons: _mons.filter(mon =>
           (mon.owner.toLowerCase() !== this._account)
@@ -351,8 +351,8 @@ class Cryptomons extends Component {
     )
 
     var cond = mon => (
-      ((mon.owner.toLowerCase() === this._account) && (!mon.forSale)) ||
-      ((mon.sharedTo.toLowerCase() === this._account) && (mon.owner.toLowerCase() !== this._account))
+      ((mon.owner.toString().toLowerCase() === this._account.toString().toLowerCase()) && (!mon.forSale)) ||
+      ((mon.sharedTo.toString().toLowerCase() === this._account.toString().toLowerCase()) && (mon.owner.toString().toLowerCase() !== this._account.toString().toLowerCase()))
     );
     // div with user's Cryptomons that can be used to fight with
     const forFightWithCryptomons = this.state.cryptomons.filter(cond).map(mon =>
@@ -439,6 +439,7 @@ class Cryptomons extends Component {
         <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example">
           <Tab className="x" eventKey="myCryptomons" title="My Cryptoships">
             <label className="p1">Your Entries</label>
+            {console.log(this.state)}
             {myCryptomons}
           </Tab>
           <Tab eventKey="forSale" title="For sale">
