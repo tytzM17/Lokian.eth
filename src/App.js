@@ -31,6 +31,8 @@ const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
 // Add all 151 Cryptomon names in an array
 const names = ['Bulbasaur', 'Ivysaur', 'Venusaur', 'Charmander', 'Charmeleon', 'Charizard', 'Squirtle', 'Wartortle', 'Blastoise', 'Caterpie', 'Metapod', 'Butterfree', 'Weedle', 'Kakuna', 'Beedrill', 'Pidgey', 'Pidgeotto', 'Pidgeot', 'Rattata', 'Raticate', 'Spearow', 'Fearow', 'Ekans', 'Arbok', 'Pikachu', 'Raichu', 'Sandshrew', 'Sandslash', 'Nidoran_f', 'Nidorina', 'Nidoqueen', 'Nidoran_m', 'Nidorino', 'Nidoking', 'Clefairy', 'Clefable', 'Vulpix', 'Ninetales', 'Jigglypuff', 'Wigglytuff', 'Zubat', 'Golbat', 'Oddish', 'Gloom', 'Vileplume', 'Paras', 'Parasect', 'Venonat', 'Venomoth', 'Diglett', 'Dugtrio', 'Meowth', 'Persian', 'Psyduck', 'Golduck', 'Mankey', 'Primeape', 'Growlithe', 'Arcanine', 'Poliwag', 'Poliwhirl', 'Poliwrath', 'Abra', 'Kadabra', 'Alakazam', 'Machop', 'Machoke', 'Machamp', 'Bellsprout', 'Weepinbell', 'Victreebel', 'Tentacool', 'Tentacruel', 'Geodude', 'Graveler', 'Golem', 'Ponyta', 'Rapidash', 'Slowpoke', 'Slowbro', 'Magnemite', 'Magneton', 'Farfetch_d', 'Doduo', 'Dodrio', 'Seel', 'Dewgong', 'Grimer', 'Muk', 'Shellder', 'Cloyster', 'Gastly', 'Haunter', 'Gengar', 'Onix', 'Drowzee', 'Hypno', 'Krabby', 'Kingler', 'Voltorb', 'Electrode', 'Exeggcute', 'Exeggutor', 'Cubone', 'Marowak', 'Hitmonlee', 'Hitmonchan', 'Lickitung', 'Koffing', 'Weezing', 'Rhyhorn', 'Rhydon', 'Chansey', 'Tangela', 'Kangaskhan', 'Horsea', 'Seadra', 'Goldeen', 'Seaking', 'Staryu', 'Starmie', 'Mr_mime', 'Scyther', 'Jynx', 'Electabuzz', 'Magmar', 'Pinsir', 'Tauros', 'Magikarp', 'Gyarados', 'Lapras', 'Ditto', 'Eevee', 'Vaporeon', 'Jolteon', 'Flareon', 'Porygon', 'Omanyte', 'Omastar', 'Kabuto', 'Kabutops', 'Aerodactyl', 'Snorlax', 'Articuno', 'Zapdos', 'Moltres', 'Dratini', 'Dragonair', 'Dragonite', 'Mew', 'Mewtwo'];
 
+
+
 async function getAccounts() {
   let web3 = new Web3(window.ethereum);
 
@@ -42,13 +44,29 @@ async function getAccounts() {
 async function getMons(web3, account) {
   const contr = new web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
   const totalMons = parseInt(await contr.methods.totalMons().call())
-  console.log('totmons', totalMons);
   return Promise.all(
     [...Array(totalMons).keys()].map(
       id => contr.methods.mons(id).call()
     )
   )
 }
+
+async function onClickConnect(that) {
+  that._web3 = new Web3(window.ethereum);
+  that._web3.setProvider('http://localhost:7545');
+  try {
+
+    // Will open the MetaMask UI
+    // You should disable this button while the request is pending!
+    const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+    const account = accounts[0];
+    that.setState({ connectBtnTxt: account?.toString() || "Connect Wallet"});
+    that._account = account?.toString() || "";
+    that.refreshMons();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 class Cryptomons extends Component {
 
@@ -70,35 +88,51 @@ class Cryptomons extends Component {
       rounds: null,         // Used to display number of rounds the fight lasted
 
       shareId: "",          // Used in shareId form input field
-      shareAddress: ""      // Used in shareAddress form input field
+      shareAddress: "",      // Used in shareAddress form input field
+
+      connectBtnTxt: 'Connect Wallet'
+
     };
 
     this._getAccounts = null;
     this._getMons = null;
 
+
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // let web3 = new Web3('ws://localhost:7545');
 
     // Web3.setProvider('ws://localhost:8546');
-    this._getAccounts = getAccounts().then(
-      accounts => {
-        console.log('first account', accounts[0]);
+    // this._getAccounts = getAccounts().then(
+    //   accounts => {
+    //     this._getAccounts = null;
+    //     this._web3 = new Web3(window.ethereum);
+    //     this._web3.setProvider('http://localhost:7545');
 
-        this._getAccounts = null;
-        this._web3 = new Web3(window.ethereum);
-        this._web3.setProvider('http://localhost:7545');
+    //     // We only have one element in accounts but we need just the value
+    //     // not the array accounts with the one element.
+    //     // That's why we use accounts[0] instead of accounts.
+    //     this._account = accounts[0];
 
-        // We only have one element in accounts but we need just the value
-        // not the array accounts with the one element.
-        // That's why we use accounts[0] instead of accounts.
-        this._account = accounts[0];
+    //     this.refreshMons()
+    //   }
+    // );
 
-        this.refreshMons()
-      }
-    );
+    this._web3 = new Web3(window.ethereum);
+    this._web3.setProvider('http://localhost:7545');
+
+    // window.ethereum.enable().then(accounts => {
+    //   this._account = accounts[0];
+    // });
+
+    if (!this._account) {
+      onClickConnect(this);
+    } 
+
+    
+    this.refreshMons()
 
   }
 
@@ -117,7 +151,7 @@ class Cryptomons extends Component {
     this._getMons = getMons(this._web3, this._account).then((_mons) => {
       this._getMons = null;
       this.setState({ cryptomons: _mons });
-      this.setState({ myCryptomons: _mons.filter(mon => mon.owner.toString().toLowerCase() === this._account.toString().toLowerCase()) })
+      this.setState({ myCryptomons: _mons.filter(mon => mon.owner?.toString().toLowerCase() === this._account?.toString().toLowerCase()) })
       this.setState({
         otherCryptomons: _mons.filter(mon =>
           (mon.owner.toLowerCase() !== this._account)
@@ -193,8 +227,11 @@ class Cryptomons extends Component {
     //console.log(this.state.value[id], event.target.value)
   }
 
+
   // Function that does all the rendering of the application
   render() {
+
+
 
     // div that holds the name and id of each Cryptomon
     var nameDiv = (mon) => {
@@ -351,8 +388,8 @@ class Cryptomons extends Component {
     )
 
     var cond = mon => (
-      ((mon.owner.toString().toLowerCase() === this._account.toString().toLowerCase()) && (!mon.forSale)) ||
-      ((mon.sharedTo.toString().toLowerCase() === this._account.toString().toLowerCase()) && (mon.owner.toString().toLowerCase() !== this._account.toString().toLowerCase()))
+      ((mon.owner.toString().toLowerCase() === this._account?.toString().toLowerCase()) && (!mon.forSale)) ||
+      ((mon.sharedTo.toString().toLowerCase() === this._account?.toString().toLowerCase()) && (mon.owner?.toString().toLowerCase() !== this._account?.toString().toLowerCase()))
     );
     // div with user's Cryptomons that can be used to fight with
     const forFightWithCryptomons = this.state.cryptomons.filter(cond).map(mon =>
@@ -435,27 +472,35 @@ class Cryptomons extends Component {
     return (
       // Creation of the different tabs of the UI
       <div>
-        <label className="AppTitle">Crypto 🚀 Ships</label>
+        <label className="AppTitle">
+          Crypto <span>🚀</span> Ships
+          <span>
+            <button
+              style={{ float: "right", fontSize: "24px", marginTop: "6px", marginRight: "6px" }}
+              onClick={() => onClickConnect(this)}>
+              {this.state.connectBtnTxt}
+            </button>
+          </span>
+        </label>
         <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example">
-          <Tab className="x" eventKey="myCryptomons" title="My Cryptoships">
+          <Tab className="x" eventKey="myCryptomons" title="My Crypto-Ships">
             <label className="p1">Your Entries</label>
-            {console.log(this.state)}
             {myCryptomons}
           </Tab>
           <Tab eventKey="forSale" title="For sale">
             <label className="p1">Selling Management</label>
             {forSaleCryptomons}
           </Tab>
-          <Tab eventKey="buyCryptomons" title="Buy Cryptoships">
+          <Tab eventKey="buyCryptomons" title="Buy Crypto-Ships">
             <label className="p1">Shop</label>
             {buyCryptomons}
           </Tab>
-          <Tab eventKey="breedCryptomons" title="Modify Cryptoships">
+          <Tab eventKey="breedCryptomons" title="Modify Crypto-Ships">
             <label className="p1">Modification Bay</label>
             <div className="breeding-area">
               {breedOption(this.state.breedChoice1)}
               {breedOption(this.state.breedChoice2)}
-              <button className="breed-btn" onClick={() => this.breedMons(this.state.breedChoice1, this.state.breedChoice2)}>Modify choosen cryptoships</button>
+              <button className="breed-btn" onClick={() => this.breedMons(this.state.breedChoice1, this.state.breedChoice2)}>Modify choosen Crypto-Ships</button>
             </div>
             {forBreedCryptomons}
           </Tab>
@@ -466,20 +511,20 @@ class Cryptomons extends Component {
               {breedOption(this.state.fightChoice2)}
               <label className="winner-label">Winner Cryptoship's Id: {this.state.winner}</label><br />
               <label className="winner-label">Rounds the fight lasted: {this.state.rounds}</label>
-              <button className="fight-btn" onClick={() => this.fight(this.state.fightChoice1, this.state.fightChoice2)}>Fight with choosen cryptoships</button>
+              <button className="fight-btn" onClick={() => this.fight(this.state.fightChoice1, this.state.fightChoice2)}>Fight with choosen Crypto-Ships</button>
             </div>
             <div className="fight-mons-<h1>Sharing Management</h1>area">
               <div className="fightWith-area">
-                <label className="p2">Your Cryptoships</label>
+                <label className="p2">Your Crypto-Ships</label>
                 {forFightWithCryptomons}
               </div>
               <div className="fightAgainst-area">
-                <label className="p2">Opponent Cryptoships</label>
+                <label className="p2">Opponent Crypto-Ships</label>
                 {forFightAgainstCryptomons}
               </div>
             </div>
           </Tab>
-          <Tab eventKey="share" title="Share Cryptoships">
+          <Tab eventKey="share" title="Share Crypto-Ships">
             <label className="p1">Sharing Management</label>
             <div className="sharing-area">
               <div className="form-line">
