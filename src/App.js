@@ -54,14 +54,27 @@ async function getMons(web3, account) {
 async function onClickConnect(that) {
   that._web3 = new Web3(window.ethereum);
   that._web3.setProvider('http://localhost:7545');
+
+  // change btn text to show 'Connect Wallet'
+  // refresh
   try {
 
     // Will open the MetaMask UI
     // You should disable this button while the request is pending!
-    const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-    const account = accounts[0];
-    that.setState({ connectBtnTxt: account?.toString() || "Connect Wallet"});
-    that._account = account?.toString() || "";
+
+    // if we have an account then logout/disconnect or account = null
+    if (that._account) {
+      that._account = null;
+      that.setState({ connectBtnTxt: "Connect Wallet" })
+    } else {
+      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+      const account = accounts[0];
+      const shortenAccount = `${account?.toString().slice(0, 5)}...${account?.toString().slice(account.toString().length - 5)}` || "Connect Wallet"
+      that.setState({ connectBtnTxt: shortenAccount });
+      that._account = account?.toString() || "";
+    }
+
+
     that.refreshMons();
   } catch (error) {
     console.error(error);
@@ -129,9 +142,9 @@ class Cryptomons extends Component {
 
     if (!this._account) {
       onClickConnect(this);
-    } 
+    }
 
-    
+
     this.refreshMons()
 
   }
@@ -478,6 +491,7 @@ class Cryptomons extends Component {
             <button
               style={{ float: "right", fontSize: "24px", marginTop: "6px", marginRight: "6px" }}
               onClick={() => onClickConnect(this)}>
+              { this.state.connectBtnTxt !== "Connect Wallet" ? <span>&#10060;</span> : <></> } 
               {this.state.connectBtnTxt}
             </button>
           </span>
