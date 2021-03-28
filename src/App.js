@@ -133,19 +133,34 @@ class Cryptomons extends Component {
     //   }
     // );
 
-    this._web3 = new Web3(window.ethereum);
-    this._web3.setProvider('http://localhost:7545');
+    if (window.ethereum) {
+      // use MetaMask's provider
+      this._web3 = new Web3(window.ethereum);
+      this._web3.setProvider('http://localhost:7545');
 
-    // window.ethereum.enable().then(accounts => {
-    //   this._account = accounts[0];
-    // });
+      window.ethereum.enable(); // get permission to access accounts
 
-    if (!this._account) {
-      onClickConnect(this);
+      // detect Metamask account change
+      window.ethereum.on('accountsChanged',  (accounts) => {
+        alert('Account Changed', accounts[0]);
+        if (this._account) this._account = null;
+        this.setState({ connectBtnTxt: "Connect Wallet" });
+        this.refreshMons();
+
+      });
+
+      // detect Network account change
+      window.ethereum.on('networkChanged', (networkId) => {
+        alert('Network Changed', networkId);
+        if (this._account) this._account = null;
+        this.setState({ connectBtnTxt: "Connect Wallet" });
+        this.refreshMons();
+      });
+
+
     }
 
 
-    this.refreshMons()
 
   }
 
@@ -491,7 +506,7 @@ class Cryptomons extends Component {
             <button
               style={{ float: "right", fontSize: "24px", marginTop: "6px", marginRight: "6px" }}
               onClick={() => onClickConnect(this)}>
-              { this.state.connectBtnTxt !== "Connect Wallet" ? <span>&#10060;</span> : <></> } 
+              {this.state.connectBtnTxt !== "Connect Wallet" ? <span>&#10060;</span> : <></>}
               {this.state.connectBtnTxt}
             </button>
           </span>
