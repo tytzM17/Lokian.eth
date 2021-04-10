@@ -538,6 +538,12 @@ class Cryptomons extends Component {
             <div className="fighting-area">
               {breedOption(this.state.fightChoice1)}
               {breedOption(this.state.fightChoice2)}
+              <label className="winner-label">And the winner is... 
+                {" "}
+                {
+                  names[(this.state.cryptomons.find(mon => mon.id?.toString() === this.state.winner?.toString()))?.species]
+                }
+              </label><br />
               <label className="winner-label">Winner Cryptoship's Id: {this.state.winner}</label><br />
               <label className="winner-label">Rounds the fight lasted: {this.state.rounds}</label>
               <button className="fight-btn" onClick={() => this.fight(this.state.fightChoice1, this.state.fightChoice2)}>Fight with choosen Crypto-Ships</button>
