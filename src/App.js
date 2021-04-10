@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import ReactTooltip from "react-tooltip";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Tab, Tabs } from 'react-bootstrap';
 import StatBar from './StatBar'
@@ -141,7 +142,7 @@ class Cryptomons extends Component {
       window.ethereum.enable(); // get permission to access accounts
 
       // detect Metamask account change
-      window.ethereum.on('accountsChanged',  (accounts) => {
+      window.ethereum.on('accountsChanged', (accounts) => {
         alert('Account Changed', accounts[0]);
         if (this._account) this._account = null;
         this.setState({ connectBtnTxt: "Connect Wallet" });
@@ -215,7 +216,7 @@ class Cryptomons extends Component {
 
   // Function that breeds 2 Cryptomons through a smart contract function
   breedMons(id1, id2) {
-    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account, gas:3000000 });
+    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account, gas: 3000000 });
     contr.methods.breedMons(id1, id2).send().on('confirmation', () => {
       this.refreshMons();
     });
@@ -223,7 +224,7 @@ class Cryptomons extends Component {
 
   // Function that allows 2 Cryptomons to fight through a smart contract function
   async fight(id1, id2) {
-    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account, gas:3000000 });
+    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account, gas: 3000000 });
     var results = await contr.methods.fight(id1, id2).call();
     this.state.winner = results[0];
     this.state.rounds = results[1];
@@ -502,14 +503,28 @@ class Cryptomons extends Component {
       <div>
         <label className="AppTitle">
           Crypto <span>🚀</span> Ships
-          <span>
-            <button
-              style={{ float: "right", fontSize: "24px", marginTop: "6px", marginRight: "6px" }}
-              onClick={() => onClickConnect(this)}>
-              {this.state.connectBtnTxt !== "Connect Wallet" ? <span>&#10060;</span> : <></>}
-              {this.state.connectBtnTxt}
-            </button>
+
+            <span>
+            <a data-tip data-for="walletLogout">
+              <button
+                style={{ float: "right", fontSize: "20px", marginTop: "6px", marginRight: "6px" }}
+                onClick={() => onClickConnect(this)}>
+                {/* {this.state.connectBtnTxt !== "Connect Wallet" ? <span onClick={() => onClickConnect(this)}>&#10060;</span> : <></>} */}
+
+                {this.state.connectBtnTxt}
+              </button>
+            </a>
           </span>
+
+          {
+            (this.state.connectBtnTxt !== "Connect Wallet") &&
+            (
+              <ReactTooltip id="walletLogout" lace="top" type="warning" effect="float">
+                <span>Click to logout</span>
+              </ReactTooltip>
+            )
+          }
+
         </label>
         <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example">
           <Tab className="x" eventKey="myCryptomons" title="My Crypto-Ships">
@@ -538,7 +553,7 @@ class Cryptomons extends Component {
             <div className="fighting-area">
               {breedOption(this.state.fightChoice1)}
               {breedOption(this.state.fightChoice2)}
-              <label className="winner-label">And the winner is... 
+              <label className="winner-label">And the winner is...
                 {" "}
                 {
                   names[(this.state.cryptomons.find(mon => mon.id?.toString() === this.state.winner?.toString()))?.species]
