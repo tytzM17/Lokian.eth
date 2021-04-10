@@ -215,7 +215,7 @@ class Cryptomons extends Component {
 
   // Function that breeds 2 Cryptomons through a smart contract function
   breedMons(id1, id2) {
-    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account });
+    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account, gas:3000000 });
     contr.methods.breedMons(id1, id2).send().on('confirmation', () => {
       this.refreshMons();
     });
@@ -223,7 +223,7 @@ class Cryptomons extends Component {
 
   // Function that allows 2 Cryptomons to fight through a smart contract function
   async fight(id1, id2) {
-    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account });
+    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account, gas:3000000 });
     var results = await contr.methods.fight(id1, id2).call();
     this.state.winner = results[0];
     this.state.rounds = results[1];
