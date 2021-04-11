@@ -6,6 +6,8 @@ import ReactTooltip from "react-tooltip";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Tab, Tabs } from 'react-bootstrap';
 import StatBar from './StatBar'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Web3 from 'web3';    // Library to work with Etherium blockchain
 import contrInterface from './interface.json'; // Load contract json file
@@ -24,7 +26,8 @@ import bg9 from './sprites/background/9.png';
 import bg10 from './sprites/background/10.png';
 
 // The contact deployment address in Etherium blockchain
-const CONTRACT_ADDRESS = '0x28596bF0a936181224E714993Bf867CA09baD983'
+// const CONTRACT_ADDRESS = '0x28596bF0a936181224E714993Bf867CA09baD983'
+const CONTRACT_ADDRESS = "0xfd69ECFc3015dF3C53962D401602A2a485180148";
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
@@ -194,6 +197,7 @@ class Cryptomons extends Component {
   buyMon(id, price) {
     const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account })
     contr.methods.buyMon(id).send({ value: BigInt(price) + BigInt(1) + "" }).on('confirmation', () => {
+      toast("Success");
       this.refreshMons();
     })
   }
@@ -202,6 +206,7 @@ class Cryptomons extends Component {
   addForSale(id, price) {
     const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account });
     contr.methods.addForSale(id, price).send().on('confirmation', () => {
+      toast("Success");
       this.refreshMons();
     })
   }
@@ -210,6 +215,7 @@ class Cryptomons extends Component {
   removeFromSale(id) {
     const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account });
     contr.methods.removeFromSale(id).send().on('confirmation', () => {
+      toast("Success");
       this.refreshMons();
     })
   }
@@ -218,13 +224,14 @@ class Cryptomons extends Component {
   breedMons(id1, id2) {
     const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account, gas: 3000000 });
     contr.methods.breedMons(id1, id2).send().on('confirmation', () => {
+      toast("Success"); // alert user if success
       this.refreshMons();
     });
   }
 
   // Function that allows 2 Cryptomons to fight through a smart contract function
   async fight(id1, id2) {
-    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account, gas: 3000000 });
+    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account });
     var results = await contr.methods.fight(id1, id2).call();
     this.state.winner = results[0];
     this.state.rounds = results[1];
@@ -259,8 +266,6 @@ class Cryptomons extends Component {
 
   // Function that does all the rendering of the application
   render() {
-
-
 
     // div that holds the name and id of each Cryptomon
     var nameDiv = (mon) => {
@@ -501,6 +506,8 @@ class Cryptomons extends Component {
     return (
       // Creation of the different tabs of the UI
       <div>
+        <ToastContainer />
+
         <label className="AppTitle">
           Crypto <span>🚀</span> Ships
 
@@ -551,6 +558,9 @@ class Cryptomons extends Component {
           <Tab eventKey="fight" title="Fight">
             <label className="p1">Space Fight Arena</label>
             <div className="fighting-area">
+              {
+
+              }
               {breedOption(this.state.fightChoice1)}
               {breedOption(this.state.fightChoice2)}
               <label className="winner-label">And the winner is...

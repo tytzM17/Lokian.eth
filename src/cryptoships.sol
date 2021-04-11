@@ -252,7 +252,7 @@ contract Cryptomons {
     function fight(uint id1, uint id2) public view returns (uint, uint8){
         assert(id1 < totalMons);
         assert(id2 < totalMons);
-        require(id1 != id2);        // A mon can't fight with itself
+        // require(id1 != id2);        // A mon can't fight with itself
         require(mons[id1].owner == msg.sender || mons[id1].sharedTo == msg.sender);    // Only owner can fight with a mon or if the mon is shared to sender
         require(!(mons[id1].forSale || mons[id2].forSale)); // Fighting mons can't be for sale.
         uint8 hp1 = mons[id1].hp;
@@ -311,7 +311,7 @@ contract Cryptomons {
     
     // function that generates pseudorandom numbers
     function randomGen(uint i) private returns (uint8) {
-        uint8 x = uint8(uint(keccak256(abi.encodePacked(now, msg.sender, nonce))) % i);
+        uint8 x = uint8(uint(keccak256(abi.encodePacked(block.timestamp, msg.sender, nonce))) % i);
         nonce++;
         return x;
     }
