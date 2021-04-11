@@ -204,6 +204,10 @@ class Cryptomons extends Component {
 
   // Function that adds a Cryptomon for sale through a smart contract function
   addForSale(id, price) {
+    if (price === 0 || price === "0") {
+      toast.error("🦄 Dude, price should be above 0");
+      return;
+    }
     const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account });
     contr.methods.addForSale(id, price).send().on('confirmation', () => {
       toast("Success");
