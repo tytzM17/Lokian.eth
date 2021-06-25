@@ -513,7 +513,7 @@ class Cryptomons extends Component {
         <ToastContainer />
 
         <label className="AppTitle">
-          Crypto <span>🚀</span> Ships
+          Babaylan.eth {" "} <span>🧞</span>
 
             <span>
             <a data-tip data-for="walletLogout">
@@ -538,19 +538,19 @@ class Cryptomons extends Component {
 
         </label>
         <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example">
-          <Tab className="x" eventKey="myCryptomons" title="My Crypto-Ships">
+          <Tab className="x" eventKey="myCryptomons" title="My Creatures">
             <label className="p1">Your Entries</label>
             {myCryptomons}
           </Tab>
-          <Tab eventKey="forSale" title="For sale">
+          <Tab eventKey="forSale" title="For trade">
             <label className="p1">Selling Management</label>
             {forSaleCryptomons}
           </Tab>
-          <Tab eventKey="buyCryptomons" title="Buy Crypto-Ships">
+          <Tab eventKey="buyCryptomons" title="Trade Creatures">
             <label className="p1">Shop</label>
             {buyCryptomons}
           </Tab>
-          <Tab eventKey="breedCryptomons" title="Modify Crypto-Ships">
+          <Tab eventKey="breedCryptomons" title="Breed Creatures">
             <label className="p1">Modification Bay</label>
             <div className="breeding-area">
               {breedOption(this.state.breedChoice1)}
@@ -560,7 +560,7 @@ class Cryptomons extends Component {
             {forBreedCryptomons}
           </Tab>
           <Tab eventKey="fight" title="Fight">
-            <label className="p1">Space Fight Arena</label>
+            <label className="p1">Arena</label>
             <div className="fighting-area">
               {
 
@@ -588,7 +588,7 @@ class Cryptomons extends Component {
               </div>
             </div>
           </Tab>
-          <Tab eventKey="share" title="Share Crypto-Ships">
+          <Tab eventKey="share" title="Share Creatures">
             <label className="p1">Sharing Management</label>
             <div className="sharing-area">
               <div className="form-line">
