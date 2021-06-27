@@ -26,8 +26,8 @@ import bg9 from './sprites/background/9.png';
 import bg10 from './sprites/background/10.png';
 
 // The contact deployment address in Etherium blockchain
-// const CONTRACT_ADDRESS = '0x28596bF0a936181224E714993Bf867CA09baD983'
-const CONTRACT_ADDRESS = "0xfd69ECFc3015dF3C53962D401602A2a485180148";
+const CONTRACT_ADDRESS = '0x38cC9433b8d5280AE772A8a0f9594eDcf2f7A72e'
+// const CONTRACT_ADDRESS = "0xfd69ECFc3015dF3C53962D401602A2a485180148";
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
@@ -163,9 +163,6 @@ class Cryptomons extends Component {
 
 
     }
-
-
-
   }
 
   componentWillUnmount() {
@@ -330,7 +327,7 @@ class Cryptomons extends Component {
       return (<div className="breed-choice-div">
         <button className="br-Choice-btn" onClick={() => {
           this.setState({ breedChoice1: mon.id });
-        }} >Choice 1</button>
+        }}>Choice 1</button>
         <button className="br-Choice-btn" onClick={() => {
           this.setState({ breedChoice2: mon.id });
         }} >Choice 2</button>
@@ -361,7 +358,7 @@ class Cryptomons extends Component {
       }
     }
 
-    // div with user's Cryptomons
+    // div with users Cryptomons
     const myCryptomons = this.state.myCryptomons.filter(mon => (!mon.forSale)).map(mon =>
       <React.Fragment key={mon.id}>
         <div className="mon">
