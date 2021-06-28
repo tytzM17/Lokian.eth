@@ -1,4 +1,4 @@
-# Babaylan.eth: A DApp Collectible Card Game featuring mythical creature nfts, token currency for the 2d adventure game, and more.
+# Babaylan.eth: A DApp Collectible Card Game featuring mythical creature nfts, token currency for the 2d adventure game, for eth-based networks.
 
 <img src="./screenshots/fighting_tab.png" alt="" width="1000em" height="500em">
 
@@ -14,9 +14,9 @@ Thanks to Stamatis Kourkotas from
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Steps for deployment and use of our CryptoShips DApp
+## Steps for deployment and use of our DApp
 
-- Firstly, deploy our smart contract found in src/cryptoships.sol. We tested this localy on a private blockchain using [Ganache](https://www.trufflesuite.com/ganache)
+- Firstly, deploy our smart contract found in src/contract.sol (babaylan.eth.sol). We tested this localy on a private blockchain using [Ganache](https://www.trufflesuite.com/ganache)
 - In the main file of our user interface src/App.js specify the address where you deployed the contract in the constant CONTRACT_ADDRESS.
 - Install the [metamask](https://metamask.io/) extension on your browser to handle your provate blockchain account. the project has been tested with the Chrome and Mozilla browsers.
 - In the project directory run:
@@ -29,7 +29,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Remaining Tasks
 
-- Change naming e.g. cryptoShips to babaylan.eth
+- Change naming e.g. cryptoShips to babaylan.eth...
 - Change game context,rules,arts,etc from spaceships to mythical creatures
 - Improve or re-design breeding function
 - Improve or re-design fighting function

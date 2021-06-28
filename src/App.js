@@ -26,8 +26,10 @@ import bg9 from './sprites/background/9.png';
 import bg10 from './sprites/background/10.png';
 
 // The contact deployment address in Etherium blockchain
-const CONTRACT_ADDRESS = '0x38cC9433b8d5280AE772A8a0f9594eDcf2f7A72e'
-// const CONTRACT_ADDRESS = "0xfd69ECFc3015dF3C53962D401602A2a485180148";
+// prev
+// const CONTRACT_ADDRESS = '0x38cC9433b8d5280AE772A8a0f9594eDcf2f7A72e'
+// babaylan.eth.sol contract address ganache
+const CONTRACT_ADDRESS = "0x8B2d7e694398f820E038383B68341f737040bA42";
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
