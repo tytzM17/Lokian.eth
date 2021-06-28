@@ -540,7 +540,7 @@ class Cryptomons extends Component {
             {myCryptomons}
           </Tab>
           <Tab eventKey="forSale" title="For trade">
-            <label className="p1">Selling Management</label>
+            <label className="p1">Manage Trade</label>
             {forSaleCryptomons}
           </Tab>
           <Tab eventKey="buyCryptomons" title="Trade Creatures">
@@ -548,11 +548,11 @@ class Cryptomons extends Component {
             {buyCryptomons}
           </Tab>
           <Tab eventKey="breedCryptomons" title="Breed Creatures">
-            <label className="p1">Modification Bay</label>
+            <label className="p1">Breeding Grounds</label>
             <div className="breeding-area">
               {breedOption(this.state.breedChoice1)}
               {breedOption(this.state.breedChoice2)}
-              <button className="breed-btn" onClick={() => this.breedMons(this.state.breedChoice1, this.state.breedChoice2)}>Modify choosen Crypto-Ships</button>
+              <button className="breed-btn" onClick={() => this.breedMons(this.state.breedChoice1, this.state.breedChoice2)}>Breed choosen creatures</button>
             </div>
             {forBreedCryptomons}
           </Tab>
@@ -570,17 +570,17 @@ class Cryptomons extends Component {
                   names[(this.state.cryptomons.find(mon => mon.id?.toString() === this.state.winner?.toString()))?.species]
                 }
               </label><br />
-              <label className="winner-label">Winner Cryptoship's Id: {this.state.winner}</label><br />
+              <label className="winner-label">Winning creature's Id: {this.state.winner}</label><br />
               <label className="winner-label">Rounds the fight lasted: {this.state.rounds}</label>
-              <button className="fight-btn" onClick={() => this.fight(this.state.fightChoice1, this.state.fightChoice2)}>Fight with choosen Crypto-Ships</button>
+              <button className="fight-btn" onClick={() => this.fight(this.state.fightChoice1, this.state.fightChoice2)}>Fight with choosen creatures</button>
             </div>
             <div className="fight-mons-<h1>Sharing Management</h1>area">
               <div className="fightWith-area">
-                <label className="p2">Your Crypto-Ships</label>
+                <label className="p2">Your Creatures</label>
                 {forFightWithCryptomons}
               </div>
               <div className="fightAgainst-area">
-                <label className="p2">Opponent Crypto-Ships</label>
+                <label className="p2">Opponent Creatures</label>
                 {forFightAgainstCryptomons}
               </div>
             </div>
@@ -589,7 +589,7 @@ class Cryptomons extends Component {
             <label className="p1">Sharing Management</label>
             <div className="sharing-area">
               <div className="form-line">
-                <label className="form-label">Cryptoship Id:</label>
+                <label className="form-label">Creature Id:</label>
                 <input className="form-input" value={this.state.shareId} onChange={(e) => this.handleShareId(e)} />
               </div>
               <div className="form-line">

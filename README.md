@@ -1,4 +1,4 @@
-# CryptoShips: A DApp Collectible Card Game featuring spaceship nfts with a React Front-end.
+# Babaylan.eth: A DApp Collectible Card Game featuring mythical creature nfts, token currency for the 2d adventure game, and more.
 
 <img src="./screenshots/fighting_tab.png" alt="" width="1000em" height="500em">
 
@@ -26,3 +26,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
     **`npm start`** This runs the app in development mode.<br />
 
 - Open [http://localhost:3000](http://localhost:3000) to view it in the browser. You can see all the Cryptoships owned by the current metamask account and play the game.
+
+## Remaining Tasks
+
+- Change naming e.g. cryptoShips to babaylan.eth
+- Change game context,rules,arts,etc from spaceships to mythical creatures
+- Improve or re-design breeding function
+- Improve or re-design fighting function
+- Add token/ erc20, tokenomics, etc
+- Add nft/ erc721
+- Add 2d/3d game with token and nfts as game currencies
+- Deploy to matic, bsc, moonbeam or ethereum-compatible test networks
+- Deploy to matic, bsc, moonbeam or ethereum-compatible main networks
