@@ -319,7 +319,7 @@ class Cryptomons extends Component {
       return (<div className="selling-div">
         <label className="add-for-sale-label">Set cryptomons price (in Wei):</label>
         <input type="number" className="add-for-sale-input" value={this.state.value} onChange={(e) => this.handleChange(mon.id, e)} />
-        <button className="add-for-sale-btn" onClick={() => this.addForSale(mon.id, this.state.value)}>Add for sale</button>
+        <button className="rpgui-button" type="button" style={{float: "right"}} onClick={() => this.addForSale(mon.id, this.state.value)}>Add for sale</button>
       </div>)
     }
 
@@ -619,7 +619,7 @@ class Cryptomons extends Component {
                 <input className="form-input" value={this.state.shareAddress} onChange={(e) => this.handleShareAddress(e)} />
               </div>
               <div className="form-line">
-                <button className="share-btn" onClick={() => this.startSharing(this.state.shareId, this.state.shareAddress)}>Share</button>
+                <button class="rpgui-button" type="button" style={{float: "right"}} onClick={() => this.startSharing(this.state.shareId, this.state.shareAddress)}>Share</button>
               </div>
             </div>
             {sharedByMe}
