@@ -178,3 +178,11 @@ button {
   font-size: 16px;
 }
 
+.nav-link.active {
+  color: #7e8a96 !important
+}
+
+.nav-link:hover {
+  color: #f3a718 !important
+}
+

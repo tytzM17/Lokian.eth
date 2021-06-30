@@ -31,12 +31,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Remaining Tasks
 
-- Change naming e.g. cryptoShips to babaylan.eth...
-- Change game context,rules,arts,etc from spaceships to mythical creatures
+- Change naming e.g. cryptoShips to babaylan.eth..ok..6/28
+- Change to 8bit theme for ui..
+- Change game context/rules/arts from spaceships to mythical creatures
 - Improve or re-design breeding function
 - Improve or re-design fighting function
 - Add token/ erc20, tokenomics, etc
-- Add nft/ erc721
+- Add nft/ erc721, this should be 3d use threeJs or some 3d js lib
 - Add 2d/3d game with token and nfts as game currencies
 - Deploy to matic, bsc, moonbeam or ethereum-compatible test networks
 - Deploy to matic, bsc, moonbeam or ethereum-compatible main networks

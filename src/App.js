@@ -35,7 +35,23 @@ const CONTRACT_ADDRESS = "0x8B2d7e694398f820E038383B68341f737040bA42";
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
 
 // Add all 151 Cryptomon names in an array
-const names = ['Bulbasaur', 'Ivysaur', 'Venusaur', 'Charmander', 'Charmeleon', 'Charizard', 'Squirtle', 'Wartortle', 'Blastoise', 'Caterpie', 'Metapod', 'Butterfree', 'Weedle', 'Kakuna', 'Beedrill', 'Pidgey', 'Pidgeotto', 'Pidgeot', 'Rattata', 'Raticate', 'Spearow', 'Fearow', 'Ekans', 'Arbok', 'Pikachu', 'Raichu', 'Sandshrew', 'Sandslash', 'Nidoran_f', 'Nidorina', 'Nidoqueen', 'Nidoran_m', 'Nidorino', 'Nidoking', 'Clefairy', 'Clefable', 'Vulpix', 'Ninetales', 'Jigglypuff', 'Wigglytuff', 'Zubat', 'Golbat', 'Oddish', 'Gloom', 'Vileplume', 'Paras', 'Parasect', 'Venonat', 'Venomoth', 'Diglett', 'Dugtrio', 'Meowth', 'Persian', 'Psyduck', 'Golduck', 'Mankey', 'Primeape', 'Growlithe', 'Arcanine', 'Poliwag', 'Poliwhirl', 'Poliwrath', 'Abra', 'Kadabra', 'Alakazam', 'Machop', 'Machoke', 'Machamp', 'Bellsprout', 'Weepinbell', 'Victreebel', 'Tentacool', 'Tentacruel', 'Geodude', 'Graveler', 'Golem', 'Ponyta', 'Rapidash', 'Slowpoke', 'Slowbro', 'Magnemite', 'Magneton', 'Farfetch_d', 'Doduo', 'Dodrio', 'Seel', 'Dewgong', 'Grimer', 'Muk', 'Shellder', 'Cloyster', 'Gastly', 'Haunter', 'Gengar', 'Onix', 'Drowzee', 'Hypno', 'Krabby', 'Kingler', 'Voltorb', 'Electrode', 'Exeggcute', 'Exeggutor', 'Cubone', 'Marowak', 'Hitmonlee', 'Hitmonchan', 'Lickitung', 'Koffing', 'Weezing', 'Rhyhorn', 'Rhydon', 'Chansey', 'Tangela', 'Kangaskhan', 'Horsea', 'Seadra', 'Goldeen', 'Seaking', 'Staryu', 'Starmie', 'Mr_mime', 'Scyther', 'Jynx', 'Electabuzz', 'Magmar', 'Pinsir', 'Tauros', 'Magikarp', 'Gyarados', 'Lapras', 'Ditto', 'Eevee', 'Vaporeon', 'Jolteon', 'Flareon', 'Porygon', 'Omanyte', 'Omastar', 'Kabuto', 'Kabutops', 'Aerodactyl', 'Snorlax', 'Articuno', 'Zapdos', 'Moltres', 'Dratini', 'Dragonair', 'Dragonite', 'Mew', 'Mewtwo'];
+const names = ['Bulbasaur', 'Ivysaur', 'Venusaur', 'Charmander', 'Charmeleon', 'Charizard', 'Squirtle', 
+'Wartortle', 'Blastoise', 'Caterpie', 'Metapod', 'Butterfree', 'Weedle', 'Kakuna', 'Beedrill', 'Pidgey', 
+'Pidgeotto', 'Pidgeot', 'Rattata', 'Raticate', 'Spearow', 'Fearow', 'Ekans', 'Arbok', 'Pikachu', 'Raichu', 
+'Sandshrew', 'Sandslash', 'Nidoran_f', 'Nidorina', 'Nidoqueen', 'Nidoran_m', 'Nidorino', 'Nidoking', 
+'Clefairy', 'Clefable', 'Vulpix', 'Ninetales', 'Jigglypuff', 'Wigglytuff', 'Zubat', 'Golbat', 'Oddish', 
+'Gloom', 'Vileplume', 'Paras', 'Parasect', 'Venonat', 'Venomoth', 'Diglett', 'Dugtrio', 'Meowth', 'Persian',
+ 'Psyduck', 'Golduck', 'Mankey', 'Primeape', 'Growlithe', 'Arcanine', 'Poliwag', 'Poliwhirl', 'Poliwrath', 
+ 'Abra', 'Kadabra', 'Alakazam', 'Machop', 'Machoke', 'Machamp', 'Bellsprout', 'Weepinbell', 'Victreebel',
+  'Tentacool', 'Tentacruel', 'Geodude', 'Graveler', 'Golem', 'Ponyta', 'Rapidash', 'Slowpoke', 'Slowbro', 
+  'Magnemite', 'Magneton', 'Farfetch_d', 'Doduo', 'Dodrio', 'Seel', 'Dewgong', 'Grimer', 'Muk', 'Shellder', 
+  'Cloyster', 'Gastly', 'Haunter', 'Gengar', 'Onix', 'Drowzee', 'Hypno', 'Krabby', 'Kingler', 'Voltorb', 
+  'Electrode', 'Exeggcute', 'Exeggutor', 'Cubone', 'Marowak', 'Hitmonlee', 'Hitmonchan', 'Lickitung',
+   'Koffing', 'Weezing', 'Rhyhorn', 'Rhydon', 'Chansey', 'Tangela', 'Kangaskhan', 'Horsea', 'Seadra',
+    'Goldeen', 'Seaking', 'Staryu', 'Starmie', 'Mr_mime', 'Scyther', 'Jynx', 'Electabuzz', 'Magmar', 
+    'Pinsir', 'Tauros', 'Magikarp', 'Gyarados', 'Lapras', 'Ditto', 'Eevee', 'Vaporeon', 'Jolteon', 
+    'Flareon', 'Porygon', 'Omanyte', 'Omastar', 'Kabuto', 'Kabutops', 'Aerodactyl', 'Snorlax', 
+    'Articuno', 'Zapdos', 'Moltres', 'Dratini', 'Dragonair', 'Dragonite', 'Mew', 'Mewtwo'];
 
 
 
@@ -508,7 +524,7 @@ class Cryptomons extends Component {
 
     return (
       // Creation of the different tabs of the UI
-      <div>
+      <div class="rpgui-content">
         <ToastContainer />
 
         <label className="AppTitle">
@@ -517,11 +533,12 @@ class Cryptomons extends Component {
             <span>
             <a data-tip data-for="walletLogout">
               <button
+                class="rpgui-button golden" type="button"
                 style={{ float: "right", fontSize: "20px", marginTop: "6px", marginRight: "6px" }}
                 onClick={() => onClickConnect(this)}>
                 {/* {this.state.connectBtnTxt !== "Connect Wallet" ? <span onClick={() => onClickConnect(this)}>&#10060;</span> : <></>} */}
 
-                {this.state.connectBtnTxt}
+                <p style={{ paddingTop: "12px" }}>{this.state.connectBtnTxt}</p>
               </button>
             </a>
           </span>
@@ -536,6 +553,9 @@ class Cryptomons extends Component {
           }
 
         </label>
+
+        <hr />
+
         <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example">
           <Tab className="x" eventKey="myCryptomons" title="My Creatures">
             <label className="p1">Your Entries</label>
@@ -554,7 +574,7 @@ class Cryptomons extends Component {
             <div className="breeding-area">
               {breedOption(this.state.breedChoice1)}
               {breedOption(this.state.breedChoice2)}
-              <button className="breed-btn" onClick={() => this.breedMons(this.state.breedChoice1, this.state.breedChoice2)}>Breed choosen creatures</button>
+              <button class="rpgui-button" type="button" style={{marginLeft: "24px"}} onClick={() => this.breedMons(this.state.breedChoice1, this.state.breedChoice2)}>Breed choosen creatures</button>
             </div>
             {forBreedCryptomons}
           </Tab>
@@ -574,7 +594,7 @@ class Cryptomons extends Component {
               </label><br />
               <label className="winner-label">Winning creature's Id: {this.state.winner}</label><br />
               <label className="winner-label">Rounds the fight lasted: {this.state.rounds}</label>
-              <button className="fight-btn" onClick={() => this.fight(this.state.fightChoice1, this.state.fightChoice2)}>Fight with choosen creatures</button>
+              <button class="rpgui-button" type="button"  onClick={() => this.fight(this.state.fightChoice1, this.state.fightChoice2)}>Fight with choosen creatures</button>
             </div>
             <div className="fight-mons-<h1>Sharing Management</h1>area">
               <div className="fightWith-area">
