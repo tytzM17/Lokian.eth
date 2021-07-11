@@ -1,4 +1,4 @@
-html {
+/* html {
   overflow-y: scroll;
 }
 
@@ -12,12 +12,12 @@ html {
   background-color: #e6f2ff;
   width:100%;
   font-size: calc(10px + 6vmin);
-}
+} */
 
-.p1{
+/* .p1{
   padding-top: 0.2em;
   text-align: center;
-  color: #6c757d; /*#007bff*/
+  color: #6c757d; #007bff
   font-size: calc(10px + 3vmin);
   width:100%;
 }
@@ -26,7 +26,7 @@ html {
   padding-top: 0.2em;
   padding-bottom: 0.2em;
   text-align: center;
-  color: #6c757d; /*#007bff*/
+  color: #6c757d; #007bff
   font-size: calc(10px + 2vmin);
   width:100%;
 }
@@ -60,7 +60,7 @@ html {
   padding: 3%;  background-color: #ffe6b3;
   background-color: #ffe6b3;
   background-image: url(./sprites/background/9.png);
-  width: 15em;		/*this defines image width*/
+  width: 15em;		
   background-size: 280px 200px;
 }
 
@@ -77,9 +77,9 @@ html {
   margin-left: auto;
   margin-right: auto;
   width: 8em;
-  height: 8em;		/*this defines image height*/
-  margin-top:2em;	/*this defines image height*/
-  margin-bottom:2em;	/*this defines image height*/
+  height: 8em;		this defines image height
+  margin-top:2em;	this defines image height
+  margin-bottom:2em;	this defines image height
 }
 
 .monBackgroundImg {
@@ -122,7 +122,7 @@ html {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 13.9em;	/*Limit this to make word break work*/
+  width: 13.9em;	
   word-wrap: break-word;
 
 }
@@ -170,12 +170,16 @@ html {
 }
 
 button {
-  background-color: #4CAF50; /* Green */
+  background-color: #4CAF50; 
   border: 2px outset;
   color: white;
   text-align: center;
   display: inline-block;
   font-size: 16px;
+} */
+
+.rpgui-content {
+  overflow: auto !important;
 }
 
 .nav-link.active {
@@ -192,5 +196,18 @@ button {
 
 .nav {
   width: 100%
+}
+
+
+
+
+/* container for mon stats */
+.mon {
+  margin: 12px;
+}
+
+/* container for mon selling in My Creatures tab */
+.selling-div {
+  display: flex;
 }
 
