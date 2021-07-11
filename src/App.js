@@ -26,10 +26,10 @@ import bg9 from './sprites/background/9.png';
 import bg10 from './sprites/background/10.png';
 
 // The contact deployment address in Etherium blockchain
-// prev
-// const CONTRACT_ADDRESS = '0x38cC9433b8d5280AE772A8a0f9594eDcf2f7A72e'
+// win-10-workstation-ganache-contract-address
+const CONTRACT_ADDRESS = '0x373aD6Ce154C45aE99F2Fdcb61Ed02d514C9eF44'
 // babaylan.eth.sol contract address ganache
-const CONTRACT_ADDRESS = "0x8B2d7e694398f820E038383B68341f737040bA42";
+// const CONTRACT_ADDRESS = "0x8B2d7e694398f820E038383B68341f737040bA42";
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
@@ -553,8 +553,6 @@ class Cryptomons extends Component {
           }
 
         </label>
-
-        <hr />
 
         <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example">
           <Tab className="x" eventKey="myCryptomons" title="My Creatures">
