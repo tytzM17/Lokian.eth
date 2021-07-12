@@ -527,7 +527,7 @@ class Cryptomons extends Component {
       <div class="rpgui-content">
         <ToastContainer />
 
-        <label className="AppTitle">
+        <div className="AppTitle">
           Babaylan.eth {" "} <span>🧞</span>
 
             <span>
@@ -552,11 +552,11 @@ class Cryptomons extends Component {
             )
           }
 
-        </label>
+        </div>
 
         <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example">
           <Tab className="x" eventKey="myCryptomons" title="My Creatures">
-            <label className="p1">Your Entries</label>
+            <div className="p1">Your Entries</div>
             {myCryptomons}
           </Tab>
           <Tab eventKey="forSale" title="For trade">

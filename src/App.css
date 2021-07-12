@@ -1,32 +1,44 @@
 /* html {
   overflow-y: scroll;
 }
+*/
+
+.rpgui-content a {
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
 
 .App {
   text-align: center;
 }
 
 .AppTitle{
-  text-align: center;
+  /* text-align: center; */
   color: #6c757d;
-  background-color: #e6f2ff;
+  /* background-color: #e6f2ff; */
   width:100%;
-  font-size: calc(10px + 6vmin);
-} */
+  padding-left: 12px;
+  padding-top: 2px;
+  /* font-size: calc(10px + 6vmin); */
+  color: #fff;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+} 
 
-/* .p1{
+.p1{
   padding-top: 0.2em;
   text-align: center;
-  color: #6c757d; #007bff
-  font-size: calc(10px + 3vmin);
+  /* #007bff */
+  color: #6c757d; 
+  /* font-size: calc(10px + 3vmin); */
   width:100%;
+  color: #fff;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
 }
 
 .p2{
   padding-top: 0.2em;
   padding-bottom: 0.2em;
   text-align: center;
-  color: #6c757d; #007bff
+  color: #6c757d;    /* #007bff */
   font-size: calc(10px + 2vmin);
   width:100%;
 }
@@ -77,9 +89,12 @@
   margin-left: auto;
   margin-right: auto;
   width: 8em;
-  height: 8em;		this defines image height
-  margin-top:2em;	this defines image height
-  margin-bottom:2em;	this defines image height
+  /* this defines image height */
+  height: 8em;	
+  /* this defines image height	 */
+  margin-top:2em;	
+  /* this defines image height */
+  margin-bottom:2em;	
 }
 
 .monBackgroundImg {
@@ -169,6 +184,7 @@
   width: 100%;
 }
 
+/*
 button {
   background-color: #4CAF50; 
   border: 2px outset;
@@ -180,6 +196,12 @@ button {
 
 .rpgui-content {
   overflow: auto !important;
+}
+
+.rpgui-content label, .rpgui-content li {
+  color: #fff;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  font-size: 0.65em;
 }
 
 .nav-link.active {
@@ -199,15 +221,18 @@ button {
 }
 
 
-
+.rpgui-content label {
+  line-height: 12px;
+  display: inline;
+}
 
 /* container for mon stats */
-.mon {
+/* .mon {
   margin: 12px;
-}
+} */
 
 /* container for mon selling in My Creatures tab */
-.selling-div {
+/* .selling-div {
   display: flex;
-}
+} */
 
