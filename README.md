@@ -2,7 +2,7 @@
 
 <!-- <img src="./screenshots/fighting_tab.png" alt="" width="1000em" height="500em">
  -->
- <img src="./screenshots/babaylan.eth.ss.gif" alt="" width="1000em" height="500em">
+ <img src="./screenshots/babaylan.eth.ss2.gif" alt="" width="1000em" height="500em">
 
 ***
 
