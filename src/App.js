@@ -54,7 +54,6 @@ const names = ['Bulbasaur', 'Ivysaur', 'Venusaur', 'Charmander', 'Charmeleon', '
     'Articuno', 'Zapdos', 'Moltres', 'Dratini', 'Dragonair', 'Dragonite', 'Mew', 'Mewtwo'];
 
 
-
 async function getAccounts() {
   let web3 = new Web3(window.ethereum);
 
@@ -327,26 +326,26 @@ class Cryptomons extends Component {
     var removeFromSaleDiv = (mon) => {
       return (<div className="selling-div">
         <label className="remove-from-sale-label">Price (in Wei):<br />{mon.price}</label>
-        <button className="remove-from-sale-btn" onClick={() => this.removeFromSale(mon.id)}>Remove from sale</button>
+        <button className="rpgui-button" type="button" style={{float: "right"}} onClick={() => this.removeFromSale(mon.id)}>Remove from sale</button>
       </div>)
     }
 
     // Create the div with buy button
     var buyDiv = (mon) => {
       return (<div className="buying-div">
-        <label className="sale-price">Price (in Wei):<br />{mon.price} </label>
-        <label className="sale-owner">Cryptomon Owner: {mon.owner} </label>
-        <button className="sale-btn" onClick={() => this.buyMon(mon.id, mon.price)}>Buy</button>
+        <div className="sale-price">Price (in Wei):<br />{mon.price} </div>
+        <div className="sale-owner">Cryptomon Owner: {mon.owner} </div>
+        <button className="sale-btn rpgui-button" type="button" style={{float: "right"}} onClick={() => this.buyMon(mon.id, mon.price)}>Buy</button>
       </div>)
     }
 
     // Create the div with breed choice 1, choice 2 buttons
     var breedDiv = (mon) => {
       return (<div className="breed-choice-div">
-        <button className="br-Choice-btn" onClick={() => {
+        <button className="br-Choice-btn rpgui-button" type="button" style={{float: "right"}} onClick={() => {
           this.setState({ breedChoice1: mon.id });
         }}>Choice 1</button>
-        <button className="br-Choice-btn" onClick={() => {
+        <button className="br-Choice-btn rpgui-button" type="button" style={{float: "right"}} onClick={() => {
           this.setState({ breedChoice2: mon.id });
         }} >Choice 2</button>
       </div>)
@@ -456,7 +455,7 @@ class Cryptomons extends Component {
             </figcaption>
           </figure>
           <div className="fight-choice-div">
-            <button className="fight-Choice-btn" onClick={() => {
+            <button className="fight-Choice-btn rpgui-button" type="button" style={{float: "right"}} onClick={() => {
               this.setState({ fightChoice1: mon.id });
             }} >Choice 1</button>
           </div>
@@ -476,7 +475,7 @@ class Cryptomons extends Component {
             </figcaption>
           </figure>
           <div className="fight-choice-div">
-            <button className="fight-Choice-btn" onClick={() => {
+            <button className="fight-Choice-btn rpgui-button" type="button" style={{float: "right"}} onClick={() => {
               this.setState({ fightChoice2: mon.id });
             }} >Choice 2</button>
           </div>
@@ -497,7 +496,7 @@ class Cryptomons extends Component {
           </figure>
           <div className="sharing-div">
             <label className="shareTo-owner">Shared to address: {mon.sharedTo} </label>
-            <button className="stop-sharing-btn" onClick={() => this.stopSharing(mon.id)}>Stop sharing</button>
+            <button className="stop-sharing-btn rpgui-button" type="button" style={{float: "right"}} onClick={() => this.stopSharing(mon.id)}>Stop sharing</button>
           </div>
         </div>
       </React.Fragment>
@@ -516,7 +515,7 @@ class Cryptomons extends Component {
           </figure>
           <div className="sharing-div">
             <label className="shared-owner">Cryptomon Owner: {mon.owner} </label>
-            <button className="stop-sharing-btn" onClick={() => this.stopSharing(mon.id)}>Stop sharing</button>
+            <button className="stop-sharing-btn rpgui-button" type="button" style={{float: "right"}} onClick={() => this.stopSharing(mon.id)}>Stop sharing</button>
           </div>
         </div>
       </React.Fragment>
@@ -560,24 +559,24 @@ class Cryptomons extends Component {
             {myCryptomons}
           </Tab>
           <Tab eventKey="forSale" title="For trade">
-            <label className="p1">Manage Trade</label>
+            <div className="p1">Manage Trade</div>
             {forSaleCryptomons}
           </Tab>
           <Tab eventKey="buyCryptomons" title="Trade Creatures">
-            <label className="p1">Shop</label>
+            <div className="p1">Shop</div>
             {buyCryptomons}
           </Tab>
           <Tab eventKey="breedCryptomons" title="Breed Creatures">
-            <label className="p1">Breeding Grounds</label>
+            <div className="p1">Breeding Grounds</div>
             <div className="breeding-area">
               {breedOption(this.state.breedChoice1)}
               {breedOption(this.state.breedChoice2)}
-              <button class="rpgui-button" type="button" style={{marginLeft: "24px"}} onClick={() => this.breedMons(this.state.breedChoice1, this.state.breedChoice2)}>Breed choosen creatures</button>
+              <button class="rpgui-button" type="button" style={{width: "420px"}} onClick={() => this.breedMons(this.state.breedChoice1, this.state.breedChoice2)}>Breed choosen creatures</button>
             </div>
             {forBreedCryptomons}
           </Tab>
           <Tab eventKey="fight" title="Fight">
-            <label className="p1">Arena</label>
+            <div className="p1">Arena</div>
             <div className="fighting-area">
               {
 
@@ -596,17 +595,17 @@ class Cryptomons extends Component {
             </div>
             <div className="fight-mons-<h1>Sharing Management</h1>area">
               <div className="fightWith-area">
-                <label className="p2">Your Creatures</label>
+                <div className="p2">Your Creatures</div>
                 {forFightWithCryptomons}
               </div>
               <div className="fightAgainst-area">
-                <label className="p2">Opponent Creatures</label>
+                <div className="p2">Opponent Creatures</div>
                 {forFightAgainstCryptomons}
               </div>
             </div>
           </Tab>
           <Tab eventKey="share" title="Share Creatures">
-            <label className="p1">Sharing Management</label>
+            <div className="p1">Sharing Management</div>
             <div className="sharing-area">
               <div className="form-line">
                 <label className="form-label">Creature Id:</label>
@@ -623,7 +622,7 @@ class Cryptomons extends Component {
             {sharedByMe}
           </Tab>
           <Tab eventKey="sharedToMe" title="Shared To Me">
-            <label className="p1">Shared To You</label>
+            <div className="p1">Shared To You</div>
             {sharedToMe}
           </Tab>
         </Tabs></div>

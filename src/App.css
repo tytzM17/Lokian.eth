@@ -1,7 +1,3 @@
-/* html {
-  overflow-y: scroll;
-}
-*/
 
 .rpgui-content a {
   text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
@@ -38,9 +34,12 @@
   padding-top: 0.2em;
   padding-bottom: 0.2em;
   text-align: center;
-  color: #6c757d;    /* #007bff */
-  font-size: calc(10px + 2vmin);
+  /* color: #6c757d; #007bff */
+  font-size: calc(5px + 0.5vmin);
+  color: #e9e9e9;
   width:100%;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+
 }
 
 .App-header {
@@ -135,11 +134,14 @@
 
 .add-for-sale-label, .remove-from-sale-label, .sale-owner, .sale-price, .shareTo-owner, .shared-owner {
   display: block;
-  margin-left: auto;
+  /* margin-left: auto;
   margin-right: auto;
-  width: 13.9em;	
+  width: 13.9em;	 */
+  line-height: 2.25em;
   word-wrap: break-word;
-
+  font-size: calc(4px + 0.5vmin);
+  color: #fff;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
 }
 
 .add-for-sale-input {
@@ -149,12 +151,22 @@
   width: 100%;
 }
 
-.selling-div, .buying-div, .breed-choice-div, .fight-choice-div, .sharing-div{
+.selling-div, .buying-div, .sharing-div{
   display: block;
   margin-left: auto;
   margin-right: auto;
   margin-top: 1em;
   border: 2px outset;
+  /* max-width: fit-content; */
+  width: 15em;
+}
+
+.fight-choice-div, .breed-choice-div{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1em;
+  max-width: fit-content;
 }
 
 .fightWith-area, .fightAgainst-area{
@@ -181,7 +193,7 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
+  width: 15em;
 }
 
 /*
@@ -220,19 +232,9 @@ button {
   width: 100%
 }
 
-
 .rpgui-content label {
   line-height: 12px;
   display: inline;
 }
 
-/* container for mon stats */
-/* .mon {
-  margin: 12px;
-} */
-
-/* container for mon selling in My Creatures tab */
-/* .selling-div {
-  display: flex;
-} */
 
