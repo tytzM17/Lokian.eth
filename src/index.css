@@ -12,5 +12,12 @@ code {
     monospace;
 }
 
+html {
+  background-color: rgb(34, 36, 37);
+}
+
+a {
+  color: rgb(117, 182, 234) !important;
+}
 
 

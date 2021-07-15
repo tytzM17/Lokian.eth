@@ -316,7 +316,7 @@ class Cryptomons extends Component {
     // Create the div with add for sale button
     var addForSaleDiv = (mon) => {
       return (<div className="selling-div">
-        <label className="add-for-sale-label">Set cryptomons price (in Wei):</label>
+        <label className="add-for-sale-label">Set creatures price (in Wei):</label>
         <input type="number" className="add-for-sale-input" value={this.state.value} onChange={(e) => this.handleChange(mon.id, e)} />
         <button className="rpgui-button" type="button" style={{float: "right"}} onClick={() => this.addForSale(mon.id, this.state.value)}>Add for sale</button>
       </div>)
@@ -334,7 +334,7 @@ class Cryptomons extends Component {
     var buyDiv = (mon) => {
       return (<div className="buying-div">
         <div className="sale-price">Price (in Wei):<br />{mon.price} </div>
-        <div className="sale-owner">Cryptomon Owner: {mon.owner} </div>
+        <div className="sale-owner">Creature Owner: {mon.owner} </div>
         <button className="sale-btn rpgui-button" type="button" style={{float: "right"}} onClick={() => this.buyMon(mon.id, mon.price)}>Buy</button>
       </div>)
     }
@@ -495,7 +495,7 @@ class Cryptomons extends Component {
             </figcaption>
           </figure>
           <div className="sharing-div">
-            <label className="shareTo-owner">Shared to address: {mon.sharedTo} </label>
+            <div className="shareTo-owner">Shared to address: {mon.sharedTo} </div>
             <button className="stop-sharing-btn rpgui-button" type="button" style={{float: "right"}} onClick={() => this.stopSharing(mon.id)}>Stop sharing</button>
           </div>
         </div>
@@ -514,7 +514,7 @@ class Cryptomons extends Component {
             </figcaption>
           </figure>
           <div className="sharing-div">
-            <label className="shared-owner">Cryptomon Owner: {mon.owner} </label>
+            <label className="shared-owner">Creature Owner: {mon.owner} </label>
             <button className="stop-sharing-btn rpgui-button" type="button" style={{float: "right"}} onClick={() => this.stopSharing(mon.id)}>Stop sharing</button>
           </div>
         </div>
@@ -594,11 +594,11 @@ class Cryptomons extends Component {
               <button class="rpgui-button" type="button"  onClick={() => this.fight(this.state.fightChoice1, this.state.fightChoice2)}>Fight with choosen creatures</button>
             </div>
             <div className="fight-mons-<h1>Sharing Management</h1>area">
-              <div className="fightWith-area">
+              <div className="fightWith-area border-gradient border-gradient-purple">
                 <div className="p2">Your Creatures</div>
                 {forFightWithCryptomons}
               </div>
-              <div className="fightAgainst-area">
+              <div className="fightAgainst-area border-gradient border-gradient-purple">
                 <div className="p2">Opponent Creatures</div>
                 {forFightAgainstCryptomons}
               </div>
