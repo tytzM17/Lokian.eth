@@ -28,7 +28,7 @@ import bg10 from './sprites/background/10.png';
 // The contact deployment address in Etherium blockchain
 // win-10-workstation-ganache-contract-address
 const CONTRACT_ADDRESS = '0x373aD6Ce154C45aE99F2Fdcb61Ed02d514C9eF44'
-// babaylan.eth.sol contract address ganache
+// project.sol contract address ganache
 // const CONTRACT_ADDRESS = "0x8B2d7e694398f820E038383B68341f737040bA42";
 
 // Add background images in an array for easy access
@@ -527,7 +527,7 @@ class Cryptomons extends Component {
         <ToastContainer />
 
         <div className="AppTitle">
-          Babaylan.eth {" "} <span>🧞</span>
+          LOKIAN.ETH {" "} <span> </span>
 
             <span>
             <a data-tip data-for="walletLogout">
