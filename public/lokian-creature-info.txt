@@ -264,7 +264,7 @@ Nidhogg -> Niddhog -> Arbok (poison)
 
 kraken -> krakken -> TENTACRUEL (water)
 
-Mare -> nytMare -> JYNX (psychic)
+Mare -> Nytmare -> JYNX (psychic)
 
 Audumbla -> audhumbal -> TAUROS (normal)
 
