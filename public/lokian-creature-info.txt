@@ -1,0 +1,278 @@
+0(plant), 
+===
+BULBASAUR, 
+IVYSAUR, 
+VENUSAUR, 
+
+ODDISH, 
+GLOOM, 
+VILEPLUME, 
+
+BELLSPROUT, 
+WEEPINBELL, 
+VICTREEBEL, 
+		 
+TANGELA, 
+
+===
+1(fire), 
+===
+ CHARMANDER, 
+ CHARMELEON, 
+ CHARIZARD, 
+		 
+ VULPIX, 
+ NINETALES, 
+
+ GROWLITHE, 
+ ARCANINE, 
+		 
+ PONYTA, 
+ RAPIDASH, 
+		 
+ MAGMAR
+		 
+ FLAREON
+		 
+ MOLTRES
+
+===
+2(water), 
+===
+ SQUIRTLE, 
+ WARTORTLE, 
+ BLASTOISE, 
+
+ PSYDUCK, (psychic?)
+ GOLDUCK, 
+ 
+ POLIWAG, 
+ POLIWHIRL,
+ POLIWRATH, 
+ 
+ TENTACOOL, 
+ TENTACRUEL,
+ 
+ SLOWPOKE, 
+ SLOWBRO, 
+ 
+ SEEL,
+ DEWGONG, 
+ 
+ SHELLDER, 
+ CLOYSTER, 
+ 
+ KRABBY, 
+ KINGLER, 
+ 
+ HORSEA, 
+ SEADRA, 
+ 
+ GOLDEEN, 
+ SEAKING, 
+ 
+ STARYU, 
+ STARMIE, 
+ 
+ MAGIKARP, 
+ GYARADOS, 
+ LAPRAS,  
+ 
+ VAPOREON
+ 
+ OMANYTE, 
+ OMASTAR,
+ KABUTO, 
+ KABUTOPS, 
+ 
+ ARTICUNO
+
+
+===
+3(bug), 
+===
+CATERPIE,
+METAPOD, 
+BUTTERFREE,       
+WEEDLE, 
+KAKUNA, 
+BEEDRILL, 
+
+PARAS, 
+PARASECT, 
+VENONAT,
+VENOMOTH, 
+
+PINSIR
+
+SCYTHER
+
+===
+4(normal), 
+===
+PIDGEY, 
+PIDGEOTTO, 
+PIDGEOT,       
+RATTATA, 
+RATICATE, 
+SPEAROW, 
+FEAROW, 
+
+NIDORAN_F, 
+NIDORINA, 
+NIDOQUEEN, 
+NIDORAN_M, 
+NIDORINO, 
+NIDOKING, 
+CLEFAIRY,
+CLEFABLE,
+		 
+JIGGLYPUFF, 
+WIGGLYTUFF, 
+
+MEOWTH, 
+PERSIAN, 
+
+MANKEY, 
+PRIMEAPE, 
+
+MACHOP, 
+MACHOKE, 
+MACHAMP, 
+
+FARFETCH_D, 
+DODUO, 
+DODRIO, 
+
+HITMONLEE, 
+HITMONCHAN, 
+LICKITUNG, 
+
+CHANSEY, 
+
+KANGASKHAN, 
+
+MR_MIME
+
+TAUROS
+
+PORYGON
+
+AERODACTYL, 
+SNORLAX, 
+
+===
+5(poison), 
+===
+ EKANS,
+ ARBOK, 
+		 
+ ZUBAT, 
+ GOLBAT, 
+		 
+ GRIMER, 
+ MUK, 
+		 
+ KOFFING, 
+ WEEZING, 
+
+===
+6(thunder), 
+===
+ PIKACHU, 
+ RAICHU, 
+		 
+ MAGNEMITE, 
+ MAGNETON, 
+
+ VOLTORB,
+ ELECTRODE, 
+		 
+ ELECTABUZZ
+		 
+ JOLTEON
+		 
+ ZAPDOS
+
+===
+7(earth), 
+===
+ SANDSHREW, 
+ SANDSLASH, 
+		 
+ DIGLETT, 
+ DUGTRIO,
+		 
+ GEODUDE, 
+ GRAVELER, 
+ GOLEM, 
+		 
+ ONIX, 
+
+ CUBONE,
+ MAROWAK, 
+		 
+ RHYHORN, 
+ RHYDON,
+===
+8(psychic), 
+===
+ABRA, 
+KADABRA, 
+ALAKAZAM, 
+
+GASTLY, 
+HAUNTER, 
+GENGAR, 
+
+DROWZEE, 
+HYPNO, 
+
+EXEGGCUTE, 
+EXEGGUTOR, 
+
+JYNX
+
+DRATINI, 
+DRAGONAIR, 
+DRAGONITE, 
+MEWTWO, 
+MEW 
+
+===
+9(ditto), 
+===
+DITTO
+
+===
+10(eevee)
+===
+EEVEE
+
+
+===
+Mythic Creatures
+===
+(Norse)
+Fenrir -> Finreir -> Arcanine, GROWLITHE (fire), or legendary NFT
+Or
+Skoll -> Skohl -> GROWLITHE 
+Hati -> Hatee -> Arcanine
+
+Jormungand -> Jormingand -> Gyarados (water)
+Nidhogg -> Niddhog -> Arbok (poison)
+
+kraken -> krakken -> TENTACRUEL (water)
+
+Mare -> nytMare -> JYNX (psychic)
+
+Audumbla -> audhumbal -> TAUROS (normal)
+
+Ratatoskr -> Ratatosk -> RATTATA or RATICATE (normal)
+
+Huggin -> Hughin -> SPEAROW (normal)
+Muninn -> Munhin -> FEAROW
+
+
+
+
