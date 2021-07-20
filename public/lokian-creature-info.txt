@@ -9,19 +9,19 @@ GLOOM, -> Dingonek
 VILEPLUME, -> Mapinguari
 
 BELLSPROUT, -> Saci
-WEEPINBELL, -> 
-VICTREEBEL, -> 
+WEEPINBELL, -> Manticore
+VICTREEBEL, -> Gnome
 		 
-TANGELA, 
+TANGELA, -> Umibozu
 
 ===
 1(fire), 
 ===
- CHARMANDER, 
- CHARMELEON, 
- CHARIZARD, 
+ CHARMANDER, -> Santelmo
+ CHARMELEON, -> Hellhound
+ CHARIZARD, -> Efreet
 		 
- VULPIX, 
+ VULPIX, --> Chimera
  NINETALES, --> Kyuubi
 
  GROWLITHE,  -> Skohl
@@ -39,12 +39,12 @@ TANGELA,
 ===
 2(water), 
 ===
- SQUIRTLE, - Vodyanoy
- WARTORTLE, 
+ SQUIRTLE, -> Vodyanoy
+ WARTORTLE, -> Ondine/ Undine
  BLASTOISE, 
 
  PSYDUCK, (psychic?) -> rusalka
- GOLDUCK, 
+ GOLDUCK, -> kappa
  
  POLIWAG, 
  POLIWHIRL,
@@ -76,7 +76,7 @@ TANGELA,
  
  MAGIKARP, 
  GYARADOS, -> Jormingand
- LAPRAS,  
+ LAPRAS,  -> Leviathan
  
  VAPOREON -> Fossgrim
  
