@@ -24,39 +24,39 @@ TANGELA,
  VULPIX, 
  NINETALES, 
 
- GROWLITHE, 
- ARCANINE, 
+ GROWLITHE,  -> Skohl
+ ARCANINE,  -> Haet
 		 
- PONYTA, 
- RAPIDASH, 
+ PONYTA, -> Todorats
+ RAPIDASH, -> Sleipnir/ Slipneir
 		 
- MAGMAR
+ MAGMAR -> Caorthannach 
 		 
- FLAREON
+ FLAREON -> Besh
 		 
- MOLTRES
+ MOLTRES -> Anzu / Anzoo (sumerian), fire breathing
 
 ===
 2(water), 
 ===
- SQUIRTLE, 
+ SQUIRTLE, - Vodyanoy
  WARTORTLE, 
  BLASTOISE, 
 
- PSYDUCK, (psychic?)
+ PSYDUCK, (psychic?) -> rusalka
  GOLDUCK, 
  
  POLIWAG, 
  POLIWHIRL,
  POLIWRATH, 
  
- TENTACOOL, 
- TENTACRUEL,
+ TENTACOOL, Bukavak
+ TENTACRUEL, - krakken
  
  SLOWPOKE, 
  SLOWBRO, 
  
- SEEL,
+ SEEL, -> Selkie
  DEWGONG, 
  
  SHELLDER, 
@@ -65,7 +65,7 @@ TANGELA,
  KRABBY, 
  KINGLER, 
  
- HORSEA, 
+ HORSEA, -> Kelpie
  SEADRA, 
  
  GOLDEEN, 
@@ -75,17 +75,17 @@ TANGELA,
  STARMIE, 
  
  MAGIKARP, 
- GYARADOS, 
+ GYARADOS, -> Jormingand
  LAPRAS,  
  
- VAPOREON
+ VAPOREON -> Fossgrim
  
  OMANYTE, 
  OMASTAR,
- KABUTO, 
+ KABUTO, -> Nuckelavees / Nokk
  KABUTOPS, 
  
- ARTICUNO
+ ARTICUNO -> Alkonost
 
 
 ===
@@ -105,18 +105,18 @@ VENOMOTH,
 
 PINSIR
 
-SCYTHER
+SCYTHER -> (egyptian, Khepri -> beetle sun god related)
 
 ===
 4(normal), 
 ===
-PIDGEY, 
-PIDGEOTTO, 
-PIDGEOT,       
+PIDGEY, -> Tsikavat
+PIDGEOTTO, -> Munhin
+PIDGEOT, ->   Hughin    
 RATTATA, 
-RATICATE, 
-SPEAROW, 
-FEAROW, 
+RATICATE, -> Ratatask
+SPEAROW, -> Stratim
+FEAROW, -> Navke
 
 NIDORAN_F, 
 NIDORINA, 
@@ -124,10 +124,10 @@ NIDOQUEEN,
 NIDORAN_M, 
 NIDORINO, 
 NIDOKING, 
-CLEFAIRY,
-CLEFABLE,
+CLEFAIRY, -> Vila
+CLEFABLE, -> Huldra
 		 
-JIGGLYPUFF, 
+JIGGLYPUFF, -> Leshy
 WIGGLYTUFF, 
 
 MEOWTH, 
@@ -136,9 +136,9 @@ PERSIAN,
 MANKEY, 
 PRIMEAPE, 
 
-MACHOP, 
-MACHOKE, 
-MACHAMP, 
+MACHOP, -> Bauk
+MACHOKE, -> Trol
+MACHAMP, -> Yotun
 
 FARFETCH_D, 
 DODUO, 
@@ -154,7 +154,7 @@ KANGASKHAN,
 
 MR_MIME
 
-TAUROS
+TAUROS -> Audumbal
 
 PORYGON
 
@@ -165,22 +165,22 @@ SNORLAX,
 5(poison), 
 ===
  EKANS,
- ARBOK, 
+ ARBOK, -> Nidhog 
 		 
- ZUBAT, 
- GOLBAT, 
+ ZUBAT, -> Minyades (greek)
+ GOLBAT, -> Chupacabra / Camazotz (latin america)
 		 
  GRIMER, 
  MUK, 
 		 
- KOFFING, 
- WEEZING, 
+ KOFFING, -> Nezhit
+ WEEZING, -> Chuma
 
 ===
 6(thunder), 
 ===
  PIKACHU, 
- RAICHU, 
+ RAICHU, -> Raijuu/ Raij
 		 
  MAGNEMITE, 
  MAGNETON, 
@@ -192,7 +192,7 @@ SNORLAX,
 		 
  JOLTEON
 		 
- ZAPDOS
+ ZAPDOS -> Quetzalcoatl/ Quetz -> (latin america)
 
 ===
 7(earth), 
@@ -217,25 +217,26 @@ SNORLAX,
 ===
 8(psychic), 
 ===
-ABRA, 
-KADABRA, 
+ABRA, -> Vukodlak
+KADABRA, -> Chernobog
 ALAKAZAM, 
 
-GASTLY, 
-HAUNTER, 
-GENGAR, 
+GASTLY, -> BooMan
+HAUNTER, -> Banshee/ Sheendel
+GENGAR, -> Mare/NytMare
 
 DROWZEE, 
 HYPNO, 
 
-EXEGGCUTE, 
+EXEGGCUTE, - Dulahann
 EXEGGUTOR, 
 
-JYNX
+JYNX -> Likho / Likh
 
-DRATINI, 
-DRAGONAIR, 
+DRATINI, -> Zamey
+DRAGONAIR, -> Ashdaya
 DRAGONITE, 
+
 MEWTWO, 
 MEW 
 
@@ -254,24 +255,125 @@ EEVEE
 Mythic Creatures
 ===
 (Norse)
-Fenrir -> Finreir -> Arcanine, GROWLITHE (fire), or legendary NFT
+Fenrir -> Finreir -> NFT
 Or
 Skoll -> Skohl -> GROWLITHE 
-Hati -> Hatee -> Arcanine
+Hati -> Haet -> Arcanine
 
-Jormungand -> Jormingand -> Gyarados (water)
-Nidhogg -> Niddhog -> Arbok (poison)
+Jormungand -> Yormungund -> Gyarados/ dragonite (water)
+Nidhogg -> Nidhog -> Arbok (poison)
 
 kraken -> krakken -> TENTACRUEL (water)
 
-Mare -> Nytmare -> JYNX (psychic)
+Mare -> Nytmare -> gengar (psychic)
 
-Audumbla -> audhumbal -> TAUROS (normal)
+Audumbla -> Audumbal -> TAUROS (normal)
 
 Ratatoskr -> Ratatosk -> RATTATA or RATICATE (normal)
 
-Huggin -> Hughin -> SPEAROW (normal)
-Muninn -> Munhin -> FEAROW
+Huggin -> Hughin -> pidgey (normal)
+Muninn -> Munhin -> pidgeotto
+
+
+Jotnar -> Yottun -> machamp (earth)
+Sleipnir -> Slipneir -> RAPIDASH (fire) 
+
+Trolls -> Trol -> machoke , MACHAMP (normal)
+
+Draugr -> Draugg -> (zombie) NFT?
+Norne -> Norn  witch/prophetess -> NFT
+
+Fossegrim -> Fossgrim -> VAPOREON (water)
+
+Huldra -> femaile/fairy/cow ->CLEFABLE
+
+
+(celtic)
+
+Banshee -> Vanshee -> haunter 
+
+kelpie -> Kelpe -> (sea horse) -> Horsea
+
+Caorthannach -> Korthanach -> MAGMAR (fire)
+
+Dulahann -> death / EXEGGCUTE
+
+selkie -> sellfie -> (water) - seel / DEWGONG
+
+incubus -> nft
+
+
+Nuckelavees  - Nokk - sea demon -> kabuto/KABUTOPS
+
+
+(slavic)
+
+Baba Yaga - Babi Yaga -> NFT
+Baba Roga - Babi Roga -> NFT
+
+Alkonost -> Alkonostra -> Articuno (ice/bird)
+
+Balachko -> (giant/fire/ice)
+
+Bauk -> (ogre) - >MACHOP
+
+Besomar/ Chernobog -> (werewolf/vampire), kadabra
+Vukodlak -> (werewolf) -> abra
+
+
+Bes -> Besh -> (fire/demon anger) -> FLAREON
+
+Bukavac -> Bukavak -> (water) TENTACOOL
+
+Butzemann -> BooMan -> GASTLY
+
+Vampir -> Bampeer -> mew/ nft
+
+Vila -> Veela -> CLEFAIRY
+
+Vilenyak /leprechaun -> NFT
+Vodenjak / vodyanoy -> (water) SQUIRTLE
+
+Gamayun -> Gamayoon -> prophetic brid 
+Sirin -> sirene -> nft
+
+Danitsa -> (venus planet) nft
+
+Domovoy -> (shape shifter) nft
+
+Drekavats -> dead/zombie toddler
+
+Zhar ptista -> (phoenix)
+
+Zmey -> Zamey -> dragon, DRATINI
+Azhdaya -> Ashdaya -> DRAGONAIR
+
+Likho -> (demon of misfortune), Jynx
+
+Mora -> (night/ baby/ hair demon)
+
+Navke -> navka -> (birds/ baby/ demon) , fearow
+
+Nezhit -> Nezht -> (demon/sickness/disease) -> KOFFING or GRIMER
+
+Stratim -> mother of all birds ->  spearow
+
+Todorats -> demon horse -> PONYTA
+
+tsikavats -> Tsikavat -> tiny bird thief/demon -> pidgeot
+
+Chuma -> disease demon, weezing
+
+Chort -> goat demon 
+
+Leshy -> humanoid fairy -? JIGGLYPUFF
+
+rusalka -> siren -> (water) - PSYDUCK
+
+(japanese)
+
+raiju -> thunder bird -> raichu
+
 
 
 
