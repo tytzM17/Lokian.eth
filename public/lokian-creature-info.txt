@@ -1,16 +1,16 @@
 0(plant), 
 ===
-BULBASAUR, 
-IVYSAUR, 
-VENUSAUR, 
+BULBASAUR, -> Leshy
+IVYSAUR, -> Dryad
+VENUSAUR, -> Wendigo
 
-ODDISH, 
-GLOOM, 
-VILEPLUME, 
+ODDISH, -> Curupira
+GLOOM, -> Dingonek
+VILEPLUME, -> Mapinguari
 
-BELLSPROUT, 
-WEEPINBELL, 
-VICTREEBEL, 
+BELLSPROUT, -> Saci
+WEEPINBELL, -> 
+VICTREEBEL, -> 
 		 
 TANGELA, 
 
@@ -127,7 +127,7 @@ NIDOKING,
 CLEFAIRY, -> Vila
 CLEFABLE, -> Huldra
 		 
-JIGGLYPUFF, -> Leshy
+JIGGLYPUFF, -> 
 WIGGLYTUFF, 
 
 MEOWTH, 
@@ -217,19 +217,19 @@ SNORLAX,
 ===
 8(psychic), 
 ===
-ABRA, -> Vukodlak
-KADABRA, -> Chernobog
-ALAKAZAM, 
+ABRA, -> Vukodlak / Vukie
+KADABRA, -> Chernobog / bog
+ALAKAZAM, -> Djinn -> Jin
 
 GASTLY, -> BooMan
 HAUNTER, -> Banshee/ Sheendel
 GENGAR, -> Mare/NytMare
 
-DROWZEE, 
-HYPNO, 
+DROWZEE, -> Incubus/ incu
+HYPNO, -> Succubus/ succu
 
-EXEGGCUTE, - Dulahann
-EXEGGUTOR, 
+EXEGGCUTE, -> Dulahann
+EXEGGUTOR, -> Oni (japanese) 
 
 JYNX -> Likho / Likh
 
@@ -366,7 +366,7 @@ Chuma -> disease demon, weezing
 
 Chort -> goat demon 
 
-Leshy -> humanoid fairy -? JIGGLYPUFF
+Leshy -> humanoid fairy -
 
 rusalka -> siren -> (water) - PSYDUCK
 
