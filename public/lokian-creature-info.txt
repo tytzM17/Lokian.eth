@@ -22,7 +22,7 @@ TANGELA,
  CHARIZARD, 
 		 
  VULPIX, 
- NINETALES, 
+ NINETALES, --> Kyuubi
 
  GROWLITHE,  -> Skohl
  ARCANINE,  -> Haet
@@ -34,7 +34,7 @@ TANGELA,
 		 
  FLAREON -> Besh
 		 
- MOLTRES -> Anzu / Anzoo (sumerian), fire breathing
+ MOLTRES -> Anzu / Anzhu (sumerian), fire breathing
 
 ===
 2(water), 
@@ -114,7 +114,7 @@ PIDGEY, -> Tsikavat
 PIDGEOTTO, -> Munhin
 PIDGEOT, ->   Hughin    
 RATTATA, 
-RATICATE, -> Ratatask
+RATICATE, -> Ratatosk
 SPEAROW, -> Stratim
 FEAROW, -> Navke
 
@@ -217,38 +217,38 @@ SNORLAX,
 ===
 8(psychic), 
 ===
-ABRA, -> Vukodlak / Vukie
+ABRA, -> Vukodlak / Vuk
 KADABRA, -> Chernobog / bog
 ALAKAZAM, -> Djinn -> Jin
 
-GASTLY, -> BooMan
+GASTLY, -> Boogeyman
 HAUNTER, -> Banshee/ Sheendel
 GENGAR, -> Mare/NytMare
 
 DROWZEE, -> Incubus/ incu
 HYPNO, -> Succubus/ succu
 
-EXEGGCUTE, -> Dulahann
-EXEGGUTOR, -> Oni (japanese) 
+EXEGGCUTE, -> Gan Ceann/ Gancean (celtic) headless death bringer
+EXEGGUTOR, -> Oni / Onee (japanese) 
 
 JYNX -> Likho / Likh
 
 DRATINI, -> Zamey
 DRAGONAIR, -> Ashdaya
-DRAGONITE, 
+DRAGONITE, -> Fafnir , dragon of gold / norse
 
-MEWTWO, 
-MEW 
+MEWTWO, -> Baba Yaga
+MEW -> Baba Roga
 
 ===
 9(ditto), 
 ===
-DITTO
+DITTO -> Doppelganger / doppel, harbinger of bad luck
 
 ===
 10(eevee)
 ===
-EEVEE
+EEVEE -> Fenrir
 
 
 ===
@@ -300,16 +300,14 @@ Dulahann -> death / EXEGGCUTE
 
 selkie -> sellfie -> (water) - seel / DEWGONG
 
-incubus -> nft
-
 
 Nuckelavees  - Nokk - sea demon -> kabuto/KABUTOPS
 
 
 (slavic)
 
-Baba Yaga - Babi Yaga -> NFT
-Baba Roga - Babi Roga -> NFT
+Baba Yaga - Babi Yaga -> mewtwo
+Baba Roga - Babi Roga -> mew
 
 Alkonost -> Alkonostra -> Articuno (ice/bird)
 
