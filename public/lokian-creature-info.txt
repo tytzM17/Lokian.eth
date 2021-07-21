@@ -32,7 +32,7 @@ TANGELA, -> Umibozu
 		 
  MAGMAR -> Caorthannach 
 		 
- FLAREON -> Besh
+ FLAREON -> Bes / Besh
 		 
  MOLTRES -> Anzu / Anzhu (sumerian), fire breathing
 
@@ -61,7 +61,7 @@ TANGELA, -> Umibozu
  DEWGONG, -> Rusalka
  
  // shell
- SHELLDER, -> Shankha Queen (hindu )
+ SHELLDER, -> Shankha Prince (hindu )
  CLOYSTER, -> Triton (greek)
  
  // crab
@@ -83,7 +83,7 @@ TANGELA, -> Umibozu
  GYARADOS, -> Jormingand/ Jormi
  LAPRAS,  -> Leviathan / Levi
  
- VAPOREON -> Fossegrim
+ VAPOREON -> Fossegrim/ Nixie
  
  // molusk
  OMANYTE, -> Luska
@@ -114,7 +114,7 @@ VENOMOTH,
 
 PINSIR
 
-SCYTHER -> (egyptian, Khepri -> beetle sun god related)
+SCYTHER -> Khepri -> (egyptian, beetle sun god related)
 
 ===
 4(normal), 
@@ -134,6 +134,7 @@ NIDOQUEEN,
 NIDORAN_M, 
 NIDORINO, 
 NIDOKING, 
+
 CLEFAIRY, -> Vila
 CLEFABLE, -> Huldra
 		 
