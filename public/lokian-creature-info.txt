@@ -39,52 +39,61 @@ TANGELA, -> Umibozu
 ===
 2(water), 
 ===
- SQUIRTLE, -> Vodyanoy
- WARTORTLE, -> Ondine/ Undine
- BLASTOISE, 
+ SQUIRTLE, -> Fastitocalon
+ WARTORTLE, -> Aspidochelone
+ BLASTOISE, -> Zaratan
 
- PSYDUCK, (psychic?) -> rusalka
+ PSYDUCK, -> Nakki
  GOLDUCK, -> kappa
  
- POLIWAG, 
- POLIWHIRL,
- POLIWRATH, 
+ // beaver
+ POLIWAG, -> Vodyanoy / Vodya
+ POLIWHIRL, -> Undine /Undina
+ POLIWRATH, -> Melusine / Melusina
  
  TENTACOOL, Bukavak
  TENTACRUEL, - krakken
  
- SLOWPOKE, 
- SLOWBRO, 
+ SLOWPOKE, -> Scylla
+ SLOWBRO, -> Charybdis
  
  SEEL, -> Selkie
- DEWGONG, 
+ DEWGONG, -> Rusalka
  
- SHELLDER, 
- CLOYSTER, 
+ // shell
+ SHELLDER, -> Shankha Queen (hindu )
+ CLOYSTER, -> Triton (greek)
  
- KRABBY, 
- KINGLER, 
+ // crab
+ KRABBY, -> Cancerous (greek, cancer)
+ KINGLER, -> Karkinos (greek)
  
  HORSEA, -> Kelpie
- SEADRA, 
+ SEADRA, -> Makara (india), elephant+fish
  
- GOLDEEN, 
- SEAKING, 
+ // goldfish
+ GOLDEEN, -> Morgens / Morgeen
+ SEAKING, -> Merrow / Merrowking
  
- STARYU, 
- STARMIE, 
+ // starfish
+ STARYU, -> Naiad
+ STARMIE, -> Nereid
  
- MAGIKARP, 
- GYARADOS, -> Jormingand
- LAPRAS,  -> Leviathan
+ MAGIKARP, Lochness / Nessy
+ GYARADOS, -> Jormingand/ Jormi
+ LAPRAS,  -> Leviathan / Levi
  
- VAPOREON -> Fossgrim
+ VAPOREON -> Fossegrim
  
- OMANYTE, 
- OMASTAR,
- KABUTO, -> Nuckelavees / Nokk
- KABUTOPS, 
+ // molusk
+ OMANYTE, -> Luska
+ OMASTAR, -> Tiamat
+
+// prawn/ lobster
+ KABUTO, -> Kheperking (egyptian, beetle)
+ KABUTOPS, -> Kaggen (san people god)
  
+ // ice/ fish/ fly
  ARTICUNO -> Alkonost
 
 
@@ -121,6 +130,7 @@ FEAROW, -> Navke
 NIDORAN_F, 
 NIDORINA, 
 NIDOQUEEN, 
+
 NIDORAN_M, 
 NIDORINO, 
 NIDOKING, 
