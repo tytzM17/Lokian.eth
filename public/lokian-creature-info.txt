@@ -18,7 +18,7 @@ TANGELA, -> Umibozu
 1(fire), 
 ===
  CHARMANDER, -> Santelmo
- CHARMELEON, -> Hellhound
+ CHARMELEON, -> Hellhound/ Cerberus
  CHARIZARD, -> Efreet
 		 
  VULPIX, --> Chimera
@@ -57,15 +57,15 @@ TANGELA, -> Umibozu
  SLOWPOKE, -> Scylla
  SLOWBRO, -> Charybdis
  
- SEEL, -> Selkie
+ SEEL, -> Selkie / Seelkie
  DEWGONG, -> Rusalka
  
  // shell
- SHELLDER, -> Shankha Prince (hindu )
+ SHELLDER, -> Nixie or Shankha Prince (hindu )
  CLOYSTER, -> Triton (greek)
  
  // crab
- KRABBY, -> Cancerous (greek, cancer)
+ KRABBY, -> Cancer/ Cancerous (greek, cancer)
  KINGLER, -> Karkinos (greek)
  
  HORSEA, -> Kelpie
@@ -83,15 +83,15 @@ TANGELA, -> Umibozu
  GYARADOS, -> Jormingand/ Jormi
  LAPRAS,  -> Leviathan / Levi
  
- VAPOREON -> Fossegrim/ Nixie
+ VAPOREON -> Fossegrim
  
  // molusk
  OMANYTE, -> Luska
- OMASTAR, -> Tiamat
+ OMASTAR, -> Hydra
 
 // prawn/ lobster
- KABUTO, -> Kheperking (egyptian, beetle)
- KABUTOPS, -> Kaggen (san people god)
+ KABUTO, ->  Afanc / fanky  (Kheperking (egyptian, beetle), move to bug )
+ KABUTOPS, -> Cetus  / Cety (Kaggen (san people god), move to bug )
  
  // ice/ fish/ fly
  ARTICUNO -> Alkonost
