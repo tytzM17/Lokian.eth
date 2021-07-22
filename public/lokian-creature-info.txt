@@ -156,7 +156,7 @@ MACHOKE, -> Trol
 MACHAMP, -> Yotun
 
 FARFETCH_D, -> Hraesvelgr (norse) giant shapeshift to eagle
-DODUO, -> Vedfolnir (norse) asgardian bird
+DODUO, -> Berunda (hindu 2 headed)
 DODRIO, -> Cockatrice (greek) 
 
 HITMONLEE, -> Yeren (ch)
@@ -173,8 +173,8 @@ TAUROS -> Audumbal
 
 PORYGON -> Tsukumogami (jp) -> tools that have acquired a kami or spirit
 
-AERODACTYL, 
-SNORLAX, 
+AERODACTYL, -> Vedfolnir (norse) asgardian bird
+SNORLAX, -> Baku (jp, devours nightmares)
 
 ===
 5(poison), 
