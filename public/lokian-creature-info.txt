@@ -61,8 +61,8 @@ TANGELA, -> Umibozu
  DEWGONG, -> Rusalka
  
  // shell
- SHELLDER, -> Nixie or Shankha Prince (hindu )
- CLOYSTER, -> Triton (greek)
+ SHELLDER, -> Carbuncle
+ CLOYSTER, -> Shen (ch) clam monster
  
  // crab
  KRABBY, -> Cancer/ Cancerous (greek, cancer)
@@ -91,7 +91,7 @@ TANGELA, -> Umibozu
 
 // prawn/ lobster
  KABUTO, ->  Afanc / fanky  (Kheperking (egyptian, beetle), move to bug )
- KABUTOPS, -> Cetus  / Cety (Kaggen (san people god), move to bug )
+ KABUTOPS, -> Cetus  / Cety 
  
  // ice/ fish/ fly
  ARTICUNO -> Alkonost
@@ -100,19 +100,21 @@ TANGELA, -> Umibozu
 ===
 3(bug), 
 ===
-CATERPIE,
-METAPOD, 
-BUTTERFREE,       
-WEEDLE, 
-KAKUNA, 
-BEEDRILL, 
+CATERPIE, -> arachne (greek) weaver turned to spider
+METAPOD, ->  Jorogumo (japanese) ghost woman spider
+BUTTERFREE, -> Tsuchigumo (jp) shapeshifting gian spider
 
-PARAS, 
-PARASECT, 
-VENONAT,
-VENOMOTH, 
+WEEDLE, -> Pabilsag (babylonian) scorpion centaur
+KAKUNA, -> Girtablilu (scorpion men, half-human , half scorpion)
+BEEDRILL, -> Selket (egyptian, scorpion death/healing goddess)
 
-PINSIR
+PARAS, -> Myrmecoleon
+PARASECT, -> Myrmidons 
+
+VENONAT, -> Mothman
+VENOMOTH, -> Moth king 
+
+PINSIR -> Kaggen (san people god),
 
 SCYTHER -> Khepri -> (egyptian, beetle sun god related)
 
@@ -121,53 +123,55 @@ SCYTHER -> Khepri -> (egyptian, beetle sun god related)
 ===
 PIDGEY, -> Tsikavat
 PIDGEOTTO, -> Munhin
-PIDGEOT, ->   Hughin    
-RATTATA, 
+PIDGEOT, ->   Hughin 
+
+RATTATA, -> Azban (canada)
 RATICATE, -> Ratatosk
+
 SPEAROW, -> Stratim
 FEAROW, -> Navke
 
-NIDORAN_F, 
-NIDORINA, 
-NIDOQUEEN, 
+NIDORAN_F, -> Wolpertinger (germany)
+NIDORINA, -> Ramidreju (spain, long weasel mythical Creatures)
+NIDOQUEEN, -> Echinemon (egyptian mongoose , fights dragon/snakes )
 
-NIDORAN_M, 
-NIDORINO, 
-NIDOKING, 
+NIDORAN_M, -> Mujina (jp badger/dog yokai shapeshifter)
+NIDORINO, -> Kamaitachi (jp yokai cuts people riding in the wind)
+NIDOKING, ->  Lavellan (scottish), poisonous large rodent
 
 CLEFAIRY, -> Vila
 CLEFABLE, -> Huldra
 		 
-JIGGLYPUFF, -> 
-WIGGLYTUFF, 
+JIGGLYPUFF, -> Nacken / Nixie
+WIGGLYTUFF, -> Tuatha de danann / Tuathan
 
-MEOWTH, 
-PERSIAN, 
+MEOWTH, -> Cait Sidhe / Cait Sith (celt)
+PERSIAN, -> Cath Balug (celt)
 
-MANKEY, 
-PRIMEAPE, 
+MANKEY, -> Satori (jp)
+PRIMEAPE, -> Shojo (jp)
 
 MACHOP, -> Bauk
 MACHOKE, -> Trol
 MACHAMP, -> Yotun
 
-FARFETCH_D, 
-DODUO, 
-DODRIO, 
+FARFETCH_D, -> Hraesvelgr (norse) giant shapeshift to eagle
+DODUO, -> Vedfolnir (norse) asgardian bird
+DODRIO, -> Cockatrice (greek) 
 
-HITMONLEE, 
-HITMONCHAN, 
-LICKITUNG, 
+HITMONLEE, -> Yeren (ch)
+HITMONCHAN, -> Yeti
+LICKITUNG, -> Yowie
 
-CHANSEY, 
+CHANSEY, -> Caladrius (roman )(healer bird)
 
-KANGASKHAN, 
+KANGASKHAN, -> Callisto (greek)
 
-MR_MIME
+MR_MIME -> Pixiu (ch) winged lions protects feng shui men
 
 TAUROS -> Audumbal
 
-PORYGON
+PORYGON -> Tsukumogami (jp) -> tools that have acquired a kami or spirit
 
 AERODACTYL, 
 SNORLAX, 
