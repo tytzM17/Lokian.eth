@@ -179,14 +179,14 @@ SNORLAX, -> Baku (jp, devours nightmares)
 ===
 5(poison), 
 ===
- EKANS,
+ EKANS, -> Basilisk
  ARBOK, -> Nidhog 
 		 
  ZUBAT, -> Minyades (greek)
  GOLBAT, -> Chupacabra / Camazotz (latin america)
 		 
- GRIMER, 
- MUK, 
+ GRIMER, Tarasque (French), dragon like, poison breath
+ MUK, -> Meretseger (egyptian)
 		 
  KOFFING, -> Nezhit
  WEEZING, -> Chuma
@@ -194,18 +194,18 @@ SNORLAX, -> Baku (jp, devours nightmares)
 ===
 6(thunder), 
 ===
- PIKACHU, 
- RAICHU, -> Raijuu/ Raij
+ PIKACHU, -> Raiju (lightning god's pet)
+ RAICHU, -> Raijin (lightning god)
 		 
- MAGNEMITE, 
- MAGNETON, 
+ MAGNEMITE, -> Brontes (cyclops)
+ MAGNETON, -> Arges (cyclops)
 
- VOLTORB,
- ELECTRODE, 
+ VOLTORB, -> Druk,  (Bhutanese), thunder dragon
+ ELECTRODE, -> Shenlong (ch) thunder dragon god
 		 
- ELECTABUZZ
+ ELECTABUZZ -> Kitsune (jp)
 		 
- JOLTEON
+ JOLTEON -> Valkyrie / Valkyrian (norse)
 		 
  ZAPDOS -> Quetzalcoatl/ Quetz -> (latin america)
 
