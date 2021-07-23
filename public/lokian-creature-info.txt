@@ -1,16 +1,16 @@
 0(plant), 
 ===
-BULBASAUR, -> Leshy
-IVYSAUR, -> Dryad
-VENUSAUR, -> Wendigo
+BULBASAUR, -> Dryad
+IVYSAUR, -> HamaDryad
+VENUSAUR, -> Leshy
 
 ODDISH, -> Curupira
-GLOOM, -> Dingonek
-VILEPLUME, -> Mapinguari
+GLOOM, -> Penghou
+VILEPLUME, -> Ghillie Dhu
 
-BELLSPROUT, -> Saci
-WEEPINBELL, -> Manticore
-VICTREEBEL, -> Gnome
+BELLSPROUT, -> Spriggan
+WEEPINBELL, -> Jubokko
+VICTREEBEL, -> Kodama (tree)
 		 
 TANGELA, -> Umibozu
 
@@ -27,12 +27,12 @@ TANGELA, -> Umibozu
  GROWLITHE,  -> Skohl
  ARCANINE,  -> Haet
 		 
- PONYTA, -> Todorats
- RAPIDASH, -> Sleipnir/ Slipneir
+ PONYTA, -> Sleipnir/ Slipneir
+ RAPIDASH, -> Todorats
 		 
  MAGMAR -> Caorthannach 
 		 
- FLAREON -> Bes / Besh
+ FLAREON -> Basan (jp fire breathing)
 		 
  MOLTRES -> Anzu / Anzhu (sumerian), fire breathing
 
@@ -51,8 +51,8 @@ TANGELA, -> Umibozu
  POLIWHIRL, -> Undine /Undina
  POLIWRATH, -> Melusine / Melusina
  
- TENTACOOL, Bukavak
- TENTACRUEL, - krakken
+ TENTACOOL, -> Bukavak
+ TENTACRUEL, -> krakken
  
  SLOWPOKE, -> Scylla
  SLOWBRO, -> Charybdis
@@ -100,7 +100,7 @@ TANGELA, -> Umibozu
 ===
 3(bug), 
 ===
-CATERPIE, -> arachne (greek) weaver turned to spider
+CATERPIE, -> Arachne (greek) weaver turned to spider
 METAPOD, ->  Jorogumo (japanese) ghost woman spider
 BUTTERFREE, -> Tsuchigumo (jp) shapeshifting gian spider
 
@@ -121,9 +121,9 @@ SCYTHER -> Khepri -> (egyptian, beetle sun god related)
 ===
 4(normal), 
 ===
-PIDGEY, -> Tsikavat
-PIDGEOTTO, -> Munhin
-PIDGEOT, ->   Hughin 
+PIDGEY, -> Tsikavats
+PIDGEOTTO, -> Munnin
+PIDGEOT, ->   Huginn 
 
 RATTATA, -> Azban (canada)
 RATICATE, -> Ratatosk
@@ -152,7 +152,7 @@ MANKEY, -> Satori (jp)
 PRIMEAPE, -> Shojo (jp)
 
 MACHOP, -> Bauk
-MACHOKE, -> Trol
+MACHOKE, -> Troll
 MACHAMP, -> Yotun
 
 FARFETCH_D, -> Hraesvelgr (norse) giant shapeshift to eagle
@@ -183,9 +183,9 @@ SNORLAX, -> Baku (jp, devours nightmares)
  ARBOK, -> Nidhog 
 		 
  ZUBAT, -> Minyades (greek)
- GOLBAT, -> Chupacabra / Camazotz (latin america)
+ GOLBAT, -> Camazotz (latin america)
 		 
- GRIMER, Tarasque (French), dragon like, poison breath
+ GRIMER, -> Tarasque (French), dragon like, poison breath
  MUK, -> Meretseger (egyptian)
 		 
  KOFFING, -> Nezhit
@@ -246,7 +246,7 @@ HYPNO, -> Succubus/ succu
 EXEGGCUTE, -> Gan Ceann/ Gancean (celtic) headless death bringer
 EXEGGUTOR, -> Oni / Onee (japanese) 
 
-JYNX -> Likho / Likh
+JYNX -> Likho
 
 DRATINI, -> Zamey
 DRAGONAIR, -> Ashdaya
