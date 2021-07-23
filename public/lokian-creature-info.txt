@@ -179,7 +179,7 @@ SNORLAX, -> Baku (jp, devours nightmares)
 ===
 5(poison), 
 ===
- EKANS, -> Basilisk
+ EKANS, -> Apophis (eqgyptian god of destruction)
  ARBOK, -> Nidhog 
 		 
  ZUBAT, -> Minyades (greek)
@@ -212,23 +212,23 @@ SNORLAX, -> Baku (jp, devours nightmares)
 ===
 7(earth), 
 ===
- SANDSHREW, 
- SANDSLASH, 
+ SANDSHREW, -> Amphivena
+ SANDSLASH, -> Basilisk
 		 
- DIGLETT, 
- DUGTRIO,
+ DIGLETT, -> Grootslang
+ DUGTRIO, -> Yaoguai
 		 
- GEODUDE, 
- GRAVELER, 
- GOLEM, 
+ GEODUDE, -> Clayboy (yiddish, slavic)
+ GRAVELER, -> Met (Hebrew, death)
+ GOLEM, -> Emet (Hebrew, truth)
 		 
- ONIX, 
+ ONIX, -> Dilong (ch earth dragon)
 
- CUBONE,
- MAROWAK, 
+ CUBONE, -> Tairanohone (jp, bones of taira)
+ MAROWAK, -> Gashadokuro (jp, giant bones conjurred)
 		 
- RHYHORN, 
- RHYDON,
+ RHYHORN, -> Garganta (esp, portu)
+ RHYDON, -> Gargoyle (eng, French) 
 ===
 8(psychic), 
 ===
