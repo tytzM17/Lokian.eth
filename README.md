@@ -31,9 +31,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Remaining Tasks
 
+Finished
 - Change naming e.g. cryptoMons to creatures..ok..6/28
 - Change to 8bit theme for ui..ok..07/02
 - Fix ui responsiveness and css, etc..ok..07/14
+
+Ongoing
 - Change creature names and artwork from cryptomons to mythical creatures.. (mvp)
 - Improve or re-design breeding function, add generate creature as nft (mvp)
 - Improve or re-design fighting function, with erc20 betting, arena type, fees, etc (mvp)

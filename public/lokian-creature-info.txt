@@ -1,8 +1,8 @@
 0(plant), 
 ===
-BULBASAUR, -> Dryad
-IVYSAUR, -> HamaDryad
-VENUSAUR, -> Leshy
+BULBASAUR, -> Dryad...art ok
+IVYSAUR, -> HamaDryad...art ok
+VENUSAUR, -> Leshy...art ok
 
 ODDISH, -> Curupira
 GLOOM, -> Penghou
@@ -189,7 +189,7 @@ SNORLAX, -> Baku (jp, devours nightmares)
  MUK, -> Meretseger (egyptian)
 		 
  KOFFING, -> Nezhit
- WEEZING, -> Chuma
+ WEEZING, -> Chuma --> art ok
 
 ===
 6(thunder), 
