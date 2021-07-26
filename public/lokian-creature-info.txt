@@ -4,12 +4,12 @@ BULBASAUR, -> Dryad...art ok
 IVYSAUR, -> HamaDryad...art ok
 VENUSAUR, -> Leshy...art ok
 
-ODDISH, -> Curupira
-GLOOM, -> Penghou
-VILEPLUME, -> Ghillie Dhu
+ODDISH, -> Curupira...art ok
+GLOOM, -> Penghou...art ok
+VILEPLUME, -> Ghillie Dhu...art ok
 
-BELLSPROUT, -> Spriggan
-WEEPINBELL, -> Jubokko
+BELLSPROUT, -> Spriggan ...art ok
+WEEPINBELL, -> Jubokko 
 VICTREEBEL, -> Kodama (tree)
 		 
 TANGELA, -> Umibozu
