@@ -17,9 +17,9 @@ TANGELA, -> Umibozu ...art ok
 ===
 1(fire), 
 ===
- CHARMANDER, -> Santelmo
- CHARMELEON, -> Hellhound/ Cerberus
- CHARIZARD, -> Efreet
+ CHARMANDER, -> Santelmo ...art ok
+ CHARMELEON, -> Hellhound/ Cerberus ...art ok
+ CHARIZARD, -> Efreet ...art ok
 		 
  VULPIX, --> Chimera
  NINETALES, --> Kyuubi
