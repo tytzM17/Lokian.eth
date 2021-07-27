@@ -21,8 +21,8 @@ TANGELA, -> Umibozu ...art ok
  CHARMELEON, -> Hellhound/ Cerberus ...art ok
  CHARIZARD, -> Efreet ...art ok
 		 
- VULPIX, --> Chimera
- NINETALES, --> Kyuubi
+ VULPIX, --> Chimera ...art ok
+ NINETALES, --> Kyuubi 
 
  GROWLITHE,  -> Skohl
  ARCANINE,  -> Haet
