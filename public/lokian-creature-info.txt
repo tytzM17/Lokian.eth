@@ -9,10 +9,10 @@ GLOOM, -> Penghou...art ok
 VILEPLUME, -> Ghillie Dhu...art ok
 
 BELLSPROUT, -> Spriggan ...art ok
-WEEPINBELL, -> Jubokko 
-VICTREEBEL, -> Kodama (tree)
+WEEPINBELL, -> Jubokko ...art ok
+VICTREEBEL, -> Kodama (tree) ...art ok
 		 
-TANGELA, -> Umibozu
+TANGELA, -> Umibozu ...art ok
 
 ===
 1(fire), 
