@@ -22,13 +22,13 @@ TANGELA, -> Umibozu ...art ok
  CHARIZARD, -> Efreet ...art ok
 		 
  VULPIX, --> Chimera ...art ok
- NINETALES, --> Kyuubi 
+ NINETALES, --> Kyuubi ...art ok
 
- GROWLITHE,  -> Skohl
- ARCANINE,  -> Haet
+ GROWLITHE,  -> Skohl ...art
+ ARCANINE,  -> Haet ..art ok
 		 
- PONYTA, -> Sleipnir/ Slipneir
- RAPIDASH, -> Todorats
+ PONYTA, -> Sleipnir/ Slipneir ...art ok
+ RAPIDASH, -> Todorats ...art ok
 		 
  MAGMAR -> Caorthannach 
 		 
