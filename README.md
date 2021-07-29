@@ -41,12 +41,12 @@ Ongoing
 - Improve or re-design breeding function, add generate creature as nft (mvp)
 - Improve or re-design fighting function, with erc20 betting, arena type, fees, etc (mvp)
 - Add token or erc20, tokenomics, for buying cards, staking, farming, etc (mvp)
-- Add super litepaper (mvp)
+- Add super litepaper or landing page (mvp)
 
 - Deploy to matic, bsc, moonbeam or ethereum compatible test networks
 - Deploy to matic, bsc, moonbeam or ethereum compatible main networks
 
-- Add defi or yield farming, then rewards token will be used in buying cards, etc (feature)
+- Add defi or yield farming or partner with defi/swap, then rewards token will be used in buying cards, etc (feature)
 - Add nft or erc721, with threejs or 3d art as a rare card, add nft trading (feature)
 - Add mini game with token and nfts as currencies (feature)
 

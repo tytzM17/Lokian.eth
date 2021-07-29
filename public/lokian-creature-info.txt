@@ -30,11 +30,11 @@ TANGELA, -> Umibozu ...art ok
  PONYTA, -> Sleipnir/ Slipneir ...art ok
  RAPIDASH, -> Todorats ...art ok
 		 
- MAGMAR -> Caorthannach 
+ MAGMAR -> Caorthannach ...art ok
 		 
- FLAREON -> Basan (jp fire breathing)
+ FLAREON -> Basan (jp fire breathing) ...art ok
 		 
- MOLTRES -> Anzu / Anzhu (sumerian), fire breathing
+ MOLTRES -> Anzu / Anzhu (sumerian), fire breathing ...art ok
 
 ===
 2(water), 
@@ -264,6 +264,51 @@ DITTO -> Doppelganger / doppel, harbinger of bad luck
 10(eevee)
 ===
 EEVEE -> Skvader (swedish fictional creature)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ===
