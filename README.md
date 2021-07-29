@@ -46,6 +46,7 @@ Ongoing
 - Deploy to matic, bsc, moonbeam or ethereum compatible test networks
 - Deploy to matic, bsc, moonbeam or ethereum compatible main networks
 
+- Add simple interest/staking, e.g. deposit usdc earn erc20s, dai->erc20, etc., erc20->erc20s
 - Add defi or yield farming or partner with defi/swap, then rewards token will be used in buying cards, etc (feature)
 - Add nft or erc721, with threejs or 3d art as a rare card, add nft trading (feature)
 - Add mini game with token and nfts as currencies (feature)

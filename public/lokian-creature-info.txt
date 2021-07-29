@@ -39,8 +39,8 @@ TANGELA, -> Umibozu ...art ok
 ===
 2(water), 
 ===
- SQUIRTLE, -> Fastitocalon
- WARTORTLE, -> Aspidochelone
+ SQUIRTLE, -> Fastitocalon ...art ok
+ WARTORTLE, -> Aspidochelone ...art ok
  BLASTOISE, -> Zaratan
 
  PSYDUCK, -> Nakki
