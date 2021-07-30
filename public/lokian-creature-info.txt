@@ -41,17 +41,17 @@ TANGELA, -> Umibozu ...art ok
 ===
  SQUIRTLE, -> Fastitocalon ...art ok
  WARTORTLE, -> Aspidochelone ...art ok
- BLASTOISE, -> Zaratan
+ BLASTOISE, -> Zaratan ...art ok
 
- PSYDUCK, -> Nakki
- GOLDUCK, -> kappa
+ PSYDUCK, -> Nakki ..art ok
+ GOLDUCK, -> kappa ...art ok
  
  // beaver
- POLIWAG, -> Vodyanoy / Vodya
- POLIWHIRL, -> Undine /Undina
- POLIWRATH, -> Melusine / Melusina
+ POLIWAG, -> Vodyanoy / Vodya ..art ok
+ POLIWHIRL, -> Undine /Undina ..art ok
+ POLIWRATH, -> Melusine / Melusina ..art ok
  
- TENTACOOL, -> Bukavak
+ TENTACOOL, -> Bukavak ...art ok
  TENTACRUEL, -> krakken
  
  SLOWPOKE, -> Scylla
