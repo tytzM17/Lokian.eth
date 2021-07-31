@@ -52,12 +52,12 @@ TANGELA, -> Umibozu ...art ok
  POLIWRATH, -> Melusine / Melusina ..art ok
  
  TENTACOOL, -> Bukavak ...art ok
- TENTACRUEL, -> krakken
+ TENTACRUEL, -> krakken ...art ok
  
- SLOWPOKE, -> Scylla
- SLOWBRO, -> Charybdis
+ SLOWPOKE, -> Scylla ...art ok
+ SLOWBRO, -> Charybdis ...art ok
  
- SEEL, -> Selkie / Seelkie
+ SEEL, -> Selkie / Seelkie ..art ok
  DEWGONG, -> Rusalka
  
  // shell
