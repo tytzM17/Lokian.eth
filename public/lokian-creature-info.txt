@@ -58,21 +58,21 @@ TANGELA, -> Umibozu ...art ok
  SLOWBRO, -> Charybdis ...art ok
  
  SEEL, -> Selkie / Seelkie ..art ok
- DEWGONG, -> Rusalka
+ DEWGONG, -> Rusalka ..art ok
  
  // shell
- SHELLDER, -> Carbuncle
- CLOYSTER, -> Shen (ch) clam monster
+ SHELLDER, -> Carbuncle ..art ok
+ CLOYSTER, -> Shen (ch) clam monster  ..art ok
  
  // crab
- KRABBY, -> Cancer/ Cancerous (greek, cancer)
- KINGLER, -> Karkinos (greek)
+ KRABBY, -> Cancer/ Cancerous (greek, cancer) ..art ok
+ KINGLER, -> Karkinos (greek) ..art ok
  
- HORSEA, -> Kelpie
- SEADRA, -> Makara (india), elephant+fish
+ HORSEA, -> Kelpie ..art ok
+ SEADRA, -> Makara (india), elephant+fish ..art ok
  
  // goldfish
- GOLDEEN, -> Morgens / Morgeen
+ GOLDEEN, -> Morgens / Morgeen ..art ok
  SEAKING, -> Merrow / Merrowking
  
  // starfish
