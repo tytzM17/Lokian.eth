@@ -38,15 +38,15 @@ Finished
 
 Ongoing
 - Change creature names and artwork from cryptomons to mythical creatures.. (mvp)
-- Review breeding function, take fee (0.05%) (mvp)
+- Review breeding function, take fee ($0.001 worth) (mvp)
 - Review fighting function, make a pvp (e.g. a duel room), add bet, take fee (0.1%) from winner (mvp)
-- Add token or erc20, for buying, selling of cards, 149million capped (8% dev fund, 5% marketing, 5% infrastructure costs, 12% game rewards) (mvp)
+- Add token or erc20, for buying, selling of cards, 149million capped (8% dev fund, 5% marketing, 5% infrastructure costs, 12% game rewards, all of these are contract locked) (mvp)
 
 - Deploy to matic, bsc, moonbeam or ethereum compatible test networks
 - Deploy to matic, bsc, moonbeam or ethereum compatible main networks
 
 Future Plan
-- Add 12hr timelock contract, other security practices.
 - Add staking, e.g. deposit usdc earn erc20s, dai->erc20, etc., erc20->erc20s
-- Add mini game (e.g. mini pet sim, mini pet adventure, etc), take entrance fee($2 worth of erc20),  untill 10% rewards are exhausted (feature)
+- Add 12hr timelock contract, other security practices, if we add defi or yield farm.
+- Add mini game (e.g. mini pet sim, mini pet rpg, etc), take entrance fee($2 worth of erc20),  untill 10% rewards are exhausted (feature)
 

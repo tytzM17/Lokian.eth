@@ -73,21 +73,21 @@ TANGELA, -> Umibozu ...art ok
  
  // goldfish
  GOLDEEN, -> Morgens / Morgeen ..art ok
- SEAKING, -> Merrow / Merrowking
+ SEAKING, -> Merrow / Merrowking ..art ok
  
  // starfish
- STARYU, -> Naiad
- STARMIE, -> Nereid
+ STARYU, -> Naiad ..art ok
+ STARMIE, -> Nereid ..art ok
  
- MAGIKARP, Lochness / Nessy
- GYARADOS, -> Jormingand/ Jormi
- LAPRAS,  -> Leviathan / Levi
+ MAGIKARP, Lochness / Nessy ..art ok
+ GYARADOS, -> Jormungandr ..art ok
+ LAPRAS,  -> Leviathan / Levi ..art ok
  
- VAPOREON -> Fossegrim
+ VAPOREON -> Fossegrim ..art ok
  
  // molusk
- OMANYTE, -> Luska
- OMASTAR, -> Hydra
+ OMANYTE, -> Luska ..art ok
+ OMASTAR, -> Hydra ..art ok
 
 // prawn/ lobster
  KABUTO, ->  Afanc / fanky  (Kheperking (egyptian, beetle), move to bug )
