@@ -90,19 +90,19 @@ TANGELA, -> Umibozu ...art ok
  OMASTAR, -> Hydra ..art ok
 
 // prawn/ lobster
- KABUTO, ->  Afanc / fanky  (Kheperking (egyptian, beetle), move to bug )
- KABUTOPS, -> Cetus  / Cety 
+ KABUTO, ->  Afanc / fanky  ..art ok
+ KABUTOPS, -> Cetus  / Cety ..art ok
  
  // ice/ fish/ fly
- ARTICUNO -> Alkonost
+ ARTICUNO -> Alkonost ..art ok
 
 
 ===
 3(bug), 
 ===
-CATERPIE, -> Arachne (greek) weaver turned to spider
-METAPOD, ->  Jorogumo (japanese) ghost woman spider
-BUTTERFREE, -> Tsuchigumo (jp) shapeshifting gian spider
+CATERPIE, -> Arachne (greek) weaver turned to spider ..art ok
+METAPOD, ->  Jorogumo (japanese) ghost woman spider ..art ok
+BUTTERFREE, -> Tsuchigumo (jp) shapeshifting gian spider ..art ok
 
 WEEDLE, -> Pabilsag (babylonian) scorpion centaur
 KAKUNA, -> Girtablilu (scorpion men, half-human , half scorpion)
