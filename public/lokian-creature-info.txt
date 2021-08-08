@@ -104,9 +104,9 @@ CATERPIE, -> Arachne (greek) weaver turned to spider ..art ok
 METAPOD, ->  Jorogumo (japanese) ghost woman spider ..art ok
 BUTTERFREE, -> Tsuchigumo (jp) shapeshifting gian spider ..art ok
 
-WEEDLE, -> Pabilsag (babylonian) scorpion centaur
-KAKUNA, -> Girtablilu (scorpion men, half-human , half scorpion)
-BEEDRILL, -> Selket (egyptian, scorpion death/healing goddess)
+WEEDLE, -> Pabilsag (babylonian) scorpion centaur ..art ok
+KAKUNA, -> Girtablilu (scorpion men, half-human , half scorpion) ..art ok
+BEEDRILL, -> Selket (egyptian, scorpion death/healing goddess) ..art ok
 
 PARAS, -> Myrmecoleon
 PARASECT, -> Myrmidons 
