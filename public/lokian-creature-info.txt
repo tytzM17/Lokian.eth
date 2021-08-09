@@ -108,13 +108,13 @@ WEEDLE, -> Pabilsag (babylonian) scorpion centaur ..art ok
 KAKUNA, -> Girtablilu (scorpion men, half-human , half scorpion) ..art ok
 BEEDRILL, -> Selket (egyptian, scorpion death/healing goddess) ..art ok
 
-PARAS, -> Myrmecoleon
-PARASECT, -> Myrmidons 
+PARAS, -> Myrmecoleon (ant-lion) ..art ok
+PARASECT, -> Myrmidons ..art ok
 
-VENONAT, -> Mothman
-VENOMOTH, -> Moth king 
+VENONAT, -> Mothman ..art ok
+VENOMOTH, -> Moth king ..art ok
 
-PINSIR -> Kaggen (san people god),
+PINSIR -> Kaggen (san people god), ..art ok
 
 SCYTHER -> Khepri -> (egyptian, beetle sun god related)
 
