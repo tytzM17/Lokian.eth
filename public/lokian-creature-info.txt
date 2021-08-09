@@ -116,7 +116,7 @@ VENOMOTH, -> Moth king ..art ok
 
 PINSIR -> Kaggen (san people god), ..art ok
 
-SCYTHER -> Khepri -> (egyptian, beetle sun god related)
+SCYTHER -> Khepri -> (egyptian, beetle sun god related) ..art ok
 
 ===
 4(normal), 
