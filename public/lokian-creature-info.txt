@@ -121,12 +121,12 @@ SCYTHER -> Khepri -> (egyptian, beetle sun god related) ..art ok
 ===
 4(normal), 
 ===
-PIDGEY, -> Tsikavats
-PIDGEOTTO, -> Munnin
-PIDGEOT, ->   Huginn 
+PIDGEY, -> Tsikavats ..art ok
+PIDGEOTTO, -> Munnin ..art ok
+PIDGEOT, ->   Huginn ..art ok
 
-RATTATA, -> Azban (canada)
-RATICATE, -> Ratatosk
+RATTATA, -> Azban (canada) ..art ok
+RATICATE, -> Ratatosk ...art ok
 
 SPEAROW, -> Stratim
 FEAROW, -> Navke
