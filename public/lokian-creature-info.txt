@@ -125,22 +125,22 @@ PIDGEY, -> Tsikavats ..art ok
 PIDGEOTTO, -> Munnin ..art ok
 PIDGEOT, ->   Huginn ..art ok
 
-RATTATA, -> Azban (canada) ..art ok
-RATICATE, -> Ratatosk ...art ok
+RATTATA, -> Azeban (canada) ..art ok
+RATICATE, -> Ratatoskr ...art ok
 
-SPEAROW, -> Stratim
-FEAROW, -> Navke
+SPEAROW, -> Stratim ..art ok
+FEAROW, -> Navka ..art ok
 
-NIDORAN_F, -> Wolpertinger (germany)
-NIDORINA, -> Ramidreju (spain, long weasel mythical Creatures)
-NIDOQUEEN, -> Echinemon (egyptian mongoose , fights dragon/snakes )
+NIDORAN_F, -> Wolpertinger (germany) ..art ok
+NIDORINA, -> Ramidreju (spain, long weasel mythical Creatures) ..art ok
+NIDOQUEEN, -> Echinemon (egyptian mongoose , fights dragon/snakes ) ..art ok
 
-NIDORAN_M, -> Mujina (jp badger/dog yokai shapeshifter)
-NIDORINO, -> Kamaitachi (jp yokai cuts people riding in the wind)
-NIDOKING, ->  Lavellan (scottish), poisonous large rodent
+NIDORAN_M, -> Mujina (jp badger/dog yokai shapeshifter) ..art ok
+NIDORINO, -> Kamaitachi (jp yokai cuts people riding in the wind) ..art ok
+NIDOKING, ->  Lavellan (scottish), poisonous large rodent ..art ok
 
-CLEFAIRY, -> Vila
-CLEFABLE, -> Huldra
+CLEFAIRY, -> Vila ..art ok
+CLEFABLE, -> Huldra ..art ok
 		 
 JIGGLYPUFF, -> Nacken / Nixie
 WIGGLYTUFF, -> Tuatha de danann / Tuathan
