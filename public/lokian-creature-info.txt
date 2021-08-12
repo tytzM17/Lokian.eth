@@ -142,11 +142,11 @@ NIDOKING, ->  Lavellan (scottish), poisonous large rodent ..art ok
 CLEFAIRY, -> Vila ..art ok
 CLEFABLE, -> Huldra ..art ok
 		 
-JIGGLYPUFF, -> Nacken / Nixie
-WIGGLYTUFF, -> Tuatha de danann / Tuathan
+JIGGLYPUFF, -> Nacken / Nixie ..art ok
+WIGGLYTUFF, -> Tuatha de danann / Tuathan ..art ok
 
-MEOWTH, -> Cait Sidhe / Cait Sith (celt)
-PERSIAN, -> Cath Balug (celt)
+MEOWTH, -> Cait Sidhe / Cait Sith (celt) ..art ok
+PERSIAN, -> Cath Balug (celt) ..art ok
 
 MANKEY, -> Satori (jp)
 PRIMEAPE, -> Shojo (jp)
