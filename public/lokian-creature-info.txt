@@ -148,11 +148,11 @@ WIGGLYTUFF, -> Tuatha de danann / Tuathan ..art ok
 MEOWTH, -> Cait Sidhe / Cait Sith (celt) ..art ok
 PERSIAN, -> Cath Balug (celt) ..art ok
 
-MANKEY, -> Satori (jp)
-PRIMEAPE, -> Shojo (jp)
+MANKEY, -> Satori (jp) ..art ok
+PRIMEAPE, -> Shojo (jp) ..art ok
 
-MACHOP, -> Bauk
-MACHOKE, -> Troll
+MACHOP, -> Bauk ..art ok
+MACHOKE, -> Troll ..art ok
 MACHAMP, -> Yotun
 
 FARFETCH_D, -> Hraesvelgr (norse) giant shapeshift to eagle
