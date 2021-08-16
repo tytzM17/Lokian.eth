@@ -153,15 +153,15 @@ PRIMEAPE, -> Shojo (jp) ..art ok
 
 MACHOP, -> Bauk ..art ok
 MACHOKE, -> Troll ..art ok
-MACHAMP, -> Yotun
+MACHAMP, -> Jotunn ..art ok
 
-FARFETCH_D, -> Hraesvelgr (norse) giant shapeshift to eagle
-DODUO, -> Berunda (hindu 2 headed)
-DODRIO, -> Cockatrice (greek) 
+FARFETCH_D, -> Hraesvelgr (norse) giant shapeshift to eagle  ..art ok
+DODUO, -> Berunda (hindu 2 headed) ..art ok
+DODRIO, -> Cockatrice (greek) ..art ok
 
-HITMONLEE, -> Yeren (ch)
-HITMONCHAN, -> Yeti
-LICKITUNG, -> Yowie
+HITMONLEE, -> Yeren (ch) ..art ok
+HITMONCHAN, -> Yeti ..art ok
+LICKITUNG, -> Yowie ..art ok
 
 CHANSEY, -> Caladrius (roman )(healer bird)
 
