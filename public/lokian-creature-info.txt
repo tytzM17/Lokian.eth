@@ -163,18 +163,18 @@ HITMONLEE, -> Yeren (ch) ..art ok
 HITMONCHAN, -> Yeti ..art ok
 LICKITUNG, -> Yowie ..art ok
 
-CHANSEY, -> Caladrius (roman )(healer bird)
+CHANSEY, -> Caladrius (roman )(healer bird) ..art ok
 
-KANGASKHAN, -> Callisto (greek)
+KANGASKHAN, -> Callisto (greek) ..art ok
 
-MR_MIME -> Pixiu (ch) winged lions protects feng shui men
+MR_MIME -> Pixiu (ch) winged lions protects feng shui men ..art ok
 
-TAUROS -> Audumbal
+TAUROS -> Audumbla ..art ok
 
-PORYGON -> Tsukumogami (jp) -> tools that have acquired a kami or spirit
+PORYGON -> Tsukumogami (jp) -> tools that have acquired a kami or spirit ..art ok
 
-AERODACTYL, -> Vedfolnir (norse) asgardian bird
-SNORLAX, -> Baku (jp, devours nightmares)
+AERODACTYL, -> Vedfolnir (norse) asgardian bird ..art ok
+SNORLAX, -> Baku (jp, devours nightmares) ..art ok
 
 ===
 5(poison), 
