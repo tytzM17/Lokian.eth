@@ -179,11 +179,11 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok
 ===
 5(poison), 
 ===
- EKANS, -> Apophis (eqgyptian god of destruction)
- ARBOK, -> Nidhog 
+ EKANS, -> Apophis (eqgyptian god of destruction) ..art ok
+ ARBOK, -> Nidhoggr ..art ok 
 		 
- ZUBAT, -> Minyades (greek)
- GOLBAT, -> Camazotz (latin america)
+ ZUBAT, -> Minyades (greek) ..art ok
+ GOLBAT, -> Camazotz (latin america) ..art ok
 		 
  GRIMER, -> Tarasque (French), dragon like, poison breath
  MUK, -> Meretseger (egyptian)
