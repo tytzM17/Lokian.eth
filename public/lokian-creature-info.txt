@@ -185,10 +185,10 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok
  ZUBAT, -> Minyades (greek) ..art ok
  GOLBAT, -> Camazotz (latin america) ..art ok
 		 
- GRIMER, -> Tarasque (French), dragon like, poison breath
- MUK, -> Meretseger (egyptian)
+ GRIMER, -> Tarasque (French), dragon like, poison breath ..art ok
+ MUK, -> Meretseger (egyptian) ..art ok
 		 
- KOFFING, -> Nezhit
+ KOFFING, -> Nezhit --> art ok
  WEEZING, -> Chuma --> art ok
 
 ===
