@@ -194,14 +194,14 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok
 ===
 6(thunder), 
 ===
- PIKACHU, -> Raiju (lightning god's pet)
- RAICHU, -> Raijin (lightning god)
+ PIKACHU, -> Raiju (lightning god's pet) ..art ok
+ RAICHU, -> Raijin (lightning god) ..art ok
 		 
- MAGNEMITE, -> Brontes (cyclops)
- MAGNETON, -> Arges (cyclops)
+ MAGNEMITE, -> Brontes (cyclops) ..art ok
+ MAGNETON, -> Arges (cyclops) ..art ok
 
- VOLTORB, -> Druk,  (Bhutanese), thunder dragon
- ELECTRODE, -> Shenlong (ch) thunder dragon god
+ VOLTORB, -> Druk,  (Bhutanese), thunder dragon ..art ok
+ ELECTRODE, -> Shenlong (ch) thunder dragon god ..art ok
 		 
  ELECTABUZZ -> Kitsune (jp)
 		 
@@ -212,7 +212,7 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok
 ===
 7(earth), 
 ===
- SANDSHREW, -> Amphivena
+ SANDSHREW, -> Amphivena ..art ok
  SANDSLASH, -> Basilisk
 		 
  DIGLETT, -> Grootslang
