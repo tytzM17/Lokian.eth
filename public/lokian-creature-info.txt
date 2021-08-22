@@ -203,11 +203,11 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok
  VOLTORB, -> Druk,  (Bhutanese), thunder dragon ..art ok
  ELECTRODE, -> Shenlong (ch) thunder dragon god ..art ok
 		 
- ELECTABUZZ -> Kitsune (jp)
+ ELECTABUZZ -> Kitsune (jp) ..art ok
 		 
- JOLTEON -> Valkyrie / Valkyrian (norse)
+ JOLTEON -> Valkyrie / Valkyrian (norse) ..art ok
 		 
- ZAPDOS -> Quetzalcoatl/ Quetz -> (latin america)
+ ZAPDOS -> Quetzalcoatl/ Quetz -> (latin america)  ..art ok
 
 ===
 7(earth), 
