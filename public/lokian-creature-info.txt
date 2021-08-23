@@ -213,10 +213,10 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok
 7(earth), 
 ===
  SANDSHREW, -> Amphivena ..art ok
- SANDSLASH, -> Basilisk
+ SANDSLASH, -> Basilisk ..art ok
 		 
- DIGLETT, -> Grootslang
- DUGTRIO, -> Yaoguai
+ DIGLETT, -> Grootslang ..art ok
+ DUGTRIO, -> Yaoguai ..art ok
 		 
  GEODUDE, -> Clayboy (yiddish, slavic)
  GRAVELER, -> Met (Hebrew, death)
