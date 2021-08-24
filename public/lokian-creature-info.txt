@@ -218,9 +218,9 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok
  DIGLETT, -> Grootslang ..art ok
  DUGTRIO, -> Yaoguai ..art ok
 		 
- GEODUDE, -> Clayboy (yiddish, slavic)
- GRAVELER, -> Met (Hebrew, death)
- GOLEM, -> Emet (Hebrew, truth)
+ GEODUDE, -> Clayboy (yiddish, slavic) ..art ok
+ GRAVELER, -> Met (Hebrew, death) ..art ok
+ GOLEM, -> Emet (Hebrew, truth) ..art ok
 		 
  ONIX, -> Dilong (ch earth dragon)
 
