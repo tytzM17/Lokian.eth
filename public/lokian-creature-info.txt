@@ -222,10 +222,10 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok
  GRAVELER, -> Met (Hebrew, death) ..art ok
  GOLEM, -> Emet (Hebrew, truth) ..art ok
 		 
- ONIX, -> Dilong (ch earth dragon)
+ ONIX, -> Dilong (ch earth dragon) ..art ok
 
- CUBONE, -> Tairanohone (jp, bones of taira)
- MAROWAK, -> Gashadokuro (jp, giant bones conjurred)
+ CUBONE, -> Tairanohone (jp, bones of taira) ..art ok
+ MAROWAK, -> Gashadokuro (jp, giant bones conjurred)  ..art ok
 		 
  RHYHORN, -> Garganta (esp, portu)
  RHYDON, -> Gargoyle (eng, French) 
