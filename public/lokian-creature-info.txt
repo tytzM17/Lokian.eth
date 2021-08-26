@@ -227,12 +227,12 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok
  CUBONE, -> Tairanohone (jp, bones of taira) ..art ok
  MAROWAK, -> Gashadokuro (jp, giant bones conjurred)  ..art ok
 		 
- RHYHORN, -> Garganta (esp, portu)
- RHYDON, -> Gargoyle (eng, French) 
+ RHYHORN, -> Garganta (esp, portu)/ sigbin ..art ok
+ RHYDON, -> Gargoyle (eng, French) ..art ok
 ===
 8(psychic), 
 ===
-ABRA, -> Vukodlak / Vuk
+ABRA, -> Vukodlak / Vuk ..art ok
 KADABRA, -> Chernobog / bog
 ALAKAZAM, -> Djinn -> Jin
 
