@@ -233,10 +233,10 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok
 8(psychic), 
 ===
 ABRA, -> Vukodlak / Vuk ..art ok
-KADABRA, -> Chernobog / bog
-ALAKAZAM, -> Djinn -> Jin
+KADABRA, -> Chernobog / bog ..art ok
+ALAKAZAM, -> Djinn -> Jin ..art OK
 
-GASTLY, -> Boogeyman/ Boogie
+GASTLY, -> Boogeyman/ Boogie ..art ok
 HAUNTER, -> Banshee/ Sheendel
 GENGAR, -> Mare/NytMare
 
