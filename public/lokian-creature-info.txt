@@ -237,10 +237,10 @@ KADABRA, -> Chernobog / bog ..art ok
 ALAKAZAM, -> Djinn -> Jin ..art OK
 
 GASTLY, -> Boogeyman/ Boogie ..art ok
-HAUNTER, -> Banshee/ Sheendel
-GENGAR, -> Mare/NytMare
+HAUNTER, -> Banshee/ Sheendel ..art ok
+GENGAR, -> Mare/NytMare ..art ok
 
-DROWZEE, -> Incubus/ incu
+DROWZEE, -> Incubus/ incu ..art ok
 HYPNO, -> Succubus/ succu
 
 EXEGGCUTE, -> Gan Ceann/ Gancean (celtic) headless death bringer
