@@ -241,10 +241,10 @@ HAUNTER, -> Banshee/ Sheendel ..art ok
 GENGAR, -> Mare/NytMare ..art ok
 
 DROWZEE, -> Incubus/ incu ..art ok
-HYPNO, -> Succubus/ succu
+HYPNO, -> Succubus/ succu ..art ok
 
-EXEGGCUTE, -> Gan Ceann/ Gancean (celtic) headless death bringer
-EXEGGUTOR, -> Oni / Onee (japanese) 
+EXEGGCUTE, -> Gan Ceann/ Gancean (celtic) headless death bringer ..art ok
+EXEGGUTOR, -> Oni / Onee (japanese) ..art ok
 
 JYNX -> Likho
 
