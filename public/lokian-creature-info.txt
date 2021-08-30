@@ -246,10 +246,10 @@ HYPNO, -> Succubus/ succu ..art ok
 EXEGGCUTE, -> Gan Ceann/ Gancean (celtic) headless death bringer ..art ok
 EXEGGUTOR, -> Oni / Onee (japanese) ..art ok
 
-JYNX -> Likho
+JYNX -> Likho ..art ok
 
-DRATINI, -> Zamey
-DRAGONAIR, -> Ashdaya
+DRATINI, -> Zmey ..art ok
+DRAGONAIR, -> Azhdaya ..art ok
 DRAGONITE, -> Fafnir , dragon of gold / norse
 
 MEWTWO, -> Baba Yaga
