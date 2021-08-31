@@ -250,10 +250,10 @@ JYNX -> Likho ..art ok
 
 DRATINI, -> Zmey ..art ok
 DRAGONAIR, -> Azhdaya ..art ok
-DRAGONITE, -> Fafnir , dragon of gold / norse
+DRAGONITE, -> Fafnir , dragon of gold / norse ..art ok
 
-MEWTWO, -> Baba Yaga
-MEW -> Baba Roga
+MEWTWO, -> Baba Yaga ..art ok
+MEW -> Baba Roga ..art ok
 
 ===
 9(ditto), 
