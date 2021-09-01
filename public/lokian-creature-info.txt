@@ -258,12 +258,12 @@ MEW -> Baba Roga ..art ok
 ===
 9(ditto), 
 ===
-DITTO -> Doppelganger / doppel, harbinger of bad luck
+DITTO -> Doppelganger / doppel, harbinger of bad luck ..art ok
 
 ===
 10(eevee)
 ===
-EEVEE -> Skvader (swedish fictional creature)
+EEVEE -> Skvader (swedish fictional creature) ..art ok
 
 
 
