@@ -26,8 +26,10 @@ import bg9 from './sprites/background/9.png';
 import bg10 from './sprites/background/10.png';
 
 // The contact deployment address in Etherium blockchain
+// win-10-workstation-ganache-contract-address-2
+const CONTRACT_ADDRESS = '0x034Db733A997009f15DC52bC1a988E9B6D0b9CDA';
 // win-10-workstation-ganache-contract-address
-const CONTRACT_ADDRESS = '0x373aD6Ce154C45aE99F2Fdcb61Ed02d514C9eF44'
+// const CONTRACT_ADDRESS = '0x373aD6Ce154C45aE99F2Fdcb61Ed02d514C9eF44';
 // project.sol contract address ganache
 // const CONTRACT_ADDRESS = "0x8B2d7e694398f820E038383B68341f737040bA42";
 
@@ -35,7 +37,7 @@ const CONTRACT_ADDRESS = '0x373aD6Ce154C45aE99F2Fdcb61Ed02d514C9eF44'
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
 
 // Add all 151 Cryptomon names in an array
-const names = ['Bulbasaur', 'Ivysaur', 'Venusaur', 'Charmander', 'Charmeleon', 'Charizard', 'Squirtle', 
+const names = ['Dryad', 'Hamadryad', 'Leshy', 'Charmander', 'Charmeleon', 'Charizard', 'Squirtle', 
 'Wartortle', 'Blastoise', 'Caterpie', 'Metapod', 'Butterfree', 'Weedle', 'Kakuna', 'Beedrill', 'Pidgey', 
 'Pidgeotto', 'Pidgeot', 'Rattata', 'Raticate', 'Spearow', 'Fearow', 'Ekans', 'Arbok', 'Pikachu', 'Raichu', 
 'Sandshrew', 'Sandslash', 'Nidoran_f', 'Nidorina', 'Nidoqueen', 'Nidoran_m', 'Nidorino', 'Nidoking', 

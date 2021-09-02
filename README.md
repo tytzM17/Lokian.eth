@@ -37,14 +37,18 @@ Finished
 - Fix ui responsiveness and css, etc..ok..07/14
 
 Ongoing
-- Change creature names and artwork from cryptomons to mythical creatures.. (mvp)
-- Review fighting function, improve (mvp)
+- Change creature names and artwork from cryptomons to mythical creatures (mvp)
+- Fix wallet connection, (if refreshed, wallet is not connected) (mvp)
+- Fix logo, create an 8 bit representaion of the logo (mvp)
 - Add token or erc20, for buying of cards, and fees, etc.. 
 tokenomics 100 billion capped, 45% rewards, 12% creators, 23% infrastructure,
 20% amm liquidity (mvp)
 
 - Deploy to matic, bsc, moonbeam or ethereum compatible test networks
 - Deploy to matic, bsc, moonbeam or ethereum compatible main networks
+
+- Create landing page, twitter, discord, and tg
+- Advertise, submit to dappradar, etc, 
 
 Future Plan
 - Add mini game (e.g. mini pet sim, mini pet rpg, etc), take entrance fee(erc20),  untill (25%) rewards are exhausted (feature)

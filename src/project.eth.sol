@@ -4,9 +4,9 @@ contract Cryptomons {
     // Cryptomons aka creatures, familiars, etc
     // 151 different Cryptomon species implemented and saved in the following enum variable.
      enum Species { 
-         BULBASAUR, 
-         IVYSAUR, 
-         VENUSAUR, 
+         DRYAD, 
+         HAMADRYAD, 
+         LESHY, 
          
          CHARMANDER, 
          CHARMELEON, 
