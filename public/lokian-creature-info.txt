@@ -30,7 +30,7 @@ TANGELA, -> Umibozu ...art ok
  PONYTA, -> Sleipnir/ Slipneir ...art ok
  RAPIDASH, -> Todorats ...art ok
 		 
- MAGMAR -> Caorthannach ...art ok
+ MAGMAR -> Caorthannach ...art ok ..NFT
 		 
  FLAREON -> Basan (jp fire breathing) ...art ok
 		 
@@ -73,21 +73,21 @@ TANGELA, -> Umibozu ...art ok
  
  // goldfish
  GOLDEEN, -> Morgens / Morgeen ..art ok
- SEAKING, -> Merrow / Merrowking ..art ok
+ SEAKING, -> Merrow / Merrowking ..art ok ..NFT
  
  // starfish
  STARYU, -> Naiad ..art ok
  STARMIE, -> Nereid ..art ok
  
- MAGIKARP, Lochness / Nessy ..art ok
+ MAGIKARP, Lochness / Nessy ..art ok 
  GYARADOS, -> Jormungandr ..art ok
- LAPRAS,  -> Leviathan / Levi ..art ok
+ LAPRAS,  -> Leviathan / Levi ..art ok ..NFT
  
  VAPOREON -> Fossegrim ..art ok
  
  // molusk
  OMANYTE, -> Luska ..art ok
- OMASTAR, -> Hydra ..art ok
+ OMASTAR, -> Hydra ..art ok ..NFT
 
 // prawn/ lobster
  KABUTO, ->  Afanc / fanky  ..art ok
@@ -122,10 +122,10 @@ SCYTHER -> Khepri -> (egyptian, beetle sun god related) ..art ok
 4(normal), 
 ===
 PIDGEY, -> Tsikavats ..art ok
-PIDGEOTTO, -> Munnin ..art ok
+PIDGEOTTO, -> Munnin ..art ok ..NFT
 PIDGEOT, ->   Huginn ..art ok
 
-RATTATA, -> Azeban (canada) ..art ok
+RATTATA, -> Azeban (canada) ..art ok  ...NFT?
 RATICATE, -> Ratatoskr ...art ok
 
 SPEAROW, -> Stratim ..art ok
@@ -153,7 +153,7 @@ PRIMEAPE, -> Shojo (jp) ..art ok
 
 MACHOP, -> Bauk ..art ok
 MACHOKE, -> Troll ..art ok
-MACHAMP, -> Jotunn ..art ok
+MACHAMP, -> Jotunn ..art ok  ..NFT
 
 FARFETCH_D, -> Hraesvelgr (norse) giant shapeshift to eagle  ..art ok
 DODUO, -> Berunda (hindu 2 headed) ..art ok
@@ -171,7 +171,7 @@ MR_MIME -> Pixiu (ch) winged lions protects feng shui men ..art ok
 
 TAUROS -> Audumbla ..art ok
 
-PORYGON -> Tsukumogami (jp) -> tools that have acquired a kami or spirit ..art ok
+PORYGON -> Tsukumogami (jp) -> tools that have acquired a kami or spirit ..art ok ..NFT
 
 AERODACTYL, -> Vedfolnir (norse) asgardian bird ..art ok
 SNORLAX, -> Baku (jp, devours nightmares) ..art ok
@@ -180,7 +180,7 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok
 5(poison), 
 ===
  EKANS, -> Apophis (eqgyptian god of destruction) ..art ok
- ARBOK, -> Nidhoggr ..art ok 
+ ARBOK, -> Nidhoggr ..art ok  ..NFT
 		 
  ZUBAT, -> Minyades (greek) ..art ok
  GOLBAT, -> Camazotz (latin america) ..art ok
@@ -189,23 +189,23 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok
  MUK, -> Meretseger (egyptian) ..art ok
 		 
  KOFFING, -> Nezhit --> art ok
- WEEZING, -> Chuma --> art ok
+ WEEZING, -> Chuma --> art ok ..NFT
 
 ===
 6(thunder), 
 ===
  PIKACHU, -> Raiju (lightning god's pet) ..art ok
- RAICHU, -> Raijin (lightning god) ..art ok
+ RAICHU, -> Raijin (lightning god) ..art ok ..NFT
 		 
  MAGNEMITE, -> Brontes (cyclops) ..art ok
  MAGNETON, -> Arges (cyclops) ..art ok
 
- VOLTORB, -> Druk,  (Bhutanese), thunder dragon ..art ok
- ELECTRODE, -> Shenlong (ch) thunder dragon god ..art ok
+ VOLTORB, -> Druk,  (Bhutanese), thunder dragon ..art ok ..NFT
+ ELECTRODE, -> Shenlong (ch) thunder dragon god ..art ok ..NFT
 		 
- ELECTABUZZ -> Kitsune (jp) ..art ok
+ ELECTABUZZ -> Kitsune (jp) ..art ok ..NFT?
 		 
- JOLTEON -> Valkyrie / Valkyrian (norse) ..art ok
+ JOLTEON -> Valkyrie / Valkyrian (norse) ..art ok ..NFT
 		 
  ZAPDOS -> Quetzalcoatl/ Quetz -> (latin america)  ..art ok
 
@@ -234,14 +234,14 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok
 ===
 ABRA, -> Vukodlak / Vuk ..art ok
 KADABRA, -> Chernobog / bog ..art ok
-ALAKAZAM, -> Djinn -> Jin ..art OK
+ALAKAZAM, -> Djinn -> Jin ..art OK ..NFT
 
 GASTLY, -> Boogeyman/ Boogie ..art ok
 HAUNTER, -> Banshee/ Sheendel ..art ok
 GENGAR, -> Mare/NytMare ..art ok
 
 DROWZEE, -> Incubus/ incu ..art ok
-HYPNO, -> Succubus/ succu ..art ok
+HYPNO, -> Succubus/ succu ..art ok ..NFT
 
 EXEGGCUTE, -> Gan Ceann/ Gancean (celtic) headless death bringer ..art ok
 EXEGGUTOR, -> Oni / Onee (japanese) ..art ok
@@ -250,20 +250,20 @@ JYNX -> Likho ..art ok
 
 DRATINI, -> Zmey ..art ok
 DRAGONAIR, -> Azhdaya ..art ok
-DRAGONITE, -> Fafnir , dragon of gold / norse ..art ok
+DRAGONITE, -> Fafnir , dragon of gold / norse ..art ok ..NFT
 
-MEWTWO, -> Baba Yaga ..art ok
-MEW -> Baba Roga ..art ok
+MEWTWO, -> Baba Yaga ..art ok ..NFT
+MEW -> Baba Roga ..art ok ..NFT
 
 ===
 9(ditto), 
 ===
-DITTO -> Doppelganger / doppel, harbinger of bad luck ..art ok
+DITTO -> Doppelganger / doppel, harbinger of bad luck ..art ok ..NFT
 
 ===
 10(eevee)
 ===
-EEVEE -> Skvader (swedish fictional creature) ..art ok
+EEVEE -> Skvader (swedish fictional creature) ..art ok ..NFT
 
 
 
