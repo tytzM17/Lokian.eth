@@ -43,12 +43,15 @@ Ongoing
 - Add token or erc20, for buying of cards, and fees, etc.. 
 tokenomics 100 billion capped, 45% rewards, 12% creators, 23% infrastructure,
 20% amm liquidity (mvp)
+- Add 12 NFTs, e.g. baba yaga, for $100 each, then baba-yaga and roga is $1000
+(Caorthannach, Merrowking, Leviathan, Hydra, etc) or All could be NFTs for $50 or $100, baba's are $1000 each.
+- NFT cards could be glowing aura or glowing eyes (glow color based on element type) or have some elemental aura?
 
 - Deploy to matic, bsc, moonbeam or ethereum compatible test networks
 - Deploy to matic, bsc, moonbeam or ethereum compatible main networks
 
 - Create landing page, twitter, discord, and tg
-- Advertise, submit to dappradar, etc, 
+- Advertise, submit to dappradar, coingecko, shill in tg's, etc., 
 
 Future Plan
 - Add mini game (e.g. mini pet sim, mini pet rpg, etc), take entrance fee(erc20),  untill (25%) rewards are exhausted (feature)
