@@ -2,44 +2,36 @@ pragma solidity ^0.7.4;
 
 contract Cryptomons {
     // Cryptomons aka creatures, familiars, etc
-    // 151 different Cryptomon species implemented and saved in the following enum variable.
+    // 149 different Cryptomon species implemented and saved in the following enum variable.
      enum Species { 
          DRYAD, 
          HAMADRYAD, 
-         LESHY, 
-         
+         LESHY,          
          CHARMANDER, 
          CHARMELEON, 
-         CHARIZARD, 
-         
+         CHARIZARD,         
          SQUIRTLE, 
          WARTORTLE, 
-         BLASTOISE, 
-
+         BLASTOISE,
          CATERPIE,
          METAPOD, 
          BUTTERFREE,       
          WEEDLE, 
          KAKUNA, 
          BEEDRILL, 
-
          PIDGEY, 
          PIDGEOTTO, 
          PIDGEOT,       
          RATTATA, 
          RATICATE, 
          SPEAROW, 
-         FEAROW, 
-         
+         FEAROW,        
          EKANS,
-         ARBOK, 
-         
+         ARBOK,        
          PIKACHU, 
-         RAICHU, 
-         
+         RAICHU,          
          SANDSHREW, 
-         SANDSLASH, 
-         
+         SANDSLASH,         
          NIDORAN_F, 
          NIDORINA, 
          NIDOQUEEN, 
@@ -47,176 +39,117 @@ contract Cryptomons {
          NIDORINO, 
          NIDOKING, 
          CLEFAIRY,
-         CLEFABLE, 
-         
+         CLEFABLE,          
          VULPIX, 
-         NINETALES, 
-         
+         NINETALES,          
          JIGGLYPUFF, 
-         WIGGLYTUFF, 
-         
+         WIGGLYTUFF,         
          ZUBAT, 
-         GOLBAT, 
-         
+         GOLBAT,         
          ODDISH, 
          GLOOM, 
-         VILEPLUME, 
-         
+         VILEPLUME,          
          PARAS, 
          PARASECT, 
          VENONAT,
-         VENOMOTH, 
-         
+         VENOMOTH,         
          DIGLETT, 
-         DUGTRIO, 
-         
+         DUGTRIO,         
          MEOWTH, 
-         PERSIAN, 
-         
+         PERSIAN,         
          PSYDUCK, 
-         GOLDUCK, 
-         
+         GOLDUCK,         
          MANKEY, 
-         PRIMEAPE, 
-         
+         PRIMEAPE,          
          GROWLITHE, 
-         ARCANINE, 
-         
+         ARCANINE,        
          POLIWAG, 
          POLIWHIRL,
-         POLIWRATH, 
-         
+         POLIWRATH,          
          ABRA, 
          KADABRA, 
-         ALAKAZAM, 
-         
+         ALAKAZAM,         
          MACHOP, 
          MACHOKE, 
-         MACHAMP, 
-         
+         MACHAMP,        
          BELLSPROUT, 
          WEEPINBELL, 
-         VICTREEBEL, 
-         
+         VICTREEBEL,         
          TENTACOOL, 
          TENTACRUEL,
-
          GEODUDE, 
          GRAVELER, 
-         GOLEM, 
-         
+         GOLEM,         
          PONYTA, 
-         RAPIDASH, 
-         
+         RAPIDASH,        
          SLOWPOKE, 
          SLOWBRO, 
-         
          MAGNEMITE, 
-         MAGNETON, 
-         
+         MAGNETON,        
          FARFETCH_D, 
          DODUO, 
-         DODRIO, 
-         
+         DODRIO,         
          SEEL,
-         DEWGONG, 
-         
+         DEWGONG,         
          GRIMER, 
          MUK, 
-
          SHELLDER, 
-         CLOYSTER, 
-         
+         CLOYSTER,         
          GASTLY, 
          HAUNTER, 
-         GENGAR, 
-         
-         ONIX, 
-         
+         GENGAR,         
+         ONIX,         
          DROWZEE, 
-         HYPNO, 
-         
+         HYPNO,         
          KRABBY, 
-         KINGLER, 
-         
+         KINGLER,          
          VOLTORB,
-         ELECTRODE, 
-         
+         ELECTRODE,          
          EXEGGCUTE, 
-         EXEGGUTOR, 
-         
+         EXEGGUTOR,          
          CUBONE,
          MAROWAK, 
-
          HITMONLEE, 
          HITMONCHAN, 
          LICKITUNG, 
-         
          KOFFING, 
-         WEEZING, 
-         
+         WEEZING,        
          RHYHORN, 
          RHYDON,
-
-         CHANSEY, 
-        
-         TANGELA, 
-         
+         CHANSEY,        
+         TANGELA,          
          KANGASKHAN, 
-
          HORSEA, 
-         SEADRA, 
-         
+         SEADRA,          
          GOLDEEN, 
-         SEAKING, 
-         
+         SEAKING,         
          STARYU, 
          STARMIE, 
-
-         MR_MIME, 
-         
-         SCYTHER, 
-         
+         MR_MIME,         
+         SCYTHER,        
          JYNX, 
-
-         ELECTABUZZ,
-         
-         MAGMAR, 
-         
-         PINSIR, 
-         
+         ELECTABUZZ,       
+         MAGMAR,         
+         PINSIR,       
          TAUROS, 
-
          MAGIKARP, 
          GYARADOS, 
-         LAPRAS, 
-         
-         DITTO, 
-         
+         LAPRAS,      
+         DITTO,         
          EEVEE, 
-
-         VAPOREON, 
-         
-         JOLTEON, 
-         
-         FLAREON, 
-         
+         VAPOREON,        
+         JOLTEON,      
+         FLAREON,      
          PORYGON, 
-
          OMANYTE, 
          OMASTAR,
          KABUTO, 
-         KABUTOPS, 
-         
+         KABUTOPS,         
          AERODACTYL, 
-         SNORLAX, 
-         
+         SNORLAX,      
          ARTICUNO, 
-
-         ZAPDOS, 
-         
-         MOLTRES, 
-         
+         ZAPDOS,       
+         MOLTRES,        
          DRATINI, 
          DRAGONAIR, 
          DRAGONITE, 

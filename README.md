@@ -41,11 +41,10 @@ Ongoing
 - Fix wallet connection, (if refreshed, wallet is not connected) (mvp)
 - Fix logo, create an 8 bit representaion of the logo (mvp)
 - Add token or erc20, for buying of cards, and fees, etc.. 
-tokenomics 100 billion capped, 45% rewards, 12% creators, 23% infrastructure,
+tokenomics 100 thousand/million capped, 45% rewards, 12% creators, 23% infrastructure,
 20% amm liquidity (mvp)
-- Add 12 NFTs, e.g. baba yaga, for $100 each, then baba-yaga and roga is $1000
-(Caorthannach, Merrowking, Leviathan, Hydra, etc) or All could be NFTs for $50 or $100, baba's are $1000 each.
-- NFT cards could be glowing aura or glowing eyes (glow color based on element type) or have some elemental aura?
+- All will be NFTs for $50, baba's, doppelganger and skvader are $100 each.
+- NFT cards could be glowing aura or glowing eyes (glow colors are based on element type) 
 
 - Deploy to matic, bsc, moonbeam or ethereum compatible test networks
 - Deploy to matic, bsc, moonbeam or ethereum compatible main networks

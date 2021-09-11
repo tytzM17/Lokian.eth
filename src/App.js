@@ -55,6 +55,7 @@ const names = ['Dryad', 'Hamadryad', 'Leshy', 'Charmander', 'Charmeleon', 'Chari
     'Flareon', 'Porygon', 'Omanyte', 'Omastar', 'Kabuto', 'Kabutops', 'Aerodactyl', 'Snorlax', 
     'Articuno', 'Zapdos', 'Moltres', 'Dratini', 'Dragonair', 'Dragonite', 'Mew', 'Mewtwo'];
 
+console.log('mons length:', names.length);
 
 async function getAccounts() {
   let web3 = new Web3(window.ethereum);
