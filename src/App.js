@@ -37,15 +37,15 @@ const CONTRACT_ADDRESS = '0x034Db733A997009f15DC52bC1a988E9B6D0b9CDA';
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
 
 // Add all 151 Cryptomon names in an array
-const names = ['Dryad', 'Hamadryad', 'Leshy', 'Charmander', 'Charmeleon', 'Charizard', 'Squirtle', 
-'Wartortle', 'Blastoise', 'Caterpie', 'Metapod', 'Butterfree', 'Weedle', 'Kakuna', 'Beedrill', 'Pidgey', 
-'Pidgeotto', 'Pidgeot', 'Rattata', 'Raticate', 'Spearow', 'Fearow', 'Ekans', 'Arbok', 'Pikachu', 'Raichu', 
-'Sandshrew', 'Sandslash', 'Nidoran_f', 'Nidorina', 'Nidoqueen', 'Nidoran_m', 'Nidorino', 'Nidoking', 
-'Clefairy', 'Clefable', 'Vulpix', 'Ninetales', 'Jigglypuff', 'Wigglytuff', 'Zubat', 'Golbat', 'Oddish', 
-'Gloom', 'Vileplume', 'Paras', 'Parasect', 'Venonat', 'Venomoth', 'Diglett', 'Dugtrio', 'Meowth', 'Persian',
- 'Psyduck', 'Golduck', 'Mankey', 'Primeape', 'Growlithe', 'Arcanine', 'Poliwag', 'Poliwhirl', 'Poliwrath', 
- 'Abra', 'Kadabra', 'Alakazam', 'Machop', 'Machoke', 'Machamp', 'Bellsprout', 'Weepinbell', 'Victreebel',
-  'Tentacool', 'Tentacruel', 'Geodude', 'Graveler', 'Golem', 'Ponyta', 'Rapidash', 'Slowpoke', 'Slowbro', 
+const names = ['Dryad', 'Hamadryad', 'Leshy', 'Santelmo', 'Cerberus', 'Efreet', 'Fastitocalon', 
+'Aspidochelone', 'Zaratan', 'Arachne', 'Jorogumo', 'Tsuchigumo', 'Pabilsag', 'Girtablilu', 'Selket', 'Tsikavats', 
+'Munnin', 'Huginn', 'Azeban', 'Ratatoskr', 'Stratim', 'Navka', 'Apep', 'Nidhoggr', 'Raiju', 'Raijin', 
+'Amphivena', 'Basilisk', 'Wolpertinger', 'Ramidreju', 'Echinemon', 'Mujina', 'Kamaitachi', 'Lavellan', 
+'Vila', 'Huldra', 'Chimera', 'Kyuubi', 'Nixie', 'Tuathan', 'Minyades', 'Camazotz', 'Curupira', 
+'Penghou', 'Ghillie Dhu', 'Myrmecoleon', 'Myrmidon', 'Mothman', 'Moth King', 'Grootslang', 'Yaoguai', 'Cait Sidhe', 'Cath Balug',
+ 'Nakki', 'Kappa', 'Satori', 'Shojo', 'Skohl', 'Haet', 'Vodyanoy', 'Undine', 'Melusine', 
+ 'Vukodlak', 'Chernobog', 'Djinn', 'Bauk', 'Troll', 'Jotun', 'Spriggan', 'Jubokko', 'Kodama',
+  'Bukavak', 'Kraken', 'Clayboy', 'Met', 'Emet', 'Ponyta', 'Rapidash', 'Slowpoke', 'Slowbro', 
   'Magnemite', 'Magneton', 'Farfetch_d', 'Doduo', 'Dodrio', 'Seel', 'Dewgong', 'Grimer', 'Muk', 'Shellder', 
   'Cloyster', 'Gastly', 'Haunter', 'Gengar', 'Onix', 'Drowzee', 'Hypno', 'Krabby', 'Kingler', 'Voltorb', 
   'Electrode', 'Exeggcute', 'Exeggutor', 'Cubone', 'Marowak', 'Hitmonlee', 'Hitmonchan', 'Lickitung',
@@ -55,7 +55,7 @@ const names = ['Dryad', 'Hamadryad', 'Leshy', 'Charmander', 'Charmeleon', 'Chari
     'Flareon', 'Porygon', 'Omanyte', 'Omastar', 'Kabuto', 'Kabutops', 'Aerodactyl', 'Snorlax', 
     'Articuno', 'Zapdos', 'Moltres', 'Dratini', 'Dragonair', 'Dragonite', 'Mew', 'Mewtwo'];
 
-console.log('mons length:', names.length);
+    names.forEach(name => console.log(name.toUpperCase()));
 
 async function getAccounts() {
   let web3 = new Web3(window.ethereum);

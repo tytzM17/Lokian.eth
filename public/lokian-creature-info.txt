@@ -8,11 +8,11 @@ ODDISH, -> Curupira...art ok 43
 GLOOM, -> Penghou...art ok 44
 VILEPLUME, -> Ghillie Dhu...art ok 45
 
-BELLSPROUT, -> Spriggan ...art ok 67
-WEEPINBELL, -> Jubokko ...art ok 68
-VICTREEBEL, -> Kodama (tree) ...art ok 69
+BELLSPROUT, -> Spriggan ...art ok 69
+WEEPINBELL, -> Jubokko ...art ok 70
+VICTREEBEL, -> Kodama (tree) ...art ok 71
 		 
-TANGELA, -> Umibozu ...art ok 112
+TANGELA, -> Umibozu ...art ok 114
 
 ===
 1(fire), 
@@ -24,17 +24,17 @@ TANGELA, -> Umibozu ...art ok 112
  VULPIX, --> Chimera ...art ok 37
  NINETALES, --> Kyuubi ...art ok 38
 
- GROWLITHE,  -> Skohl ...art 56
- ARCANINE,  -> Haet ..art ok 57
+ GROWLITHE,  -> Skohl ...art 58
+ ARCANINE,  -> Haet ..art ok 59
 		 
- PONYTA, -> Sleipnir/ Slipneir ...art ok 75
- RAPIDASH, -> Todorats ...art ok 76
+ PONYTA, -> Sleipnir/ Slipneir ...art ok 77
+ RAPIDASH, -> Todorats ...art ok 78
 		 
- MAGMAR -> Caorthannach ...art ok ..NFT 124
+ MAGMAR -> Caorthannach ...art ok ..NFT 126
 		 
- FLAREON -> Basan (jp fire breathing) ...art ok 134
+ FLAREON -> Basan (jp fire breathing) ...art ok 136
 		 
- MOLTRES -> Anzu / Anzhu (sumerian), fire breathing ...art ok 144
+ MOLTRES -> Anzu / Anzhu (sumerian), fire breathing ...art ok 146
 
 ===
 2(water), 
@@ -43,58 +43,58 @@ TANGELA, -> Umibozu ...art ok 112
  WARTORTLE, -> Aspidochelone ...art ok 8
  BLASTOISE, -> Zaratan ...art ok 9
 
- PSYDUCK, -> Nakki ..art ok 52
- GOLDUCK, -> kappa ...art ok 53
+ PSYDUCK, -> Nakki ..art ok 54
+ GOLDUCK, -> kappa ...art ok 55
  
  // beaver
- POLIWAG, -> Vodyanoy / Vodya ..art ok 58
- POLIWHIRL, -> Undine /Undina ..art ok 59
- POLIWRATH, -> Melusine / Melusina ..art ok 60
+ POLIWAG, -> Vodyanoy / Vodya ..art ok 60
+ POLIWHIRL, -> Undine /Undina ..art ok 61
+ POLIWRATH, -> Melusine / Melusina ..art ok 62
  
- TENTACOOL, -> Bukavak ...art ok 70
- TENTACRUEL, -> krakken ...art ok 71
+ TENTACOOL, -> Bukavak ...art ok 72
+ TENTACRUEL, -> krakken ...art ok 73
  
- SLOWPOKE, -> Scylla ...art ok 77
- SLOWBRO, -> Charybdis ...art ok 78
+ SLOWPOKE, -> Scylla ...art ok 79
+ SLOWBRO, -> Charybdis ...art ok 80
  
- SEEL, -> Selkie / Seelkie ..art ok 84
- DEWGONG, -> Rusalka ..art ok 85
+ SEEL, -> Selkie / Seelkie ..art ok 86
+ DEWGONG, -> Rusalka ..art ok 87
  
  // shell
- SHELLDER, -> Carbuncle ..art ok 88
- CLOYSTER, -> Shen (ch) clam monster  ..art ok 89
+ SHELLDER, -> Carbuncle ..art ok 90
+ CLOYSTER, -> Shen (ch) clam monster  ..art ok 91
  
  // crab
- KRABBY, -> Cancer/ Cancerous (greek, cancer) ..art ok 96
- KINGLER, -> Karkinos (greek) ..art ok 97
+ KRABBY, -> Cancer/ Cancerous (greek, cancer) ..art ok 98
+ KINGLER, -> Karkinos (greek) ..art ok 99
  
- HORSEA, -> Kelpie ..art ok 114
- SEADRA, -> Makara (india), elephant+fish ..art ok 115
+ HORSEA, -> Kelpie ..art ok 116
+ SEADRA, -> Makara (india), elephant+fish ..art ok 117
  
  // goldfish
- GOLDEEN, -> Morgens / Morgeen ..art ok 116
- SEAKING, -> Merrow / Merrowking ..art ok ..NFT 117
+ GOLDEEN, -> Morgens / Morgeen ..art ok 118
+ SEAKING, -> Merrow / Merrowking ..art ok ..NFT 119
  
  // starfish
- STARYU, -> Naiad ..art ok 118
- STARMIE, -> Nereid ..art ok 119
+ STARYU, -> Naiad ..art ok 120
+ STARMIE, -> Nereid ..art ok 121
  
- MAGIKARP, Lochness / Nessy ..art ok 127
- GYARADOS, -> Jormungandr ..art ok 128
- LAPRAS,  -> Leviathan / Levi ..art ok ..NFT 129
+ MAGIKARP, Lochness / Nessy ..art ok 129
+ GYARADOS, -> Jormungandr ..art ok 130
+ LAPRAS,  -> Leviathan / Levi ..art ok ..NFT 131
  
- VAPOREON -> Fossegrim ..art ok
+ VAPOREON -> Fossegrim ..art ok 134
  
  // molusk
- OMANYTE, -> Luska ..art ok 136
- OMASTAR, -> Hydra ..art ok ..NFT 137
+ OMANYTE, -> Luska ..art ok 138
+ OMASTAR, -> Hydra ..art ok ..NFT 139
 
 // prawn/ lobster
- KABUTO, ->  Afanc / fanky  ..art ok 138
- KABUTOPS, -> Cetus  / Cety ..art ok 139
+ KABUTO, ->  Afanc / fanky  ..art ok 140
+ KABUTOPS, -> Cetus  / Cety ..art ok 141
  
  // ice/ fish/ fly
- ARTICUNO -> Alkonost ..art ok 142
+ ARTICUNO -> Alkonost ..art ok 144
 
 
 ===
@@ -114,9 +114,9 @@ PARASECT, -> Myrmidons ..art ok 47
 VENONAT, -> Mothman ..art ok 48
 VENOMOTH, -> Moth king ..art ok 49
 
-PINSIR -> Kaggen (san people god), ..art ok 125
+PINSIR -> Kaggen (san people god), ..art ok 127
 
-SCYTHER -> Khepri -> (egyptian, beetle sun god related) ..art ok 121
+SCYTHER -> Khepri -> (egyptian, beetle sun god related) ..art ok 123
 
 ===
 4(normal), 
@@ -148,48 +148,48 @@ WIGGLYTUFF, -> Tuatha de danann / Tuathan ..art ok 40
 MEOWTH, -> Cait Sidhe / Cait Sith (celt) ..art ok 52
 PERSIAN, -> Cath Balug (celt) ..art ok 53
 
-MANKEY, -> Satori (jp) ..art ok 54
-PRIMEAPE, -> Shojo (jp) ..art ok 55
+MANKEY, -> Satori (jp) ..art ok 56
+PRIMEAPE, -> Shojo (jp) ..art ok 57
 
-MACHOP, -> Bauk ..art ok 64
-MACHOKE, -> Troll ..art ok 65
-MACHAMP, -> Jotunn ..art ok  ..NFT 66
+MACHOP, -> Bauk ..art ok 66
+MACHOKE, -> Troll ..art ok 67
+MACHAMP, -> Jotunn ..art ok  ..NFT 68
 
-FARFETCH_D, -> Hraesvelgr (norse) giant shapeshift to eagle  ..art ok 81
-DODUO, -> Berunda (hindu 2 headed) ..art ok 82
-DODRIO, -> Cockatrice (greek) ..art ok 83
+FARFETCH_D, -> Hraesvelgr (norse) giant shapeshift to eagle  ..art ok 83
+DODUO, -> Berunda (hindu 2 headed) ..art ok 84
+DODRIO, -> Cockatrice (greek) ..art ok 85
 
-HITMONLEE, -> Yeren (ch) ..art ok 104
-HITMONCHAN, -> Yeti ..art ok 105
-LICKITUNG, -> Yowie ..art ok 106
+HITMONLEE, -> Yeren (ch) ..art ok 106
+HITMONCHAN, -> Yeti ..art ok 107
+LICKITUNG, -> Yowie ..art ok 108
 
-CHANSEY, -> Caladrius (roman )(healer bird) ..art ok 111
+CHANSEY, -> Caladrius (roman )(healer bird) ..art ok 113
 
-KANGASKHAN, -> Callisto (greek) ..art ok 113
+KANGASKHAN, -> Callisto (greek) ..art ok 115
 
-MR_MIME -> Pixiu (ch) winged lions protects feng shui men ..art ok 120
+MR_MIME -> Pixiu (ch) winged lions protects feng shui men ..art ok 122
 
-TAUROS -> Audumbla ..art ok 126
+TAUROS -> Audumbla ..art ok 128
 
-PORYGON -> Tsukumogami (jp) -> tools that have acquired a kami or spirit ..art ok ..NFT 135
+PORYGON -> Tsukumogami (jp) -> tools that have acquired a spirit ..art ok 137
 
-AERODACTYL, -> Vedfolnir (norse) asgardian bird ..art ok 140
-SNORLAX, -> Baku (jp, devours nightmares) ..art ok 141
+AERODACTYL, -> Vedfolnir (norse) asgardian bird ..art ok 142
+SNORLAX, -> Baku (jp, devours nightmares) ..art ok 143
 
 ===
 5(poison), 
 ===
- EKANS, -> Apophis (eqgyptian god of destruction) ..art ok 23
+ EKANS, -> Apophis (eqgyptian god of destruction) Apep ..art ok 23
  ARBOK, -> Nidhoggr ..art ok  ..NFT 24
 		 
  ZUBAT, -> Minyades (greek) ..art ok 41
  GOLBAT, -> Camazotz (latin america) ..art ok 42
 		 
- GRIMER, -> Tarasque (French), dragon like, poison breath ..art ok 86
- MUK, -> Meretseger (egyptian) ..art ok 87
+ GRIMER, -> Tarasque (French), dragon like, poison breath ..art ok 88
+ MUK, -> Meretseger (egyptian) ..art ok 89
 		 
- KOFFING, -> Nezhit --> art ok 107
- WEEZING, -> Chuma --> art ok ..NFT 108
+ KOFFING, -> Nezhit --> art ok 109
+ WEEZING, -> Chuma --> art ok ..NFT 110
 
 ===
 6(thunder), 
@@ -197,17 +197,17 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok 141
  PIKACHU, -> Raiju (lightning god's pet) ..art ok 25
  RAICHU, -> Raijin (lightning god) ..art ok ..NFT 26
 		 
- MAGNEMITE, -> Brontes (cyclops) ..art ok 79
- MAGNETON, -> Arges (cyclops) ..art ok 80
+ MAGNEMITE, -> Brontes (cyclops) ..art ok 81
+ MAGNETON, -> Arges (cyclops) ..art ok 82
 
- VOLTORB, -> Druk,  (Bhutanese), thunder dragon ..art ok ..NFT 98
- ELECTRODE, -> Shenlong (ch) thunder dragon god ..art ok ..NFT 99
+ VOLTORB, -> Druk,  (Bhutanese), thunder dragon ..art ok ..NFT 100
+ ELECTRODE, -> Shenlong (ch) thunder dragon god ..art ok ..NFT 101
 		 
- ELECTABUZZ -> Kitsune (jp) ..art ok ..NFT? 123
+ ELECTABUZZ -> Kitsune (jp) ..art ok ..NFT? 125
 		 
- JOLTEON -> Valkyrie / Valkyrian (norse) ..art ok ..NFT 133
+ JOLTEON -> Valkyrie / Valkyrian (norse) ..art ok ..NFT 135
 		 
- ZAPDOS -> Quetzalcoatl/ Quetz -> (latin america)  ..art ok 143
+ ZAPDOS -> Quetzalcoatl/ Quetz -> (latin america)  ..art ok 145
 
 ===
 7(earth), 
@@ -218,52 +218,52 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok 141
  DIGLETT, -> Grootslang ..art ok 50
  DUGTRIO, -> Yaoguai ..art ok 51
 		 
- GEODUDE, -> Clayboy (yiddish, slavic) ..art ok 72
- GRAVELER, -> Met (Hebrew, death) ..art ok 73
- GOLEM, -> Emet (Hebrew, truth) ..art ok 74
+ GEODUDE, -> Clayboy (yiddish, slavic) ..art ok 74
+ GRAVELER, -> Met (Hebrew, death) ..art ok 75
+ GOLEM, -> Emet (Hebrew, truth) ..art ok 76
 		 
  ONIX, -> Dilong (ch earth dragon) ..art ok 93
 
- CUBONE, -> Tairanohone (jp, bones of taira) ..art ok 102
- MAROWAK, -> Gashadokuro (jp, giant bones conjurred)  ..art ok 103
+ CUBONE, -> Tairanohone (jp, bones of taira) ..art ok 104
+ MAROWAK, -> Gashadokuro (jp, giant bones conjurred)  ..art ok 105
 		 
- RHYHORN, -> Garganta (esp, portu)/ sigbin ..art ok 109
- RHYDON, -> Gargoyle (eng, French) ..art ok 110
+ RHYHORN, -> Garganta (esp, portu)/ sigbin ..art ok 111
+ RHYDON, -> Gargoyle (eng, French) ..art ok 112
 ===
 8(psychic), 
 ===
-ABRA, -> Vukodlak / Vuk ..art ok 61
-KADABRA, -> Chernobog / bog ..art ok 62
-ALAKAZAM, -> Djinn -> Jin ..art OK ..NFT 63
+ABRA, -> Vukodlak / Vuk ..art ok 63
+KADABRA, -> Chernobog / bog ..art ok 64
+ALAKAZAM, -> Djinn -> Jin ..art OK ..NFT 65
 
-GASTLY, -> Boogeyman/ Boogie ..art ok 90
-HAUNTER, -> Banshee/ Sheendel ..art ok 91
-GENGAR, -> Mare/NytMare ..art ok 92
+GASTLY, -> Boogeyman/ Boogie ..art ok 92
+HAUNTER, -> Banshee/ Sheendel ..art ok 93
+GENGAR, -> Mare/NytMare ..art ok 94
 
-DROWZEE, -> Incubus/ incu ..art ok 94
-HYPNO, -> Succubus/ succu ..art ok ..NFT 95
+DROWZEE, -> Incubus/ incu ..art ok 95
+HYPNO, -> Succubus/ succu ..art ok ..NFT 96
 
-EXEGGCUTE, -> Gan Ceann/ Gancean (celtic) headless death bringer ..art ok 100
-EXEGGUTOR, -> Oni / Onee (japanese) ..art ok 101
+EXEGGCUTE, -> Gan Ceann/ Gancean (celtic) headless death bringer ..art ok 102
+EXEGGUTOR, -> Oni / Onee (japanese) ..art ok 103
 
-JYNX -> Likho ..art ok 122
+JYNX -> Likho ..art ok 124
 
-DRATINI, -> Zmey ..art ok 145
-DRAGONAIR, -> Azhdaya ..art ok 146
-DRAGONITE, -> Fafnir , dragon of gold / norse ..art ok ..NFT 147
+DRATINI, -> Zmey ..art ok 147
+DRAGONAIR, -> Azhdaya ..art ok 148
+DRAGONITE, -> Fafnir , dragon of gold / norse ..art ok ..NFT 149
 
-MEWTWO, -> Baba Yaga ..art ok ..NFT 148
-MEW -> Baba Roga ..art ok ..NFT 149
+MEWTWO, -> Baba Yaga ..art ok ..NFT 150
+MEW -> Baba Roga ..art ok ..NFT 151
 
 ===
 9(ditto), 
 ===
-DITTO -> Doppelganger / doppel, harbinger of bad luck ..art ok ..NFT 130
+DITTO -> Doppelganger / doppel, harbinger of bad luck ..art ok ..NFT 132
 
 ===
 10(eevee)
 ===
-EEVEE -> Skvader (swedish fictional creature) ..art ok ..NFT 131
+EEVEE -> Skvader (swedish fictional creature) ..art ok ..NFT 133
 
 
 
@@ -343,7 +343,7 @@ Trolls -> Trol -> machoke , MACHAMP (normal)
 Draugr -> Draugg -> (zombie) NFT?
 Norne -> Norn  witch/prophetess -> NFT
 
-Fossegrim -> Fossgrim -> VAPOREON (water) 132
+Fossegrim -> Fossgrim -> VAPOREON (water) 
 
 Huldra -> femaile/fairy/cow ->CLEFABLE
 
