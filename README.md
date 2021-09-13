@@ -37,7 +37,7 @@ Finished
 - Fix ui responsiveness and css, etc..ok..07/14
 
 Ongoing
-- Change creature names and artwork from cryptomons to mythical creatures (mvp)
+- Change creature names and artwork from cryptomons to mythical creatures (mvp) ..100%
 - Fix wallet connection, (if refreshed, wallet is not connected) (mvp)
 - Fix logo, create an 8 bit representaion of the logo (mvp)
 - Add token or erc20, for buying of cards, and fees, etc.. 

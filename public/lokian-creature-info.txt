@@ -222,12 +222,12 @@ SNORLAX, -> Baku (jp, devours nightmares) ..art ok 143
  GRAVELER, -> Met (Hebrew, death) ..art ok 75
  GOLEM, -> Emet (Hebrew, truth) ..art ok 76
 		 
- ONIX, -> Dilong (ch earth dragon) ..art ok 93
+ ONIX, -> Dilong (ch earth dragon) ..art ok 95
 
  CUBONE, -> Tairanohone (jp, bones of taira) ..art ok 104
  MAROWAK, -> Gashadokuro (jp, giant bones conjurred)  ..art ok 105
 		 
- RHYHORN, -> Garganta (esp, portu)/ sigbin ..art ok 111
+ RHYHORN, -> Sigbin ..art ok 111
  RHYDON, -> Gargoyle (eng, French) ..art ok 112
 ===
 8(psychic), 
@@ -240,8 +240,8 @@ GASTLY, -> Boogeyman/ Boogie ..art ok 92
 HAUNTER, -> Banshee/ Sheendel ..art ok 93
 GENGAR, -> Mare/NytMare ..art ok 94
 
-DROWZEE, -> Incubus/ incu ..art ok 95
-HYPNO, -> Succubus/ succu ..art ok ..NFT 96
+DROWZEE, -> Incubus/ incu ..art ok 96
+HYPNO, -> Succubus/ succu ..art ok ..NFT 97
 
 EXEGGCUTE, -> Gan Ceann/ Gancean (celtic) headless death bringer ..art ok 102
 EXEGGUTOR, -> Oni / Onee (japanese) ..art ok 103

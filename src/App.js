@@ -26,12 +26,8 @@ import bg9 from './sprites/background/9.png';
 import bg10 from './sprites/background/10.png';
 
 // The contact deployment address in Etherium blockchain
-// win-10-workstation-ganache-contract-address-2
-const CONTRACT_ADDRESS = '0x034Db733A997009f15DC52bC1a988E9B6D0b9CDA';
-// win-10-workstation-ganache-contract-address
-// const CONTRACT_ADDRESS = '0x373aD6Ce154C45aE99F2Fdcb61Ed02d514C9eF44';
-// project.sol contract address ganache
-// const CONTRACT_ADDRESS = "0x8B2d7e694398f820E038383B68341f737040bA42";
+// win-10-workstation-ganache-contract-address-3
+const CONTRACT_ADDRESS = '0x69e8d9a132677A39629f749EE3135FBDB9FCe879';
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
@@ -42,20 +38,20 @@ const names = ['Dryad', 'Hamadryad', 'Leshy', 'Santelmo', 'Cerberus', 'Efreet', 
 'Munnin', 'Huginn', 'Azeban', 'Ratatoskr', 'Stratim', 'Navka', 'Apep', 'Nidhoggr', 'Raiju', 'Raijin', 
 'Amphivena', 'Basilisk', 'Wolpertinger', 'Ramidreju', 'Echinemon', 'Mujina', 'Kamaitachi', 'Lavellan', 
 'Vila', 'Huldra', 'Chimera', 'Kyuubi', 'Nixie', 'Tuathan', 'Minyades', 'Camazotz', 'Curupira', 
-'Penghou', 'Ghillie Dhu', 'Myrmecoleon', 'Myrmidon', 'Mothman', 'Moth King', 'Grootslang', 'Yaoguai', 'Cait Sidhe', 'Cath Balug',
+'Penghou', 'Ghillie_Dhu', 'Myrmecoleon', 'Myrmidon', 'Mothman', 'Moth_King', 'Grootslang', 'Yaoguai', 'Cait_Sidhe', 'Cath_Balug',
  'Nakki', 'Kappa', 'Satori', 'Shojo', 'Skohl', 'Haet', 'Vodyanoy', 'Undine', 'Melusine', 
  'Vukodlak', 'Chernobog', 'Djinn', 'Bauk', 'Troll', 'Jotun', 'Spriggan', 'Jubokko', 'Kodama',
-  'Bukavak', 'Kraken', 'Clayboy', 'Met', 'Emet', 'Ponyta', 'Rapidash', 'Slowpoke', 'Slowbro', 
-  'Magnemite', 'Magneton', 'Farfetch_d', 'Doduo', 'Dodrio', 'Seel', 'Dewgong', 'Grimer', 'Muk', 'Shellder', 
-  'Cloyster', 'Gastly', 'Haunter', 'Gengar', 'Onix', 'Drowzee', 'Hypno', 'Krabby', 'Kingler', 'Voltorb', 
-  'Electrode', 'Exeggcute', 'Exeggutor', 'Cubone', 'Marowak', 'Hitmonlee', 'Hitmonchan', 'Lickitung',
-   'Koffing', 'Weezing', 'Rhyhorn', 'Rhydon', 'Chansey', 'Tangela', 'Kangaskhan', 'Horsea', 'Seadra',
-    'Goldeen', 'Seaking', 'Staryu', 'Starmie', 'Mr_mime', 'Scyther', 'Jynx', 'Electabuzz', 'Magmar', 
-    'Pinsir', 'Tauros', 'Magikarp', 'Gyarados', 'Lapras', 'Ditto', 'Eevee', 'Vaporeon', 'Jolteon', 
-    'Flareon', 'Porygon', 'Omanyte', 'Omastar', 'Kabuto', 'Kabutops', 'Aerodactyl', 'Snorlax', 
-    'Articuno', 'Zapdos', 'Moltres', 'Dratini', 'Dragonair', 'Dragonite', 'Mew', 'Mewtwo'];
+  'Bukavak', 'Kraken', 'Clayboy', 'Met', 'Emet', 'Sleipnir', 'Todorats', 'Scylla', 'Charybdis', 
+  'Brontes', 'Arges', 'Hraesvelgr', 'Berunda', 'Cockatrice', 'Selkie', 'Rusalka', 'Tarasque', 'Meretseger', 'Carbuncle', 
+  'Shen', 'Boogeyman', 'Banshee', 'Mare', 'Dilong', 'Incubus', 'Succubus', 'Cancer', 'Karkinos', 'Druk', 
+  'Shenlong', 'Gan_Ceann', 'Oni', 'Tairanohone', 'Gashadokuro', 'Yeren', 'Yeti', 'Yowie',
+   'Nezhit', 'Chuma', 'Sigbin', 'Gargoyle', 'Caladrius', 'Umibozu', 'Callisto', 'Kelpie', 'Makara',
+    'Morgen', 'Merrow', 'Naiad', 'Nereid', 'Pixiu', 'Khepri', 'Likho', 'kitsune', 'Caorthannach', 
+    'Kaggen', 'Audumbla', 'Lochness', 'Jormungandr', 'Leviathan', 'Doppelganger', 'Skvader', 'Fossegrim', 'Valkyrie', 
+    'Basan', 'Tsukumogami', 'Luska', 'Hydra', 'Afanc', 'Cetus', 'Vedfolnir', 'Baku', 
+    'Alkonost', 'Quetzalcoatl', 'Anzu', 'Zmey', 'Azhdaya', 'Fafnir', 'Baba_Yaga', 'Baba_Roga'];
 
-    names.forEach(name => console.log(name.toUpperCase()));
+    names.forEach(name => console.log(name.toUpperCase() + ','));
 
 async function getAccounts() {
   let web3 = new Web3(window.ethereum);
@@ -535,7 +531,7 @@ class Cryptomons extends Component {
             <span>
             <a data-tip data-for="walletLogout">
               <button
-                class="rpgui-button golden" type="button"
+                className="rpgui-button golden" type="button"
                 style={{ float: "right", fontSize: "20px", marginTop: "6px", marginRight: "6px" }}
                 onClick={() => onClickConnect(this)}>
                 {/* {this.state.connectBtnTxt !== "Connect Wallet" ? <span onClick={() => onClickConnect(this)}>&#10060;</span> : <></>} */}
