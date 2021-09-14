@@ -35,9 +35,9 @@ Finished
 - Change naming e.g. cryptoMons to creatures..ok..6/28
 - Change to 8bit theme for ui..ok..07/02
 - Fix ui responsiveness and css, etc..ok..07/14
+- Change creature names and artwork from cryptomons to mythical creatures (mvp) ..ok..09/13
 
 Ongoing
-- Change creature names and artwork from cryptomons to mythical creatures (mvp) ..100%
 - Fix wallet connection try multi-wallet with web3modal, (if refreshed, wallet is not connected) (mvp)
 - Fix logo, create an 8 bit representaion of the logo (mvp)
 - Add token or erc20, for buying of cards, and fees, etc. 
@@ -45,6 +45,7 @@ tokenomics 100 billion capped, 45% rewards, 12% creators, 23% infrastructure lik
 20% amm liquidity (mvp)
 - All will be NFTs for $39, baba's, doppelganger and skvader are $100 each. Create NFT Shop replace shop. (mvp)
 - NFT cards could be glowing aura or glowing eyes (glow colors are based on element type) (mvp) 
+- Fees will be absorbed to rewards(40%), creators(35%), amm(20%) and burn pool(5%) 
 
 - Deploy to matic, bsc, avax, moonbeam or ethereum compatible test networks
 - Deploy to matic, bsc, avax, moonbeam or ethereum compatible main networks
@@ -53,5 +54,4 @@ tokenomics 100 billion capped, 45% rewards, 12% creators, 23% infrastructure lik
 - Advertise, submit to dappradar, coingecko, shill in tg's, etc., 
 
 Future Plan
-- Add mini game (e.g. mini pet sim, mini pet rpg, etc), take entrance fee(erc20),  untill (25%) rewards are exhausted (feature)
-
+- Add mini game (e.g. mini moba or rpg), take entrance fee(token),  win rewards (token) (feature)

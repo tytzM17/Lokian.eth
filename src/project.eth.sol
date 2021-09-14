@@ -1,9 +1,8 @@
+// SPDX-License-Identifier: MIT
+
 pragma solidity ^0.7.4;
 
-// SPDX-License-Identifier: GPL-3.0-only
-
 contract Cryptomons {
-    // Cryptomons aka creatures, familiars, etc
     // 149 different Cryptomon species implemented and saved in the following enum variable.
      enum Species { 
          DRYAD, 
