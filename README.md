@@ -38,16 +38,16 @@ Finished
 
 Ongoing
 - Change creature names and artwork from cryptomons to mythical creatures (mvp) ..100%
-- Fix wallet connection, (if refreshed, wallet is not connected) (mvp)
+- Fix wallet connection try multi-wallet with web3modal, (if refreshed, wallet is not connected) (mvp)
 - Fix logo, create an 8 bit representaion of the logo (mvp)
-- Add token or erc20, for buying of cards, and fees, etc.. 
-tokenomics 100 thousand/million capped, 45% rewards, 12% creators, 23% infrastructure,
+- Add token or erc20, for buying of cards, and fees, etc. 
+tokenomics 100 billion capped, 45% rewards, 12% creators, 23% infrastructure like landing page,domain name etc.,
 20% amm liquidity (mvp)
-- All will be NFTs for $50, baba's, doppelganger and skvader are $100 each.
-- NFT cards could be glowing aura or glowing eyes (glow colors are based on element type) 
+- All will be NFTs for $39, baba's, doppelganger and skvader are $100 each. Create NFT Shop replace shop. (mvp)
+- NFT cards could be glowing aura or glowing eyes (glow colors are based on element type) (mvp) 
 
-- Deploy to matic, bsc, moonbeam or ethereum compatible test networks
-- Deploy to matic, bsc, moonbeam or ethereum compatible main networks
+- Deploy to matic, bsc, avax, moonbeam or ethereum compatible test networks
+- Deploy to matic, bsc, avax, moonbeam or ethereum compatible main networks
 
 - Create landing page, twitter, discord, and tg
 - Advertise, submit to dappradar, coingecko, shill in tg's, etc., 
