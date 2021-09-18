@@ -38,18 +38,17 @@ Finished
 - Change creature names and artwork from cryptomons to mythical creatures (mvp) ..ok..09/13
 
 Ongoing
-- Fix wallet connection try multi-wallet with web3modal, (if refreshed, wallet is not connected) (mvp)
+- Convert frontend to typescript, hooks, etc (mvp)
+
+- Fix wallet , use web3-react and injected connector (mvp)
 
 - Fix logo, create an 8 bit representaion of the logo (mvp)
 
-- Convert frontend to typescript (mvp)
+- Add erc20, add tokenomics, token utilities, etc (mvp)
 
-- Add token or erc20, for buying of cards, and fees, etc. 
-tokenomics 100 billion capped, 45% rewards, 12% creators, 23% infrastructure like landing page,domain name etc.,
-20% amm liquidity (mvp)
+- Create NFT Shop replace shop, that will mint 151 nfts (mvp)
 
-- All will be NFTs for $39, baba's, doppelganger and skvader are $100 each. Create NFT Shop replace shop. (mvp)
-- NFT cards could be glowing aura or glowing eyes (glow colors are based on element type) (mvp) 
+- NFT cards could be glowing aura or eyes (mvp) 
 
 - Fees will be absorbed to rewards(40%), creators(35%), amm(20%) and burn pool(5%) 
 
@@ -60,4 +59,4 @@ tokenomics 100 billion capped, 45% rewards, 12% creators, 23% infrastructure lik
 - Advertise, submit to dappradar, coingecko, shill in tg's, etc., 
 
 Future Plan
-- Add mini game (e.g. mini moba or rpg), take entrance fee(token),  win rewards (token) (feature)
+- Add free to play, mini game (e.g. mini moba or rpg), buy nft skin with erc20 etc
