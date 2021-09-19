@@ -7,12 +7,7 @@ import StatBar from "./StatBar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // Library to work with Etherium blockchain
-import Web3 from "web3";
-// For wallet connection
-import Web3Modal, {
-  getInjectedProvider,
-  getInjectedProviderName,
-} from "web3modal";
+
 import contrInterface from "./interface.json"; // Load contract json file
 // Load all the background images for the 10 different Cryptomon types
 import bg0 from "./sprites/background/0.png";
@@ -241,43 +236,43 @@ class Cryptomons extends Component {
 
   async componentDidMount() {
 
-    const web3Modal = new Web3Modal();
-    const provider = await web3Modal.connect();
-    this._web3 = new Web3(provider);
+    // const web3Modal = new Web3Modal();
+    // const provider = await web3Modal.connect();
+    // this._web3 = new Web3(provider);
 
-    console.log("getInjectedProvider", getInjectedProvider());
-    console.log("getInjectedProviderName", getInjectedProviderName());
+    // console.log("getInjectedProvider", getInjectedProvider());
+    // console.log("getInjectedProviderName", getInjectedProviderName());
 
-    const { name } = getInjectedProvider();
+    // const { name } = getInjectedProvider();
 
-    // if metamask
-    if (name === "MetaMask") {
-      const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
+    // // if metamask
+    // if (name === "MetaMask") {
+    //   const accounts = await window.ethereum.request({
+    //     method: "eth_requestAccounts",
+    //   });
 
-      this._account = accounts[0];
-      this.setState({ connectBtnTxt: formatWallet(accounts[0]?.toString()) });
+    //   this._account = accounts[0];
+    //   this.setState({ connectBtnTxt: formatWallet(accounts[0]?.toString()) });
 
-      if (typeof window.ethereum.autoRefreshOnNetworkChange !== "undefined") {
-        window.ethereum.autoRefreshOnNetworkChange = false;
-      }
-    }
+    //   if (typeof window.ethereum.autoRefreshOnNetworkChange !== "undefined") {
+    //     window.ethereum.autoRefreshOnNetworkChange = false;
+    //   }
+    // }
 
-    // Subscribe to accounts change
-    provider.on("accountsChanged", (accounts) => {
-      console.log('Accounts:', accounts);
-      this.setState({ connectBtnTxt: formatWallet(accounts[0]?.toString()) });
-    });
+    // // Subscribe to accounts change
+    // provider.on("accountsChanged", (accounts) => {
+    //   console.log('Accounts:', accounts);
+    //   this.setState({ connectBtnTxt: formatWallet(accounts[0]?.toString()) });
+    // });
 
-    // Subscribe to chainId change
-    provider.on("chainChanged", (chainId) => {
-      console.log('Chain id:', chainId);
-    });
+    // // Subscribe to chainId change
+    // provider.on("chainChanged", (chainId) => {
+    //   console.log('Chain id:', chainId);
+    // });
 
-    provider.on("connect", (info) => {
-      console.log('Connect info:', info);
-    });
+    // provider.on("connect", (info) => {
+    //   console.log('Connect info:', info);
+    // });
 
   }
 
