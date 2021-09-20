@@ -38,7 +38,7 @@ Finished
 - Change creature names and artwork from cryptomons to mythical creatures (mvp) ..ok..09/13
 
 Ongoing
-- Convert frontend to typescript, hooks, etc (mvp)
+- Convert frontend to typescript, next, hooks, etc (mvp)
 
 - Fix wallet , use web3-react and injected connector (mvp)
 
@@ -46,17 +46,17 @@ Ongoing
 
 - Add erc20, add tokenomics, token utilities, etc (mvp)
 
-- Create NFT Shop replace shop, that will mint 151 nfts (mvp)
+- Create NFT Shop replace default shop, that will mint 151 nfts (mvp)
 
 - NFT cards could be glowing aura or eyes (mvp) 
 
-- Fees will be absorbed to rewards(40%), creators(35%), amm(20%) and burn pool(5%) 
+- Fees will be absorbed to rewards, creators, amm and burn pools 
 
-- Deploy to matic, bsc, avax, moonbeam or evm compatible test networks
-- Deploy to matic, bsc, avax, moonbeam or evm compatible main networks
+- Deploy to matic, bsc, avax, moonriver or evm compatible test networks
+- Deploy to matic, bsc, avax, moonriver or evm compatible main networks
 
-- Create landing page, twitter, discord, and tg
-- Advertise, submit to dappradar, coingecko, shill in tg's, etc., 
+- Create landing page, twitter, discord, and tg (ann)
+- Advertise, submit to dappradar, coingecko, vlogs, etc., 
 
 Future Plan
-- Add free to play, mini game (e.g. mini moba or rpg), buy nft skin with erc20 etc
+- Add free to play, mini game (e.g. mini moba or rpg), buy nft skin with erc20, etc

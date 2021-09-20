@@ -235,52 +235,41 @@ class Cryptomons extends Component {
   }
 
   async componentDidMount() {
-
     // const web3Modal = new Web3Modal();
     // const provider = await web3Modal.connect();
     // this._web3 = new Web3(provider);
-
     // console.log("getInjectedProvider", getInjectedProvider());
     // console.log("getInjectedProviderName", getInjectedProviderName());
-
     // const { name } = getInjectedProvider();
-
     // // if metamask
     // if (name === "MetaMask") {
     //   const accounts = await window.ethereum.request({
     //     method: "eth_requestAccounts",
     //   });
-
     //   this._account = accounts[0];
     //   this.setState({ connectBtnTxt: formatWallet(accounts[0]?.toString()) });
-
     //   if (typeof window.ethereum.autoRefreshOnNetworkChange !== "undefined") {
     //     window.ethereum.autoRefreshOnNetworkChange = false;
     //   }
     // }
-
     // // Subscribe to accounts change
     // provider.on("accountsChanged", (accounts) => {
     //   console.log('Accounts:', accounts);
     //   this.setState({ connectBtnTxt: formatWallet(accounts[0]?.toString()) });
     // });
-
     // // Subscribe to chainId change
     // provider.on("chainChanged", (chainId) => {
     //   console.log('Chain id:', chainId);
     // });
-
     // provider.on("connect", (info) => {
     //   console.log('Connect info:', info);
     // });
-
   }
 
   componentWillUnmount() {
     // if (this._getAccounts) {
     //   this._getAccounts.cancel();
     // }
-
     // if (this._getMons) {
     //   this._getMons.cancel();
     // }
