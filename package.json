@@ -49,5 +49,10 @@
     "source-map-loader": "^3.0.0",
     "ts-loader": "^9.2.5",
     "typescript": "^4.4.3"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 120
   }
 }

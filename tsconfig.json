@@ -1,30 +1,33 @@
+
 {
-    "compilerOptions": {
-      "target": "es5",
-      "lib": [
-        "dom",
-        "dom.iterable",
-        "esnext"
-      ],
-      "allowJs": true,
-      "skipLibCheck": true,
-      "strict": false,
-      "forceConsistentCasingInFileNames": true,
-      "noEmit": true,
-      "esModuleInterop": true,
-      "module": "esnext",
-      "moduleResolution": "node",
-      "resolveJsonModule": true,
-      "isolatedModules": true,
-      "jsx": "preserve"
-    },
-    "exclude": [
-      "node_modules"
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
     ],
-    "include": [
-      "next-env.d.ts",
-      "**/*.ts",
-      "**/*.tsx"
-    ]
-  }
-  
+    "allowJs": false, // changed from true
+    "skipLibCheck": true,
+    "strict": false, // changed from true
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": false,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react", // changed from preserve
+    "outDir": "dist/",
+    "sourceMap": true, // added
+  },
+  // "exclude": [
+  //   "node_modules",
+  //   "dist"
+  // ],
+  "include": [
+    // "next-env.d.ts", // removed, coz next config won't be use 
+    "**/*.ts",
+    "**/*.tsx"
+  ]
+}
