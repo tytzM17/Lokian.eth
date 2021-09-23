@@ -203,7 +203,7 @@ async function onClickConnect(self) {
   // self.refreshMons();
 }
 
-class Cryptomons extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
@@ -939,4 +939,4 @@ class Cryptomons extends Component {
   }
 }
 
-export default Cryptomons;
+export default App;
