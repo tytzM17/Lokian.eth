@@ -18,12 +18,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react", // changed from preserve
-    "outDir": "dist/", // aded
+    // "outDir": "dist/", // aded
     "sourceMap": true, // added
   },
   "exclude": [
     "node_modules",
-    "dist" // added
+    // "dist", // added
+    // "src/sprites",
+    // "src/sprites/background"
   ],
   "include": [
     // "next-env.d.ts", // removed, coz next config won't be use 
