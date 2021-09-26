@@ -1,203 +1,201 @@
 /* global BigInt */
-import React, { Component } from "react";
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Tab, Tabs } from "react-bootstrap";
-import StatBar from "./StatBar";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { Component } from 'react'
+import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Tab, Tabs } from 'react-bootstrap'
+import StatBar from './StatBar'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 // Library to work with Etherium blockchain
 
-import contrInterface from "./interface.json"; // Load contract json file
+import contrInterface from './interface.json' // Load contract json file
 // Load all the background images for the 10 different Cryptomon types
-import bg0 from "./sprites/background/0.png";
-import bg1 from "./sprites/background/1.png";
-import bg2 from "./sprites/background/2.png";
-import bg3 from "./sprites/background/3.png";
-import bg4 from "./sprites/background/4.png";
-import bg5 from "./sprites/background/5.png";
-import bg6 from "./sprites/background/6.png";
-import bg7 from "./sprites/background/7.png";
-import bg8 from "./sprites/background/8.png";
-import bg9 from "./sprites/background/9.png";
-import bg10 from "./sprites/background/10.png";
+import bg0 from './sprites/background/0.png'
+import bg1 from './sprites/background/1.png'
+import bg2 from './sprites/background/2.png'
+import bg3 from './sprites/background/3.png'
+import bg4 from './sprites/background/4.png'
+import bg5 from './sprites/background/5.png'
+import bg6 from './sprites/background/6.png'
+import bg7 from './sprites/background/7.png'
+import bg8 from './sprites/background/8.png'
+import bg9 from './sprites/background/9.png'
+import bg10 from './sprites/background/10.png'
 // Utils
-import formatWallet from "./utils/formatWallet";
+import formatWallet from './utils/formatWallet'
 
 // The contact deployment address in an EVM based blockchain
-const CONTRACT_ADDRESS = "0x69e8d9a132677A39629f749EE3135FBDB9FCe879"; // win-10-workstation-ganache-contract-address
+const CONTRACT_ADDRESS = '0x69e8d9a132677A39629f749EE3135FBDB9FCe879' // win-10-workstation-ganache-contract-address
 
 // Add background images in an array for easy access
-const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
+const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]
 
 // Add all 151 Cryptomon names in an array
 const names = [
-  "Dryad",
-  "Hamadryad",
-  "Leshy",
-  "Santelmo",
-  "Cerberus",
-  "Efreet",
-  "Fastitocalon",
-  "Aspidochelone",
-  "Zaratan",
-  "Arachne",
-  "Jorogumo",
-  "Tsuchigumo",
-  "Pabilsag",
-  "Girtablilu",
-  "Selket",
-  "Tsikavats",
-  "Munnin",
-  "Huginn",
-  "Azeban",
-  "Ratatoskr",
-  "Stratim",
-  "Navka",
-  "Apep",
-  "Nidhoggr",
-  "Raiju",
-  "Raijin",
-  "Amphivena",
-  "Basilisk",
-  "Wolpertinger",
-  "Ramidreju",
-  "Echinemon",
-  "Mujina",
-  "Kamaitachi",
-  "Lavellan",
-  "Vila",
-  "Huldra",
-  "Chimera",
-  "Kyuubi",
-  "Nixie",
-  "Tuathan",
-  "Minyades",
-  "Camazotz",
-  "Curupira",
-  "Penghou",
-  "Ghillie_Dhu",
-  "Myrmecoleon",
-  "Myrmidon",
-  "Mothman",
-  "Moth_King",
-  "Grootslang",
-  "Yaoguai",
-  "Cait_Sidhe",
-  "Cath_Balug",
-  "Nakki",
-  "Kappa",
-  "Satori",
-  "Shojo",
-  "Skohl",
-  "Haet",
-  "Vodyanoy",
-  "Undine",
-  "Melusine",
-  "Vukodlak",
-  "Chernobog",
-  "Djinn",
-  "Bauk",
-  "Troll",
-  "Jotun",
-  "Spriggan",
-  "Jubokko",
-  "Kodama",
-  "Bukavak",
-  "Kraken",
-  "Clayboy",
-  "Met",
-  "Emet",
-  "Sleipnir",
-  "Todorats",
-  "Scylla",
-  "Charybdis",
-  "Brontes",
-  "Arges",
-  "Hraesvelgr",
-  "Berunda",
-  "Cockatrice",
-  "Selkie",
-  "Rusalka",
-  "Tarasque",
-  "Meretseger",
-  "Carbuncle",
-  "Shen",
-  "Boogeyman",
-  "Banshee",
-  "Mare",
-  "Dilong",
-  "Incubus",
-  "Succubus",
-  "Cancer",
-  "Karkinos",
-  "Druk",
-  "Shenlong",
-  "Gan_Ceann",
-  "Oni",
-  "Tairanohone",
-  "Gashadokuro",
-  "Yeren",
-  "Yeti",
-  "Yowie",
-  "Nezhit",
-  "Chuma",
-  "Sigbin",
-  "Gargoyle",
-  "Caladrius",
-  "Umibozu",
-  "Callisto",
-  "Kelpie",
-  "Makara",
-  "Morgen",
-  "Merrow",
-  "Naiad",
-  "Nereid",
-  "Pixiu",
-  "Khepri",
-  "Likho",
-  "kitsune",
-  "Caorthannach",
-  "Kaggen",
-  "Audumbla",
-  "Lochness",
-  "Jormungandr",
-  "Leviathan",
-  "Doppelganger",
-  "Skvader",
-  "Fossegrim",
-  "Valkyrie",
-  "Basan",
-  "Tsukumogami",
-  "Luska",
-  "Hydra",
-  "Afanc",
-  "Cetus",
-  "Vedfolnir",
-  "Baku",
-  "Alkonost",
-  "Quetzalcoatl",
-  "Anzu",
-  "Zmey",
-  "Azhdaya",
-  "Fafnir",
-  "Baba_Yaga",
-  "Baba_Roga",
-];
+  'Dryad',
+  'Hamadryad',
+  'Leshy',
+  'Santelmo',
+  'Cerberus',
+  'Efreet',
+  'Fastitocalon',
+  'Aspidochelone',
+  'Zaratan',
+  'Arachne',
+  'Jorogumo',
+  'Tsuchigumo',
+  'Pabilsag',
+  'Girtablilu',
+  'Selket',
+  'Tsikavats',
+  'Munnin',
+  'Huginn',
+  'Azeban',
+  'Ratatoskr',
+  'Stratim',
+  'Navka',
+  'Apep',
+  'Nidhoggr',
+  'Raiju',
+  'Raijin',
+  'Amphivena',
+  'Basilisk',
+  'Wolpertinger',
+  'Ramidreju',
+  'Echinemon',
+  'Mujina',
+  'Kamaitachi',
+  'Lavellan',
+  'Vila',
+  'Huldra',
+  'Chimera',
+  'Kyuubi',
+  'Nixie',
+  'Tuathan',
+  'Minyades',
+  'Camazotz',
+  'Curupira',
+  'Penghou',
+  'Ghillie_Dhu',
+  'Myrmecoleon',
+  'Myrmidon',
+  'Mothman',
+  'Moth_King',
+  'Grootslang',
+  'Yaoguai',
+  'Cait_Sidhe',
+  'Cath_Balug',
+  'Nakki',
+  'Kappa',
+  'Satori',
+  'Shojo',
+  'Skohl',
+  'Haet',
+  'Vodyanoy',
+  'Undine',
+  'Melusine',
+  'Vukodlak',
+  'Chernobog',
+  'Djinn',
+  'Bauk',
+  'Troll',
+  'Jotun',
+  'Spriggan',
+  'Jubokko',
+  'Kodama',
+  'Bukavak',
+  'Kraken',
+  'Clayboy',
+  'Met',
+  'Emet',
+  'Sleipnir',
+  'Todorats',
+  'Scylla',
+  'Charybdis',
+  'Brontes',
+  'Arges',
+  'Hraesvelgr',
+  'Berunda',
+  'Cockatrice',
+  'Selkie',
+  'Rusalka',
+  'Tarasque',
+  'Meretseger',
+  'Carbuncle',
+  'Shen',
+  'Boogeyman',
+  'Banshee',
+  'Mare',
+  'Dilong',
+  'Incubus',
+  'Succubus',
+  'Cancer',
+  'Karkinos',
+  'Druk',
+  'Shenlong',
+  'Gan_Ceann',
+  'Oni',
+  'Tairanohone',
+  'Gashadokuro',
+  'Yeren',
+  'Yeti',
+  'Yowie',
+  'Nezhit',
+  'Chuma',
+  'Sigbin',
+  'Gargoyle',
+  'Caladrius',
+  'Umibozu',
+  'Callisto',
+  'Kelpie',
+  'Makara',
+  'Morgen',
+  'Merrow',
+  'Naiad',
+  'Nereid',
+  'Pixiu',
+  'Khepri',
+  'Likho',
+  'kitsune',
+  'Caorthannach',
+  'Kaggen',
+  'Audumbla',
+  'Lochness',
+  'Jormungandr',
+  'Leviathan',
+  'Doppelganger',
+  'Skvader',
+  'Fossegrim',
+  'Valkyrie',
+  'Basan',
+  'Tsukumogami',
+  'Luska',
+  'Hydra',
+  'Afanc',
+  'Cetus',
+  'Vedfolnir',
+  'Baku',
+  'Alkonost',
+  'Quetzalcoatl',
+  'Anzu',
+  'Zmey',
+  'Azhdaya',
+  'Fafnir',
+  'Baba_Yaga',
+  'Baba_Roga',
+]
 
 async function getMons(web3, account) {
   const contr = new web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, {
     from: account,
-  });
-  const totalMons = parseInt(await contr.methods.totalMons().call());
-  return Promise.all(
-    [...Array(totalMons).keys()].map((id) => contr.methods.mons(id).call())
-  );
+  })
+  const totalMons = parseInt(await contr.methods.totalMons().call())
+  return Promise.all([...Array(totalMons).keys()].map((id) => contr.methods.mons(id).call()))
 }
 
 async function onClickConnect(self) {
   if (self && self._account) {
-    alert("Account management modal");
+    alert('Account management modal')
   }
 
   // self.refreshMons();
@@ -205,7 +203,7 @@ async function onClickConnect(self) {
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       cryptomons: [],
@@ -222,16 +220,16 @@ class App extends Component {
       winner: null, // Used to display winner of the last fight
       rounds: null, // Used to display number of rounds the fight lasted
 
-      shareId: "", // Used in shareId form input field
-      shareAddress: "", // Used in shareAddress form input field
+      shareId: '', // Used in shareId form input field
+      shareAddress: '', // Used in shareAddress form input field
 
-      connectBtnTxt: "Connect Wallet",
-    };
+      connectBtnTxt: 'Connect Wallet',
+    }
 
-    this._getAccounts = null;
-    this._getMons = null;
+    this._getAccounts = null
+    this._getMons = null
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this)
   }
 
   async componentDidMount() {
@@ -278,145 +276,113 @@ class App extends Component {
   // Change the list of created Crypromons saved in the state so UI refreshes after this call
   refreshMons() {
     this._getMons = getMons(this._web3, this._account).then((_mons) => {
-      this._getMons = null;
-      this.setState({ cryptomons: _mons });
+      this._getMons = null
+      this.setState({ cryptomons: _mons })
       this.setState({
         myCryptomons: _mons.filter(
-          (mon) =>
-            mon.owner?.toString().toLowerCase() ===
-            this._account?.toString().toLowerCase()
+          (mon) => mon.owner?.toString().toLowerCase() === this._account?.toString().toLowerCase()
         ),
-      });
+      })
       this.setState({
-        otherCryptomons: _mons.filter(
-          (mon) => mon.owner.toLowerCase() !== this._account
-        ),
-      });
-    });
+        otherCryptomons: _mons.filter((mon) => mon.owner.toLowerCase() !== this._account),
+      })
+    })
   }
 
   // Function that buys a Cryptomon through a smart contract function
   buyMon(id, price) {
-    const contr = new this._web3.eth.Contract(
-      contrInterface,
-      CONTRACT_ADDRESS,
-      { from: this._account }
-    );
+    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account })
     contr.methods
       .buyMon(id)
-      .send({ value: BigInt(price) + BigInt(1) + "" })
-      .on("confirmation", () => {
-        toast("Success");
-        this.refreshMons();
-      });
+      .send({ value: BigInt(price) + BigInt(1) + '' })
+      .on('confirmation', () => {
+        toast('Success')
+        this.refreshMons()
+      })
   }
 
   // Function that adds a Cryptomon for sale through a smart contract function
   addForSale(id, price) {
-    if (price === 0 || price === "0") {
-      toast.error("🦄 Dude, price should be above 0");
-      return;
+    if (price === 0 || price === '0') {
+      toast.error('🦄 Dude, price should be above 0')
+      return
     }
-    const contr = new this._web3.eth.Contract(
-      contrInterface,
-      CONTRACT_ADDRESS,
-      { from: this._account }
-    );
+    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account })
     contr.methods
       .addForSale(id, price)
       .send()
-      .on("confirmation", () => {
-        toast("Success");
-        this.refreshMons();
-      });
+      .on('confirmation', () => {
+        toast('Success')
+        this.refreshMons()
+      })
   }
 
   // Function that removes a Cryptomon from sale through a smart contract function
   removeFromSale(id) {
-    const contr = new this._web3.eth.Contract(
-      contrInterface,
-      CONTRACT_ADDRESS,
-      { from: this._account }
-    );
+    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account })
     contr.methods
       .removeFromSale(id)
       .send()
-      .on("confirmation", () => {
-        toast("Success");
-        this.refreshMons();
-      });
+      .on('confirmation', () => {
+        toast('Success')
+        this.refreshMons()
+      })
   }
 
   // Function that breeds 2 Cryptomons through a smart contract function
   breedMons(id1, id2) {
-    const contr = new this._web3.eth.Contract(
-      contrInterface,
-      CONTRACT_ADDRESS,
-      { from: this._account, gas: 3000000 }
-    );
+    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account, gas: 3000000 })
     contr.methods
       .breedMons(id1, id2)
       .send()
-      .on("confirmation", () => {
-        toast("Success"); // alert user if success
-        this.refreshMons();
-      });
+      .on('confirmation', () => {
+        toast('Success') // alert user if success
+        this.refreshMons()
+      })
   }
 
   // Function that allows 2 Cryptomons to fight through a smart contract function
   async fight(id1, id2) {
-    const contr = new this._web3.eth.Contract(
-      contrInterface,
-      CONTRACT_ADDRESS,
-      { from: this._account }
-    );
-    var results = await contr.methods.fight(id1, id2).call();
-    this.state.winner = results[0];
-    this.state.rounds = results[1];
-    this.refreshMons();
+    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account })
+    var results = await contr.methods.fight(id1, id2).call()
+    this.state.winner = results[0]
+    this.state.rounds = results[1]
+    this.refreshMons()
   }
 
   // Function that starts sharing a Cryptomon to another address through a smart contract function
   startSharing(id, address) {
-    const contr = new this._web3.eth.Contract(
-      contrInterface,
-      CONTRACT_ADDRESS,
-      { from: this._account }
-    );
+    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account })
     contr.methods
       .startSharing(id, address)
       .send()
-      .on("confirmation", () => {
-        this.refreshMons();
-      });
+      .on('confirmation', () => {
+        this.refreshMons()
+      })
   }
 
   // Function that stops sharing a Cryptomon with other addresses through a smart contrct function
   stopSharing(id) {
-    const contr = new this._web3.eth.Contract(
-      contrInterface,
-      CONTRACT_ADDRESS,
-      { from: this._account }
-    );
+    const contr = new this._web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: this._account })
     contr.methods
       .stopSharing(id)
       .send()
-      .on("confirmation", () => {
-        this.refreshMons();
-      });
+      .on('confirmation', () => {
+        this.refreshMons()
+      })
   }
 
   // Handlers for form inputs
   handleShareId(event) {
-    this.setState({ shareId: event.target.value });
+    this.setState({ shareId: event.target.value })
   }
   handleShareAddress(event) {
-    console.log(event.target.value);
-    this.setState({ shareAddress: event.target.value });
+    console.log(event.target.value)
+    this.setState({ shareAddress: event.target.value })
   }
 
   handleChange(id, event) {
-    this.setState({ value: event.target.value });
+    this.setState({ value: event.target.value })
     //console.log(this.state.value[id], event.target.value)
   }
 
@@ -427,30 +393,30 @@ class App extends Component {
       return (
         <div>
           <label className="monName">{names[mon.species]}</label>
-          <label className="" style={{ float: "right" }}>
-            {"ID: " + mon.id}
+          <label className="" style={{ float: 'right' }}>
+            {'ID: ' + mon.id}
           </label>
         </div>
-      );
-    };
+      )
+    }
 
     // Function that  returns the style of the background image according to Cryptomons' type
     var bgStyle = (Type) => ({
-      backgroundImage: "url(" + bg[Type] + ")",
-      backgroundSize: "210px 240px",
-    });
+      backgroundImage: 'url(' + bg[Type] + ')',
+      backgroundSize: '210px 240px',
+    })
     // div that holds the images (Cryptomon image and background image) of a Cryptomon
     var imgDiv = (mon) => {
       return (
         <div className="monBox" style={bgStyle(mon.monType)}>
           <img
             className="monImg"
-            src={require("./sprites/" + (parseInt(mon.species) + 1) + ".png")}
+            src={require('./sprites/' + (parseInt(mon.species) + 1) + '.png')}
             alt={mon.species}
           />
         </div>
-      );
-    };
+      )
+    }
 
     // div that holds the stats of a Cryptomon
     var statDiv = (mon) => {
@@ -473,16 +439,14 @@ class App extends Component {
             <StatBar percentage={(mon.speed * 100) / 140} />
           </div>
         </div>
-      );
-    };
+      )
+    }
 
     // Create the div with add for sale button
     var addForSaleDiv = (mon) => {
       return (
         <div className="selling-div">
-          <label className="add-for-sale-label">
-            Set creatures price (in Wei):
-          </label>
+          <label className="add-for-sale-label">Set creatures price (in Wei):</label>
           <input
             type="number"
             className="add-for-sale-input"
@@ -492,14 +456,14 @@ class App extends Component {
           <button
             className="rpgui-button"
             type="button"
-            style={{ float: "right" }}
+            style={{ float: 'right' }}
             onClick={() => this.addForSale(mon.id, this.state.value)}
           >
             Add for sale
           </button>
         </div>
-      );
-    };
+      )
+    }
 
     // Create the div with remove from sale button
     var removeFromSaleDiv = (mon) => {
@@ -513,14 +477,14 @@ class App extends Component {
           <button
             className="rpgui-button"
             type="button"
-            style={{ float: "right" }}
+            style={{ float: 'right' }}
             onClick={() => this.removeFromSale(mon.id)}
           >
             Remove from sale
           </button>
         </div>
-      );
-    };
+      )
+    }
 
     // Create the div with buy button
     var buyDiv = (mon) => {
@@ -529,20 +493,20 @@ class App extends Component {
           <div className="sale-price">
             Price (in Wei):
             <br />
-            {mon.price}{" "}
+            {mon.price}{' '}
           </div>
           <div className="sale-owner">Creature Owner: {mon.owner} </div>
           <button
             className="sale-btn rpgui-button"
             type="button"
-            style={{ float: "right" }}
+            style={{ float: 'right' }}
             onClick={() => this.buyMon(mon.id, mon.price)}
           >
             Buy
           </button>
         </div>
-      );
-    };
+      )
+    }
 
     // Create the div with breed choice 1, choice 2 buttons
     var breedDiv = (mon) => {
@@ -551,9 +515,9 @@ class App extends Component {
           <button
             className="br-Choice-btn rpgui-button"
             type="button"
-            style={{ float: "right" }}
+            style={{ float: 'right' }}
             onClick={() => {
-              this.setState({ breedChoice1: mon.id });
+              this.setState({ breedChoice1: mon.id })
             }}
           >
             Choice 1
@@ -561,16 +525,16 @@ class App extends Component {
           <button
             className="br-Choice-btn rpgui-button"
             type="button"
-            style={{ float: "right" }}
+            style={{ float: 'right' }}
             onClick={() => {
-              this.setState({ breedChoice2: mon.id });
+              this.setState({ breedChoice2: mon.id })
             }}
           >
             Choice 2
           </button>
         </div>
-      );
-    };
+      )
+    }
 
     var breedOption = (breedchoice) => {
       if (breedchoice === null) {
@@ -579,17 +543,13 @@ class App extends Component {
             <figure className="my-figure">
               <figcaption>
                 <div className="monBox">
-                  {" "}
-                  <img
-                    className="monImg"
-                    src={require("./sprites/0.png")}
-                    alt={"empty"}
-                  />
+                  {' '}
+                  <img className="monImg" src={require('./sprites/0.png')} alt={'empty'} />
                 </div>
               </figcaption>
             </figure>
           </div>
-        );
+        )
       } else {
         return this.state.cryptomons
           .filter((mon) => mon.id === breedchoice)
@@ -602,9 +562,9 @@ class App extends Component {
                 </figure>
               </div>
             </React.Fragment>
-          ));
+          ))
       }
-    };
+    }
 
     // div with users Cryptomons
     const myCryptomons = this.state.myCryptomons
@@ -620,7 +580,7 @@ class App extends Component {
             {addForSaleDiv(mon)}
           </div>
         </React.Fragment>
-      ));
+      ))
 
     // div with user's Cryptomons that are for sale
     const forSaleCryptomons = this.state.myCryptomons
@@ -636,7 +596,7 @@ class App extends Component {
             {removeFromSaleDiv(mon)}
           </div>
         </React.Fragment>
-      ));
+      ))
 
     // div with Cryptomons available for buy to the user
     const buyCryptomons = this.state.otherCryptomons
@@ -652,7 +612,7 @@ class App extends Component {
             {buyDiv(mon)}
           </div>
         </React.Fragment>
-      ));
+      ))
 
     // div with user's Cryptomons that can be used for breeding
     const forBreedCryptomons = this.state.myCryptomons
@@ -668,42 +628,36 @@ class App extends Component {
             {breedDiv(mon)}
           </div>
         </React.Fragment>
-      ));
+      ))
 
     var cond = (mon) =>
-      (mon.owner.toString().toLowerCase() ===
-        this._account?.toString().toLowerCase() &&
-        !mon.forSale) ||
-      (mon.sharedTo.toString().toLowerCase() ===
-        this._account?.toString().toLowerCase() &&
-        mon.owner?.toString().toLowerCase() !==
-          this._account?.toString().toLowerCase());
+      (mon.owner.toString().toLowerCase() === this._account?.toString().toLowerCase() && !mon.forSale) ||
+      (mon.sharedTo.toString().toLowerCase() === this._account?.toString().toLowerCase() &&
+        mon.owner?.toString().toLowerCase() !== this._account?.toString().toLowerCase())
     // div with user's Cryptomons that can be used to fight with
-    const forFightWithCryptomons = this.state.cryptomons
-      .filter(cond)
-      .map((mon) => (
-        <React.Fragment key={mon.id}>
-          <div className="mon">
-            <figure className="my-figure">
-              {nameDiv(mon)}
-              {imgDiv(mon)}
-              <figcaption>{statDiv(mon)}</figcaption>
-            </figure>
-            <div className="fight-choice-div">
-              <button
-                className="fight-Choice-btn rpgui-button"
-                type="button"
-                style={{ float: "right" }}
-                onClick={() => {
-                  this.setState({ fightChoice1: mon.id });
-                }}
-              >
-                Choice 1
-              </button>
-            </div>
+    const forFightWithCryptomons = this.state.cryptomons.filter(cond).map((mon) => (
+      <React.Fragment key={mon.id}>
+        <div className="mon">
+          <figure className="my-figure">
+            {nameDiv(mon)}
+            {imgDiv(mon)}
+            <figcaption>{statDiv(mon)}</figcaption>
+          </figure>
+          <div className="fight-choice-div">
+            <button
+              className="fight-Choice-btn rpgui-button"
+              type="button"
+              style={{ float: 'right' }}
+              onClick={() => {
+                this.setState({ fightChoice1: mon.id })
+              }}
+            >
+              Choice 1
+            </button>
           </div>
-        </React.Fragment>
-      ));
+        </div>
+      </React.Fragment>
+    ))
 
     // div with Cryptomons that user can fight against
     const forFightAgainstCryptomons = this.state.otherCryptomons
@@ -720,9 +674,9 @@ class App extends Component {
               <button
                 className="fight-Choice-btn rpgui-button"
                 type="button"
-                style={{ float: "right" }}
+                style={{ float: 'right' }}
                 onClick={() => {
-                  this.setState({ fightChoice2: mon.id });
+                  this.setState({ fightChoice2: mon.id })
                 }}
               >
                 Choice 2
@@ -730,7 +684,7 @@ class App extends Component {
             </div>
           </div>
         </React.Fragment>
-      ));
+      ))
 
     // div with user's shared Cryptomons
     const sharedByMe = this.state.myCryptomons
@@ -744,13 +698,11 @@ class App extends Component {
               <figcaption>{statDiv(mon)}</figcaption>
             </figure>
             <div className="sharing-div">
-              <div className="shareTo-owner">
-                Shared to address: {mon.sharedTo}{" "}
-              </div>
+              <div className="shareTo-owner">Shared to address: {mon.sharedTo} </div>
               <button
                 className="stop-sharing-btn rpgui-button"
                 type="button"
-                style={{ float: "right" }}
+                style={{ float: 'right' }}
                 onClick={() => this.stopSharing(mon.id)}
               >
                 Stop sharing
@@ -758,7 +710,7 @@ class App extends Component {
             </div>
           </div>
         </React.Fragment>
-      ));
+      ))
 
     // div with Cryptomons shared to the user
     const sharedToMe = this.state.otherCryptomons
@@ -772,13 +724,11 @@ class App extends Component {
               <figcaption>{statDiv(mon)}</figcaption>
             </figure>
             <div className="sharing-div">
-              <label className="shared-owner">
-                Creature Owner: {mon.owner}{" "}
-              </label>
+              <label className="shared-owner">Creature Owner: {mon.owner} </label>
               <button
                 className="stop-sharing-btn rpgui-button"
                 type="button"
-                style={{ float: "right" }}
+                style={{ float: 'right' }}
                 onClick={() => this.stopSharing(mon.id)}
               >
                 Stop sharing
@@ -786,7 +736,7 @@ class App extends Component {
             </div>
           </div>
         </React.Fragment>
-      ));
+      ))
 
     return (
       // Creation of the different tabs of the UI
@@ -800,14 +750,14 @@ class App extends Component {
               className="rpgui-button golden"
               type="button"
               style={{
-                float: "right",
-                fontSize: "20px",
-                marginTop: "6px",
-                marginRight: "6px",
+                float: 'right',
+                fontSize: '20px',
+                marginTop: '6px',
+                marginRight: '6px',
               }}
               onClick={() => onClickConnect(this)}
             >
-              <p style={{ paddingTop: "12px" }}>{this.state.connectBtnTxt}</p>
+              <p style={{ paddingTop: '12px' }}>{this.state.connectBtnTxt}</p>
             </button>
           </span>
         </div>
@@ -833,13 +783,8 @@ class App extends Component {
               <button
                 className="rpgui-button"
                 type="button"
-                style={{ width: "420px" }}
-                onClick={() =>
-                  this.breedMons(
-                    this.state.breedChoice1,
-                    this.state.breedChoice2
-                  )
-                }
+                style={{ width: '420px' }}
+                onClick={() => this.breedMons(this.state.breedChoice1, this.state.breedChoice2)}
               >
                 Breed choosen creatures
               </button>
@@ -853,30 +798,21 @@ class App extends Component {
               {breedOption(this.state.fightChoice1)}
               {breedOption(this.state.fightChoice2)}
               <label className="winner-label">
-                And the winner is...{" "}
+                And the winner is...{' '}
                 {
                   names[
-                    this.state.cryptomons.find(
-                      (mon) =>
-                        mon.id?.toString() === this.state.winner?.toString()
-                    )?.species
+                    this.state.cryptomons.find((mon) => mon.id?.toString() === this.state.winner?.toString())?.species
                   ]
                 }
               </label>
               <br />
-              <label className="winner-label">
-                Winning creature's Id: {this.state.winner}
-              </label>
+              <label className="winner-label">Winning creature's Id: {this.state.winner}</label>
               <br />
-              <label className="winner-label">
-                Rounds the fight lasted: {this.state.rounds}
-              </label>
+              <label className="winner-label">Rounds the fight lasted: {this.state.rounds}</label>
               <button
                 className="rpgui-button"
                 type="button"
-                onClick={() =>
-                  this.fight(this.state.fightChoice1, this.state.fightChoice2)
-                }
+                onClick={() => this.fight(this.state.fightChoice1, this.state.fightChoice2)}
               >
                 Fight with choosen creatures
               </button>
@@ -897,11 +833,7 @@ class App extends Component {
             <div className="sharing-area">
               <div className="form-line">
                 <label className="form-label">Creature Id:</label>
-                <input
-                  className="form-input"
-                  value={this.state.shareId}
-                  onChange={(e) => this.handleShareId(e)}
-                />
+                <input className="form-input" value={this.state.shareId} onChange={(e) => this.handleShareId(e)} />
               </div>
               <div className="form-line">
                 <label className="form-label">Share to address:</label>
@@ -915,13 +847,8 @@ class App extends Component {
                 <button
                   className="rpgui-button"
                   type="button"
-                  style={{ float: "right" }}
-                  onClick={() =>
-                    this.startSharing(
-                      this.state.shareId,
-                      this.state.shareAddress
-                    )
-                  }
+                  style={{ float: 'right' }}
+                  onClick={() => this.startSharing(this.state.shareId, this.state.shareAddress)}
                 >
                   Share
                 </button>
@@ -935,8 +862,8 @@ class App extends Component {
           </Tab>
         </Tabs>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
