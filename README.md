@@ -44,13 +44,13 @@ Ongoing
 
 - Fix logo, create an 8 bit representaion of the logo (mvp)
 
-- Add erc20, add tokenomics, token utilities, etc (mvp)
+- Add erc20, add tokenomics, token utilities, etc (feature)
 
 - Create NFT Shop replace default shop, that will mint 151 nfts (mvp)
 
-- NFT cards could be glowing aura or eyes (mvp) 
+- NFT cards could be glowing aura or eyes (feature) 
 
-- Fees will be absorbed to rewards, creators, amm and burn pools 
+- Fees will be absorbed to rewards, creators, amm and burn pools (feature)
 
 - Deploy to matic, bsc, avax, moonriver or evm compatible test networks
 - Deploy to matic, bsc, avax, moonriver or evm compatible main networks
@@ -59,4 +59,4 @@ Ongoing
 - Advertise, submit to dappradar, coingecko, vlogs, etc., 
 
 Future Plan
-- Add free to play, mini game (e.g. mini moba or rpg), buy nft skin with erc20, etc
+- Add free to play, mini game (e.g. mini moba or rpg), buy nft skin with erc20, etc (feature)
