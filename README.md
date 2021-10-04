@@ -32,31 +32,29 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Remaining Tasks
 
 Finished
-- Change naming e.g. cryptoMons to creatures..ok..6/28
-- Change to 8bit theme for ui..ok..07/02
-- Fix ui responsiveness and css, etc..ok..07/14
-- Change creature names and artwork from cryptomons to mythical creatures (mvp) ..ok..09/13
+- Change naming e.g. cryptoMons to creatures 6/28
+- Change to 8bit theme for ui 07/02
+- Fix ui responsiveness and css, 07/14
+- Change creature names and artwork (mvp) 09/13
 
 Ongoing
-- Convert frontend to typescript, next, hooks, etc (mvp)
+- Convert frontend to typescript (mvp)
 
-- Fix wallet , use web3-react and injected connector (mvp)
+- Fix wallet, use web3-react and injected connector (mvp)
 
 - Fix logo, create an 8 bit representaion of the logo (mvp)
 
-- Add erc20, add tokenomics, token utilities, etc (feature)
-
 - Create NFT Shop replace default shop, that will mint 151 nfts (mvp)
+
+- Test and polish (mvp)
+
+- Add erc20, add tokenomics, token utilities, etc (feature)
 
 - NFT cards could be glowing aura or eyes (feature) 
 
-- Fees will be absorbed to rewards, creators, amm and burn pools (feature)
+- Deploy to matic, bsc, moonriver testnets
+- Deploy to matic, bsc, moonriver mainnets
 
-- Deploy to matic, bsc, avax, moonriver or evm compatible test networks
-- Deploy to matic, bsc, avax, moonriver or evm compatible main networks
+- Create landing page, tg ann channel
+- Advertise, submit to dappradar, etc. 
 
-- Create landing page, twitter, discord, and tg (ann)
-- Advertise, submit to dappradar, coingecko, vlogs, etc., 
-
-Future Plan
-- Add free to play, mini game (e.g. mini moba or rpg), buy nft skin with erc20, etc (feature)

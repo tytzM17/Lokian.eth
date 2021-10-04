@@ -1,14 +1,18 @@
 /* global BigInt */
-import React, { Component } from 'react'
+import React from 'react'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Tab, Tabs } from 'react-bootstrap'
 import StatBar from './StatBar'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { Spinner } from '../components/Spinner'
+
 // Library to work with Etherium blockchain
+import { injected } from '../connectors'
 
 import contrInterface from './interface.json' // Load contract json file
+
 // Load all the background images for the 10 different Cryptomon types
 import bg0 from './sprites/background/0.png'
 import bg1 from './sprites/background/1.png'
@@ -21,11 +25,19 @@ import bg7 from './sprites/background/7.png'
 import bg8 from './sprites/background/8.png'
 import bg9 from './sprites/background/9.png'
 import bg10 from './sprites/background/10.png'
+
 // Utils
 import formatWallet from './utils/formatWallet'
+import { useWeb3React } from '@web3-react/core'
 
-// The contact deployment address in an EVM based blockchain
-const CONTRACT_ADDRESS = '0x69e8d9a132677A39629f749EE3135FBDB9FCe879' // win-10-workstation-ganache-contract-address
+enum ConnectorNames { Injected = 'Injected' }
+
+const connectorsByName: { [connectorName in ConnectorNames]: any } = {
+  [ConnectorNames.Injected]: injected
+}
+
+// Contact deployment address, ganache
+const CONTRACT_ADDRESS = '0x69e8d9a132677A39629f749EE3135FBDB9FCe879' 
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]
@@ -201,7 +213,22 @@ async function onClickConnect(self) {
   // self.refreshMons();
 }
 
-class App extends Component {
+function Account() {
+  const { account } = useWeb3React()
+
+  return (
+      <span>
+        {account === null
+          ? '-'
+          : account
+          ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}`
+          : ''}
+      </span>
+  )
+}
+
+function App() {
+  
   constructor(props) {
     super(props)
 
@@ -231,6 +258,23 @@ class App extends Component {
 
     this.handleChange = this.handleChange.bind(this)
   }
+
+  const context = useWeb3React<Web3Provider>()
+  const { connector, account, activate, deactivate, active, error } = context
+
+  // handle logic to recognize the connector currently being activated
+  const [activatingConnector, setActivatingConnector] = React.useState<any>()
+  React.useEffect(() => {
+    if (activatingConnector && activatingConnector === connector) {
+      setActivatingConnector(undefined)
+    }
+  }, [activatingConnector, connector])
+
+  // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
+  const triedEager = useEagerConnect()
+
+  // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
+  useInactiveListener(!triedEager || !!activatingConnector)
 
   async componentDidMount() {
     // const web3Modal = new Web3Modal();
@@ -745,7 +789,15 @@ class App extends Component {
 
         <div className="AppTitle">
           LOKIAN.ETH
+
+          //  wallet button
           <span>
+          {
+            const currentConnector = connectorsByName[0]
+            const activating = currentConnector === activatingConnector
+            const connected = currentConnector === connector
+            const disabled = !triedEager || !!activatingConnector || connected || !!error
+          }
             <button
               className="rpgui-button golden"
               type="button"
@@ -755,9 +807,16 @@ class App extends Component {
                 marginTop: '6px',
                 marginRight: '6px',
               }}
-              onClick={() => onClickConnect(this)}
+              onClick={() => {
+                // onClickConnect(this)
+                setActivatingConnector(currentConnector)
+                activate(currentConnector)
+              }}
+              disabled={disabled}
             >
-              <p style={{ paddingTop: '12px' }}>{this.state.connectBtnTxt}</p>
+            {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
+              // <p style={{ paddingTop: '12px' }}>{this.state.connectBtnTxt}</p>
+              <Account />
             </button>
           </span>
         </div>
