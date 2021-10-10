@@ -36,10 +36,9 @@ Finished
 - Change to 8bit theme for ui 07/02
 - Fix ui responsiveness and css, 07/14
 - Change creature names and artwork (mvp) 09/13
+- Convert frontend to typescript (mvp) 10/10
 
 Ongoing
-- Convert frontend to typescript (mvp)
-
 - Fix wallet, use web3-react and injected connector (mvp)
 
 - Fix logo, create an 8 bit representaion of the logo (mvp)
