@@ -1,4 +1,4 @@
-# Lokian.eth: A dapp collectible card game featuring mythical creatures nft, farm tokens for defi, will be deployed soon on evm-based networks.
+# Lokiean.eth: A trading card game dapp featuring NFT cards, share, fight and breed mythical creatures in solidity blockchains.
 
 <!-- <img src="./screenshots/fighting_tab.png" alt="" width="1000em" height="500em">
  -->
@@ -18,9 +18,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Steps for deployment and use of our DApp
 
-- Firstly, deploy our smart contract found in src/contract.sol (project.eth.sol). We tested this localy on a private blockchain using [Ganache](https://www.trufflesuite.com/ganache)
-- In the main file of our user interface src/App.js specify the address where you deployed the contract in the constant CONTRACT_ADDRESS.
-- Install the [metamask](https://metamask.io/) extension on your browser to handle your provate blockchain account. the project has been tested with the Chrome and Mozilla browsers.
+- Firstly, deploy our smart contract found in src/project.eth.sol. We tested this locally on a private blockchain using [Ganache](https://www.trufflesuite.com/ganache)
+- In the main file of our user interface src/App.tsx specify the address where you deployed the contract in the constant CONTRACT_ADDRESS.
+- Install the [metamask](https://metamask.io/) extension on your browser to handle your provate blockchain account. The project has been tested with the Chrome and Mozilla browsers.
 - In the project directory run:
 
     **`npm install`** This installs all the necessary dependencies to build our application
@@ -37,10 +37,9 @@ Finished
 - Fix ui responsiveness and css, 07/14
 - Change creature names and artwork (mvp) 09/13
 - Convert frontend to typescript (mvp) 10/10
+- Fix wallet, use web3-react and injected connector (mvp) 10/10
 
 Ongoing
-- Fix wallet, use web3-react and injected connector (mvp)
-
 - Fix logo, create an 8 bit representaion of the logo (mvp)
 
 - Create NFT Shop, create erc-721 smart contract that will mint 151 nfts (mvp)
