@@ -11,6 +11,12 @@ import { Spinner } from './components/Spinner'
 // Library to work with Ethereum like blockchain
 import { injected } from './wallet/connectors'
 import { useEagerConnect, useInactiveListener } from './wallet/hooks'
+import {
+  NoEthereumProviderError,
+  UserRejectedRequestError as UserRejectedRequestErrorInjected
+} from '@web3-react/injected-connector'
+import { Web3ReactProvider, useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
+import { Web3Provider } from '@ethersproject/providers'
 
 import contrInterface from './interface.json' // Load contract json file
 
@@ -27,8 +33,7 @@ import bg8 from './sprites/background/8.png'
 import bg9 from './sprites/background/9.png'
 import bg10 from './sprites/background/10.png'
 
-// Utils
-import { useWeb3React } from '@web3-react/core'
+
 
 enum ConnectorNames { Injected = 'Injected' }
 
@@ -219,7 +224,20 @@ function Account() {
   )
 }
 
-
+function getErrorMessage(error: Error) {
+  if (error instanceof NoEthereumProviderError) {
+    return 'No Ethereum browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.'
+  } else if (error instanceof UnsupportedChainIdError) {
+    return "You're connected to an unsupported network."
+  } else if (
+    error instanceof UserRejectedRequestErrorInjected
+  ) {
+    return 'Please authorize this website to access your Ethereum account.'
+  } else {
+    console.error(error)
+    return 'An unknown error occurred. Check the console for more details.'
+  }
+}
 
 function App() {
   const [cryptomons, setCryptomons] = useState([]);
@@ -712,11 +730,6 @@ function App() {
       </React.Fragment>
     ))
 
-  // Wallet pre-requisites
-  const currentConnector = connectorsByName[0]
-  const activating = currentConnector === activatingConnector
-  const connected = currentConnector === connector
-  const disabled = !triedEager || !!activatingConnector || connected || !!error
 
   // Function that does all the rendering of the application
   return (
@@ -727,38 +740,14 @@ function App() {
       <div className="AppTitle">
         LOKiEAN
 
-        {/* wallet button */}
-        <span>
-          <button
-            className="rpgui-button golden"
-            type="button"
-            style={{
-              float: 'right',
-              fontSize: '20px',
-              marginTop: '6px',
-              marginRight: '6px',
-            }}
-            onClick={() => {
-              setActivatingConnector(currentConnector)
-              activate(currentConnector)
-            }}
-            disabled={disabled}
-          >
-            {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
-            <Account />
-          </button>
-
+        {/* wallet buttons */}       
+        <span style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}>
+          
           {/* wallet logout */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div>
             {(active || error) && (
               <button
-                style={{
-                  height: '3rem',
-                  marginTop: '2rem',
-                  borderRadius: '1rem',
-                  borderColor: 'red',
-                  cursor: 'pointer'
-                }}
+               className="rpgui-button"
                 onClick={() => {
                   deactivate()
                 }}
@@ -769,6 +758,37 @@ function App() {
 
             {!!error && <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>{getErrorMessage(error)}</h4>}
           </div>
+
+          {Object.keys(connectorsByName).map(name => {
+            const currentConnector = connectorsByName[name]
+            const activating = currentConnector === activatingConnector
+            const connected = currentConnector === connector
+            const disabled = !triedEager || !!activatingConnector || connected || !!error
+
+            return (
+              <button
+                className="rpgui-button golden"
+                type="button"
+                style={{
+                  fontSize: '20px',
+                  paddingTop: '14px'
+                }}
+                onClick={() => {
+                  setActivatingConnector(currentConnector)
+                  activate(currentConnector)
+                }}
+                disabled={disabled}
+              >
+                {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
+                <Account />
+                {" "}
+                <div style={{ display: 'none' }}>{name}</div>
+                {!account ? `Connect wallet` : '' } 
+              </button>
+            )
+
+          })
+          }
         </span>
       </div>
 
