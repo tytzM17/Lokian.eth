@@ -44,7 +44,7 @@ Ongoing
 
 - Fix logo, create an 8 bit representaion of the logo (mvp)
 
-- Create NFT Shop replace default shop, that will mint 151 nfts (mvp)
+- Create NFT Shop, create erc-721 smart contract that will mint 151 nfts (mvp)
 
 - Test and polish (mvp)
 
@@ -52,9 +52,9 @@ Ongoing
 
 - NFT cards could be glowing aura or eyes (feature) 
 
-- Deploy to matic, bsc, moonriver testnets
-- Deploy to matic, bsc, moonriver mainnets
+- Deploy to matic, fantom, moonriver testnets
+- Deploy to matic, fantom, moonriver mainnets
 
-- Create landing page, tg ann channel
+- Create landing page, tg channel
 - Advertise, submit to dappradar, etc. 
 

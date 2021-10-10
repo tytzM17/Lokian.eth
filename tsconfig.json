@@ -1,29 +1,32 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": false,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react", // changed from preserve
-    "sourceMap": true // added
+    "jsx": "react",
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true
   },
   "exclude": [
     "node_modules",
-    "dist", // added
-    // "src/sprites",
-    // "src/sprites/background"
+    "dist"
   ],
   "include": [
-    // "next-env.d.ts", // removed, coz next config won't be use
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "src/serviceWorker.js"
   ]
 }
