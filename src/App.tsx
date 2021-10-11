@@ -17,6 +17,7 @@ import {
 } from '@web3-react/injected-connector'
 import { Web3ReactProvider, useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
+import { Contract, ContractFunction } from "@ethersproject/contracts";
 
 import contrInterface from './interface.json' // Load contract json file
 
@@ -202,12 +203,11 @@ const names = [
   'Baba_Roga',
 ]
 
-async function getMons(web3, account) {
-  const contr = new web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, {
-    from: account,
-  })
-  const totalMons = parseInt(await contr.methods.totalMons().call())
-  return Promise.all([...Array(totalMons).keys()].map((id) => contr.methods.mons(id).call()))
+async function getMons(_library, _account) {
+ 
+  const contr = new Contract(CONTRACT_ADDRESS, contrInterface,  _library.getSigner(_account))
+  const totalMons = parseInt(await contr.totalMons())
+  return Promise.all([...Array(totalMons).keys()].map((id) => contr.mons(id)))
 }
 
 function Account() {
@@ -256,7 +256,7 @@ function App() {
   const [shareAddress, setShareAddress] = useState(''); // Used in shareAddress form input field
 
   const context = useWeb3React<Web3Provider>()
-  const { connector, account, activate, deactivate, active, error } = context
+  const { connector, account, library, activate, deactivate, active, error } = context
 
   // handle logic to recognize the connector currently being activated
   const [activatingConnector, setActivatingConnector] = React.useState<any>()
@@ -264,6 +264,8 @@ function App() {
     if (activatingConnector && activatingConnector === connector) {
       setActivatingConnector(undefined)
     }
+
+    refreshMons();
   }, [activatingConnector, connector])
 
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
@@ -274,8 +276,9 @@ function App() {
 
   // Change the list of created Crypromons saved in the state so UI refreshes after this call
   function refreshMons() {
-    getMons(_web3, account).then((_mons) => {
-      _getMons = null;
+    if (!library || !account) return
+    getMons(library, account).then((_mons) => {
+      
       setCryptomons(_mons);
       setMyCryptomons(_mons.filter(mon => mon.owner?.toString()?.toLowerCase() === account?.toString()?.toLowerCase()));
       setOtherCryptomons(_mons.filter((mon) => mon.owner.toLowerCase() !== account));
@@ -300,7 +303,7 @@ function App() {
       toast.error('🦄 Dude, price should be above 0')
       return
     }
-    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: _account })
+    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
     contr.methods
       .addForSale(id, price)
       .send()
@@ -312,7 +315,7 @@ function App() {
 
   // Function that removes a Cryptomon from sale through a smart contract function
   function removeFromSale(id) {
-    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: _account })
+    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
     contr.methods
       .removeFromSale(id)
       .send()
@@ -324,7 +327,7 @@ function App() {
 
   // Function that breeds 2 Cryptomons through a smart contract function
   function breedMons(id1, id2) {
-    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: _account, gas: 3000000 })
+    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account, gas: 3000000 })
     contr.methods
       .breedMons(id1, id2)
       .send()
@@ -336,7 +339,7 @@ function App() {
 
   // Function that allows 2 Cryptomons to fight through a smart contract function
   async function fight(id1, id2) {
-    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: _account })
+    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
     const results = await contr.methods.fight(id1, id2).call()
     setWinner(results[0])
     setRounds(results[1])
@@ -345,7 +348,7 @@ function App() {
 
   // Function that starts sharing a Cryptomon to another address through a smart contract function
   function startSharing(id, address) {
-    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: _account })
+    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
     contr.methods
       .startSharing(id, address)
       .send()
@@ -356,7 +359,7 @@ function App() {
 
   // Function that stops sharing a Cryptomon with other addresses through a smart contrct function
   function stopSharing(id) {
-    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: _account })
+    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
     contr.methods
       .stopSharing(id)
       .send()
@@ -680,7 +683,7 @@ function App() {
 
   // div with user's shared Cryptomons
   const sharedByMe = myCryptomons
-    .filter((mon) => mon.sharedTo.toLowerCase() !== _account)
+    .filter((mon) => mon.sharedTo.toLowerCase() !== account)
     .map((mon) => (
       <React.Fragment key={mon.id}>
         <div className="mon">
@@ -706,7 +709,7 @@ function App() {
 
   // div with Cryptomons shared to the user
   const sharedToMe = otherCryptomons
-    .filter((mon) => mon.sharedTo.toLowerCase() === _account)
+    .filter((mon) => mon.sharedTo.toLowerCase() === account)
     .map((mon) => (
       <React.Fragment key={mon.id}>
         <div className="mon">
@@ -738,7 +741,7 @@ function App() {
       <ToastContainer />
 
       <div className="AppTitle">
-        LOKiEAN
+        LOKiAN
 
         {/* wallet buttons */}       
         <span style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}>
