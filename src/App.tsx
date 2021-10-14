@@ -18,7 +18,9 @@ import {
 import { Web3ReactProvider, useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
 import { Contract, ContractFunction } from "@ethersproject/contracts";
+import { BigNumber } from "@ethersproject/bignumber";
 
+// abi
 import contrInterface from './interface.json' // Load contract json file
 
 // Load all the background images for the 10 different Cryptomon types
@@ -33,8 +35,6 @@ import bg7 from './sprites/background/7.png'
 import bg8 from './sprites/background/8.png'
 import bg9 from './sprites/background/9.png'
 import bg10 from './sprites/background/10.png'
-
-
 
 enum ConnectorNames { Injected = 'Injected' }
 
@@ -204,8 +204,7 @@ const names = [
 ]
 
 async function getMons(_library, _account) {
- 
-  const contr = new Contract(CONTRACT_ADDRESS, contrInterface,  _library.getSigner(_account))
+  const contr = new Contract(CONTRACT_ADDRESS, contrInterface, _library.getSigner(_account))
   const totalMons = parseInt(await contr.totalMons())
   return Promise.all([...Array(totalMons).keys()].map((id) => contr.mons(id)))
 }
@@ -278,18 +277,31 @@ function App() {
   function refreshMons() {
     if (!library || !account) return
     getMons(library, account).then((_mons) => {
-      
-      setCryptomons(_mons);
-      setMyCryptomons(_mons.filter(mon => mon.owner?.toString()?.toLowerCase() === account?.toString()?.toLowerCase()));
-      setOtherCryptomons(_mons.filter((mon) => mon.owner.toLowerCase() !== account));
+      // map result 
+      const monsMap = _mons.map(mon => ({ 
+        atk: mon.atk, 
+        def: mon.def,
+        evolve: mon.evolve,
+        forSale: mon.forSale,
+        hp: mon.hp,
+        id: (BigNumber.from(mon.id._hex)).toNumber(),
+        monType: mon.monType,
+        owner: mon.owner,
+        price: (BigNumber.from(mon.price._hex)).toBigInt(),
+        sharedTo: mon.sharedTo,
+        species: mon.species,
+        speed: mon.speed
+      }))
+      setCryptomons(monsMap);
+      setMyCryptomons(monsMap.filter(mon => mon.owner === account));
+      setOtherCryptomons(monsMap.filter((mon) => mon.owner !== account));
     })
   }
 
   // Function that buys a Cryptomon through a smart contract function
   function buyMon(id, price) {
-    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
-    contr.methods
-      .buyMon(id)
+    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+    contr.buyMon(id)
       .send({ value: BigInt(price) + BigInt(1) + '' })
       .on('confirmation', () => {
         toast('Success')
@@ -298,19 +310,22 @@ function App() {
   }
 
   // Function that adds a Cryptomon for sale through a smart contract function
-  function addForSale(id, price) {
+  async function addForSale(id, price) {
     if (price === 0 || price === '0') {
       toast.error('🦄 Dude, price should be above 0')
       return
     }
-    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
-    contr.methods
-      .addForSale(id, price)
-      .send()
-      .on('confirmation', () => {
-        toast('Success')
-        refreshMons()
-      })
+    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+    const tx = await contr.addForSale(id, price);
+    const receipt = await tx.wait();
+    if (receipt && receipt.status === 1) {
+      toast.success(`Success, Tx hash: ${receipt.transactionHash}`)
+      refreshMons()
+    }
+
+    if (receipt && receipt.status === 0) {
+      toast.error(`Error, Tx hash: ${receipt.transactionHash}`)
+    }
   }
 
   // Function that removes a Cryptomon from sale through a smart contract function
