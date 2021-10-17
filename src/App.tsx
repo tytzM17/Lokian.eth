@@ -1,4 +1,3 @@
-/* global BigInt */
 import React, { useEffect, useState } from 'react'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -15,9 +14,8 @@ import {
   NoEthereumProviderError,
   UserRejectedRequestError as UserRejectedRequestErrorInjected
 } from '@web3-react/injected-connector'
-import { Web3ReactProvider, useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
-import { Web3Provider } from '@ethersproject/providers'
-import { Contract, ContractFunction } from "@ethersproject/contracts";
+import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
+import { Contract } from "@ethersproject/contracts";
 import { BigNumber } from "@ethersproject/bignumber";
 
 // abi
@@ -299,14 +297,19 @@ function App() {
   }
 
   // Function that buys a Cryptomon through a smart contract function
-  function buyMon(id, price) {
+  async function buyMon(id, price) {
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    contr.buyMon(id)
-      .send({ value: BigInt(price) + BigInt(1) + '' })
-      .on('confirmation', () => {
-        toast('Success')
-        refreshMons()
-      })
+    let overrides = { value: BigInt(price) + BigInt(1) + '' };
+    const tx = await contr.buyMon(id, overrides);
+    const recpt = await tx.wait();
+    if (recpt && recpt.status === 1) {
+      toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
+      refreshMons()
+    }
+    
+    if (recpt && recpt.status === 0) {
+      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+    }
   }
 
   // Function that adds a Cryptomon for sale through a smart contract function
@@ -329,41 +332,56 @@ function App() {
   }
 
   // Function that removes a Cryptomon from sale through a smart contract function
-  function removeFromSale(id) {
-    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
-    contr.methods
-      .removeFromSale(id)
-      .send()
-      .on('confirmation', () => {
-        toast('Success')
-        refreshMons()
-      })
+  async function removeFromSale(id) {
+    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+    const tx = await contr.removeFromSale(id);
+    const recpt = await tx.wait();
+    if (recpt && recpt.status === 1) {
+      toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
+      refreshMons()
+    }
+    
+    if (recpt && recpt.status === 0) {
+      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+    }
   }
 
   // Function that breeds 2 Cryptomons through a smart contract function
-  function breedMons(id1, id2) {
-    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account, gas: 3000000 })
-    contr.methods
-      .breedMons(id1, id2)
-      .send()
-      .on('confirmation', () => {
-        toast('Success') // alert user if success
-        refreshMons()
-      })
+  async function breedMons(id1, id2) {
+    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account));
+    const tx = await contr.breedMons(id1, id2)
+    const recpt = await tx.wait()
+    if (recpt && recpt.status) {
+      toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
+      refreshMons()
+    }
+    
+    if (recpt && !recpt.status) {
+      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+    } 
   }
 
   // Function that allows 2 Cryptomons to fight through a smart contract function
   async function fight(id1, id2) {
-    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
-    const results = await contr.methods.fight(id1, id2).call()
-    setWinner(results[0])
-    setRounds(results[1])
-    refreshMons()
+    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+    const res = await contr.functions.fight(id1, id2)
+    // const recpt = await tx.wait()
+    if (res && res.length) {
+      
+      const winner = (BigNumber.from(res[0]._hex)).toNumber()
+      setWinner(winner)
+      setRounds(res[1])
+      refreshMons()
+    }
+    
+    if (!res || !res.length) {
+      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+    }
   }
 
   // Function that starts sharing a Cryptomon to another address through a smart contract function
   function startSharing(id, address) {
-    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
+    const contr = new Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
     contr.methods
       .startSharing(id, address)
       .send()
