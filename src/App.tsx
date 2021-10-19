@@ -365,7 +365,6 @@ function App() {
   async function fight(id1, id2) {
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
     const res = await contr.functions.fight(id1, id2)
-    // const recpt = await tx.wait()
     if (res && res.length) {
       
       const winner = (BigNumber.from(res[0]._hex)).toNumber()
@@ -380,25 +379,34 @@ function App() {
   }
 
   // Function that starts sharing a Cryptomon to another address through a smart contract function
-  function startSharing(id, address) {
-    const contr = new Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
-    contr.methods
-      .startSharing(id, address)
-      .send()
-      .on('confirmation', () => {
-        refreshMons()
-      })
+  async function startSharing(id, address) {
+    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+    const tx = await contr.startSharing(id, address)
+    const recpt = await tx.wait()
+    if (recpt && recpt.status) {
+      toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
+      refreshMons()
+    }
+    
+    if (recpt && !recpt.status) {
+      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+    }  
+      
   }
 
   // Function that stops sharing a Cryptomon with other addresses through a smart contrct function
-  function stopSharing(id) {
-    const contr = new _web3.eth.Contract(contrInterface, CONTRACT_ADDRESS, { from: account })
-    contr.methods
-      .stopSharing(id)
-      .send()
-      .on('confirmation', () => {
-        refreshMons()
-      })
+  async function stopSharing(id) {
+    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+    const tx = await contr.stopSharing(id)
+    const recpt = await tx.wait()
+    if (recpt && recpt.status) {
+      toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
+      refreshMons()
+    }
+    
+    if (recpt && !recpt.status) {
+      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+    }
   }
 
   // Handlers for form inputs
@@ -742,7 +750,7 @@ function App() {
 
   // div with Cryptomons shared to the user
   const sharedToMe = otherCryptomons
-    .filter((mon) => mon.sharedTo.toLowerCase() === account)
+    .filter((mon) => mon.sharedTo === account)
     .map((mon) => (
       <React.Fragment key={mon.id}>
         <div className="mon">
