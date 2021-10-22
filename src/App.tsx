@@ -792,7 +792,13 @@ function App() {
               <button
                 className="rpgui-button"
                 onClick={() => {
-                  deactivate()
+                  deactivate();
+                  setCryptomons([]);
+                  setMyCryptomons([]);
+                  setOtherCryptomons([]);
+                  setWinner(null);
+                  setRounds(null);
+                  setValue(0);
                 }}
               >
                 Logout
