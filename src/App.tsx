@@ -41,10 +41,10 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
 }
 
 // Contact deployment address, ganache
-const CONTRACT_ADDRESS = '0x69e8d9a132677A39629f749EE3135FBDB9FCe879'
+const CONTRACT_ADDRESS = '0xE4A281168BfFE4132A51Fc9e4a132d7F166207b5';
 
 // Add background images in an array for easy access
-const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]
+const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
 
 // Add all 151 Cryptomon names in an array
 const names = [
