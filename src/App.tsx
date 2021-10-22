@@ -366,15 +366,14 @@ function App() {
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
     const res = await contr.functions.fight(id1, id2)
     if (res && res.length) {
-      
-      const winner = (BigNumber.from(res[0]._hex)).toNumber()
-      setWinner(winner)
-      setRounds(res[1])
-      refreshMons()
+      const winner = (BigNumber.from(res[0]._hex)).toNumber();
+      setWinner(winner);
+      setRounds(res[1]);
+      refreshMons();
     }
     
     if (!res || !res.length) {
-      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+      toast.error(`Error, Tx hash: ${recpt.transactionHash}`);
     }
   }
 
@@ -886,7 +885,11 @@ function App() {
             <button
               className="rpgui-button"
               type="button"
-              onClick={() => fight(fightChoice1, fightChoice2)}
+              onClick={() => {
+                setWinner(null);
+                setRounds(null);
+                fight(fightChoice1, fightChoice2)
+              }}
             >
               Fight with choosen creatures
             </button>

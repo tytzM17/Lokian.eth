@@ -435,6 +435,13 @@ contract Cryptomons {
                 hp2 = hp2 - damage(id1, id2);
             }
         } while (hp1 > 0 && hp2>0);
+
+        // check hp's 
+        if (hp1 == 0) winnerId = id2;
+        if (hp2 == 0) winnerId = id1;
+        if (hp1 == hp2) winnerId = 1000; // it's a tie
+        if ((id1 != 0 || id2 !=0) && winnerId == 0) winnerId = 2000; // unknown winner
+
         return (winnerId, round);
     }
     
