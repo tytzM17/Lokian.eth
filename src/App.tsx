@@ -276,8 +276,8 @@ function App() {
     if (!library || !account) return
     getMons(library, account).then((_mons) => {
       // map result 
-      const monsMap = _mons.map(mon => ({ 
-        atk: mon.atk, 
+      const monsMap = _mons.map(mon => ({
+        atk: mon.atk,
         def: mon.def,
         evolve: mon.evolve,
         forSale: mon.forSale,
@@ -306,7 +306,7 @@ function App() {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
       refreshMons()
     }
-    
+
     if (recpt && recpt.status === 0) {
       toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
     }
@@ -340,7 +340,7 @@ function App() {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
       refreshMons()
     }
-    
+
     if (recpt && recpt.status === 0) {
       toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
     }
@@ -355,10 +355,10 @@ function App() {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
       refreshMons()
     }
-    
+
     if (recpt && !recpt.status) {
       toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
-    } 
+    }
   }
 
   // Function that allows 2 Cryptomons to fight through a smart contract function
@@ -371,7 +371,7 @@ function App() {
       setRounds(res[1]);
       refreshMons();
     }
-    
+
     if (!res || !res.length) {
       toast.error(`Error, Tx hash: ${recpt.transactionHash}`);
     }
@@ -386,11 +386,11 @@ function App() {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
       refreshMons()
     }
-    
+
     if (recpt && !recpt.status) {
       toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
-    }  
-      
+    }
+
   }
 
   // Function that stops sharing a Cryptomon with other addresses through a smart contrct function
@@ -402,7 +402,7 @@ function App() {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
       refreshMons()
     }
-    
+
     if (recpt && !recpt.status) {
       toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
     }
@@ -783,14 +783,14 @@ function App() {
       <div className="AppTitle">
         LOKiAN
 
-        {/* wallet buttons */}       
+        {/* wallet buttons */}
         <span style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}>
-          
+
           {/* wallet logout */}
           <div>
             {(active || error) && (
               <button
-               className="rpgui-button"
+                className="rpgui-button"
                 onClick={() => {
                   deactivate()
                 }}
@@ -826,7 +826,7 @@ function App() {
                 <Account />
                 {" "}
                 <div style={{ display: 'none' }}>{name}</div>
-                {!account ? `Connect wallet` : '' } 
+                {!account ? `Connect wallet` : ''}
               </button>
             )
 
@@ -877,11 +877,25 @@ function App() {
                 cryptomons.find((mon) => mon.id?.toString() === winner?.toString())?.species
                 ]
               }
+              {
+                winner === 1000 ? "no one, it's a tie" : ''
+              }
+              {
+                winner === 2000 ? "unknown" : ''
+              }
             </label>
-            <br />
-            <label className="winner-label">Winning creature's Id: {winner}</label>
-            <br />
-            <label className="winner-label">Rounds the fight lasted: {rounds}</label>
+
+            {
+              winner !== 1000 || winner !== 2000 ?
+
+                (<>
+                  <br />
+                  <label className="winner-label">Winning creature's Id: {winner}</label>
+                  <br />
+                  <label className="winner-label">Rounds the fight lasted: {rounds}</label>
+                </>) : ''
+            }
+
             <button
               className="rpgui-button"
               type="button"
