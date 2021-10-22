@@ -883,6 +883,7 @@ function App() {
                 cryptomons.find((mon) => mon.id?.toString() === winner?.toString())?.species
                 ]
               }
+              {/* untested */}
               {
                 winner === 1000 ? "no one, it's a tie" : ''
               }
