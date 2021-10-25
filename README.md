@@ -32,27 +32,26 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Remaining Tasks
 
 Finished
-- Change naming e.g. cryptoMons to creatures 6/28
-- Change to 8bit theme for ui 07/02
-- Fix ui responsiveness and css, 07/14
-- Change creature names and artwork (mvp) 09/13
-- Convert frontend to typescript (mvp) 10/10
-- Fix wallet, use web3-react and injected connector (mvp) 10/10
+- Change naming e.g. cryptoMons to creatures 6/28/2021
+- Change to 8bit theme for ui 07/02/2021
+- Fix ui responsiveness and css, 07/14/2021
+- Change creature names and artwork (mvp) 09/13/2021
+- Convert frontend to typescript (mvp) 10/10/2021
+- Fix wallet, use web3-react and injected connector (mvp) 10/10/2021
+- Fix logo, create an 8 bit representaion of the logo (mvp) 10/26/2021
 
 Ongoing
-- Fix logo, create an 8 bit representaion of the logo (mvp)
-
-- Create NFT Shop, create erc-721 smart contract that will mint 151 nfts (mvp)
+- Change buyMon, addForSale, removeForSale, to be on the nft marketplace itself
+- Change contract to accept erc-1155 (e.g. class Cryptomon is ERC1155Holder)
+    a. Total of 148 creatures x 1000 nft mint x $0,25 each
+    b. Total of 3 rare creatures (skvader, baba roga, baba yaga) x 100 nft mint x $9.99
+- Create account in nftTrade, create erc-1155 smart contract that will mint nfts, etc (mvp)
 
 - Test and polish (mvp)
-
-- Add erc20, add tokenomics, token utilities, etc (feature)
-
-- NFT cards could be glowing aura or eyes (feature) 
 
 - Deploy to matic, fantom, moonriver testnets
 - Deploy to matic, fantom, moonriver mainnets
 
 - Create landing page, tg channel
-- Advertise, submit to dappradar, etc. 
+- Advertise, submit to dappradar, idos, airdrops, etc. 
 

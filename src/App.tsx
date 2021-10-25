@@ -781,7 +781,9 @@ function App() {
       <ToastContainer />
 
       <div className="AppTitle">
-        LOKiAN
+      <img src="/favicon-16x16.png" alt="lokian-logo" />
+      {" "}
+      <span>L O K I A N </span>
 
         {/* wallet buttons */}
         <span style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}>
