@@ -43,17 +43,17 @@ Finished
 Ongoing
 - Create erc-1155 smart contract that will mint nfts, etc (mvp)
 
-- Create account in nftTrade 
+- Create account in nftTrade (mvp)
     a. Total of 148 creatures x 1000 nft mint x $0,25 each
     b. Total of 3 rare creatures (skvader, baba roga, baba yaga) x 100 nft mint x $9.99
 
-- Change buyMon, addForSale, removeForSale, to be on the nft marketplace itself
-- Change contract to accept erc-1155 (e.g. class Cryptomon is ERC1155Holder)
+- Change buyMon, addForSale, removeForSale, to be on the nft marketplace itself (mvp)
+- Change contract to accept erc-1155 (e.g. class Cryptomon is ERC1155Holder) (mvp)
 
 - Test and polish (mvp)
 
-- Deploy and test to matic, fantom, moonriver testnets
-- Deploy to matic, fantom, moonriver mainnets
+- Deploy and test to matic, fantom, moonriver testnets (mvp)
+- Deploy to matic, fantom, moonriver mainnets (mvp)
 
 - Create landing page, tg channel, search investors
 - Advertise, submit to dappradar, idos, airdrops, etc. 
