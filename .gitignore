@@ -24,5 +24,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # arts
-
 /src/sprites/*
