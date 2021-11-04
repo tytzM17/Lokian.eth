@@ -40,7 +40,7 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.Injected]: injected
 }
 
-// Contact deployment address, ganache
+// Contact deployment address, e.g. ganache
 const CONTRACT_ADDRESS = '0xE4A281168BfFE4132A51Fc9e4a132d7F166207b5';
 
 // Add background images in an array for easy access
