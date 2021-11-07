@@ -19,8 +19,8 @@ import { Contract } from "@ethersproject/contracts";
 import { BigNumber } from "@ethersproject/bignumber";
 
 // abi
-import contrInterface from './interface.json' // Load contract json file
-import erc1155contrInterface from './erc1155Interface.json' 
+import contrInterface from './abi.json' // Load contract json file
+import erc1155Interface from './erc1155Interface.json' 
 
 // Load all the background images for the 10 different Cryptomon types
 import bg0 from './sprites/background/0.png'
@@ -43,7 +43,10 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
 
 // Contact deployment address, e.g. ganache
 const CONTRACT_ADDRESS = '0x14014a31Bc92099453075d0c75FaAFfd7528474E';
-const ERC1155_CONTRACT_ADDRESS = '0x4C0ad3B895FdA61679E5FCec12824B25f0b0438e';
+// const CONTRACT_ADDRESS = '0x7a131A8783Bbcec7441D4867B99a1214BcF27b35';
+// const CONTRACT_ADDRESS = '0x357dBC8d883adb2b13Be3F1F4802333A41966d33';
+
+const ERC1155_CONTRACT_ADDRESS = '0xba3148996b4a28E114bA15D967AACEE870149387';
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
@@ -415,8 +418,8 @@ function App() {
     // prolly captcha first
 
     // call test erc20 contract mint
-    const contr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155contrInterface, library.getSigner(account))
-    const tx = await contr.safeBatchTransferFrom(contr.owner(), account, [0,1,2,3,4,5,6,7,8,9,151], [1,1,1,1,1,1,1,1,1,1,100],'0x00');
+    const contr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
+    const tx = await contr.mintGold(account,'0x00');
     const recpt = await tx.wait()
 
     if (recpt && recpt.status) {
