@@ -20,6 +20,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 
 // abi
 import contrInterface from './interface.json' // Load contract json file
+import erc1155contrInterface from './erc1155Interface.json' 
 
 // Load all the background images for the 10 different Cryptomon types
 import bg0 from './sprites/background/0.png'
@@ -41,7 +42,8 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
 }
 
 // Contact deployment address, e.g. ganache
-const CONTRACT_ADDRESS = '0xE4A281168BfFE4132A51Fc9e4a132d7F166207b5';
+const CONTRACT_ADDRESS = '0x14014a31Bc92099453075d0c75FaAFfd7528474E';
+const ERC1155_CONTRACT_ADDRESS = '0x4C0ad3B895FdA61679E5FCec12824B25f0b0438e';
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
@@ -408,6 +410,25 @@ function App() {
     }
   }
 
+  // Function to get test tokens
+  async function getTestTokens() {
+    // prolly captcha first
+
+    // call test erc20 contract mint
+    const contr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155contrInterface, library.getSigner(account))
+    const tx = await contr.safeBatchTransferFrom(contr.owner(), account, [0,1,2,3,4,5,6,7,8,9,151], [1,1,1,1,1,1,1,1,1,1,100],'0x00');
+    const recpt = await tx.wait()
+
+    if (recpt && recpt.status) {
+      toast.success(`Success, Tx hash: ${recpt.transactionHash}`);     
+      refreshMons()
+    }
+
+    if (recpt && !recpt.status) {
+      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+    }
+  }
+
   // Handlers for form inputs
   function handleShareId(event) {
     setShareId(event.target.value)
@@ -445,7 +466,7 @@ function App() {
       <div className="monBox" style={bgStyle(mon?.monType)}>
         <img
           className="monImg"
-          src={require('./sprites/' + (parseInt(mon?.species) + 1) + '.png')}
+          src={require('./sprites-copy/' + (parseInt(mon?.species) + 1) + '.png')}
           alt={mon?.species}
         />
       </div>
@@ -578,7 +599,7 @@ function App() {
             <figcaption>
               <div className="monBox">
                 {' '}
-                <img className="monImg" src={require('./sprites/0.png')} alt={'empty'} />
+                <img className="monImg" src={require('./sprites-copy/0.png')} alt={'empty'} />
               </div>
             </figcaption>
           </figure>
@@ -840,10 +861,33 @@ function App() {
 
           })
           }
+
         </span>
       </div>
 
       <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example">
+        {
+          // if test network, then add faucet tab else buy at swaps
+        }
+         <Tab className="x" eventKey="tokens" title="Tokens">
+          <div className="p1">Test tokens contract address: {ERC1155_CONTRACT_ADDRESS}</div>
+          <br />
+          <div className="sharing-area">
+            <div className="form-line">
+              <button
+                className="rpgui-button"
+                type="button"
+                style={{ float: 'right' }}
+                onClick={() => getTestTokens()}
+              >
+                Get test tokens
+              </button>
+            </div>
+            {/* {
+              getTokenResults
+            } */}
+          </div>
+        </Tab>
         <Tab className="x" eventKey="myCryptomons" title="My Creatures">
           <div className="p1">Your Entries</div>
           {myCryptomonsDiv}
