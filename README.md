@@ -56,7 +56,7 @@ Ongoing
 - Submit to dappradar, IGOs, marketing/hyping, etc 
 
 Roadmap
-- October 2021, Development and Tests
+- October 2021, Development and Tests..ok
 - November 2021, Test and deploy to testnet
 - December 2021, Deploy to mainnet
 - January 2022, PvP metaVerse test
