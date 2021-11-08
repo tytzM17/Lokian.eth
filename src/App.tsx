@@ -12,15 +12,15 @@ import { injected } from './wallet/connectors'
 import { useEagerConnect, useInactiveListener } from './wallet/hooks'
 import {
   NoEthereumProviderError,
-  UserRejectedRequestError as UserRejectedRequestErrorInjected
+  UserRejectedRequestError as UserRejectedRequestErrorInjected,
 } from '@web3-react/injected-connector'
 import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
-import { Contract } from "@ethersproject/contracts";
-import { BigNumber } from "@ethersproject/bignumber";
+import { Contract } from '@ethersproject/contracts'
+import { BigNumber } from '@ethersproject/bignumber'
 
 // abi
 import contrInterface from './abi.json' // Load contract json file
-import erc1155Interface from './erc1155Interface.json' 
+import erc1155Interface from './erc1155Interface.json'
 
 // Load all the background images for the 10 different Cryptomon types
 import bg0 from './sprites/background/0.png'
@@ -35,21 +35,23 @@ import bg8 from './sprites/background/8.png'
 import bg9 from './sprites/background/9.png'
 import bg10 from './sprites/background/10.png'
 
-enum ConnectorNames { Injected = 'Injected' }
+enum ConnectorNames {
+  Injected = 'Injected',
+}
 
 const connectorsByName: { [connectorName in ConnectorNames]: any } = {
-  [ConnectorNames.Injected]: injected
+  [ConnectorNames.Injected]: injected,
 }
 
 // Contact deployment address, e.g. ganache
-const CONTRACT_ADDRESS = '0x14014a31Bc92099453075d0c75FaAFfd7528474E';
+const CONTRACT_ADDRESS = '0x14014a31Bc92099453075d0c75FaAFfd7528474E'
 // const CONTRACT_ADDRESS = '0x7a131A8783Bbcec7441D4867B99a1214BcF27b35';
 // const CONTRACT_ADDRESS = '0x357dBC8d883adb2b13Be3F1F4802333A41966d33';
 
-const ERC1155_CONTRACT_ADDRESS = '0xba3148996b4a28E114bA15D967AACEE870149387';
+const ERC1155_CONTRACT_ADDRESS = '0xba3148996b4a28E114bA15D967AACEE870149387'
 
 // Add background images in an array for easy access
-const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
+const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]
 
 // Add all 151 Cryptomon names in an array
 const names = [
@@ -217,11 +219,7 @@ function Account() {
 
   return (
     <span>
-      {account === null
-        ? '-'
-        : account
-          ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}`
-          : ''}
+      {account === null ? '-' : account ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}` : ''}
     </span>
   )
 }
@@ -231,9 +229,7 @@ function getErrorMessage(error: Error) {
     return 'No Ethereum browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.'
   } else if (error instanceof UnsupportedChainIdError) {
     return "You're connected to an unsupported network."
-  } else if (
-    error instanceof UserRejectedRequestErrorInjected
-  ) {
+  } else if (error instanceof UserRejectedRequestErrorInjected) {
     return 'Please authorize this website to access your Ethereum account.'
   } else {
     console.error(error)
@@ -242,20 +238,21 @@ function getErrorMessage(error: Error) {
 }
 
 function App() {
-  const [cryptomons, setCryptomons] = useState([]);
-  const [myCryptomons, setMyCryptomons] = useState([]);
-  const [otherCryptomons, setOtherCryptomons] = useState([]);
-  const [value, setValue] = useState(0); // Used in My Cryptomons tab for input in price text
+  const [cryptomons, setCryptomons] = useState([])
+  const [myCryptomons, setMyCryptomons] = useState([])
+  const [otherCryptomons, setOtherCryptomons] = useState([])
+  const [value, setValue] = useState(0) // Used in My Cryptomons tab for input in price text
   // Used in breeding tab
-  const [breedChoice1, setBreedChoice1] = useState(null);
-  const [breedChoice2, setBreedChoice2] = useState(null);
+  const [breedChoice1, setBreedChoice1] = useState(null)
+  const [breedChoice2, setBreedChoice2] = useState(null)
   // Used in fighting tab
-  const [fightChoice1, setFightChoice1] = useState(null);
-  const [fightChoice2, setFightChoice2] = useState(null);
-  const [winner, setWinner] = useState(null); // Used to display winner of the last fight
-  const [rounds, setRounds] = useState(null); // Used to display number of rounds the fight lasted
-  const [shareId, setShareId] = useState(''); // Used in shareId form input field
-  const [shareAddress, setShareAddress] = useState(''); // Used in shareAddress form input field
+  const [fightChoice1, setFightChoice1] = useState(null)
+  const [fightChoice2, setFightChoice2] = useState(null)
+  const [winner, setWinner] = useState(null) // Used to display winner of the last fight
+  const [rounds, setRounds] = useState(null) // Used to display number of rounds the fight lasted
+  const [shareId, setShareId] = useState('') // Used in shareId form input field
+  const [shareAddress, setShareAddress] = useState('') // Used in shareAddress form input field
+  const [userLokianGold, setUserLokianGold] = useState(0)
 
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
@@ -267,7 +264,7 @@ function App() {
       setActivatingConnector(undefined)
     }
 
-    refreshMons();
+    refreshMons()
   }, [activatingConnector, connector])
 
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
@@ -280,33 +277,33 @@ function App() {
   function refreshMons() {
     if (!library || !account) return
     getMons(library, account).then((_mons) => {
-      // map result 
-      const monsMap = _mons.map(mon => ({
+      // map result
+      const monsMap = _mons.map((mon) => ({
         atk: mon.atk,
         def: mon.def,
         evolve: mon.evolve,
         forSale: mon.forSale,
         hp: mon.hp,
-        id: (BigNumber.from(mon.id._hex)).toNumber(),
+        id: BigNumber.from(mon.id._hex).toNumber(),
         monType: mon.monType,
         owner: mon.owner,
-        price: (BigNumber.from(mon.price._hex)).toBigInt(),
+        price: BigNumber.from(mon.price._hex).toBigInt(),
         sharedTo: mon.sharedTo,
         species: mon.species,
-        speed: mon.speed
+        speed: mon.speed,
       }))
-      setCryptomons(monsMap);
-      setMyCryptomons(monsMap.filter(mon => mon.owner === account));
-      setOtherCryptomons(monsMap.filter((mon) => mon.owner !== account));
+      setCryptomons(monsMap)
+      setMyCryptomons(monsMap.filter((mon) => mon.owner === account))
+      setOtherCryptomons(monsMap.filter((mon) => mon.owner !== account))
     })
   }
 
   // Function that buys a Cryptomon through a smart contract function
   async function buyMon(id, price) {
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    let overrides = { value: BigInt(price) + BigInt(1) + '' };
-    const tx = await contr.buyMon(id, overrides);
-    const recpt = await tx.wait();
+    let overrides = { value: BigInt(price) + BigInt(1) + '' }
+    const tx = await contr.buyMon(id, overrides)
+    const recpt = await tx.wait()
     if (recpt && recpt.status === 1) {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
       refreshMons()
@@ -324,8 +321,8 @@ function App() {
       return
     }
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const tx = await contr.addForSale(id, price);
-    const receipt = await tx.wait();
+    const tx = await contr.addForSale(id, price)
+    const receipt = await tx.wait()
     if (receipt && receipt.status === 1) {
       toast.success(`Success, Tx hash: ${receipt.transactionHash}`)
       refreshMons()
@@ -339,8 +336,8 @@ function App() {
   // Function that removes a Cryptomon from sale through a smart contract function
   async function removeFromSale(id) {
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const tx = await contr.removeFromSale(id);
-    const recpt = await tx.wait();
+    const tx = await contr.removeFromSale(id)
+    const recpt = await tx.wait()
     if (recpt && recpt.status === 1) {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
       refreshMons()
@@ -353,7 +350,7 @@ function App() {
 
   // Function that breeds 2 Cryptomons through a smart contract function
   async function breedMons(id1, id2) {
-    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account));
+    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
     const tx = await contr.breedMons(id1, id2)
     const recpt = await tx.wait()
     if (recpt && recpt.status) {
@@ -371,14 +368,14 @@ function App() {
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
     const res = await contr.functions.fight(id1, id2)
     if (res && res.length) {
-      const winner = (BigNumber.from(res[0]._hex)).toNumber();
-      setWinner(winner);
-      setRounds(res[1]);
-      refreshMons();
+      const winner = BigNumber.from(res[0]._hex).toNumber()
+      setWinner(winner)
+      setRounds(res[1])
+      refreshMons()
     }
 
     if (!res || !res.length) {
-      toast.error(`Error, Tx hash: ${recpt.transactionHash}`);
+      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
     }
   }
 
@@ -395,7 +392,6 @@ function App() {
     if (recpt && !recpt.status) {
       toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
     }
-
   }
 
   // Function that stops sharing a Cryptomon with other addresses through a smart contrct function
@@ -419,11 +415,12 @@ function App() {
 
     // call test erc20 contract mint
     const contr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
-    const tx = await contr.mintGold(account,'0x00');
+    const tx = await contr.mintGold(account, '0x00')
     const recpt = await tx.wait()
 
     if (recpt && recpt.status) {
-      toast.success(`Success, Tx hash: ${recpt.transactionHash}`);     
+      toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
+
       refreshMons()
     }
 
@@ -432,6 +429,19 @@ function App() {
     }
   }
 
+  // Function to get lokian gold balance
+  async function getTokenBalance(tokenId: number = 151) {
+    if (!library || !account) return
+
+    const contr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
+    const res = await contr.functions.balanceOf(account, tokenId)
+
+    if (res && res.length) {
+      console.log(res)
+      const gold = BigNumber.from(res[0]._hex).toNumber()
+      setUserLokianGold(gold)
+    }
+  }
   // Handlers for form inputs
   function handleShareId(event) {
     setShareId(event.target.value)
@@ -505,12 +515,7 @@ function App() {
     return (
       <div className="selling-div">
         <label className="add-for-sale-label">Set creatures price (in Wei):</label>
-        <input
-          type="number"
-          className="add-for-sale-input"
-          value={value}
-          onChange={(e) => handleChange(mon?.id, e)}
-        />
+        <input type="number" className="add-for-sale-input" value={value} onChange={(e) => handleChange(mon?.id, e)} />
         <button
           className="rpgui-button"
           type="button"
@@ -797,6 +802,7 @@ function App() {
       </React.Fragment>
     ))
 
+  getTokenBalance();
 
   // Function that does all the rendering of the application
   return (
@@ -805,26 +811,22 @@ function App() {
       <ToastContainer />
 
       <div className="AppTitle">
-      <img src="/favicon-16x16.png" alt="lokian-logo" />
-      {" "}
-      <span>L O K I A N </span>
-
+        <img src="/favicon-16x16.png" alt="lokian-logo" /> <span>L O K I A N </span>
         {/* wallet buttons */}
         <span style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}>
-
           {/* wallet logout */}
           <div>
             {(active || error) && (
               <button
                 className="rpgui-button"
                 onClick={() => {
-                  deactivate();
-                  setCryptomons([]);
-                  setMyCryptomons([]);
-                  setOtherCryptomons([]);
-                  setWinner(null);
-                  setRounds(null);
-                  setValue(0);
+                  deactivate()
+                  setCryptomons([])
+                  setMyCryptomons([])
+                  setOtherCryptomons([])
+                  setWinner(null)
+                  setRounds(null)
+                  setValue(0)
                 }}
               >
                 Logout
@@ -834,7 +836,7 @@ function App() {
             {!!error && <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>{getErrorMessage(error)}</h4>}
           </div>
 
-          {Object.keys(connectorsByName).map(name => {
+          {Object.keys(connectorsByName).map((name) => {
             const currentConnector = connectorsByName[name]
             const activating = currentConnector === activatingConnector
             const connected = currentConnector === connector
@@ -846,7 +848,7 @@ function App() {
                 type="button"
                 style={{
                   fontSize: '20px',
-                  paddingTop: '14px'
+                  paddingTop: '14px',
                 }}
                 onClick={() => {
                   setActivatingConnector(currentConnector)
@@ -855,40 +857,33 @@ function App() {
                 disabled={disabled}
               >
                 {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
-                <Account />
-                {" "}
-                <div style={{ display: 'none' }}>{name}</div>
+                <Account /> <div style={{ display: 'none' }}>{name}</div>
                 {!account ? `Connect wallet` : ''}
               </button>
             )
-
-          })
-          }
-
+          })}
         </span>
       </div>
 
-      <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example">
-        {
-          // if test network, then add faucet tab else buy at swaps
-        }
-         <Tab className="x" eventKey="tokens" title="Tokens">
+      <Tabs defaultActiveKey="tokens" id="uncontrolled-tab-example">
+        <Tab className="x" eventKey="tokens" title="Tokens">
+          <div className="p1">Your Lokian Gold: <span style={{color: 'gold'}}>{userLokianGold}</span></div>
+          <div className="p1" style={{fontSize: '10px'}}>(Lokian gold is used to buy, breed, and share creatures)</div>
+          <br />
           <div className="p1">Test tokens contract address: {ERC1155_CONTRACT_ADDRESS}</div>
           <br />
           <div className="sharing-area">
             <div className="form-line">
-              <button
-                className="rpgui-button"
-                type="button"
-                style={{ float: 'right' }}
-                onClick={() => getTestTokens()}
-              >
-                Get test tokens
+              <button style={{width:'100%'}} className="rpgui-button" type="button" onClick={() => getTestTokens()}>
+                Get Test Tokens
               </button>
             </div>
-            {/* {
-              getTokenResults
-            } */}
+            <div className="form-line">
+              <button style={{width:'100%'}} className="rpgui-button" type="button" onClick={() => alert('wen? soon!')}>
+                Buy Tokens
+              </button>
+            </div>
+    
           </div>
         </Tab>
         <Tab className="x" eventKey="myCryptomons" title="My Creatures">
@@ -922,42 +917,33 @@ function App() {
         <Tab eventKey="fight" title="Fight">
           <div className="p1">Arena</div>
           <div className="fighting-area">
-            { }
+            {}
             {breedOption(fightChoice1)}
             {breedOption(fightChoice2)}
             <label className="winner-label">
-              And the winner is...{' '}
-              {
-                names[
-                cryptomons.find((mon) => mon.id?.toString() === winner?.toString())?.species
-                ]
-              }
+              And the winner is... {names[cryptomons.find((mon) => mon.id?.toString() === winner?.toString())?.species]}
               {/* untested */}
-              {
-                winner === 1000 ? "no one, it's a tie" : ''
-              }
-              {
-                winner === 2000 ? "unknown" : ''
-              }
+              {winner === 1000 ? "no one, it's a tie" : ''}
+              {winner === 2000 ? 'unknown' : ''}
             </label>
 
-            {
-              winner !== 1000 || winner !== 2000 ?
-
-                (<>
-                  <br />
-                  <label className="winner-label">Winning creature's Id: {winner}</label>
-                  <br />
-                  <label className="winner-label">Rounds the fight lasted: {rounds}</label>
-                </>) : ''
-            }
+            {winner !== 1000 || winner !== 2000 ? (
+              <>
+                <br />
+                <label className="winner-label">Winning creature's Id: {winner}</label>
+                <br />
+                <label className="winner-label">Rounds the fight lasted: {rounds}</label>
+              </>
+            ) : (
+              ''
+            )}
 
             <button
               className="rpgui-button"
               type="button"
               onClick={() => {
-                setWinner(null);
-                setRounds(null);
+                setWinner(null)
+                setRounds(null)
                 fight(fightChoice1, fightChoice2)
               }}
             >
@@ -984,11 +970,7 @@ function App() {
             </div>
             <div className="form-line">
               <label className="form-label">Share to address:</label>
-              <input
-                className="form-input"
-                value={shareAddress}
-                onChange={(e) => handleShareAddress(e)}
-              />
+              <input className="form-input" value={shareAddress} onChange={(e) => handleShareAddress(e)} />
             </div>
             <div className="form-line">
               <button
@@ -1010,7 +992,6 @@ function App() {
       </Tabs>
     </div>
   )
-
 }
 
 export default App
