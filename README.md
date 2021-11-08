@@ -58,7 +58,7 @@ Ongoing
 Roadmap
 - October 2021, Development and Tests..ok
 - November 2021, Test and deploy to testnet
-- December 2021, Deploy to mainnet
+- December 2021, Deploy to mainnet, Initial PvP metaVerse
 - January 2022, PvP metaVerse test
 - February 2022, PvP metaVerse deployment
 - March 2022, Moba metaVerse development
