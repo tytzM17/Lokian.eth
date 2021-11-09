@@ -35,6 +35,9 @@ import bg8 from './sprites/background/8.png'
 import bg9 from './sprites/background/9.png'
 import bg10 from './sprites/background/10.png'
 
+// axios
+import axios, {AxiosResponse} from "axios"
+
 enum ConnectorNames {
   Injected = 'Injected',
 }
@@ -253,6 +256,8 @@ function App() {
   const [shareId, setShareId] = useState('') // Used in shareId form input field
   const [shareAddress, setShareAddress] = useState('') // Used in shareAddress form input field
   const [userLokianGold, setUserLokianGold] = useState(0)
+  const [chosenPack, setChosenPack] = useState('')
+  const [coinData, setCoinData] = useState<AxiosResponse | null>(null);
 
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
@@ -266,6 +271,40 @@ function App() {
 
     refreshMons()
   }, [activatingConnector, connector])
+
+  // Get network coin price e.g. ether or movr price
+  useEffect(() => {
+      
+    const coin = 'moonriver';
+    const url=`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coin}`
+      let unmounted = false;
+      let source = axios.CancelToken.source();
+
+      axios.get(url, {
+        cancelToken: source.token
+    })
+    .then(res => {
+      if (!unmounted) {
+        // @ts-ignore
+        setCoinData(res.data);       
+      }
+    })
+    .catch(function (e) {
+      if (!unmounted) {
+        toast.error(`Error: ${e.message}`)
+      }
+      if (axios.isCancel(e)) {
+        console.log(`request cancelled:${e.message}`);
+    } else {
+        console.log("another error happened:" + e.message);
+    }
+    })
+
+    return () => {
+      unmounted = true;
+      source.cancel("Cancelling in cleanup");
+    }
+  }, [])
 
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
   const triedEager = useEagerConnect()
@@ -437,7 +476,6 @@ function App() {
     const res = await contr.functions.balanceOf(account, tokenId)
 
     if (res && res.length) {
-      console.log(res)
       const gold = BigNumber.from(res[0]._hex).toNumber()
       setUserLokianGold(gold)
     }
@@ -802,7 +840,7 @@ function App() {
       </React.Fragment>
     ))
 
-  getTokenBalance();
+  getTokenBalance()
 
   // Function that does all the rendering of the application
   return (
@@ -867,23 +905,31 @@ function App() {
 
       <Tabs defaultActiveKey="tokens" id="uncontrolled-tab-example">
         <Tab className="x" eventKey="tokens" title="Tokens">
-          <div className="p1">Your Lokian Gold: <span style={{color: 'gold'}}>{userLokianGold}</span></div>
-          <div className="p1" style={{fontSize: '10px'}}>(Lokian gold is used to buy, breed, and share creatures)</div>
+          <div className="p1">
+            Your Lokian Gold: <span style={{ color: 'gold' }}>{userLokianGold}</span>
+          </div>
+          <div className="p1" style={{ fontSize: '10px' }}>
+            (Lokian gold is used to buy, breed, and share creatures)
+          </div>
           <br />
           <div className="p1">Test tokens contract address: {ERC1155_CONTRACT_ADDRESS}</div>
           <br />
           <div className="sharing-area">
             <div className="form-line">
-              <button style={{width:'100%'}} className="rpgui-button" type="button" onClick={() => getTestTokens()}>
+              <button style={{ width: '100%' }} className="rpgui-button" type="button" onClick={() => getTestTokens()}>
                 Get Test Tokens
               </button>
             </div>
             <div className="form-line">
-              <button style={{width:'100%'}} className="rpgui-button" type="button" onClick={() => alert('wen? soon!')}>
+              <button
+                style={{ width: '100%' }}
+                className="rpgui-button"
+                type="button"
+                onClick={() => alert('wen? soon!')}
+              >
                 Buy Tokens
               </button>
             </div>
-    
           </div>
         </Tab>
         <Tab className="x" eventKey="myCryptomons" title="My Creatures">
@@ -896,6 +942,58 @@ function App() {
         </Tab>
         <Tab eventKey="buyCryptomons" title="Trade Creatures">
           <div className="p1">Shop</div>
+
+          {/* Buy random pack */}
+          <>
+            <div className="rpgui-container framed-golden" style={{display: 'flex', flexDirection: 'column'}}>
+              Choose a pack to buy
+    
+              <select
+                className="rpgui-dropdown-buy-pack"
+                // className="rpgui-dropdown"
+                value={chosenPack}
+                onChange={(e) => {
+                  setChosenPack(e.target.value);
+                }}
+              >
+                <option value="basicPack"> 
+                Basic Pack {" "}
+                {
+                  coinData && `($1 or ${parseFloat( 1 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`
+                }
+                </option>
+                <option value="intermediatePack">Intermediate Pack 
+                {" "}
+                {
+                  coinData && `($3 or ${parseFloat( 3 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`
+                }
+                </option>
+                <option value="advancePack">Advance Pack 
+                {" "}
+                {
+                  coinData && `($5 or ${parseFloat( 5 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`
+                }
+                </option>
+              </select>
+
+              <button
+              className="rpgui-button"
+              type="button"
+              style={{ marginTop: '12px' }}
+              onClick={() => {
+                // 'mint random pack', if basic creature 0-50, if interm 50-100, adv 100-150
+                
+                
+              }}
+            >
+              Buy Now 
+            </button>
+            </div>
+
+          
+          </>
+       
+
           {buyCryptomons}
         </Tab>
         <Tab eventKey="breedCryptomons" title="Breed Creatures">

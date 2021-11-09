@@ -241,6 +241,12 @@
   font-size: 0.65em;
 }
 
+.rpgui-dropdown-buy-pack {
+  font-size: 16px !important;
+  padding: 4px;
+  margin-top: 12px !important;
+}
+
 .nav-link.active {
   /* color: #7e8a96 !important */
   color: #f3a718 !important;

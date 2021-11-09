@@ -17,6 +17,7 @@
     "@web3-react/frame-connector": "latest",
     "@web3-react/injected-connector": "latest",
     "@web3-react/walletconnect-connector": "latest",
+    "axios": "^0.24.0",
     "big-integer": "^1.6.48",
     "bootstrap": "^4.4.1",
     "react": ">=16.8",

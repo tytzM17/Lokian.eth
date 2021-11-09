@@ -40,27 +40,25 @@ Finished
 - Fix wallet, use web3-react and injected connector (mvp) 10/10/2021
 - Fix logo, create an 8 bit representation of the logo (mvp) 10/26/2021
 - Create erc-1155 smart contract that will mint nfts, tests (mvp) 10/27/2021
-    a. see test contract, 0x4C0ad3B895FdA61679E5FCec12824B25f0b0438e
 - Create faucet page for getting nfts or tokens (mvp) 11/9/2021
 
 Ongoing
-- Change project contract to be an erc-1155 (mvp)
-- Breeding calls mint, payable on mainnet (mvp)
-- After breed or create mon, just add dynamic/random attributes then upload 
-  minted nft to ipfs.
-- Create the frontend in pinata or ipfs (mvp)
-- Deploy and test to rinkeby or mumbai testnets (mvp)
-- Deploy to eth or matic mainnets (mvp)
+- After breed or buy pack mons (random), just add dynamic/random attributes then upload minted nft to ipfs.
+- Breed then mint, payable (mvp)
 
-- Create landing page in ipfs, buy domain name($1-5), tg , twitr channel
-- Submit to dappradar, IGOs, marketing/hyping, etc 
+- Set frontend in pinata or ipfs (mvp)
+- Deploy and test to rinkeby or moonbase alpha testnets (mvp)
+- Deploy to eth or moonriver mainnets (mvp)
+
+- Create landing page in ipfs, buy domain name($1-5), tg ann, twitr page
+- Submit to dappradar, IGOs, state of the dapps, etc 
 
 Roadmap
 - October 2021, Development and Tests..ok
 - November 2021, Test and deploy to testnet
 - December 2021, Deploy to mainnet, Initial PvP metaVerse
-- January 2022, PvP metaVerse test
-- February 2022, PvP metaVerse deployment
-- March 2022, Moba metaVerse development
+- January 2022, PvP metaVerse test/deploy
+- February 2022, Moba metaVerse 
+
 
 
