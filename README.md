@@ -43,10 +43,12 @@ Finished
 - Create faucet page for getting nfts or tokens (mvp) 11/9/2021
 
 Ongoing
-- After breed or buy pack mons (random), just add dynamic/random attributes then upload minted nft to ipfs.
+- After breed or buy pack mons (random) minted, just add dynamic/random attributes then upload minted nft to ipfs. payable (mvp)
 - Breed then mint, payable (mvp)
 
-- Set frontend in pinata or ipfs (mvp)
+- fight wins highscore, pay with gas/native to set on-chain record (feature)
+
+- Set frontend in pinata or ipfs, use bit.ly(shorten url) atm (mvp)
 - Deploy and test to rinkeby or moonbase alpha testnets (mvp)
 - Deploy to eth or moonriver mainnets (mvp)
 

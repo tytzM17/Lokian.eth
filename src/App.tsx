@@ -38,6 +38,9 @@ import bg10 from './sprites/background/10.png'
 // axios
 import axios, {AxiosResponse} from "axios"
 
+// util
+import cryptoRandom from "./utils/cryptoRandom";
+
 enum ConnectorNames {
   Injected = 'Injected',
 }
@@ -256,7 +259,7 @@ function App() {
   const [shareId, setShareId] = useState('') // Used in shareId form input field
   const [shareAddress, setShareAddress] = useState('') // Used in shareAddress form input field
   const [userLokianGold, setUserLokianGold] = useState(0)
-  const [chosenPack, setChosenPack] = useState('')
+  const [chosenPack, setChosenPack] = useState('freePack')
   const [coinData, setCoinData] = useState<AxiosResponse | null>(null);
 
   const context = useWeb3React<Web3Provider>()
@@ -275,7 +278,7 @@ function App() {
   // Get network coin price e.g. ether or movr price
   useEffect(() => {
       
-    const coin = 'moonriver';
+    const coin = 'ethereum';
     const url=`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coin}`
       let unmounted = false;
       let source = axios.CancelToken.source();
@@ -449,18 +452,37 @@ function App() {
   }
 
   // Function to get test tokens
-  async function getTestTokens() {
-    // prolly captcha first
+  // async function getTestTokens() {
+  //   // prolly captcha first
+
+  //   // call test erc20 contract mint
+  //   const contr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
+  //   const tx = await contr.mintGold(account, '0x00')
+  //   const recpt = await tx.wait()
+
+  //   if (recpt && recpt.status) {
+  //     toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
+
+  //     refreshMons()
+  //   }
+
+  //   if (recpt && !recpt.status) {
+  //     toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+  //   }
+  // }
+
+  // Function to mint batch tokens
+   async function getMintBatch(mintBatchIds, mintBatchAmount) {
 
     // call test erc20 contract mint
     const contr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
-    const tx = await contr.mintGold(account, '0x00')
+    const tx = await contr.mintBatch(account, mintBatchIds, mintBatchAmount, '0x00');
     const recpt = await tx.wait()
 
     if (recpt && recpt.status) {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
 
-      refreshMons()
+      // refreshMons() or display nfts in my creatures tab
     }
 
     if (recpt && !recpt.status) {
@@ -904,7 +926,7 @@ function App() {
       </div>
 
       <Tabs defaultActiveKey="tokens" id="uncontrolled-tab-example">
-        <Tab className="x" eventKey="tokens" title="Tokens">
+        {/* <Tab className="x" eventKey="tokens" title="Tokens">
           <div className="p1">
             Your Lokian Gold: <span style={{ color: 'gold' }}>{userLokianGold}</span>
           </div>
@@ -931,7 +953,7 @@ function App() {
               </button>
             </div>
           </div>
-        </Tab>
+        </Tab> */}
         <Tab className="x" eventKey="myCryptomons" title="My Creatures">
           <div className="p1">Your Entries</div>
           {myCryptomonsDiv}
@@ -956,22 +978,28 @@ function App() {
                   setChosenPack(e.target.value);
                 }}
               >
+                 <option value="freePack"> 
+                Free Pack {" "}
+                {
+                  coinData && `($0 or 0.00 ${coinData[0].symbol})`
+                }
+                </option>
                 <option value="basicPack"> 
                 Basic Pack {" "}
                 {
-                  coinData && `($1 or ${parseFloat( 1 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`
+                  coinData && `($0.50 or ${parseFloat( 0.5 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`
                 }
                 </option>
                 <option value="intermediatePack">Intermediate Pack 
                 {" "}
                 {
-                  coinData && `($3 or ${parseFloat( 3 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`
+                  coinData && `($0.75 or ${parseFloat( 0.75 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`
                 }
                 </option>
                 <option value="advancePack">Advance Pack 
                 {" "}
                 {
-                  coinData && `($5 or ${parseFloat( 5 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`
+                  coinData && `($0.99 or ${parseFloat( 0.99 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`
                 }
                 </option>
               </select>
@@ -981,8 +1009,49 @@ function App() {
               type="button"
               style={{ marginTop: '12px' }}
               onClick={() => {
-                // 'mint random pack', if basic creature 0-50, if interm 50-100, adv 100-150
+                // 'mint random pack', if free, 0-12, basic creature 13-50, if interm 50-100, adv 100-150
+                switch (chosenPack) {
+                  case 'freePack':
+                    const mintfreeBatch = [
+                          cryptoRandom(0,12),
+                          cryptoRandom(0,12),
+                          cryptoRandom(0,12),
+                          cryptoRandom(0,12),
+                          cryptoRandom(0,12),
+                          cryptoRandom(0,12),
+                          cryptoRandom(0,12),
+                          cryptoRandom(0,12)];
+                    // call mint batch func in nft contract
+console.log(mintfreeBatch);
+const mintfreeBatchAmount = [1,1,1,1,1,1,1,1];
+getMintBatch(mintfreeBatch, mintfreeBatchAmount);
+
+                    break;
+
+                    case 'basicPack':
+                      const mintbasicBatch = [
+                        cryptoRandom(13, 50),
+                        cryptoRandom(13, 50),
+                        cryptoRandom(13, 50),
+                        cryptoRandom(13, 50),
+                        cryptoRandom(13, 50),
+                        cryptoRandom(13, 50),
+                        cryptoRandom(13, 50),
+                        cryptoRandom(13, 50),
+                        cryptoRandom(13, 50),
+                        cryptoRandom(13, 50),
+                        cryptoRandom(13, 50),
+                        cryptoRandom(13, 50)];
+                  // call mint batch func in nft contract
+                  console.log(mintbasicBatch);
+                  const mintbasicBatchAmt = [1,1,1,1,1,1,1,1,1,1,1,1];
+getMintBatch(mintbasicBatch, mintbasicBatchAmt);
+                    
+                    break;
                 
+                  default:
+                    break;
+                }
                 
               }}
             >

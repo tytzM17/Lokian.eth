@@ -245,6 +245,10 @@
   font-size: 16px !important;
   padding: 4px;
   margin-top: 12px !important;
+  
+  background-color: rgb(34, 36, 37) !important;
+    color: rgb(209, 203, 199) !important;
+    border-color: rgb(123, 107, 101) !important;
 }
 
 .nav-link.active {
