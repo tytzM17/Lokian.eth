@@ -36,10 +36,10 @@ import bg9 from './sprites/background/9.png'
 import bg10 from './sprites/background/10.png'
 
 // axios
-import axios, {AxiosResponse} from "axios"
+import axios, { AxiosResponse } from 'axios'
 
 // util
-import cryptoRandom from "./utils/cryptoRandom";
+import cryptoRandom from './utils/cryptoRandom'
 
 enum ConnectorNames {
   Injected = 'Injected',
@@ -260,7 +260,7 @@ function App() {
   const [shareAddress, setShareAddress] = useState('') // Used in shareAddress form input field
   const [userLokianGold, setUserLokianGold] = useState(0)
   const [chosenPack, setChosenPack] = useState('freePack')
-  const [coinData, setCoinData] = useState<AxiosResponse | null>(null);
+  const [coinData, setCoinData] = useState<AxiosResponse | null>(null)
 
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
@@ -277,35 +277,36 @@ function App() {
 
   // Get network coin price e.g. ether or movr price
   useEffect(() => {
-      
-    const coin = 'ethereum';
-    const url=`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coin}`
-      let unmounted = false;
-      let source = axios.CancelToken.source();
+    
+    const coin = 'ethereum'
+    const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coin}`
+    let unmounted = false
+    let source = axios.CancelToken.source()
 
-      axios.get(url, {
-        cancelToken: source.token
-    })
-    .then(res => {
-      if (!unmounted) {
-        // @ts-ignore
-        setCoinData(res.data);       
-      }
-    })
-    .catch(function (e) {
-      if (!unmounted) {
-        toast.error(`Error: ${e.message}`)
-      }
-      if (axios.isCancel(e)) {
-        console.log(`request cancelled:${e.message}`);
-    } else {
-        console.log("another error happened:" + e.message);
-    }
-    })
+    axios
+      .get(url, {
+        cancelToken: source.token,
+      })
+      .then((res) => {
+        if (!unmounted) {
+          // @ts-ignore
+          setCoinData(res.data)
+        }
+      })
+      .catch(function (e) {
+        if (!unmounted) {
+          toast.error(`Error: ${e.message}`)
+        }
+        if (axios.isCancel(e)) {
+          console.log(`request cancelled:${e.message}`)
+        } else {
+          console.log('another error happened:' + e.message)
+        }
+      })
 
     return () => {
-      unmounted = true;
-      source.cancel("Cancelling in cleanup");
+      unmounted = true
+      source.cancel('Cancelling in cleanup')
     }
   }, [])
 
@@ -472,11 +473,10 @@ function App() {
   // }
 
   // Function to mint batch tokens
-   async function getMintBatch(mintBatchIds, mintBatchAmount) {
-
+  async function getMintBatch(mintBatchIds, mintBatchAmount) {
     // call test erc20 contract mint
     const contr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
-    const tx = await contr.mintBatch(account, mintBatchIds, mintBatchAmount, '0x00');
+    const tx = await contr.mintBatch(account, mintBatchIds, mintBatchAmount, '0x00')
     const recpt = await tx.wait()
 
     if (recpt && recpt.status) {
@@ -915,6 +915,7 @@ function App() {
                   activate(currentConnector)
                 }}
                 disabled={disabled}
+                key={name}
               >
                 {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
                 <Account /> <div style={{ display: 'none' }}>{name}</div>
@@ -967,66 +968,56 @@ function App() {
 
           {/* Buy random pack */}
           <>
-            <div className="rpgui-container framed-golden" style={{display: 'flex', flexDirection: 'column'}}>
+            <div className="rpgui-container framed-golden" style={{ display: 'flex', flexDirection: 'column' }}>
               Choose a pack to buy
-    
               <select
                 className="rpgui-dropdown-buy-pack"
                 // className="rpgui-dropdown"
                 value={chosenPack}
                 onChange={(e) => {
-                  setChosenPack(e.target.value);
+                  setChosenPack(e.target.value)
                 }}
               >
-                 <option value="freePack"> 
-                Free Pack {" "}
-                {
-                  coinData && `($0 or 0.00 ${coinData[0].symbol})`
-                }
+                <option value="freePack">Free Pack {coinData && `($0 or 0.00 ${coinData[0].symbol})`}</option>
+                <option value="basicPack">
+                  Basic Pack{' '}
+                  {coinData &&
+                    `($0.50 or ${parseFloat(0.5 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
                 </option>
-                <option value="basicPack"> 
-                Basic Pack {" "}
-                {
-                  coinData && `($0.50 or ${parseFloat( 0.5 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`
-                }
+                <option value="intermediatePack">
+                  Intermediate Pack{' '}
+                  {coinData &&
+                    `($0.75 or ${parseFloat(0.75 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
                 </option>
-                <option value="intermediatePack">Intermediate Pack 
-                {" "}
-                {
-                  coinData && `($0.75 or ${parseFloat( 0.75 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`
-                }
-                </option>
-                <option value="advancePack">Advance Pack 
-                {" "}
-                {
-                  coinData && `($0.99 or ${parseFloat( 0.99 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`
-                }
+                <option value="advancePack">
+                  Advance Pack{' '}
+                  {coinData &&
+                    `($0.99 or ${parseFloat(0.99 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
                 </option>
               </select>
-
               <button
-              className="rpgui-button"
-              type="button"
-              style={{ marginTop: '12px' }}
-              onClick={() => {
-                // 'mint random pack', if free, 0-12, basic creature 13-50, if interm 50-100, adv 100-150
-                switch (chosenPack) {
-                  case 'freePack':
-                    const mintfreeBatch = [
-                          cryptoRandom(0,12),
-                          cryptoRandom(0,12),
-                          cryptoRandom(0,12),
-                          cryptoRandom(0,12),
-                          cryptoRandom(0,12),
-                          cryptoRandom(0,12),
-                          cryptoRandom(0,12),
-                          cryptoRandom(0,12)];
-                    // call mint batch func in nft contract
-console.log(mintfreeBatch);
-const mintfreeBatchAmount = [1,1,1,1,1,1,1,1];
-getMintBatch(mintfreeBatch, mintfreeBatchAmount);
+                className="rpgui-button"
+                type="button"
+                style={{ marginTop: '12px' }}
+                onClick={() => {
+                  // 'mint random pack', if free, 0-12, basic creature 13-50, if interm 50-100, adv 100-150
+                  switch (chosenPack) {
+                    case 'freePack':
+                      const mintfreeBatch = [
+                        cryptoRandom(0, 12),
+                        cryptoRandom(0, 12),
+                        cryptoRandom(0, 12),
+                        cryptoRandom(0, 12),
+                        cryptoRandom(0, 12),
+                        cryptoRandom(0, 12),
+                        cryptoRandom(0, 12),
+                        cryptoRandom(0, 12),
+                      ]
+                      // call mint batch func in nft contract
+                      const mintfreeBatchAmount = [1, 1, 1, 1, 1, 1, 1, 1]
+                      getMintBatch(mintfreeBatch, mintfreeBatchAmount)
 
-                    break;
+                      break
 
                     case 'basicPack':
                       const mintbasicBatch = [
@@ -1041,27 +1032,68 @@ getMintBatch(mintfreeBatch, mintfreeBatchAmount);
                         cryptoRandom(13, 50),
                         cryptoRandom(13, 50),
                         cryptoRandom(13, 50),
-                        cryptoRandom(13, 50)];
-                  // call mint batch func in nft contract
-                  console.log(mintbasicBatch);
-                  const mintbasicBatchAmt = [1,1,1,1,1,1,1,1,1,1,1,1];
-getMintBatch(mintbasicBatch, mintbasicBatchAmt);
-                    
-                    break;
-                
-                  default:
-                    break;
-                }
-                
-              }}
-            >
-              Buy Now 
-            </button>
-            </div>
+                        cryptoRandom(13, 50),
+                      ]
+                      // call mint batch func in nft contract
+                      const mintbasicBatchAmt = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+                      getMintBatch(mintbasicBatch, mintbasicBatchAmt)
 
-          
+                      break
+
+                    case 'intermediatePack':
+                      const mintIntermBatch = [
+                        cryptoRandom(51, 100),
+                        cryptoRandom(51, 100),
+                        cryptoRandom(51, 100),
+                        cryptoRandom(51, 100),
+                        cryptoRandom(51, 100),
+                        cryptoRandom(51, 100),
+                        cryptoRandom(51, 100),
+                        cryptoRandom(51, 100),
+                        cryptoRandom(51, 100),
+                        cryptoRandom(51, 100),
+                        cryptoRandom(51, 100),
+                        cryptoRandom(51, 100),
+                      ]
+                      // call mint batch func in nft contract
+                      console.log(mintIntermBatch)
+                      const mintIntermBatchAmt = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+                      getMintBatch(mintIntermBatch, mintIntermBatchAmt)
+
+                      break
+
+                    case 'advancePack':
+                      const mintAdvanceBatch = [
+                        cryptoRandom(101, 151),
+                        cryptoRandom(101, 151),
+                        cryptoRandom(101, 151),
+                        cryptoRandom(101, 151),
+                        cryptoRandom(101, 151),
+                        cryptoRandom(101, 151),
+                        cryptoRandom(101, 151),
+                        cryptoRandom(101, 151),
+                        cryptoRandom(101, 151),
+                        cryptoRandom(101, 151),
+                        cryptoRandom(101, 151),
+                        cryptoRandom(101, 151),
+                      ]
+                      // call mint batch func in nft contract
+                      console.log(mintAdvanceBatch)
+                      const mintAdvanceBatchAmt = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+                      getMintBatch(mintAdvanceBatch, mintAdvanceBatchAmt)
+
+                      break
+
+                    default:
+                      toast.info('Cannot find pack')
+                      break
+                  }
+                }}
+              >
+                Buy Now
+              </button>
+            </div>
           </>
-       
 
           {buyCryptomons}
         </Tab>
