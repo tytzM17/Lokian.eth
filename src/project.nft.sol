@@ -93,14 +93,14 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
     }
     
     // for fight winnings
-    function mintGold(address account, bytes memory data, uint winnerMonId, bool isRecorded)
+    function mintGold(address account, bytes memory data, uint winnerMonId)
         public
     {
-        // require isRecorded, must have paid to record highscore
-        require(isRecorded);
+       
+        require(winnerMonId > 12);
         // require account has balance of winnerMonId 
         require(_balanceOf(account, winnerMonId) > 0);
 
-        _mint(account, GOLD, 100, data);
+        _mint(account, GOLD, 10, data);
     }
 }
