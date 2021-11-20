@@ -15,13 +15,13 @@ export const pinFileToIPFS = (params) => {
     const monImg = require(`../sprites/${parseInt(params?.mon?.species || "-1") + 1}.png`);
     const monImgBlob = dataURItoBlob(monImg);
     console.log('mon img blob', monImgBlob);
-    data.append('file', monImgBlob, `${monName}.png`);
+    data.append('file', monImgBlob, `${monName || ''}_issue_no_${params?.mon?.id || ''}.png`);
 
     //You'll need to make sure that the metadata is in the form of a JSON object that's been convered to a string
     //metadata is optional
     
     const metadata = JSON.stringify({
-        name: `${monName || params?.mon?.owner || 'no name'}`,
+        name: `${monName || ''}_issue_no_${params?.mon?.id || ''}`,
         keyvalues: {
             owner: params?.mon?.owner || 'no owner',
             id: params?.mon?.id || 'no id',
@@ -64,6 +64,7 @@ export const pinFileToIPFS = (params) => {
         .then(function (response) {
             //handle response here
             if (params && params.success) params.success(response);
+      
         })
         .catch(function (error) {
             //handle error here

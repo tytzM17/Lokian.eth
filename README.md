@@ -46,6 +46,8 @@ Ongoing
 - After breed or buy pack mons (random) minted, just add dynamic/random attributes then upload minted nft to ipfs. payable (mvp)
 
 - Breed then mint, payable (mvp)
+- When breed/mint, create dynamic overlay of card no. (e.g. no.45 on front-most layer) or just pin a json/metadata then attach the image hash to avoid isDuplicate in
+ipfs uploading (mvp)
 
 - fight wins, pay with gas/native to set on-chain record (feature)
 

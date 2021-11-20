@@ -266,7 +266,7 @@ function App() {
   const [userLokianGold, setUserLokianGold] = useState(0)
   const [chosenPack, setChosenPack] = useState('freePack')
   const [coinData, setCoinData] = useState<AxiosResponse | null>(null)
-const [breedMintInfo, setbreedMintInfo] = useState(null);
+const [breedMintInfo, setBreedMintInfo] = useState(null);
 
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
@@ -323,9 +323,10 @@ const [breedMintInfo, setbreedMintInfo] = useState(null);
   useInactiveListener(!triedEager || !!activatingConnector)
 
   // Change the list of created Crypromons saved in the state so UI refreshes after this call
-  function refreshMons() {
+  async function refreshMons() {
     if (!library || !account) return
-    getMons(library, account).then((_mons) => {
+    await getMons(library, account)
+    .then((_mons) => {
       // map result
       const monsMap = _mons.map((mon) => ({
         atk: mon.atk,
@@ -345,6 +346,7 @@ const [breedMintInfo, setbreedMintInfo] = useState(null);
       setMyCryptomons(monsMap.filter((mon) => mon.owner === account))
       setOtherCryptomons(monsMap.filter((mon) => mon.owner !== account))
     })
+    .catch(err => toast.error(err))
   }
 
   // Function that buys a Cryptomon through a smart contract function
@@ -407,10 +409,31 @@ const [breedMintInfo, setbreedMintInfo] = useState(null);
     const recpt = await tx.wait()
     if (recpt && recpt.status) {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
-      refreshMons();
+      
+      // await refreshMons();
+      const totalMons = parseInt(await contr.totalMons());
+      const latestMon = await contr.mons(totalMons-1);
+      if (!latestMon) {
+        toast.error('Cannot find new breed!')
+        return
+      }
+      const maxPeak = {
+        atk: latestMon.atk,
+        def: latestMon.def,
+        evolve: latestMon.evolve,
+        forSale: latestMon.forSale,
+        hp: latestMon.hp,
+        id: BigNumber.from(latestMon.id._hex).toNumber(),
+        monType: latestMon.monType,
+        owner: latestMon.owner,
+        price: BigNumber.from(latestMon.price._hex).toBigInt(),
+        sharedTo: latestMon.sharedTo,
+        species: latestMon.species,
+        speed: latestMon.speed,
+      }
 
       // get user mons, get highest mon id
-      const maxPeak = myCryptomons.reduce((a, b) => a.id > b.id ? a : b);
+      //const maxPeak = cryptomons.reduce((a, b) => a.id > b.id ? a : b);
       console.log(maxPeak, maxPeak?.id);
       // get mon species , get index from mon species
       console.log(names[maxPeak.species]);
@@ -427,7 +450,7 @@ const monName = names[maxPeak.species];
       }
       const price = BigInt(parseInt(parseFloat(0.05 / coinData[0].current_price) * WeiPerEther));
       let overrides = { value: `${price}` }
-      const txmint = await nftcontr.mintPayable(account, monIdx, 1, '0x00', overrides)
+      const txmint = await nftcontr.mintPayable(account, maxPeak.species, 1, '0x00', overrides)
       const recptmint = await txmint.wait()
       if (recptmint && recptmint.status) {
         // upload img and mon stats to ipfs 
@@ -456,6 +479,8 @@ const monName = names[maxPeak.species];
     if (recpt && !recpt.status) {
       toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
     }
+
+    await refreshMons();
   }
 
   // Function that allows 2 Cryptomons to fight through a smart contract function
@@ -1163,19 +1188,25 @@ const monName = names[maxPeak.species];
             >
               Breed choosen creatures
             </button>
-       
-            {
-              breedMintInfo ? (<div className="p2">
-                {`Successfully minted a ${breedMintInfo?.ipfs?.IpfsHash || ''}!`}
-                {`IPFS Hash: ${breedMintInfo?.ipfs?.IpfsHash || ''}`}
-                Link:
-                <a href={`https://gateway.pinata.cloud/ipfs/${breedMintInfo?.ipfs?.IpfsHash || ''}`} target="_blank">
-                  {`https://gateway.pinata.cloud/ipfs/${breedMintInfo?.ipfs?.IpfsHash || ''}`}
-                </a>
-              </div>) : ''
-            }
-            
+               
           </div>
+
+<br />
+          <div className="p1">Breeding Results</div>
+          <br />
+
+          <div className="p2">
+{`New Breed: ${breedMintInfo?.monName || ''}`}
+</div>
+<div className="p2">
+{`IPFS Hash: ${breedMintInfo?.ipfs?.IpfsHash || ''}`}
+</div>
+<div className="p2">
+<a href={`https://gateway.pinata.cloud/ipfs/${breedMintInfo?.ipfs?.IpfsHash || ''}`} target="_blank">
+                  NFT link
+                </a>
+</div>
+
           {forBreedCryptomons}
         </Tab>
         <Tab eventKey="fight" title="Fight">
