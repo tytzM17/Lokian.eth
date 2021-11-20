@@ -6,20 +6,10 @@ import "@openzeppelin/contracts@4.3.2/access/Ownable.sol";
 import "@openzeppelin/contracts@4.3.2/token/ERC1155/extensions/ERC1155Burnable.sol";
 
 contract Lokie is ERC1155, Ownable, ERC1155Burnable {
-      // mons, maybe enum?
-    // uint256 public constant DRYAD = 0;
-    // uint256 public constant HAMADRYAD = 1;
-    // uint256 public constant LESHY = 2;
-    // uint256 public constant SANTELMO = 3;
-    // uint256 public constant CERBERUS = 4;
-    // uint256 public constant EFREET = 5;
-    // uint256 public constant FASTITOCALON = 6;
-    // uint256 public constant ASPIDOCHELONE = 7;
-    // uint256 public constant ZARATAN = 8;
-    // uint256 public constant ARACHNE = 9;
-    // uint256 public constant JOROGUMO = 10;
-    // uint256 public constant TSUCHIGUMO = 11;
 
+// Payable address can receive Ether
+    address payable public manager;
+    
          enum Species { 
          DRYAD, 
          HAMADRYAD, 
@@ -37,19 +27,21 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         // token
     uint256 public constant GOLD = 151;
     
-    constructor() ERC1155("") {
+    constructor() ERC1155("") payable {
+        manager = payable(msg.sender);
+        
         // mons
-        _mint(msg.sender, Species.DRYAD, 10, "");
-        _mint(msg.sender, Species.HAMADRYAD, 10, "");
-        _mint(msg.sender, Species.LESHY, 10, "");
-        _mint(msg.sender, Species.SANTELMO, 10, "");
-        _mint(msg.sender, Species.CERBERUS, 10, "");
-        _mint(msg.sender, Species.EFREET, 10, "");
-        _mint(msg.sender, Species.FASTITOCALON, 10, "");
-        _mint(msg.sender, Species.ASPIDOCHELONE, 10, "");
+        _mint(msg.sender, uint(Species.DRYAD), 1, "");
+        _mint(msg.sender, uint(Species.HAMADRYAD), 1, "");
+        _mint(msg.sender, uint(Species.LESHY), 1, "");
+        _mint(msg.sender, uint(Species.SANTELMO), 1, "");
+        _mint(msg.sender, uint(Species.CERBERUS), 1, "");
+        _mint(msg.sender, uint(Species.EFREET), 1, "");
+        _mint(msg.sender, uint(Species.FASTITOCALON), 1, "");
+        _mint(msg.sender, uint(Species.ASPIDOCHELONE), 1, "");
          
 		 // token
-        _mint(msg.sender, GOLD, 1000, "");
+        _mint(msg.sender, GOLD, 100, "");
     }
 
     function setURI(string memory newuri) public onlyOwner {
@@ -67,9 +59,9 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         public
         payable
     {
-		require(msg.value > price);
-		
-		address payable seller = owner;
+        require (msg.value > 0);
+         
+		address payable seller = payable(manager);
         _mint(account, id, amount, data);
 		seller.transfer(msg.value);
     }
@@ -85,9 +77,10 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         public
         payable
     {
+        require(msg.value > 0);
 		require(msg.value > price);
 		
-		address payable seller = owner;
+		address payable seller = payable(manager);
         _mintBatch(to, ids, amounts, data);
 		seller.transfer(msg.value);
     }
@@ -99,8 +92,8 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
        
         require(winnerMonId > 12);
         // require account has balance of winnerMonId 
-        require(_balanceOf(account, winnerMonId) > 0);
+        require(balanceOf(account, winnerMonId) > 0);
 
-        _mint(account, GOLD, 10, data);
+        _mint(account, GOLD, 100, data);
     }
 }

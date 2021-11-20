@@ -17,10 +17,12 @@ import {
 import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { Contract } from '@ethersproject/contracts'
 import { BigNumber } from '@ethersproject/bignumber'
+import { WeiPerEther } from "@ethersproject/constants";
 
-// abi
+// abis
 import contrInterface from './abi.json' // Load contract json file
-import erc1155Interface from './erc1155Interface.json'
+// import erc1155Interface from './erc1155Interface.json'
+import erc1155Interface from './project.nft.abi.json'
 
 // Load all the background images for the 10 different Cryptomon types
 import bg0 from './sprites/background/0.png'
@@ -37,6 +39,7 @@ import bg10 from './sprites/background/10.png'
 
 // axios
 import axios, { AxiosResponse } from 'axios'
+import { pinFileToIPFS } from "./rest/pinFileToIPFS";
 
 // util
 import cryptoRandom from './utils/cryptoRandom'
@@ -54,7 +57,9 @@ const CONTRACT_ADDRESS = '0x14014a31Bc92099453075d0c75FaAFfd7528474E'
 // const CONTRACT_ADDRESS = '0x7a131A8783Bbcec7441D4867B99a1214BcF27b35';
 // const CONTRACT_ADDRESS = '0x357dBC8d883adb2b13Be3F1F4802333A41966d33';
 
-const ERC1155_CONTRACT_ADDRESS = '0xba3148996b4a28E114bA15D967AACEE870149387'
+// nft contract
+// const ERC1155_CONTRACT_ADDRESS = '0xba3148996b4a28E114bA15D967AACEE870149387'
+const ERC1155_CONTRACT_ADDRESS = '0x34F240a6559d3D93306b4412D616349D55cFE6A0'
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]
@@ -261,6 +266,7 @@ function App() {
   const [userLokianGold, setUserLokianGold] = useState(0)
   const [chosenPack, setChosenPack] = useState('freePack')
   const [coinData, setCoinData] = useState<AxiosResponse | null>(null)
+const [breedMintInfo, setbreedMintInfo] = useState(null);
 
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
@@ -344,7 +350,8 @@ function App() {
   // Function that buys a Cryptomon through a smart contract function
   async function buyMon(id, price) {
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    let overrides = { value: BigInt(price) + BigInt(1) + '' }
+    const newprice = `${BigInt(price * WeiPerEther)}`;
+    let overrides = { value: newprice }
     const tx = await contr.buyMon(id, overrides)
     const recpt = await tx.wait()
     if (recpt && recpt.status === 1) {
@@ -394,11 +401,56 @@ function App() {
   // Function that breeds 2 Cryptomons through a smart contract function
   async function breedMons(id1, id2) {
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+    const nftcontr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
+
     const tx = await contr.breedMons(id1, id2)
     const recpt = await tx.wait()
     if (recpt && recpt.status) {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
-      refreshMons()
+      refreshMons();
+
+      // get user mons, get highest mon id
+      const maxPeak = myCryptomons.reduce((a, b) => a.id > b.id ? a : b);
+      console.log(maxPeak, maxPeak?.id);
+      // get mon species , get index from mon species
+      console.log(names[maxPeak.species]);
+      if (!maxPeak || !maxPeak.species) {
+        toast.error("Species not found!")
+        return;
+      }
+      const monIdx = maxPeak.species;
+const monName = names[maxPeak.species];
+      // mintPayable 1 param are account, mon idx species, amount=1, data='0x00'
+      if (!coinData || !coinData[0].current_price) {
+        toast.error('Cannot fetch price, please reload');
+        return;
+      }
+      const price = BigInt(parseInt(parseFloat(0.05 / coinData[0].current_price) * WeiPerEther));
+      let overrides = { value: `${price}` }
+      const txmint = await nftcontr.mintPayable(account, monIdx, 1, '0x00', overrides)
+      const recptmint = await txmint.wait()
+      if (recptmint && recptmint.status) {
+        // upload img and mon stats to ipfs 
+        try {
+          // axios pin to ipfs pinata
+          await pinFileToIPFS({
+            mon: maxPeak,
+            monName,
+            success: (successResponse) => {
+              console.log(successResponse)
+              if (successResponse && successResponse.status === 200) {
+                toast.success(`Success, IpfsHash:${successResponse.data?.IpfsHash}`);
+                if (successResponse.data) setBreedMintInfo({ ipfs: successResponse.data, monName });
+              }
+            },
+            error:  (errorResponse) => toast.error(errorResponse)
+          })
+          // success, error
+        } catch (error) {
+          toast.error('An error occurred while uploading nft to ipfs!')
+        }
+      }
+      
     }
 
     if (recpt && !recpt.status) {
@@ -614,9 +666,9 @@ function App() {
     return (
       <div className="buying-div">
         <div className="sale-price">
-          Price (in Wei):
+          Price:
           <br />
-          {mon.price}{' '}
+          {mon?.price || 'price not found'}{' '}
         </div>
         <div className="sale-owner">Creature Owner: {mon?.owner} </div>
         <button
@@ -969,7 +1021,7 @@ function App() {
           {/* Buy random pack */}
           <>
             <div className="rpgui-container framed-golden" style={{ display: 'flex', flexDirection: 'column' }}>
-              Choose a pack to buy
+              Choose an nft pack to buy
               <select
                 className="rpgui-dropdown-buy-pack"
                 // className="rpgui-dropdown"
@@ -982,17 +1034,17 @@ function App() {
                 <option value="basicPack">
                   Basic Pack{' '}
                   {coinData &&
-                    `($0.50 or ${parseFloat(0.5 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
+                    `($0.50 or ${parseFloat(0.25 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
                 </option>
                 <option value="intermediatePack">
                   Intermediate Pack{' '}
                   {coinData &&
-                    `($0.75 or ${parseFloat(0.75 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
+                    `($0.75 or ${parseFloat(0.50 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
                 </option>
                 <option value="advancePack">
                   Advance Pack{' '}
                   {coinData &&
-                    `($0.99 or ${parseFloat(0.99 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
+                    `($0.99 or ${parseFloat(0.75 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
                 </option>
               </select>
               <button
@@ -1102,6 +1154,7 @@ function App() {
           <div className="breeding-area">
             {breedOption(breedChoice1)}
             {breedOption(breedChoice2)}
+            <div className="p2">proceeed to mint nft ($0.05)</div>
             <button
               className="rpgui-button"
               type="button"
@@ -1110,6 +1163,18 @@ function App() {
             >
               Breed choosen creatures
             </button>
+       
+            {
+              breedMintInfo ? (<div className="p2">
+                {`Successfully minted a ${breedMintInfo?.ipfs?.IpfsHash || ''}!`}
+                {`IPFS Hash: ${breedMintInfo?.ipfs?.IpfsHash || ''}`}
+                Link:
+                <a href={`https://gateway.pinata.cloud/ipfs/${breedMintInfo?.ipfs?.IpfsHash || ''}`} target="_blank">
+                  {`https://gateway.pinata.cloud/ipfs/${breedMintInfo?.ipfs?.IpfsHash || ''}`}
+                </a>
+              </div>) : ''
+            }
+            
           </div>
           {forBreedCryptomons}
         </Tab>

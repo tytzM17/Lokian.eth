@@ -352,7 +352,7 @@ contract Cryptomons {
         }
         
         else {
-            s = Species(128);       // result MAGIKARP in every other case
+            s = Species(128);       // result MAGIKARP/lochness in every other case
         }
         
         return s;

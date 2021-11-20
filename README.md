@@ -56,6 +56,8 @@ Ongoing
 - Create landing page in ipfs, buy domain name($1-5), tg ann, twitr page
 - Submit to dappradar, IGOs, state of the dapps, etc 
 
+- Create meme coin with future utility (10 trillion?, feature) 
+
 Roadmap
 - October 2021, Development and Tests..ok
 - November 2021, Test and deploy to testnet
