@@ -43,9 +43,9 @@ Finished
 - Create faucet page for getting nfts or tokens (mvp) 11/9/2021
 
 Ongoing
-- After breed or buy pack mons (random) minted, just add dynamic/random attributes then upload minted nft to ipfs. payable (mvp)
+- After breed or buy pack mons (random) minted, just add dynamic/random attributes then upload minted nft to ipfs. payable (mvp) (function can be same as breed/mint)
 
-- Breed then mint, payable (mvp)
+- Breed then mint, payable (mvp) ..almost done (see below)
 - When breed/mint, create dynamic overlay of card no. (e.g. no.45 on front-most layer) or just pin a json/metadata then attach the image hash to avoid isDuplicate in
 ipfs uploading (mvp)
 
