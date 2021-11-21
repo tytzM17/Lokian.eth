@@ -41,13 +41,10 @@ Finished
 - Fix logo, create an 8 bit representation of the logo (mvp) 10/26/2021
 - Create erc-1155 smart contract that will mint nfts, tests (mvp) 10/27/2021
 - Create faucet page for getting nfts or tokens (mvp) 11/9/2021
+- Breed then mint, pinJson, payable (mvp) 11/21/2021
 
 Ongoing
 - After breed or buy pack mons (random) minted, just add dynamic/random attributes then upload minted nft to ipfs. payable (mvp) (function can be same as breed/mint)
-
-- Breed then mint, payable (mvp) ..almost done (see below)
-- When breed/mint, create dynamic overlay of card no. (e.g. no.45 on front-most layer) or just pin a json/metadata then attach the image hash to avoid isDuplicate in
-ipfs uploading (mvp)
 
 - fight wins, pay with gas/native to set on-chain record (feature)
 

@@ -433,14 +433,6 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
       }
 
       // get user mons, get highest mon id
-      //const maxPeak = cryptomons.reduce((a, b) => a.id > b.id ? a : b);
-      console.log(maxPeak, maxPeak?.id);
-      // get mon species , get index from mon species
-      console.log(names[maxPeak.species]);
-      if (!maxPeak || !maxPeak.species) {
-        toast.error("Species not found!")
-        return;
-      }
       const monIdx = maxPeak.species;
       const monName = names[maxPeak.species];
       // mintPayable 1 param are account, mon idx species, amount=1, data='0x00'
