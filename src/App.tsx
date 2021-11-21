@@ -39,7 +39,7 @@ import bg10 from './sprites/background/10.png'
 
 // axios
 import axios, { AxiosResponse } from 'axios'
-import { pinFileToIPFS } from "./rest/pinFileToIPFS";
+import { pinJSONToIPFS } from "./rest/pinJSONToIPFS";
 
 // util
 import cryptoRandom from './utils/cryptoRandom'
@@ -442,7 +442,7 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
         return;
       }
       const monIdx = maxPeak.species;
-const monName = names[maxPeak.species];
+      const monName = names[maxPeak.species];
       // mintPayable 1 param are account, mon idx species, amount=1, data='0x00'
       if (!coinData || !coinData[0].current_price) {
         toast.error('Cannot fetch price, please reload');
@@ -456,7 +456,7 @@ const monName = names[maxPeak.species];
         // upload img and mon stats to ipfs 
         try {
           // axios pin to ipfs pinata
-          await pinFileToIPFS({
+          await pinJSONToIPFS({
             mon: maxPeak,
             monName,
             success: (successResponse) => {

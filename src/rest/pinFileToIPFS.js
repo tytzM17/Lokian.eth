@@ -8,13 +8,10 @@ export const pinFileToIPFS = (params) => {
     const pinataSecretApiKey = process.env.REACT_APP_PINATA_SECRET_API_KEY;
 
     const monName = params?.monName;
-    console.log('mon name ifps:', monName);
-
     //we gather a local file for this example, but any valid readStream source will work here.
     let data = new FormData();
     const monImg = require(`../sprites/${parseInt(params?.mon?.species || "-1") + 1}.png`);
     const monImgBlob = dataURItoBlob(monImg);
-    console.log('mon img blob', monImgBlob);
     data.append('file', monImgBlob, `${monName || ''}_issue_no_${params?.mon?.id || ''}.png`);
 
     //You'll need to make sure that the metadata is in the form of a JSON object that's been convered to a string
