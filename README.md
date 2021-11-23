@@ -44,7 +44,8 @@ Finished
 - Breed then mint, pinJson, payable (mvp) 11/21/2021
 
 Ongoing
-- After breed or buy pack mons (random) minted, just add dynamic/random attributes then upload minted nft to ipfs. payable (mvp) (function can be same as breed/mint)
+- Combine game and nft contracts, e.g. createMon and breedMon funcs will be private on nft contract. 
+    Other states like totalMons will be migrated too. In nftContract.mintPayable there will be breedMon method inside or in nftContract.mintBatchPayable there will be createMons method inside. Or createMon method in game contract should have some kind of a guard. This is to prevent unauthorized creation and breeding of mons (mvp)
 
 - fight wins, pay with gas/native to set on-chain record (feature)
 

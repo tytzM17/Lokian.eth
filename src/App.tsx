@@ -43,6 +43,7 @@ import { pinJSONToIPFS } from "./rest/pinJSONToIPFS";
 
 // util
 import cryptoRandom from './utils/cryptoRandom'
+import { Web3Provider } from '@ethersproject/providers'
 
 enum ConnectorNames {
   Injected = 'Injected',
@@ -53,13 +54,13 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
 }
 
 // Contact deployment address, e.g. ganache
-const CONTRACT_ADDRESS = '0x14014a31Bc92099453075d0c75FaAFfd7528474E'
-// const CONTRACT_ADDRESS = '0x7a131A8783Bbcec7441D4867B99a1214BcF27b35';
+// const CONTRACT_ADDRESS = '0x14014a31Bc92099453075d0c75FaAFfd7528474E'
+const CONTRACT_ADDRESS = '0x6c32f90F6A53A753299e109E8CBB11e4C61e9734';
 // const CONTRACT_ADDRESS = '0x357dBC8d883adb2b13Be3F1F4802333A41966d33';
 
 // nft contract
-// const ERC1155_CONTRACT_ADDRESS = '0xba3148996b4a28E114bA15D967AACEE870149387'
-const ERC1155_CONTRACT_ADDRESS = '0x34F240a6559d3D93306b4412D616349D55cFE6A0'
+const ERC1155_CONTRACT_ADDRESS = '0x8ae9E353F2A06Fcae864E514cF8AFf6119B3F766'
+// const ERC1155_CONTRACT_ADDRESS = '0x34F240a6559d3D93306b4412D616349D55cFE6A0'
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]
@@ -433,7 +434,6 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
       }
 
       // get user mons, get highest mon id
-      const monIdx = maxPeak.species;
       const monName = names[maxPeak.species];
       // mintPayable 1 param are account, mon idx species, amount=1, data='0x00'
       if (!coinData || !coinData[0].current_price) {
@@ -1051,17 +1051,17 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
                 <option value="basicPack">
                   Basic Pack{' '}
                   {coinData &&
-                    `($0.50 or ${parseFloat(0.25 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
+                    `($0.25 or ${parseFloat(0.25 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
                 </option>
                 <option value="intermediatePack">
                   Intermediate Pack{' '}
                   {coinData &&
-                    `($0.75 or ${parseFloat(0.50 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
+                    `($0.50 or ${parseFloat(0.50 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
                 </option>
                 <option value="advancePack">
                   Advance Pack{' '}
                   {coinData &&
-                    `($0.99 or ${parseFloat(0.75 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
+                    `($0.75 or ${parseFloat(0.75 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
                 </option>
               </select>
               <button

@@ -235,6 +235,9 @@ contract Cryptomons {
     
     function createMon(Species species, uint price, bool forSale) public onlyManager {
         assert(totalMons <  max);
+
+        // require a ipfs hash or mon id param ? query hash by msg.sender after pinning data
+        // or requires an ipfs hash or mon id , that the sender has
         
         Mon storage mon = mons[totalMons];
         mon.id = totalMons;
