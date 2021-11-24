@@ -1037,6 +1037,9 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
 
           {/* Buy random pack */}
           <>
+          <div className="p1">
+            NFT packs has +10 attribute points compared to (non-nft) free packs
+          </div>
             <div className="rpgui-container framed-golden" style={{ display: 'flex', flexDirection: 'column' }}>
               Choose an nft pack to buy
               <select
@@ -1047,21 +1050,21 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
                   setChosenPack(e.target.value)
                 }}
               >
-                <option value="freePack">Free Pack {coinData && `($0 or 0.00 ${coinData[0].symbol})`}</option>
+                <option value="freePack">Free Pack (non-nft) {coinData && `($0 or 0.00 ${coinData[0].symbol})`}</option>
                 <option value="basicPack">
                   Basic Pack{' '}
                   {coinData &&
-                    `($0.25 or ${parseFloat(0.25 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
+                    `($0.05 or ${parseFloat(0.05 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
                 </option>
                 <option value="intermediatePack">
                   Intermediate Pack{' '}
                   {coinData &&
-                    `($0.50 or ${parseFloat(0.50 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
+                    `($0.10 or ${parseFloat(0.10 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
                 </option>
                 <option value="advancePack">
                   Advance Pack{' '}
                   {coinData &&
-                    `($0.75 or ${parseFloat(0.75 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
+                    `($0.20 or ${parseFloat(0.20 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
                 </option>
               </select>
               <button
@@ -1069,7 +1072,7 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
                 type="button"
                 style={{ marginTop: '12px' }}
                 onClick={() => {
-                  // 'mint random pack', if free, 0-12, basic creature 13-50, if interm 50-100, adv 100-150
+                  // 'mint random pack', if free, 0-18, basic creature 19-65, if interm 66-110, adv 111-150
                   switch (chosenPack) {
                     case 'freePack':
                       const mintfreeBatch = [

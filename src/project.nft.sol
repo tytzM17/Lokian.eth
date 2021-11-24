@@ -10,7 +10,7 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
 // Payable address can receive Ether
     address payable public manager;
     
-         enum Species { 
+    enum Species { 
          DRYAD, 
          HAMADRYAD, 
          LESHY,          
@@ -23,9 +23,10 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
          ARACHNE,
          JOROGUMO,
          TSUCHIGUMO
-         }
-        // token
-    uint256 public constant GOLD = 151;
+    }
+    
+    // token
+    uint256 public constant GOLD = 0;
     
     constructor() ERC1155("") payable {
         manager = payable(msg.sender);
@@ -48,52 +49,85 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         _setURI(newuri);
     }
 
-    function mint(address account, uint256 id, uint256 amount, bytes memory data)
-        public
-        onlyOwner
-    {
-        _mint(account, id, amount, data);
-    }
+    // function mint(address account, uint256 id, uint256 amount, bytes memory data)
+    //     public
+    //     onlyOwner
+    // {
+    //     _mint(account, id, amount, data);
+    // }
 	
-	function mintPayable(address account, uint256 id, uint256 amount, bytes memory data)
+	function mintBasicPayable(address account, uint256 id, bytes memory data)
         public
         payable
     {
-        require (msg.value > 0);
-         
+        require (msg.value > 0); // or >= $0.05 equivalent
+        require (id > 18 && id < 66);
+   
 		address payable seller = payable(manager);
-        _mint(account, id, amount, data);
+        _mint(account, id, 1, data);
 		seller.transfer(msg.value);
     }
 
-    function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
-        public
-        onlyOwner
-    {
-        _mintBatch(to, ids, amounts, data);
-    }
-	
-	function mintBatchPayable(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data, uint price)
+    // mint intermediate 
+    function mintIntermPayable(address account, uint256 id, bytes memory data)
         public
         payable
     {
-        require(msg.value > 0);
-		require(msg.value > price);
+        require (msg.value > 0); // or >= $0.1 equivalent
+        require (id > 65 && id < 111);
+   
+		address payable seller = payable(manager);
+        _mint(account, id, 1, data);
+		seller.transfer(msg.value);
+    }
+
+    function mintAdvancePayable(address account, uint256 id, bytes memory data)
+        public
+        payable
+    {
+        require (msg.value > 0); // or >= $0.2 equivalent
+        require (id > 110);
+   
+		address payable seller = payable(manager);
+        _mint(account, id, 1, data);
+		seller.transfer(msg.value);
+    }
+
+    // function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+    //     public
+    //     onlyOwner
+    // {
+    //     _mintBatch(to, ids, amounts, data);
+    // }
+	
+	function mintBatchBasicPayable(address to, bytes memory data)
+        public
+        payable
+    {
+        require(msg.value > 0); // or >= $0.05 equivalent
+
+        // uint256[] memory ids = [19,20,21...65];
+        // uint256[] memory amounts = [1,1,1,1,1...n];
 		
 		address payable seller = payable(manager);
         _mintBatch(to, ids, amounts, data);
 		seller.transfer(msg.value);
     }
-    
-    // for fight winnings
-    function mintGold(address account, bytes memory data, uint winnerMonId)
-        public
-    {
-       
-        require(winnerMonId > 12);
-        // require account has balance of winnerMonId 
-        require(balanceOf(account, winnerMonId) > 0);
 
-        _mint(account, GOLD, 100, data);
-    }
+    // function mintBatchIntermPayable
+    // function mintBatchAdvancePayable
+
+
+    
+    // for fight winnings/ maybe the meme coin
+    // function mintGold(address account, bytes memory data, uint winnerMonId)
+    //     public
+    // {
+       
+    //     require(winnerMonId > 18);
+    //     // require account has balance of winnerMonId 
+    //     require(balanceOf(account, winnerMonId) > 0);
+
+    //     _mint(account, GOLD, 100, data);
+    // }
 }

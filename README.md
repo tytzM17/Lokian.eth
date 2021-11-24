@@ -44,26 +44,26 @@ Finished
 - Breed then mint, pinJson, payable (mvp) 11/21/2021
 
 Ongoing
-- Combine game and nft contracts, e.g. createMon and breedMon funcs will be private on nft contract. 
-    Other states like totalMons will be migrated too. In nftContract.mintPayable there will be breedMon method inside or in nftContract.mintBatchPayable there will be createMons method inside. Or createMon method in game contract should have some kind of a guard. This is to prevent unauthorized creation and breeding of mons (mvp)
+- Create and Breed mon are payable (free pack not payable, above free pack and non nft for intermediate and advance payable are payable like 0.05 and 0.10), 
+- Dialog to mint nft (if yes, mint is payable too) 
 
-- fight wins, pay with gas/native to set on-chain record (feature)
+- Create meme coin with future utility (1-10 trillion?, feature) 
+- fight wins (earn meme coin?), pay with meme coin? to set on-chain record e.g. name or address, wins 120 loss 2, rank no. 1 (feature)
 
 - Set frontend in pinata or ipfs, use bit.ly(shorten url) atm (mvp)
-- Deploy and test to rinkeby or moonbase alpha testnets (mvp)
-- Deploy to eth or moonriver mainnets (mvp)
+- Deploy and test to rinkeby or evm-compatible testnets (mvp)
+- Deploy to eth or evm-compatible mainnets (mvp)
 
 - Create landing page in ipfs, buy domain name($1-5), tg ann, twitr page
 - Submit to dappradar, IGOs, state of the dapps, etc 
 
-- Create meme coin with future utility (10 trillion?, feature) 
 
 Roadmap
 - October 2021, Development and Tests..ok
 - November 2021, Test and deploy to testnet
-- December 2021, Deploy to mainnet, Initial PvP metaVerse
-- January 2022, PvP metaVerse test/deploy
-- February 2022, Moba metaVerse 
+- December 2021, Deploy to mainnet 
+- January 2022, Initial PvP development
+- February 2022, Initial Moba development  
 
 
 

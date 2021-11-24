@@ -204,7 +204,7 @@ contract Cryptomons {
     uint private max = 2**256 - 1;      // Max number of Cryptomons
     
     uint private nonce = 0;             // Number used for guessable pseudo-random generated number.
-    
+
     constructor() {
         manager = msg.sender;
         
@@ -233,12 +233,11 @@ contract Cryptomons {
         _;
     }
     
-    function createMon(Species species, uint price, bool forSale) public onlyManager {
-        assert(totalMons <  max);
 
-        // require a ipfs hash or mon id param ? query hash by msg.sender after pinning data
-        // or requires an ipfs hash or mon id , that the sender has
-        
+    function createFreeMon(Species species, uint price, bool forSale) public {
+        assert(totalMons <  max);
+        require(species < 19);
+      
         Mon storage mon = mons[totalMons];
         mon.id = totalMons;
         mon.owner = msg.sender;
@@ -258,6 +257,35 @@ contract Cryptomons {
         mon.sharedTo = msg.sender;
         
         totalMons++;
+    }
+
+    function createMon(Species species, uint price, bool forSale) public payable {
+        assert(totalMons <  max);
+        require(msg.value > 0);
+        require(species > 18);
+      
+        Mon storage mon = mons[totalMons];
+        mon.id = totalMons;
+        mon.owner = msg.sender;
+        mon.species = species;
+        mon.price = price;
+        mon.forSale = forSale;
+        
+        mon.monType = monTypes[uint8(species)];    // Assign the type of the cryptomon
+        mon.evolve = evolves[uint8(species)];      // Keep whether this cryptomon can evolve
+        
+        // Assign stats of the cryptomon
+        mon.hp = 110 + randomGen(41);
+        mon.atk = 110 + randomGen(41);
+        mon.def = 110 + randomGen(41);
+        mon.speed = 110 + randomGen(41);
+        
+        mon.sharedTo = msg.sender;
+        
+        totalMons++;
+
+        address payable seller = manager;
+        seller.transfer(msg.value);
     }
     
     function buyMon(uint id) public payable {
@@ -361,7 +389,7 @@ contract Cryptomons {
         return s;
     }
     
-    function breedMons(uint id1, uint id2) public {
+    function breedMons(uint id1, uint id2) public payable {
         assert(id1 < totalMons);
         assert(id2 < totalMons);
         assert(totalMons <  max);           // Not reached maximum number of mons allowed
@@ -388,6 +416,9 @@ contract Cryptomons {
         mon.sharedTo = msg.sender;
         
         totalMons++;
+
+        address payable seller = manager;
+        seller.transfer(msg.value);
     }
     
     function damage(uint id1, uint id2) private view returns (uint8) {
