@@ -44,10 +44,10 @@ Finished
 - Breed then mint, pinJson, payable (mvp) 11/21/2021
 
 Ongoing
-- Create and Breed mon are payable (free pack not payable, above free pack and non nft for intermediate and advance payable are payable like 0.05 and 0.10), 
-- Dialog to mint nft (if yes, mint is payable too) 
+- free packs are not nft not payable, basic to advance packs are nfts and payable (mvp) 
+- breed mons are nft, payable (mvp)
 
-- Create meme coin with future utility (1-10 trillion?, feature) 
+- Create meme coin with future utility (10-100 trillion?, feature) 
 - fight wins (earn meme coin?), pay with meme coin? to set on-chain record e.g. name or address, wins 120 loss 2, rank no. 1 (feature)
 
 - Set frontend in pinata or ipfs, use bit.ly(shorten url) atm (mvp)

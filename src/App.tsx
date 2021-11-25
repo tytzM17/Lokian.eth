@@ -1075,85 +1075,98 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
                   // 'mint random pack', if free, 0-18, basic creature 19-65, if interm 66-110, adv 111-150
                   switch (chosenPack) {
                     case 'freePack':
-                      const mintfreeBatch = [
-                        cryptoRandom(0, 12),
-                        cryptoRandom(0, 12),
-                        cryptoRandom(0, 12),
-                        cryptoRandom(0, 12),
-                        cryptoRandom(0, 12),
-                        cryptoRandom(0, 12),
-                        cryptoRandom(0, 12),
-                        cryptoRandom(0, 12),
+                      const freemons = [
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
+                        cryptoRandom(0, 18),
                       ]
-                      // call mint batch func in nft contract
-                      const mintfreeBatchAmount = [1, 1, 1, 1, 1, 1, 1, 1]
-                      getMintBatch(mintfreeBatch, mintfreeBatchAmount)
+                      // call game contract only
+                      getFreeBatch(freemons);
 
                       break
 
                     case 'basicPack':
-                      const mintbasicBatch = [
-                        cryptoRandom(13, 50),
-                        cryptoRandom(13, 50),
-                        cryptoRandom(13, 50),
-                        cryptoRandom(13, 50),
-                        cryptoRandom(13, 50),
-                        cryptoRandom(13, 50),
-                        cryptoRandom(13, 50),
-                        cryptoRandom(13, 50),
-                        cryptoRandom(13, 50),
-                        cryptoRandom(13, 50),
-                        cryptoRandom(13, 50),
-                        cryptoRandom(13, 50),
+                      const basicmons = [
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
+                        cryptoRandom(19, 65),
                       ]
-                      // call mint batch func in nft contract
-                      const mintbasicBatchAmt = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-                      getMintBatch(mintbasicBatch, mintbasicBatchAmt)
-
+                      // call game contract 
+                      setMintBasicBatch(basicmons, "0x66726f6d2067616d6520636f6e7472616374");
+                      // call mint basic batch func in nft contract
+                      getMintBasicBatch(basicmons, "0x66726f6d2067616d6520636f6e7472616374");
                       break
 
                     case 'intermediatePack':
-                      const mintIntermBatch = [
-                        cryptoRandom(51, 100),
-                        cryptoRandom(51, 100),
-                        cryptoRandom(51, 100),
-                        cryptoRandom(51, 100),
-                        cryptoRandom(51, 100),
-                        cryptoRandom(51, 100),
-                        cryptoRandom(51, 100),
-                        cryptoRandom(51, 100),
-                        cryptoRandom(51, 100),
-                        cryptoRandom(51, 100),
-                        cryptoRandom(51, 100),
-                        cryptoRandom(51, 100),
-                      ]
-                      // call mint batch func in nft contract
-                      console.log(mintIntermBatch)
-                      const mintIntermBatchAmt = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-                      getMintBatch(mintIntermBatch, mintIntermBatchAmt)
-
+                  // call game contract 
+                      // call mint interm batch func in nft contract
+                      getMintIntermBatch(account, "0x66726f6d2067616d6520636f6e7472616374");
                       break
 
                     case 'advancePack':
-                      const mintAdvanceBatch = [
-                        cryptoRandom(101, 151),
-                        cryptoRandom(101, 151),
-                        cryptoRandom(101, 151),
-                        cryptoRandom(101, 151),
-                        cryptoRandom(101, 151),
-                        cryptoRandom(101, 151),
-                        cryptoRandom(101, 151),
-                        cryptoRandom(101, 151),
-                        cryptoRandom(101, 151),
-                        cryptoRandom(101, 151),
-                        cryptoRandom(101, 151),
-                        cryptoRandom(101, 151),
-                      ]
-                      // call mint batch func in nft contract
-                      console.log(mintAdvanceBatch)
-                      const mintAdvanceBatchAmt = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-                      getMintBatch(mintAdvanceBatch, mintAdvanceBatchAmt)
-
+                         // call game contract 
+                      // call mint advance func in nft contract
+                      getMintAdvBatch(account, "0x66726f6d2067616d6520636f6e7472616374");
                       break
 
                     default:

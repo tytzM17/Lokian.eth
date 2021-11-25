@@ -234,7 +234,7 @@ contract Cryptomons {
     }
     
 
-    function createFreeMon(Species species, uint price, bool forSale) public {
+    function createFreeMon(Species species, bool forSale) public {
         assert(totalMons <  max);
         require(species < 19);
       
@@ -242,7 +242,7 @@ contract Cryptomons {
         mon.id = totalMons;
         mon.owner = msg.sender;
         mon.species = species;
-        mon.price = price;
+        mon.price = 0;
         mon.forSale = forSale;
         
         mon.monType = monTypes[uint8(species)];    // Assign the type of the cryptomon
@@ -257,6 +257,30 @@ contract Cryptomons {
         mon.sharedTo = msg.sender;
         
         totalMons++;
+    }
+
+    function createFreeMonPack(uint256[] memory freemons) {
+        assert(totalMons <  max);
+
+        createFreeMon(Species(freemons[0]), false);
+        createFreeMon(Species(freemons[1]), false);
+        createFreeMon(Species(freemons[2]), false);
+        createFreeMon(Species(freemons[3]), false);
+        createFreeMon(Species(freemons[4]), false);
+        createFreeMon(Species(freemons[5]), false);
+        createFreeMon(Species(freemons[6]), false);
+        createFreeMon(Species(freemons[7]), false);
+        createFreeMon(Species(freemons[8]), false);
+        createFreeMon(Species(freemons[9]), false);
+        createFreeMon(Species(freemons[10]), false);
+        createFreeMon(Species(freemons[11]), false);
+        createFreeMon(Species(freemons[12]), false);
+        createFreeMon(Species(freemons[13]), false);
+        createFreeMon(Species(freemons[14]), false);
+        createFreeMon(Species(freemons[15]), false);
+        createFreeMon(Species(freemons[16]), false);
+        createFreeMon(Species(freemons[17]), false);
+
     }
 
     function createMon(Species species, uint price, bool forSale) public payable {
