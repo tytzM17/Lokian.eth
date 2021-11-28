@@ -17,7 +17,7 @@ import {
 import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { Contract } from '@ethersproject/contracts'
 import { BigNumber } from '@ethersproject/bignumber'
-import { WeiPerEther } from "@ethersproject/constants";
+import { WeiPerEther } from '@ethersproject/constants'
 
 // abis
 import contrInterface from './abi.json' // Load contract json file
@@ -39,11 +39,13 @@ import bg10 from './sprites/background/10.png'
 
 // axios
 import axios, { AxiosResponse } from 'axios'
-import { pinJSONToIPFS } from "./rest/pinJSONToIPFS";
+import { pinJSONToIPFS } from './rest/pinJSONToIPFS'
 
 // util
 import cryptoRandom from './utils/cryptoRandom'
 import { Web3Provider } from '@ethersproject/providers'
+import txSuccess from './utils/txSuccess'
+import txFail from './utils/txFail'
 
 enum ConnectorNames {
   Injected = 'Injected',
@@ -54,8 +56,7 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
 }
 
 // Contact deployment address, e.g. ganache
-// const CONTRACT_ADDRESS = '0x14014a31Bc92099453075d0c75FaAFfd7528474E'
-const CONTRACT_ADDRESS = '0x6c32f90F6A53A753299e109E8CBB11e4C61e9734';
+const CONTRACT_ADDRESS = '0x6c32f90F6A53A753299e109E8CBB11e4C61e9734'
 // const CONTRACT_ADDRESS = '0x357dBC8d883adb2b13Be3F1F4802333A41966d33';
 
 // nft contract
@@ -267,7 +268,7 @@ function App() {
   const [userLokianGold, setUserLokianGold] = useState(0)
   const [chosenPack, setChosenPack] = useState('freePack')
   const [coinData, setCoinData] = useState<AxiosResponse | null>(null)
-const [breedMintInfo, setBreedMintInfo] = useState(null);
+  const [breedMintInfo, setBreedMintInfo] = useState(null)
 
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
@@ -284,7 +285,6 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
 
   // Get network coin price e.g. ether or movr price
   useEffect(() => {
-    
     const coin = 'ethereum'
     const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coin}`
     let unmounted = false
@@ -327,44 +327,39 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
   async function refreshMons() {
     if (!library || !account) return
     await getMons(library, account)
-    .then((_mons) => {
-      // map result
-      const monsMap = _mons.map((mon) => ({
-        atk: mon.atk,
-        def: mon.def,
-        evolve: mon.evolve,
-        forSale: mon.forSale,
-        hp: mon.hp,
-        id: BigNumber.from(mon.id._hex).toNumber(),
-        monType: mon.monType,
-        owner: mon.owner,
-        price: BigNumber.from(mon.price._hex).toBigInt(),
-        sharedTo: mon.sharedTo,
-        species: mon.species,
-        speed: mon.speed,
-      }))
-      setCryptomons(monsMap)
-      setMyCryptomons(monsMap.filter((mon) => mon.owner === account))
-      setOtherCryptomons(monsMap.filter((mon) => mon.owner !== account))
-    })
-    .catch(err => toast.error(err))
+      .then((_mons) => {
+        // map result
+        const monsMap = _mons.map((mon) => ({
+          atk: mon.atk,
+          def: mon.def,
+          evolve: mon.evolve,
+          forSale: mon.forSale,
+          hp: mon.hp,
+          id: BigNumber.from(mon.id._hex).toNumber(),
+          monType: mon.monType,
+          owner: mon.owner,
+          price: BigNumber.from(mon.price._hex).toBigInt(),
+          sharedTo: mon.sharedTo,
+          species: mon.species,
+          speed: mon.speed,
+        }))
+        setCryptomons(monsMap)
+        setMyCryptomons(monsMap.filter((mon) => mon.owner === account))
+        setOtherCryptomons(monsMap.filter((mon) => mon.owner !== account))
+      })
+      .catch((err) => toast.error(err))
   }
 
   // Function that buys a Cryptomon through a smart contract function
   async function buyMon(id, price) {
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const newprice = `${BigInt(price * WeiPerEther)}`;
+    const weiPerEth = WeiPerEther as any;
+    const newprice = `${BigInt(price * weiPerEth)}`
     let overrides = { value: newprice }
     const tx = await contr.buyMon(id, overrides)
     const recpt = await tx.wait()
-    if (recpt && recpt.status === 1) {
-      toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
-      refreshMons()
-    }
-
-    if (recpt && recpt.status === 0) {
-      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
-    }
+    txSuccess(recpt, toast, refreshMons)
+    txFail(recpt, toast)
   }
 
   // Function that adds a Cryptomon for sale through a smart contract function
@@ -410,10 +405,10 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
     const recpt = await tx.wait()
     if (recpt && recpt.status) {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
-      
+
       // await refreshMons();
-      const totalMons = parseInt(await contr.totalMons());
-      const latestMon = await contr.mons(totalMons-1);
+      const totalMons = parseInt(await contr.totalMons())
+      const latestMon = await contr.mons(totalMons - 1)
       if (!latestMon) {
         toast.error('Cannot find new breed!')
         return
@@ -434,18 +429,38 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
       }
 
       // get user mons, get highest mon id
-      const monName = names[maxPeak.species];
+      const monName = names[maxPeak.species]
       // mintPayable 1 param are account, mon idx species, amount=1, data='0x00'
       if (!coinData || !coinData[0].current_price) {
-        toast.error('Cannot fetch price, please reload');
-        return;
+        toast.error('Cannot fetch price, please reload')
+        return
       }
-      const price = BigInt(parseInt(parseFloat(0.05 / coinData[0].current_price) * WeiPerEther));
+      const weiPerEth = WeiPerEther as any;
+      const price = BigInt(parseInt((parseFloat((0.05 / coinData[0].current_price).toString()) * weiPerEth).toString()))
       let overrides = { value: `${price}` }
-      const txmint = await nftcontr.mintPayable(account, maxPeak.species, 1, '0x00', overrides)
-      const recptmint = await txmint.wait()
+
+      let txmint;
+      let recptmint;
+      // mint basic pack
+if (maxPeak.species > 18 && maxPeak.species < 66) {
+  txmint = await nftcontr.mintBasicPayable(account, maxPeak.species, '0x00', overrides)
+  recptmint = await txmint.wait()
+}
+
+// mint intermediate pack
+if (maxPeak.species > 65 && maxPeak.species < 110) {
+  txmint = await nftcontr.mintIntermPayable(account, maxPeak.species, '0x00', overrides)
+  recptmint = await txmint.wait()
+}
+
+// mint advance pack
+if (maxPeak.species > 110 && maxPeak.species < 151) {
+  txmint = await nftcontr.mintAdvancePayable(account, maxPeak.species, '0x00', overrides)
+  recptmint = await txmint.wait()
+}
+    
       if (recptmint && recptmint.status) {
-        // upload img and mon stats to ipfs 
+        // upload img and mon stats to ipfs
         try {
           // axios pin to ipfs pinata
           await pinJSONToIPFS({
@@ -454,25 +469,24 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
             success: (successResponse) => {
               console.log(successResponse)
               if (successResponse && successResponse.status === 200) {
-                toast.success(`Success, IpfsHash:${successResponse.data?.IpfsHash}`);
-                if (successResponse.data) setBreedMintInfo({ ipfs: successResponse.data, monName });
+                toast.success(`Success, IpfsHash:${successResponse.data?.IpfsHash}`)
+                if (successResponse.data) setBreedMintInfo({ ipfs: successResponse.data, monName })
               }
             },
-            error:  (errorResponse) => toast.error(errorResponse)
+            error: (errorResponse) => toast.error(errorResponse),
           })
           // success, error
         } catch (error) {
           toast.error('An error occurred while uploading nft to ipfs!')
         }
       }
-      
     }
 
     if (recpt && !recpt.status) {
       toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
     }
 
-    await refreshMons();
+    await refreshMons()
   }
 
   // Function that allows 2 Cryptomons to fight through a smart contract function
@@ -487,7 +501,7 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
     }
 
     if (!res || !res.length) {
-      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+      toast.error(`Error, Tx hash: ${res.transactionHash}`)
     }
   }
 
@@ -557,6 +571,100 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
     if (recpt && !recpt.status) {
       toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
     }
+  }
+
+  // Function to create free mon batch
+  async function setFreeBatch(freemons: number[]) {
+    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+    const tx = await contr.createFreeMonPack(freemons)
+    const recpt = await tx.wait()
+    txSuccess(recpt, toast, refreshMons)
+    txFail(recpt, toast)
+  }
+
+  // Function to create basic mon batch
+  async function setBasicBatch(basicmons: number[]) {
+    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+    const weiPerEth = WeiPerEther as any
+    const packprice = 0.05 / 2
+    const price = parseFloat((packprice / coinData[0].current_price).toString())
+    const newprice = `${BigInt(price * weiPerEth)}`
+    let overrides = { value: newprice }
+    const tx = await contr.createBasicMonPack(basicmons, overrides)
+    const recpt = await tx.wait()
+    txSuccess(recpt, toast, refreshMons)
+    txFail(recpt, toast)
+    return recpt.status === 1
+  }
+    // Function to mint basic mon batch
+    async function mintBasicBatch(basicmons: number[], byteString: string) {
+      const nftcontr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
+      const weiPerEth = WeiPerEther as any
+      const packprice = 0.05 / 2
+      const price = parseFloat((packprice / coinData[0].current_price).toString())
+      const newprice = `${BigInt(price * weiPerEth)}`
+      let overrides = { value: newprice }
+      const tx = await nftcontr.mintBatchBasicPayable(account, basicmons, byteString, overrides)
+      const recpt = await tx.wait()
+      txSuccess(recpt, toast, refreshMons)
+      txFail(recpt, toast)
+      return recpt.status === 1
+    }
+  // Function to create intermediate mon batch
+  async function setIntermBatch(freemons: number[]) {
+    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+    const weiPerEth = WeiPerEther as any
+    const packprice = 0.10 / 2
+    const price = parseFloat((packprice / coinData[0].current_price).toString())
+    const newprice = `${BigInt(price * weiPerEth)}`
+    let overrides = { value: newprice }
+    const tx = await contr.createIntermMonPack(freemons, overrides)
+    const recpt = await tx.wait()
+    txSuccess(recpt, toast, refreshMons)
+    txFail(recpt, toast)
+    return recpt.status === 1
+  }
+   // Function to mint intermediate mon batch
+   async function mintIntermBatch(intermmons: number[], byteString: string) {
+    const nftcontr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
+    const weiPerEth = WeiPerEther as any
+    const packprice = 0.10 / 2
+    const price = parseFloat((packprice / coinData[0].current_price).toString())
+    const newprice = `${BigInt(price * weiPerEth)}`
+    let overrides = { value: newprice }
+    const tx = await nftcontr.mintBatchIntermPayable(account, intermmons, byteString, overrides)
+    const recpt = await tx.wait()
+    txSuccess(recpt, toast, refreshMons)
+    txFail(recpt, toast)
+    return recpt.status === 1
+  }
+  // Function to create advance mon batch
+  async function setAdvanceBatch(advmons: number[]) {
+    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+    const weiPerEth = WeiPerEther as any
+    const packprice = 0.20 / 2
+    const price = parseFloat((packprice / coinData[0].current_price).toString())
+    const newprice = `${BigInt(price * weiPerEth)}`
+    let overrides = { value: newprice }
+    const tx = await contr.createAdvanceMonPack(advmons, overrides)
+    const recpt = await tx.wait()
+    txSuccess(recpt, toast, refreshMons)
+    txFail(recpt, toast)
+    return recpt.status === 1
+  }
+   // Function to mint advance mon batch
+   async function mintAdvanceBatch(advmons: number[], byteString: string) {
+    const nftcontr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
+    const weiPerEth = WeiPerEther as any
+    const packprice = 0.20 / 2
+    const price = parseFloat((packprice / coinData[0].current_price).toString())
+    const newprice = `${BigInt(price * weiPerEth)}`
+    let overrides = { value: newprice }
+    const tx = await nftcontr.mintBatchAdvPayable(account, advmons, byteString, overrides)
+    const recpt = await tx.wait()
+    txSuccess(recpt, toast, refreshMons)
+    txFail(recpt, toast)
+    return recpt.status === 1
   }
 
   // Function to get lokian gold balance
@@ -1037,9 +1145,7 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
 
           {/* Buy random pack */}
           <>
-          <div className="p1">
-            NFT packs has +10 attribute points compared to (non-nft) free packs
-          </div>
+            <div className="p1">NFT packs has +10 attribute points compared to (non-nft) free packs</div>
             <div className="rpgui-container framed-golden" style={{ display: 'flex', flexDirection: 'column' }}>
               Choose an nft pack to buy
               <select
@@ -1054,17 +1160,17 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
                 <option value="basicPack">
                   Basic Pack{' '}
                   {coinData &&
-                    `($0.05 or ${parseFloat(0.05 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
+                    `($0.05 or ${parseFloat((0.05 / coinData[0].current_price).toString()).toFixed(6)} ${coinData[0].symbol})`}
                 </option>
                 <option value="intermediatePack">
                   Intermediate Pack{' '}
                   {coinData &&
-                    `($0.10 or ${parseFloat(0.10 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
+                    `($0.10 or ${parseFloat((0.1 / coinData[0].current_price).toString()).toFixed(6)} ${coinData[0].symbol})`}
                 </option>
                 <option value="advancePack">
                   Advance Pack{' '}
                   {coinData &&
-                    `($0.20 or ${parseFloat(0.20 / coinData[0].current_price).toFixed(6)} ${coinData[0].symbol})`}
+                    `($0.20 or ${parseFloat((0.2 / coinData[0].current_price).toString()).toFixed(6)} ${coinData[0].symbol})`}
                 </option>
               </select>
               <button
@@ -1072,101 +1178,60 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
                 type="button"
                 style={{ marginTop: '12px' }}
                 onClick={() => {
-                  // 'mint random pack', if free, 0-18, basic creature 19-65, if interm 66-110, adv 111-150
+                  // if free, 0-18, basic creature 19-65, if interm 66-110, adv 111-150
                   switch (chosenPack) {
                     case 'freePack':
-                      const freemons = [
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                        cryptoRandom(0, 18),
-                      ]
+                      let freemons = []
+                      for (let index = 0; index < 19; index++) {
+                        freemons.push(cryptoRandom(0, 18))
+                      }
                       // call game contract only
-                      getFreeBatch(freemons);
-
+                      if (freemons.length) setFreeBatch(freemons)
                       break
 
                     case 'basicPack':
-                      const basicmons = [
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                        cryptoRandom(19, 65),
-                      ]
-                      // call game contract 
-                      setMintBasicBatch(basicmons, "0x66726f6d2067616d6520636f6e7472616374");
-                      // call mint basic batch func in nft contract
-                      getMintBasicBatch(basicmons, "0x66726f6d2067616d6520636f6e7472616374");
+                      let basicmons = []
+                      for (let index = 0; index < 47; index++) {
+                        basicmons.push(cryptoRandom(19, 65))
+                      }
+                      // call game contract, 47 mons
+                      if (basicmons.length) {
+                        setBasicBatch(basicmons)
+                          // then call mint basic batch func in nft contract
+                          .then((isSuccess) => {
+                            if (isSuccess) mintBasicBatch(basicmons, '0x66726f6d2067616d6520636f6e7472616374')
+                          })
+                      }
                       break
 
                     case 'intermediatePack':
-                  // call game contract 
-                      // call mint interm batch func in nft contract
-                      getMintIntermBatch(account, "0x66726f6d2067616d6520636f6e7472616374");
+                      let intermmons = []
+                      for (let index = 0; index < 45; index++) {
+                        intermmons.push(cryptoRandom(66, 110))
+                      }
+                      // call game contract, 45 mons
+                      if (intermmons.length) {
+                        setIntermBatch(intermmons)
+                          // then call mint interm batch func in nft contract
+                          .then((isSuccess) => {
+                            if (isSuccess) mintIntermBatch(intermmons, '0x66726f6d2067616d6520636f6e7472616374')
+                          })
+                      }
                       break
 
                     case 'advancePack':
-                         // call game contract 
-                      // call mint advance func in nft contract
-                      getMintAdvBatch(account, "0x66726f6d2067616d6520636f6e7472616374");
+                      let advmons = []
+                      for (let index = 0; index < 40; index++) {
+                        advmons.push(cryptoRandom(111, 150))
+                      }
+                      // call game contract, 40 mons
+                      if (advmons.length) {
+                        setAdvanceBatch(advmons)
+                          // call mint advance func in nft contract
+                          .then((isSuccess) => {
+                            if (isSuccess) mintAdvanceBatch(advmons, '0x66726f6d2067616d6520636f6e7472616374')
+                          })
+                      }
                       break
 
                     default:
@@ -1196,24 +1261,19 @@ const [breedMintInfo, setBreedMintInfo] = useState(null);
             >
               Breed choosen creatures
             </button>
-               
           </div>
 
-<br />
+          <br />
           <div className="p1">Breeding Results</div>
           <br />
 
+          <div className="p2">{`New Breed: ${breedMintInfo?.monName || ''}`}</div>
+          <div className="p2">{`IPFS Hash: ${breedMintInfo?.ipfs?.IpfsHash || ''}`}</div>
           <div className="p2">
-{`New Breed: ${breedMintInfo?.monName || ''}`}
-</div>
-<div className="p2">
-{`IPFS Hash: ${breedMintInfo?.ipfs?.IpfsHash || ''}`}
-</div>
-<div className="p2">
-<a href={`https://gateway.pinata.cloud/ipfs/${breedMintInfo?.ipfs?.IpfsHash || ''}`} target="_blank">
-                  NFT link
-                </a>
-</div>
+            <a href={`https://gateway.pinata.cloud/ipfs/${breedMintInfo?.ipfs?.IpfsHash || ''}`} target="_blank">
+              NFT link
+            </a>
+          </div>
 
           {forBreedCryptomons}
         </Tab>

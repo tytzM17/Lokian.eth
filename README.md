@@ -42,13 +42,15 @@ Finished
 - Create erc-1155 smart contract that will mint nfts, tests (mvp) 10/27/2021
 - Create faucet page for getting nfts or tokens (mvp) 11/9/2021
 - Breed then mint, pinJson, payable (mvp) 11/21/2021
+- free packs are not nft not payable, basic to advance packs are nfts and payable (mvp) 11/29/2021
+- breed mons are nft, payable (mvp) 11/29/2021
 
 Ongoing
-- free packs are not nft not payable, basic to advance packs are nfts and payable (mvp) 
-- breed mons are nft, payable (mvp)
+- Test create and breed mon packs functionality (mvp)
 
 - Create meme coin with future utility (10-100 trillion?, feature) 
-- fight wins (earn meme coin?), pay with meme coin? to set on-chain record e.g. name or address, wins 120 loss 2, rank no. 1 (feature)
+
+- fight wins (earn meme coin?), pay with meme coin? to set on-chain record e.g. name or address or title, wins 120 loss 2, rank no. 1 (feature)
 
 - Set frontend in pinata or ipfs, use bit.ly(shorten url) atm (mvp)
 - Deploy and test to rinkeby or evm-compatible testnets (mvp)
@@ -63,7 +65,8 @@ Roadmap
 - November 2021, Test and deploy to testnet
 - December 2021, Deploy to mainnet 
 - January 2022, Initial PvP development
-- February 2022, Initial Moba development  
+- February 2022, PvP on testnet then mainnet
+- March 2022, Initial Moba development  
 
 
 

@@ -24,9 +24,6 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         TSUCHIGUMO
     }
 
-    // token
-    // uint8 public constant GOLD = 0;
-
     uint256 public basicPackPrice;
     uint256 public intermediatePackPrice;
     uint256 public advancePackPrice;
@@ -50,9 +47,6 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         _mint(msg.sender, uint256(Species.EFREET), 1, '');
         _mint(msg.sender, uint256(Species.FASTITOCALON), 1, '');
         _mint(msg.sender, uint256(Species.ASPIDOCHELONE), 1, '');
-
-        // token
-        // _mint(msg.sender, GOLD, 100, '');
 
         basicPackPrice = 0;
         intermediatePackPrice = 0;
@@ -95,20 +89,13 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         singlePriceInfo = info;
     }
 
-    // function mint(address account, uint256 id, uint256 amount, bytes memory data)
-    //     public
-    //     onlyOwner
-    // {
-    //     _mint(account, id, amount, data);
-    // }
-
     // for breeding then mint
     function mintBasicPayable(
         address account,
         uint256 id,
         bytes memory data
     ) public payable {
-        require(msg.value > basicSinglePrice); 
+        require(msg.value > basicSinglePrice);
         require(id > 18 && id < 66);
 
         address payable seller = payable(manager);
@@ -121,7 +108,7 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         uint256 id,
         bytes memory data
     ) public payable {
-        require(msg.value > intermediateSinglePrice); 
+        require(msg.value > intermediateSinglePrice);
         require(id > 65 && id < 111);
 
         address payable seller = payable(manager);
@@ -134,125 +121,28 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         uint256 id,
         bytes memory data
     ) public payable {
-        require(msg.value > advanceSinglePrice); 
-        require(id > 110);
+        require(msg.value > advanceSinglePrice);
+        require(id > 110 && id < 151);
 
         address payable seller = payable(manager);
         _mint(account, id, 1, data);
         seller.transfer(msg.value);
     }
 
-    // function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
-    //     public
-    //     onlyOwner
-    // {
-    //     _mintBatch(to, ids, amounts, data);
-    // }
-
     // for buying packs
-    function mintBatchBasicPayable(address to, uint256[] memory ids, bytes memory data) public payable {
+    function mintBatchBasicPayable(
+        address to,
+        uint256[] memory ids,
+        bytes memory data
+    ) public payable {
         require(msg.value > basicPackPrice);
+        require(ids.length == 47);
 
-        // uint256[] memory ids = [
-        //     19,
-        //     20,
-        //     21,
-        //     22,
-        //     23,
-        //     24,
-        //     25,
-        //     26,
-        //     27,
-        //     28,
-        //     29,
-        //     30,
-        //     31,
-        //     31,
-        //     33,
-        //     34,
-        //     35,
-        //     36,
-        //     37,
-        //     38,
-        //     39,
-        //     40,
-        //     41,
-        //     42,
-        //     43,
-        //     44,
-        //     45,
-        //     46,
-        //     47,
-        //     48,
-        //     49,
-        //     50,
-        //     51,
-        //     52,
-        //     53,
-        //     54,
-        //     55,
-        //     56,
-        //     57,
-        //     58,
-        //     59,
-        //     60,
-        //     61,
-        //     62,
-        //     63,
-        //     64,
-        //     65,
-        //     65
-        // ];
-        uint256[] memory amounts = [
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1
-        ];
+        uint256[] memory amounts;
+
+        for (uint256 i = 0; i < ids.length; i++) {
+            amount.push(1);
+        }
 
         address payable seller = payable(manager);
         _mintBatch(to, ids, amounts, data);
@@ -260,103 +150,19 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
     }
 
     // function mintBatchIntermPayable
-    function mintBatchIntermPayable(address to, bytes memory data) public payable {
+    function mintBatchIntermPayable(
+        address to,
+        uint256[] memory ids,
+        bytes memory data
+    ) public payable {
         require(msg.value > intermediatePackPrice);
+        require(ids.length == 45);
 
-        uint256[] memory ids = [
-            66,
-            67,
-            68,
-            69,
-            70,
-            71,
-            72,
-            73,
-            74,
-            75,
-            76,
-            77,
-            78,
-            79,
-            80,
-            81,
-            82,
-            83,
-            84,
-            85,
-            86,
-            87,
-            88,
-            89,
-            90,
-            91,
-            92,
-            93,
-            94,
-            95,
-            96,
-            97,
-            98,
-            99,
-            100,
-            101,
-            102,
-            103,
-            104,
-            105,
-            106,
-            107,
-            108,
-            109,
-            110
-        ];
-        uint256[] memory amounts = [
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1
-        ];
+        uint256[] memory amounts;
+
+        for (uint256 i = 0; i < ids.length; i++) {
+            amount.push(1);
+        }
 
         address payable seller = payable(manager);
         _mintBatch(to, ids, amounts, data);
@@ -364,106 +170,22 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
     }
 
     // function mintBatchAdvancePayable
-    function mintBatchAdvPayable(address to, bytes memory data) public payable {
+    function mintBatchAdvPayable(
+        address to,
+        uint256[] memory ids,
+        bytes memory data
+    ) public payable {
         require(msg.value > advancePackPrice);
+        require(ids.length == 40);
 
-        uint256[] memory ids = [
-            111,
-            112,
-            113,
-            114,
-            115,
-            116,
-            118,
-            119,
-            120,
-            121,
-            122,
-            123,
-            124,
-            125,
-            126,
-            127,
-            128,
-            129,
-            130,
-            131,
-            132,
-            133,
-            134,
-            135,
-            136,
-            137,
-            138,
-            139,
-            140,
-            141,
-            142,
-            143,
-            144,
-            145,
-            146,
-            147,
-            148,
-            149,
-            150
-        ];
-        uint256[] memory amounts = [
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1
-        ];
+        uint256[] memory amounts;
+
+        for (uint256 i = 0; i < ids.length; i++) {
+            amount.push(1);
+        }
 
         address payable seller = payable(manager);
         _mintBatch(to, ids, amounts, data);
         seller.transfer(msg.value);
     }
-
-    // for fight winnings/ maybe the meme coin
-    // function mintGold(address account, bytes memory data, uint winnerMonId)
-    //     public
-    // {
-
-    //     require(winnerMonId > 18);
-    //     // require account has balance of winnerMonId
-    //     require(balanceOf(account, winnerMonId) > 0);
-
-    //     _mint(account, GOLD, 100, data);
-    // }
 }

@@ -205,6 +205,11 @@ contract Cryptomons {
     
     uint private nonce = 0;             // Number used for guessable pseudo-random generated number.
 
+    uint256 public basicPackPrice; // Set price for basic mon pack, half for this contract, half for nft contract
+    uint256 public intermediatePackPrice;
+    uint256 public advancePackPrice;
+    bytes32 public packPriceInfo; // e.g. date
+
     constructor() {
         manager = msg.sender;
         
@@ -232,9 +237,21 @@ contract Cryptomons {
         );
         _;
     }
-    
 
-    function createFreeMon(Species species, bool forSale) public {
+    // set prices
+    function setPackPrices(
+        uint256 basicPrice,
+        uint256 intermPrice,
+        uint256 advPrice,
+        bytes32 memory info
+    ) public onlyOwner {
+        basicPackPrice = basicPrice;
+        intermediatePackPrice = intermPrice;
+        advancePackPrice = advPrice;
+        packPriceInfo = info;
+    }  
+
+    function createFreeMon(Species species, bool forSale) private {
         assert(totalMons <  max);
         require(species < 19);
       
@@ -259,34 +276,17 @@ contract Cryptomons {
         totalMons++;
     }
 
-    function createFreeMonPack(uint256[] memory freemons) {
+    function createFreePack(uint256[] memory freemons) public {
         assert(totalMons <  max);
 
-        createFreeMon(Species(freemons[0]), false);
-        createFreeMon(Species(freemons[1]), false);
-        createFreeMon(Species(freemons[2]), false);
-        createFreeMon(Species(freemons[3]), false);
-        createFreeMon(Species(freemons[4]), false);
-        createFreeMon(Species(freemons[5]), false);
-        createFreeMon(Species(freemons[6]), false);
-        createFreeMon(Species(freemons[7]), false);
-        createFreeMon(Species(freemons[8]), false);
-        createFreeMon(Species(freemons[9]), false);
-        createFreeMon(Species(freemons[10]), false);
-        createFreeMon(Species(freemons[11]), false);
-        createFreeMon(Species(freemons[12]), false);
-        createFreeMon(Species(freemons[13]), false);
-        createFreeMon(Species(freemons[14]), false);
-        createFreeMon(Species(freemons[15]), false);
-        createFreeMon(Species(freemons[16]), false);
-        createFreeMon(Species(freemons[17]), false);
-
+        for (uint i = 0; i < 19; i++) {
+            createFreeMon(Species(freemons[i]), false);
+        }
     }
 
-    function createMon(Species species, uint price, bool forSale) public payable {
+    function createPayableMon(Species species, bool forSale, uint memory speciesLowerLimit, uint memory speciesUpperLimit) private {
         assert(totalMons <  max);
-        require(msg.value > 0);
-        require(species > 18);
+        require(species > speciesLowerLimit && species < speciesUpperLimit);
       
         Mon storage mon = mons[totalMons];
         mon.id = totalMons;
@@ -307,6 +307,42 @@ contract Cryptomons {
         mon.sharedTo = msg.sender;
         
         totalMons++;
+    }
+  
+    function createBasicMonPack(uint256[] memory basicmons) public payable {
+        assert(totalMons <  max);
+        require(msg.value > 0);
+        require(msg.value > basicPackPrice);
+
+        for (uint i = 0; i < 47; i++) {
+            createBasicMon(Species(basicmons[i]), false, 18, 66);
+        }
+
+        address payable seller = manager;
+        seller.transfer(msg.value);
+    }
+
+    function createIntermMonPack(uint256[] memory intermmons) public payable {
+        assert(totalMons <  max);
+        require(msg.value > 0);
+        require(msg.value > intermediatePackPrice);
+
+        for (uint i = 0; i < 45; i++) {
+           createBasicMon(Species(intermmons[i]), false, 65, 111);
+        }
+
+        address payable seller = manager;
+        seller.transfer(msg.value);
+    }
+
+    function createAdvanceMonPack(uint256[] memory advancemons) public payable {
+        assert(totalMons <  max);
+        require(msg.value > 0);
+        require(msg.value > advancePackPrice);
+
+        for (uint i = 0; i < 40; i++) {
+            createBasicMon(Species(advancemons[i]), false, 110, 151);
+        }
 
         address payable seller = manager;
         seller.transfer(msg.value);
