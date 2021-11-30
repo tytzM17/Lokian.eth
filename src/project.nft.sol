@@ -52,6 +52,7 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         intermediatePackPrice = 0;
         advancePackPrice = 0;
 
+        // for breeding mons
         basicSinglePrice = 0;
         intermediateSinglePrice = 0;
         advanceSinglePrice = 0;

@@ -589,12 +589,13 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
     const packprice = 0.05 / 2
     const price = parseFloat((packprice / coinData[0].current_price).toString())
     const newprice = `${BigInt(price * weiPerEth)}`
+    console.log('basic batch price:', newprice);
     let overrides = { value: newprice }
-    const tx = await contr.createBasicMonPack(basicmons, overrides)
-    const recpt = await tx.wait()
-    txSuccess(recpt, toast, refreshMons)
-    txFail(recpt, toast)
-    return recpt.status === 1
+    // const tx = await contr.createBasicMonPack(basicmons, overrides)
+    // const recpt = await tx.wait()
+    // txSuccess(recpt, toast, refreshMons)
+    // txFail(recpt, toast)
+    // return recpt && recpt.status === 1
   }
     // Function to mint basic mon batch
     async function mintBasicBatch(basicmons: number[], byteString: string) {
@@ -608,7 +609,7 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
       const recpt = await tx.wait()
       txSuccess(recpt, toast, refreshMons)
       txFail(recpt, toast)
-      return recpt.status === 1
+      return recpt && recpt.status === 1
     }
   // Function to create intermediate mon batch
   async function setIntermBatch(freemons: number[]) {
@@ -617,12 +618,13 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
     const packprice = 0.10 / 2
     const price = parseFloat((packprice / coinData[0].current_price).toString())
     const newprice = `${BigInt(price * weiPerEth)}`
+    console.log('interm batch price:', newprice);
     let overrides = { value: newprice }
-    const tx = await contr.createIntermMonPack(freemons, overrides)
-    const recpt = await tx.wait()
-    txSuccess(recpt, toast, refreshMons)
-    txFail(recpt, toast)
-    return recpt.status === 1
+    // const tx = await contr.createIntermMonPack(freemons, overrides)
+    // const recpt = await tx.wait()
+    // txSuccess(recpt, toast, refreshMons)
+    // txFail(recpt, toast)
+    // return recpt && recpt.status === 1
   }
    // Function to mint intermediate mon batch
    async function mintIntermBatch(intermmons: number[], byteString: string) {
@@ -636,7 +638,7 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
     const recpt = await tx.wait()
     txSuccess(recpt, toast, refreshMons)
     txFail(recpt, toast)
-    return recpt.status === 1
+    return recpt && recpt.status === 1
   }
   // Function to create advance mon batch
   async function setAdvanceBatch(advmons: number[]) {
@@ -645,12 +647,13 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
     const packprice = 0.20 / 2
     const price = parseFloat((packprice / coinData[0].current_price).toString())
     const newprice = `${BigInt(price * weiPerEth)}`
+    console.log('advance batch price:', newprice);
     let overrides = { value: newprice }
-    const tx = await contr.createAdvanceMonPack(advmons, overrides)
-    const recpt = await tx.wait()
-    txSuccess(recpt, toast, refreshMons)
-    txFail(recpt, toast)
-    return recpt.status === 1
+    // const tx = await contr.createAdvanceMonPack(advmons, overrides)
+    // const recpt = await tx.wait()
+    // txSuccess(recpt, toast, refreshMons)
+    // txFail(recpt, toast)
+    // return recpt && recpt.status === 1
   }
    // Function to mint advance mon batch
    async function mintAdvanceBatch(advmons: number[], byteString: string) {
@@ -660,11 +663,11 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
     const price = parseFloat((packprice / coinData[0].current_price).toString())
     const newprice = `${BigInt(price * weiPerEth)}`
     let overrides = { value: newprice }
-    const tx = await nftcontr.mintBatchAdvPayable(account, advmons, byteString, overrides)
-    const recpt = await tx.wait()
-    txSuccess(recpt, toast, refreshMons)
-    txFail(recpt, toast)
-    return recpt.status === 1
+    // const tx = await nftcontr.mintBatchAdvPayable(account, advmons, byteString, overrides)
+    // const recpt = await tx.wait()
+    // txSuccess(recpt, toast, refreshMons)
+    // txFail(recpt, toast)
+    // return recpt && recpt.status === 1
   }
 
   // Function to get lokian gold balance
@@ -1039,7 +1042,7 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
       </React.Fragment>
     ))
 
-  getTokenBalance()
+  // getTokenBalance()
 
   // Function that does all the rendering of the application
   return (
