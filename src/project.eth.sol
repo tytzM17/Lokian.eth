@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-
 pragma solidity ^0.8.2;
 
 contract Cryptomons {
@@ -756,20 +755,21 @@ contract Cryptomons {
     }
 
     function checkBreedPrice(uint256 id1, uint256 id2, uint256 msgValue) private view returns (bool) {  
-        bool results;   
-        // basic pack
-        if ((id1 > 18 || id2 > 18) && (id1 < 66 || id2 < 66)) {
-            results = msgValue >= basicSinglePrice;
+        bool results;  
+
+        // advance pack
+        if (id1 > 110 || id2 > 110) {
+            results = msgValue >= advanceSinglePrice;
         }
 
-        // basic pack
-        if ((id1 > 65 || id2 > 65) && (id1 < 111 || id2 < 111)) {
+        // intermediate pack
+        if ((id1 > 65 && id1 < 111) || (id2 > 65 && id2 < 111)) {
             results = msgValue >= intermediateSinglePrice;
         }
 
-              // advance pack
-        if (id1 > 110 || id2 > 110) {
-            results = msgValue >= advanceSinglePrice;
+        // basic pack
+        if ((id1 > 18 && id1 < 66) || (id2 > 18 && id2 < 66)) {
+            results = msgValue >= basicSinglePrice;
         }
 
         return results;

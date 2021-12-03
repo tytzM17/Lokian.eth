@@ -46,6 +46,7 @@ Finished
 - breed mons are nft, payable (mvp) 11/29/2021
 
 Ongoing
+- Change contract to accept IERC20 e.g. USDT, instead of native token. For easy price maintenance. (mvp) 
 - Test create and breed mon packs functionality (mvp)
 
 - Create meme coin with future utility (10-100 trillion?, feature) 
