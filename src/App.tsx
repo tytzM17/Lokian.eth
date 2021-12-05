@@ -61,7 +61,7 @@ const CONTRACT_ADDRESS = '0x6c32f90F6A53A753299e109E8CBB11e4C61e9734'
 
 // nft contract
 const ERC1155_CONTRACT_ADDRESS = '0x8ae9E353F2A06Fcae864E514cF8AFf6119B3F766'
-// const ERC1155_CONTRACT_ADDRESS = '0x34F240a6559d3D93306b4412D616349D55cFE6A0'
+// const ERC20_CONTRACT_ADDRESS = '0x34F240a6559d3D93306b4412D616349D55cFE6A0'
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]
@@ -225,6 +225,13 @@ async function getMons(_library, _account) {
   const contr = new Contract(CONTRACT_ADDRESS, contrInterface, _library.getSigner(_account))
   const totalMons = parseInt(await contr.totalMons())
   return Promise.all([...Array(totalMons).keys()].map((id) => contr.mons(id)))
+}
+
+async function approve(_library, _account, _amount) {
+  const erc20Contr = new Contract(ERC20_CONTRACT_ADDRESS, contrInterface, _library.getSigner(_account))
+  const weiPerEth = WeiPerEther as any
+  const newAmount = `${BigInt(_amount * weiPerEth)}`
+  return await erc20Contr.approve(CONTRACT_ADDRESS, newAmount)
 }
 
 function Account() {
@@ -585,31 +592,53 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
   // Function to create basic mon batch
   async function setBasicBatch(basicmons: number[]) {
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const weiPerEth = WeiPerEther as any
-    const packprice = 0.05 / 2
-    const price = parseFloat((packprice / coinData[0].current_price).toString())
-    const newprice = `${BigInt(price * weiPerEth)}`
-    console.log('basic batch price:', newprice);
-    let overrides = { value: newprice }
-    // const tx = await contr.createBasicMonPack(basicmons, overrides)
-    // const recpt = await tx.wait()
-    // txSuccess(recpt, toast, refreshMons)
-    // txFail(recpt, toast)
-    // return recpt && recpt.status === 1
+    // const weiPerEth = WeiPerEther as any
+    // const packprice = 0.05 / 2
+    // const price = parseFloat((packprice / coinData[0].current_price).toString())
+    // const newprice = `${BigInt(price * weiPerEth)}`
+    approve(library, account, 0.025)
+    .then(result => {
+      if (result) {
+        console.log('basic batch price:', `${BigInt(0.025 * (WeiPerEther as any))}`);
+        let overrides = { value: `${BigInt(0.025 * (WeiPerEther as any))}` }
+        // const tx = await contr.createBasicMonPack(basicmons, overrides)
+        // const recpt = await tx.wait()
+        // txSuccess(recpt, toast, refreshMons)
+        // txFail(recpt, toast)
+        // return recpt && recpt.status === 1
+      }
+    })
+    .catch((err) => toast.error(err))
+    
   }
     // Function to mint basic mon batch
     async function mintBasicBatch(basicmons: number[], byteString: string) {
       const nftcontr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
-      const weiPerEth = WeiPerEther as any
-      const packprice = 0.05 / 2
-      const price = parseFloat((packprice / coinData[0].current_price).toString())
-      const newprice = `${BigInt(price * weiPerEth)}`
-      let overrides = { value: newprice }
-      const tx = await nftcontr.mintBatchBasicPayable(account, basicmons, byteString, overrides)
-      const recpt = await tx.wait()
-      txSuccess(recpt, toast, refreshMons)
-      txFail(recpt, toast)
-      return recpt && recpt.status === 1
+      // const weiPerEth = WeiPerEther as any
+      // const packprice = 0.05 / 2
+      // const price = parseFloat((packprice / coinData[0].current_price).toString())
+      // const newprice = `${BigInt(price * weiPerEth)}`
+
+      approve(library, account, 0.025)
+      .then(async (result) => {
+        if (result) {
+          console.log('basic batch price:', `${BigInt(0.025 * (WeiPerEther as any))}`);
+          let overrides = { value: `${BigInt(0.025 * (WeiPerEther as any))}` }
+          const tx = await nftcontr.mintBatchBasicPayable(account, basicmons, byteString, overrides)
+          const recpt = await tx.wait()
+          txSuccess(recpt, toast, refreshMons)
+          txFail(recpt, toast)
+          return recpt && recpt.status === 1
+        }
+      })
+      .catch((err) => toast.error(err))
+
+      // let overrides = { value: newprice }
+      // const tx = await nftcontr.mintBatchBasicPayable(account, basicmons, byteString, overrides)
+      // const recpt = await tx.wait()
+      // txSuccess(recpt, toast, refreshMons)
+      // txFail(recpt, toast)
+      // return recpt && recpt.status === 1
     }
   // Function to create intermediate mon batch
   async function setIntermBatch(freemons: number[]) {
@@ -618,6 +647,21 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
     const packprice = 0.10 / 2
     const price = parseFloat((packprice / coinData[0].current_price).toString())
     const newprice = `${BigInt(price * weiPerEth)}`
+
+    approve(library, account, 0.05)
+    .then(result => {
+      if (result) {
+        console.log('interm batch price:', `${BigInt(0.025 * (WeiPerEther as any))}`);
+        let overrides = { value: `${BigInt(0.05 * (WeiPerEther as any))}` }
+        // const tx = await contr.createBasicMonPack(basicmons, overrides)
+        // const recpt = await tx.wait()
+        // txSuccess(recpt, toast, refreshMons)
+        // txFail(recpt, toast)
+        // return recpt && recpt.status === 1
+      }
+    })
+    .catch((err) => toast.error(err))
+    
     console.log('interm batch price:', newprice);
     let overrides = { value: newprice }
     // const tx = await contr.createIntermMonPack(freemons, overrides)
@@ -1162,18 +1206,18 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
                 <option value="freePack">Free Pack (non-nft) {coinData && `($0 or 0.00 ${coinData[0].symbol})`}</option>
                 <option value="basicPack">
                   Basic Pack{' '}
-                  {coinData &&
-                    `($0.05 or ${parseFloat((0.05 / coinData[0].current_price).toString()).toFixed(6)} ${coinData[0].symbol})`}
+                  {coinData && "0.05 USDT"}
+                    {/* `($0.05 or ${parseFloat((0.05 / coinData[0].current_price).toString()).toFixed(6)} ${coinData[0].symbol})`} */}
                 </option>
                 <option value="intermediatePack">
                   Intermediate Pack{' '}
-                  {coinData &&
-                    `($0.10 or ${parseFloat((0.1 / coinData[0].current_price).toString()).toFixed(6)} ${coinData[0].symbol})`}
+                  {coinData && "0.10 USDT"}
+                    {/* `($0.10 or ${parseFloat((0.1 / coinData[0].current_price).toString()).toFixed(6)} ${coinData[0].symbol})`} */}
                 </option>
                 <option value="advancePack">
                   Advance Pack{' '}
-                  {coinData &&
-                    `($0.20 or ${parseFloat((0.2 / coinData[0].current_price).toString()).toFixed(6)} ${coinData[0].symbol})`}
+                  {coinData && "0.20 USDT"}
+                    {/* `($0.20 or ${parseFloat((0.2 / coinData[0].current_price).toString()).toFixed(6)} ${coinData[0].symbol})`} */}
                 </option>
               </select>
               <button
@@ -1202,7 +1246,7 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
                         setBasicBatch(basicmons)
                           // then call mint basic batch func in nft contract
                           .then((isSuccess) => {
-                            if (isSuccess) mintBasicBatch(basicmons, '0x66726f6d2067616d6520636f6e7472616374')
+                            // if (isSuccess) mintBasicBatch(basicmons, '0x66726f6d2067616d6520636f6e7472616374')
                           })
                       }
                       break
@@ -1217,7 +1261,7 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
                         setIntermBatch(intermmons)
                           // then call mint interm batch func in nft contract
                           .then((isSuccess) => {
-                            if (isSuccess) mintIntermBatch(intermmons, '0x66726f6d2067616d6520636f6e7472616374')
+                            // if (isSuccess) mintIntermBatch(intermmons, '0x66726f6d2067616d6520636f6e7472616374')
                           })
                       }
                       break
@@ -1232,7 +1276,7 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
                         setAdvanceBatch(advmons)
                           // call mint advance func in nft contract
                           .then((isSuccess) => {
-                            if (isSuccess) mintAdvanceBatch(advmons, '0x66726f6d2067616d6520636f6e7472616374')
+                            // if (isSuccess) mintAdvanceBatch(advmons, '0x66726f6d2067616d6520636f6e7472616374')
                           })
                       }
                       break
