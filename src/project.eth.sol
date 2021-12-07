@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 contract Cryptomons {
+
+    IERC20 private _token;
+
     // 149 different Cryptomon species implemented and saved in the following enum variable.
     enum Species {
         DRYAD,
@@ -501,8 +506,10 @@ contract Cryptomons {
     uint256 public advanceSinglePrice; // ", divided by 40
     bytes32 public singlePriceInfo; // e.g. date
 
-    constructor() {
+    constructor(IERC20 token) {
         manager = msg.sender;
+
+        _token = token;
 
         // Add initial cryptomons on contract deployment to start game
         createFreeMon(Species(0), false);
@@ -511,15 +518,15 @@ contract Cryptomons {
         createFreeMon(Species(6), false);
         createFreeMon(Species(9), false);
         createFreeMon(Species(15), false);
-
-        basicPackPrice = 0;
-        intermediatePackPrice = 0;
-        advancePackPrice = 0;
+       
+        basicPackPrice = 0.025;
+        intermediatePackPrice = 0.05;
+        advancePackPrice = 0.1;
 
         // for breeding mons
-        basicSinglePrice = 0;
-        intermediateSinglePrice = 0;
-        advanceSinglePrice = 0;
+        basicSinglePrice = 0.000532; // basicPackPrice / 47 mons
+        intermediateSinglePrice = 0.001111; // intermediatePackPrice / 45 mons
+        advanceSinglePrice = 0.002222; // advancePackPrice / 45 mons
 
         packPriceInfo = '0x00';
         singlePriceInfo = '0x00';
@@ -529,6 +536,21 @@ contract Cryptomons {
         // Modifier
         require(msg.sender == manager, 'Only manager can call this.');
         _;
+    }
+
+    // erc20 functions
+    function deposit(uint256 amount) public returns (bool) {
+        // approve first
+        require(amount > 0, "Amount must be greater than 0");
+        address from = msg.sender;
+
+        return _token.transferFrom(from, address(this), amount);
+    }
+
+    function withdraw(uint256 amount) public onlyManager returns (bool) {
+		require(amount > 0, "Amount must be greater than 0");
+
+        return _token.transfer(msg.sender, amount);
     }
 
     // set prices

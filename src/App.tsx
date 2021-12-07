@@ -622,7 +622,7 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
       approve(library, account, 0.025)
       .then(async (result) => {
         if (result) {
-          console.log('basic batch price:', `${BigInt(0.025 * (WeiPerEther as any))}`);
+          console.log('basic mint batch price:', `${BigInt(0.025 * (WeiPerEther as any))}`);
           let overrides = { value: `${BigInt(0.025 * (WeiPerEther as any))}` }
           const tx = await nftcontr.mintBatchBasicPayable(account, basicmons, byteString, overrides)
           const recpt = await tx.wait()
@@ -641,19 +641,19 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
       // return recpt && recpt.status === 1
     }
   // Function to create intermediate mon batch
-  async function setIntermBatch(freemons: number[]) {
+  async function setIntermBatch(intermmons: number[]) {
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const weiPerEth = WeiPerEther as any
-    const packprice = 0.10 / 2
-    const price = parseFloat((packprice / coinData[0].current_price).toString())
-    const newprice = `${BigInt(price * weiPerEth)}`
+    // const weiPerEth = WeiPerEther as any
+    // const packprice = 0.10 / 2
+    // const price = parseFloat((packprice / coinData[0].current_price).toString())
+    // const newprice = `${BigInt(price * weiPerEth)}`
 
     approve(library, account, 0.05)
     .then(result => {
       if (result) {
-        console.log('interm batch price:', `${BigInt(0.025 * (WeiPerEther as any))}`);
+        console.log('interm batch price:', `${BigInt(0.05 * (WeiPerEther as any))}`);
         let overrides = { value: `${BigInt(0.05 * (WeiPerEther as any))}` }
-        // const tx = await contr.createBasicMonPack(basicmons, overrides)
+        // const tx = await contr.createIntermMonPack(intermmons, overrides)
         // const recpt = await tx.wait()
         // txSuccess(recpt, toast, refreshMons)
         // txFail(recpt, toast)
@@ -662,8 +662,8 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
     })
     .catch((err) => toast.error(err))
     
-    console.log('interm batch price:', newprice);
-    let overrides = { value: newprice }
+    // console.log('interm batch price:', newprice);
+    // let overrides = { value: newprice }
     // const tx = await contr.createIntermMonPack(freemons, overrides)
     // const recpt = await tx.wait()
     // txSuccess(recpt, toast, refreshMons)
@@ -673,26 +673,55 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
    // Function to mint intermediate mon batch
    async function mintIntermBatch(intermmons: number[], byteString: string) {
     const nftcontr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
-    const weiPerEth = WeiPerEther as any
-    const packprice = 0.10 / 2
-    const price = parseFloat((packprice / coinData[0].current_price).toString())
-    const newprice = `${BigInt(price * weiPerEth)}`
-    let overrides = { value: newprice }
-    const tx = await nftcontr.mintBatchIntermPayable(account, intermmons, byteString, overrides)
-    const recpt = await tx.wait()
-    txSuccess(recpt, toast, refreshMons)
-    txFail(recpt, toast)
-    return recpt && recpt.status === 1
+    // const weiPerEth = WeiPerEther as any
+    // const packprice = 0.10 / 2
+    // const price = parseFloat((packprice / coinData[0].current_price).toString())
+    // const newprice = `${BigInt(price * weiPerEth)}`
+    // let overrides = { value: newprice }
+    // const tx = await nftcontr.mintBatchIntermPayable(account, intermmons, byteString, overrides)
+    // const recpt = await tx.wait()
+    // txSuccess(recpt, toast, refreshMons)
+    // txFail(recpt, toast)
+    // return recpt && recpt.status === 1
+
+    approve(library, account, 0.05)
+    .then(async (result) => {
+      if (result) {
+        console.log('interm mint batch price:', `${BigInt(0.05 * (WeiPerEther as any))}`);
+        let overrides = { value: `${BigInt(0.05 * (WeiPerEther as any))}` }
+        const tx = await nftcontr.mintBatchBasicPayable(account, intermmons, byteString, overrides)
+        const recpt = await tx.wait()
+        txSuccess(recpt, toast, refreshMons)
+        txFail(recpt, toast)
+        return recpt && recpt.status === 1
+      }
+    })
+    .catch((err) => toast.error(err))
   }
   // Function to create advance mon batch
   async function setAdvanceBatch(advmons: number[]) {
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const weiPerEth = WeiPerEther as any
-    const packprice = 0.20 / 2
-    const price = parseFloat((packprice / coinData[0].current_price).toString())
-    const newprice = `${BigInt(price * weiPerEth)}`
-    console.log('advance batch price:', newprice);
-    let overrides = { value: newprice }
+    // const weiPerEth = WeiPerEther as any
+    // const packprice = 0.20 / 2
+    // const price = parseFloat((packprice / coinData[0].current_price).toString())
+    // const newprice = `${BigInt(price * weiPerEth)}`
+    // console.log('advance batch price:', newprice);
+    // let overrides = { value: newprice }
+
+    approve(library, account, 0.10)
+    .then(result => {
+      if (result) {
+        console.log('advance batch price:', `${BigInt(0.10 * (WeiPerEther as any))}`);
+        let overrides = { value: `${BigInt(0.10 * (WeiPerEther as any))}` }
+        // const tx = await contr.createAdvanceMonPack(advmmons, overrides)
+        // const recpt = await tx.wait()
+        // txSuccess(recpt, toast, refreshMons)
+        // txFail(recpt, toast)
+        // return recpt && recpt.status === 1
+      }
+    })
+    .catch((err) => toast.error(err))
+
     // const tx = await contr.createAdvanceMonPack(advmons, overrides)
     // const recpt = await tx.wait()
     // txSuccess(recpt, toast, refreshMons)
@@ -712,6 +741,20 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
     // txSuccess(recpt, toast, refreshMons)
     // txFail(recpt, toast)
     // return recpt && recpt.status === 1
+
+    approve(library, account, 0.10)
+    .then(async (result) => {
+      if (result) {
+        console.log('advance mint batch price:', `${BigInt(0.10 * (WeiPerEther as any))}`);
+        let overrides = { value: `${BigInt(0.10 * (WeiPerEther as any))}` }
+        const tx = await nftcontr.mintBatchBasicPayable(account, advmons, byteString, overrides)
+        const recpt = await tx.wait()
+        txSuccess(recpt, toast, refreshMons)
+        txFail(recpt, toast)
+        return recpt && recpt.status === 1
+      }
+    })
+    .catch((err) => toast.error(err))
   }
 
   // Function to get lokian gold balance

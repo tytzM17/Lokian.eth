@@ -6,6 +6,8 @@ import '@openzeppelin/contracts@4.3.2/access/Ownable.sol';
 import '@openzeppelin/contracts@4.3.2/token/ERC1155/extensions/ERC1155Burnable.sol';
 
 contract Lokie is ERC1155, Ownable, ERC1155Burnable {
+    IERC20 private _token;
+
     // Payable address can receive Ether
     address payable public manager;
 
@@ -35,7 +37,9 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
     bytes32 public packPriceInfo; // e.g. date
     bytes32 public singlePriceInfo;
 
-    constructor() payable ERC1155('') {
+    constructor(IERC20 token) payable ERC1155('') {
+        _token = token;
+
         manager = payable(msg.sender);
 
         // mons
@@ -48,17 +52,32 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         _mint(msg.sender, uint256(Species.FASTITOCALON), 1, '');
         _mint(msg.sender, uint256(Species.ASPIDOCHELONE), 1, '');
 
-        basicPackPrice = 0;
-        intermediatePackPrice = 0;
-        advancePackPrice = 0;
+        basicPackPrice = 0.025;
+        intermediatePackPrice = 0.05;
+        advancePackPrice = 0.1;
 
         // for breeding mons
-        basicSinglePrice = 0;
-        intermediateSinglePrice = 0;
-        advanceSinglePrice = 0;
+        basicSinglePrice = 0.000532; // basicPackPrice / 47 mons
+        intermediateSinglePrice = 0.001111; // intermediatePackPrice / 45 mons
+        advanceSinglePrice = 0.002222; // advancePackPrice / 45 mons
 
         packPriceInfo = '0x00';
         singlePriceInfo = '0x00';
+    }
+    
+    // erc20 functions
+    function deposit(uint256 amount) public returns (bool) {
+        // approve first
+        require(amount > 0, "Amount must be greater than 0");
+        address from = msg.sender;
+
+        return _token.transferFrom(from, address(this), amount);
+    }
+
+    function withdraw(uint256 amount) public onlyManager returns (bool) {
+		require(amount > 0, "Amount must be greater than 0");
+
+        return _token.transfer(msg.sender, amount);
     }
 
     function setURI(string memory newuri) public onlyOwner {
