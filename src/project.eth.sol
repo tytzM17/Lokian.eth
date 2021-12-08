@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 contract Cryptomons {
 
     IERC20 private _token;
+    IERC20 private _memetoken;
 
     // 149 different Cryptomon species implemented and saved in the following enum variable.
     enum Species {
@@ -506,10 +507,11 @@ contract Cryptomons {
     uint256 public advanceSinglePrice; // ", divided by 40
     bytes32 public singlePriceInfo; // e.g. date
 
-    constructor(IERC20 token) {
+    constructor(IERC20 token, IERC20 memetoken) {
         manager = msg.sender;
 
         _token = token;
+        _memetoken = token;
 
         // Add initial cryptomons on contract deployment to start game
         createFreeMon(Species(0), false);
@@ -539,18 +541,22 @@ contract Cryptomons {
     }
 
     // erc20 functions
-    function deposit(uint256 amount) public returns (bool) {
-        // approve first
+    function deposit(uint256 amount) private {
         require(amount > 0, "Amount must be greater than 0");
-        address from = msg.sender;
 
-        return _token.transferFrom(from, address(this), amount);
+        _token.transferFrom(msg.sender, address(this), amount);
     }
 
-    function withdraw(uint256 amount) public onlyManager returns (bool) {
+    function withdraw(uint256 amount) public onlyManager {
 		require(amount > 0, "Amount must be greater than 0");
 
-        return _token.transfer(msg.sender, amount);
+        _token.transfer(msg.sender, amount);
+    }
+
+    function depositMemeToken(uint256 amount) public {
+        require(amount > 0, "Amount must be greater than 0");
+
+        _memetoken.transferFrom(msg.sender, address(this), amount);
     }
 
     // set prices
@@ -638,8 +644,8 @@ contract Cryptomons {
             createPayableMon(Species(basicmons[i]), false, 18, 66);
         }
 
-        address payable seller = payable(manager);
-        seller.transfer(msg.value);
+        // approve then deposit to contract's erc20 e.g. usdt
+        deposit(msg.value);
     }
 
     function createIntermMonPack(uint256[] memory intermmons) public payable {
@@ -651,8 +657,7 @@ contract Cryptomons {
             createPayableMon(Species(intermmons[i]), false, 65, 111);
         }
 
-        address payable seller = payable(manager);
-        seller.transfer(msg.value);
+        deposit(msg.value);
     }
 
     function createAdvanceMonPack(uint256[] memory advancemons) public payable {
@@ -664,8 +669,7 @@ contract Cryptomons {
             createPayableMon(Species(advancemons[i]), false, 110, 151);
         }
 
-        address payable seller = payable(manager);
-        seller.transfer(msg.value);
+        deposit(msg.value);
     }
 
     function buyMon(uint256 id) public payable {
@@ -828,8 +832,7 @@ contract Cryptomons {
 
         totalMons++;
 
-        address payable seller = payable(manager);
-        seller.transfer(msg.value);
+        deposit(msg.value);
     }
 
     function damage(uint256 id1, uint256 id2) private view returns (uint8) {
@@ -885,6 +888,11 @@ contract Cryptomons {
         if (hp2 == 0) winnerId = id1;
         if (hp1 == hp2) winnerId = 1000; // it's a tie
         if ((id1 != 0 || id2 != 0) && winnerId == 0) winnerId = 2000; // unknown winner
+
+        // check winner id , to earn meme token
+        if (mons[winnerId].owner == msg.sender && mons[winnerId].species > 18) {
+            _memetoken.transfer(msg.sender, 1000);
+        }
 
         return (winnerId, round);
     }

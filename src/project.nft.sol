@@ -8,9 +8,6 @@ import '@openzeppelin/contracts@4.3.2/token/ERC1155/extensions/ERC1155Burnable.s
 contract Lokie is ERC1155, Ownable, ERC1155Burnable {
     IERC20 private _token;
 
-    // Payable address can receive Ether
-    address payable public manager;
-
     enum Species {
         DRYAD,
         HAMADRYAD,
@@ -40,8 +37,6 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
     constructor(IERC20 token) payable ERC1155('') {
         _token = token;
 
-        manager = payable(msg.sender);
-
         // mons
         _mint(msg.sender, uint256(Species.DRYAD), 1, '');
         _mint(msg.sender, uint256(Species.HAMADRYAD), 1, '');
@@ -64,24 +59,24 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         packPriceInfo = '0x00';
         singlePriceInfo = '0x00';
     }
+
+    function setURI(string memory newuri) public onlyOwner {
+        _setURI(newuri);
+    }
     
     // erc20 functions
-    function deposit(uint256 amount) public returns (bool) {
+    function deposit(uint256 amount) private {
         // approve first
         require(amount > 0, "Amount must be greater than 0");
         address from = msg.sender;
 
-        return _token.transferFrom(from, address(this), amount);
+        _token.transferFrom(from, address(this), amount);
     }
 
-    function withdraw(uint256 amount) public onlyManager returns (bool) {
+    function withdraw(uint256 amount) public onlyManager {
 		require(amount > 0, "Amount must be greater than 0");
 
-        return _token.transfer(msg.sender, amount);
-    }
-
-    function setURI(string memory newuri) public onlyOwner {
-        _setURI(newuri);
+        _token.transfer(msg.sender, amount);
     }
 
     // set prices
@@ -115,12 +110,11 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         uint256 id,
         bytes memory data
     ) public payable {
-        require(msg.value > basicSinglePrice);
-        require(id > 18 && id < 66);
+        require(msg.value > basicSinglePrice, "Fee must equal pack price");
+        require(id > 18 && id < 66, "Species not in range");
 
-        address payable seller = payable(manager);
         _mint(account, id, 1, data);
-        seller.transfer(msg.value);
+        deposit(msg.value);
     }
 
     function mintIntermPayable(
@@ -128,12 +122,11 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         uint256 id,
         bytes memory data
     ) public payable {
-        require(msg.value > intermediateSinglePrice);
-        require(id > 65 && id < 111);
+        require(msg.value > intermediateSinglePrice, "Fee must equal pack price");
+        require(id > 65 && id < 111, "Species not in range");
 
-        address payable seller = payable(manager);
         _mint(account, id, 1, data);
-        seller.transfer(msg.value);
+        deposit(msg.value);
     }
 
     function mintAdvancePayable(
@@ -141,12 +134,11 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         uint256 id,
         bytes memory data
     ) public payable {
-        require(msg.value > advanceSinglePrice);
-        require(id > 110 && id < 151);
+        require(msg.value > advanceSinglePrice, "Fee must equal pack price");
+        require(id > 110 && id < 151, "Species not in range");
 
-        address payable seller = payable(manager);
         _mint(account, id, 1, data);
-        seller.transfer(msg.value);
+        deposit(msg.value);
     }
 
     // for buying packs
@@ -155,8 +147,8 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         uint256[] memory ids,
         bytes memory data
     ) public payable {
-        require(msg.value > basicPackPrice);
-        require(ids.length == 47);
+        require(msg.value > basicPackPrice, "Fee must equal pack price");
+        require(ids.length == 47, "IDs length must be 47");
 
         uint256[] memory amounts;
 
@@ -164,19 +156,17 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
             amount.push(1);
         }
 
-        address payable seller = payable(manager);
         _mintBatch(to, ids, amounts, data);
-        seller.transfer(msg.value);
+        deposit(msg.value);
     }
 
-    // function mintBatchIntermPayable
     function mintBatchIntermPayable(
         address to,
         uint256[] memory ids,
         bytes memory data
     ) public payable {
-        require(msg.value > intermediatePackPrice);
-        require(ids.length == 45);
+        require(msg.value > intermediatePackPrice, "Fee must equal pack price");
+        require(ids.length == 45, "IDs length must be 45");
 
         uint256[] memory amounts;
 
@@ -184,19 +174,17 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
             amount.push(1);
         }
 
-        address payable seller = payable(manager);
         _mintBatch(to, ids, amounts, data);
-        seller.transfer(msg.value);
+        deposit(msg.value);
     }
 
-    // function mintBatchAdvancePayable
     function mintBatchAdvPayable(
         address to,
         uint256[] memory ids,
         bytes memory data
     ) public payable {
-        require(msg.value > advancePackPrice);
-        require(ids.length == 40);
+        require(msg.value > advancePackPrice, "Fee must equal pack price");
+        require(ids.length == 40, "IDs length must be 40");
 
         uint256[] memory amounts;
 
@@ -204,8 +192,7 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
             amount.push(1);
         }
 
-        address payable seller = payable(manager);
         _mintBatch(to, ids, amounts, data);
-        seller.transfer(msg.value);
+        deposit(msg.value);
     }
 }

@@ -44,14 +44,14 @@ Finished
 - Breed then mint, pinJson, payable (mvp) 11/21/2021
 - free packs are not nft not payable, basic to advance packs are nfts and payable (mvp) 11/29/2021
 - breed mons are nft, payable (mvp) 11/29/2021
+- Change contract to accept IERC20 e.g. USDT, instead of native token. For easy price maintenance. (mvp)  12/8/2021
+- Create meme token functions (100 trillion, mvp) 12/8/2021
+- fight function extension, earn meme token when you win (mvp) 12/8/2021
 
 Ongoing
-- Change contract to accept IERC20 e.g. USDT, instead of native token. For easy price maintenance. (mvp) 
-- Test create and breed mon packs functionality (mvp)
+- Test create, breed, mint mon packs functionality (mvp)
 
-- Create meme coin with future utility (10-100 trillion?, feature) 
-
-- fight wins (earn meme coin?), pay with meme coin? to set on-chain record e.g. name or address or title, wins 120 loss 2, rank no. 1 (feature)
+- Pay with meme token to set on-chain record e.g. name or address or title, wins 120 loss 2, rank no. 1 (feature)
 
 - Set frontend in pinata or ipfs, use bit.ly(shorten url) atm (mvp)
 - Deploy and test to rinkeby or evm-compatible testnets (mvp)
@@ -63,7 +63,7 @@ Ongoing
 
 Roadmap
 - October 2021, Development and Tests..ok
-- November 2021, Test and deploy to testnet
+- November 2021, Test and deploy to testnet..delayed
 - December 2021, Deploy to mainnet 
 - January 2022, Initial PvP development
 - February 2022, PvP on testnet then mainnet
