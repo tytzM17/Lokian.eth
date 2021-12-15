@@ -490,9 +490,19 @@ contract Cryptomons {
         address sharedTo; // Used for sharing
     }
 
+    // Structure of highscore
+    struct Highscore {
+        uint256 id;
+        bytes32 name;
+        uint256 wins;
+        uint256 losses;
+    }
+
     address public manager; // Manager of the contract
     mapping(uint256 => Mon) public mons; // Holds all created Cryptomons
+    mapping(address => Highscore) public highscores; // Holds all recorded highscores
     uint256 public totalMons = 0; // Number of created Cryptomons
+    uint256 public highscoresId = 0; // Number of recorded highscores
     uint256 private max = 2**256 - 1; // Max number of Cryptomons
 
     uint256 private nonce = 0; // Number used for guessable pseudo-random generated number.
@@ -557,6 +567,12 @@ contract Cryptomons {
         require(amount > 0, "Amount must be greater than 0");
 
         _memetoken.transferFrom(msg.sender, address(this), amount);
+    }
+
+    function withdrawMemeToken(uint256 amount) public onlyManager {
+		require(amount > 0, "Amount must be greater than 0");
+
+        _memetoken.transfer(msg.sender, amount);
     }
 
     // set prices
@@ -833,6 +849,22 @@ contract Cryptomons {
         totalMons++;
 
         deposit(msg.value);
+    }
+
+    function recordHighscore(uint256 _recordHighscoreFee, bytes32 memory _name, uint256 _wins, uint256 _losses) public {
+        require(_recordHighscoreFee >= recordHighscoreFee, "Record fee submitted is incorrect");
+        require(_name != "", "Name must not be empty");
+        require(_wins > 0, "Wins must be above zero");
+        
+        Highscore storage hscore = highscores[msg.sender];
+        hscore.id = highscoresId;
+        hscore.name = _name;
+        hscore.wins = _wins;
+        hscore.losses = _losses;
+        
+        depositMemeToken(_recordHighscoreFee);
+
+        highscoresId++;
     }
 
     function damage(uint256 id1, uint256 id2) private view returns (uint8) {

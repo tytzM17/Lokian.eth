@@ -46,19 +46,20 @@ Finished
 - breed mons are nft, payable (mvp) 11/29/2021
 - Change contract to accept IERC20 e.g. USDT, instead of native token. For easy price maintenance. (mvp)  12/8/2021
 - Create meme token functions (100 trillion, mvp) 12/8/2021
-- fight function extension, earn meme token when you win (mvp) 12/8/2021
+- Fight function extension, earn meme token when you win (mvp) 12/8/2021
+- Record highscore function in game contract. 12/16/2021
 
 Ongoing
 - Test create, breed, mint mon packs functionality (mvp)
 
-- Pay with meme token to set on-chain record e.g. name or address or title, wins 120 loss 2, rank no. 1 (feature)
+- Pay with meme token to set on-chain record e.g. name or address or title, wins 120 loss 2 (mvp)
 
 - Set frontend in pinata or ipfs, use bit.ly(shorten url) atm (mvp)
 - Deploy and test to rinkeby or evm-compatible testnets (mvp)
 - Deploy to eth or evm-compatible mainnets (mvp)
 
-- Create landing page in ipfs, buy domain name($1-5), tg ann, twitr page
-- Submit to dappradar, IGOs, state of the dapps, etc 
+- Create landing page in ipfs, buy domain name($1-5), tg ann, twitr page (mvp)
+- Submit to dappradar, IGOs, state of the dapps, etc (mvp)
 
 
 Roadmap
