@@ -50,25 +50,21 @@ Finished
 - Record highscore function in game contract. 12/16/2021
 
 Ongoing
+- Remove memetoken and highscore functions
+- Remove buyMon, addForSale, and removeFromSale functions
+- Remove startSharing and stopSharing functions
+
 - Test create, breed, mint mon packs functionality (mvp)
 
-- Pay with meme token to set on-chain record e.g. name or address or title, wins 120 loss 2 (mvp)
+- Set frontend in pinata or ipfs, (mvp)
+- Deploy and test to mumbai or other evm-compatible testnets (mvp)
+- Deploy to matic or other evm-compatible mainnets (mvp)
 
-- Set frontend in pinata or ipfs, use bit.ly(shorten url) atm (mvp)
-- Deploy and test to rinkeby or evm-compatible testnets (mvp)
-- Deploy to eth or evm-compatible mainnets (mvp)
-
-- Create landing page in ipfs, buy domain name($1-5), tg ann, twitr page (mvp)
+- Create landing page in ipfs (mvp)
 - Submit to dappradar, IGOs, state of the dapps, etc (mvp)
 
 
-Roadmap
-- October 2021, Development and Tests..ok
-- November 2021, Test and deploy to testnet..delayed
-- December 2021, Deploy to mainnet 
-- January 2022, Initial PvP development
-- February 2022, PvP on testnet then mainnet
-- March 2022, Initial Moba development  
+
 
 
 

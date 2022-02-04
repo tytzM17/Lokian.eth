@@ -5,8 +5,8 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Cryptomons {
 
+    // The stable coin used for buying nfts
     IERC20 private _token;
-    IERC20 private _memetoken;
 
     // 149 different Cryptomon species implemented and saved in the following enum variable.
     enum Species {
@@ -480,29 +480,19 @@ contract Cryptomons {
         address payable owner;
         Species species;
         uint256 price;
-        bool forSale;
+        // bool forSale;
         uint8 monType; // Used for breeding
         bool evolve; // Used for breeding
         uint8 hp; // Used for fighting
         uint8 atk; // Used for fighting
         uint8 def; // Used for fighting
         uint8 speed; // Used for fighting
-        address sharedTo; // Used for sharing
-    }
-
-    // Structure of highscore
-    struct Highscore {
-        uint256 id;
-        bytes32 name;
-        uint256 wins;
-        uint256 losses;
+        // address sharedTo; // Used for sharing
     }
 
     address public manager; // Manager of the contract
     mapping(uint256 => Mon) public mons; // Holds all created Cryptomons
-    mapping(address => Highscore) public highscores; // Holds all recorded highscores
     uint256 public totalMons = 0; // Number of created Cryptomons
-    uint256 public highscoresId = 0; // Number of recorded highscores
     uint256 private max = 2**256 - 1; // Max number of Cryptomons
 
     uint256 private nonce = 0; // Number used for guessable pseudo-random generated number.
@@ -516,12 +506,11 @@ contract Cryptomons {
     uint256 public intermediateSinglePrice; // ", divided by 45
     uint256 public advanceSinglePrice; // ", divided by 40
     bytes32 public singlePriceInfo; // e.g. date
-
-    constructor(IERC20 token, IERC20 memetoken) {
+    
+    constructor(IERC20 token) {
         manager = msg.sender;
 
         _token = token;
-        _memetoken = token;
 
         // Add initial cryptomons on contract deployment to start game
         createFreeMon(Species(0), false);
@@ -531,14 +520,14 @@ contract Cryptomons {
         createFreeMon(Species(9), false);
         createFreeMon(Species(15), false);
        
-        basicPackPrice = 0.025;
-        intermediatePackPrice = 0.05;
-        advancePackPrice = 0.1;
+        basicPackPrice = 25000000000000000; // 0.025
+        intermediatePackPrice = 50000000000000000; // 0.05;
+        advancePackPrice = 100000000000000000; // 0.1;
 
         // for breeding mons
-        basicSinglePrice = 0.000532; // basicPackPrice / 47 mons
-        intermediateSinglePrice = 0.001111; // intermediatePackPrice / 45 mons
-        advanceSinglePrice = 0.002222; // advancePackPrice / 45 mons
+        basicSinglePrice = 532000000000000; // 0.000532; basicPackPrice / 47 mons
+        intermediateSinglePrice = 1111000000000000; // 0.001111; intermediatePackPrice / 45 mons
+        advanceSinglePrice = 2222000000000000;  // 0.002222; advancePackPrice / 45 mons
 
         packPriceInfo = '0x00';
         singlePriceInfo = '0x00';
@@ -561,18 +550,6 @@ contract Cryptomons {
 		require(amount > 0, "Amount must be greater than 0");
 
         _token.transfer(msg.sender, amount);
-    }
-
-    function depositMemeToken(uint256 amount) public {
-        require(amount > 0, "Amount must be greater than 0");
-
-        _memetoken.transferFrom(msg.sender, address(this), amount);
-    }
-
-    function withdrawMemeToken(uint256 amount) public onlyManager {
-		require(amount > 0, "Amount must be greater than 0");
-
-        _memetoken.transfer(msg.sender, amount);
     }
 
     // set prices
@@ -688,30 +665,30 @@ contract Cryptomons {
         deposit(msg.value);
     }
 
-    function buyMon(uint256 id) public payable {
-        assert(id < totalMons);
-        require(msg.value > mons[id].price, "Must send enough money to buy"); 
-        require(mons[id].forSale == true, "Mon must be for sale");
-        address payable seller = mons[id].owner;
-        mons[id].owner = payable(msg.sender);
-        mons[id].sharedTo = msg.sender; // Stop sharing since owner changed
-        mons[id].forSale = false;
-        seller.transfer(msg.value);
-    }
+    // function buyMon(uint256 id) public payable {
+    //     assert(id < totalMons);
+    //     require(msg.value > mons[id].price, "Must send enough money to buy"); 
+    //     require(mons[id].forSale == true, "Mon must be for sale");
+    //     address payable seller = mons[id].owner;
+    //     mons[id].owner = payable(msg.sender);
+    //     mons[id].sharedTo = msg.sender; // Stop sharing since owner changed
+    //     mons[id].forSale = false;
+    //     seller.transfer(msg.value);
+    // }
 
-    function addForSale(uint256 id, uint256 price) public {
-        assert(id < totalMons);
-        require(mons[id].owner == msg.sender, "Only owner can add it to sale"); 
-        mons[id].forSale = true;
-        mons[id].sharedTo = msg.sender; // Stop sharing since you sell this
-        mons[id].price = price;
-    }
+    // function addForSale(uint256 id, uint256 price) public {
+    //     assert(id < totalMons);
+    //     require(mons[id].owner == msg.sender, "Only owner can add it to sale"); 
+    //     mons[id].forSale = true;
+    //     mons[id].sharedTo = msg.sender; // Stop sharing since you sell this
+    //     mons[id].price = price;
+    // }
 
-    function removeFromSale(uint256 id) public {
-        assert(id < totalMons);
-        require(mons[id].owner == msg.sender, "Only owner can remove it from sale"); 
-        mons[id].forSale = false;
-    }
+    // function removeFromSale(uint256 id) public {
+    //     assert(id < totalMons);
+    //     require(mons[id].owner == msg.sender, "Only owner can remove it from sale"); 
+    //     mons[id].forSale = false;
+    // }
 
     // Function that defines the resulting egg species from breeding
     function findEggSpecies(uint256 id1, uint256 id2) private returns (Species) {
@@ -851,22 +828,6 @@ contract Cryptomons {
         deposit(msg.value);
     }
 
-    function recordHighscore(uint256 _recordHighscoreFee, bytes32 memory _name, uint256 _wins, uint256 _losses) public {
-        require(_recordHighscoreFee >= recordHighscoreFee, "Record fee submitted is incorrect");
-        require(_name != "", "Name must not be empty");
-        require(_wins > 0, "Wins must be above zero");
-        
-        Highscore storage hscore = highscores[msg.sender];
-        hscore.id = highscoresId;
-        hscore.name = _name;
-        hscore.wins = _wins;
-        hscore.losses = _losses;
-        
-        depositMemeToken(_recordHighscoreFee);
-
-        highscoresId++;
-    }
-
     function damage(uint256 id1, uint256 id2) private view returns (uint8) {
         return (mons[id1].atk > mons[id2].def) ? 10 : 5;
     }
@@ -921,26 +882,21 @@ contract Cryptomons {
         if (hp1 == hp2) winnerId = 1000; // it's a tie
         if ((id1 != 0 || id2 != 0) && winnerId == 0) winnerId = 2000; // unknown winner
 
-        // check winner id , to earn meme token
-        if (mons[winnerId].owner == msg.sender && mons[winnerId].species > 18) {
-            _memetoken.transfer(msg.sender, 1000);
-        }
-
         return (winnerId, round);
     }
 
-    function startSharing(uint256 id, address addr) public {
-        assert(id < totalMons);
-        require(!mons[id].forSale, "Sharing mon can't be for sale"); 
-        require(mons[id].owner == msg.sender, "Only owner can share a mon"); 
-        mons[id].sharedTo = addr;
-    }
+    // function startSharing(uint256 id, address addr) public {
+    //     assert(id < totalMons);
+    //     require(!mons[id].forSale, "Sharing mon can't be for sale"); 
+    //     require(mons[id].owner == msg.sender, "Only owner can share a mon"); 
+    //     mons[id].sharedTo = addr;
+    // }
 
-    function stopSharing(uint256 id) public {
-        assert(id < totalMons);
-        require(mons[id].owner == msg.sender || mons[id].sharedTo == msg.sender, "Only owner or the address that it is shared to can terminate the sharing of a mon"); 
-        mons[id].sharedTo = mons[id].owner;
-    }
+    // function stopSharing(uint256 id) public {
+    //     assert(id < totalMons);
+    //     require(mons[id].owner == msg.sender || mons[id].sharedTo == msg.sender, "Only owner or the address that it is shared to can terminate the sharing of a mon"); 
+    //     mons[id].sharedTo = mons[id].owner;
+    // }
 
     // function that generates pseudorandom numbers
     function randomGen(uint256 i) private returns (uint8) {

@@ -757,19 +757,7 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
     .catch((err) => toast.error(err))
   }
 
-  // Function to get lokian gold balance
-  async function getTokenBalance(tokenId: number = 151) {
-    if (!library || !account) return
-
-    const contr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
-    const res = await contr.functions.balanceOf(account, tokenId)
-
-    if (res && res.length) {
-      const gold = BigNumber.from(res[0]._hex).toNumber()
-      setUserLokianGold(gold)
-    }
-  }
-  // Handlers for form inputs
+   // Handlers for form inputs
   function handleShareId(event) {
     setShareId(event.target.value)
   }
@@ -1129,8 +1117,6 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
       </React.Fragment>
     ))
 
-  // getTokenBalance()
-
   // Function that does all the rendering of the application
   return (
     // Creation of the different tabs of the UI
@@ -1194,34 +1180,6 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
       </div>
 
       <Tabs defaultActiveKey="tokens" id="uncontrolled-tab-example">
-        {/* <Tab className="x" eventKey="tokens" title="Tokens">
-          <div className="p1">
-            Your Lokian Gold: <span style={{ color: 'gold' }}>{userLokianGold}</span>
-          </div>
-          <div className="p1" style={{ fontSize: '10px' }}>
-            (Lokian gold is used to buy, breed, and share creatures)
-          </div>
-          <br />
-          <div className="p1">Test tokens contract address: {ERC1155_CONTRACT_ADDRESS}</div>
-          <br />
-          <div className="sharing-area">
-            <div className="form-line">
-              <button style={{ width: '100%' }} className="rpgui-button" type="button" onClick={() => getTestTokens()}>
-                Get Test Tokens
-              </button>
-            </div>
-            <div className="form-line">
-              <button
-                style={{ width: '100%' }}
-                className="rpgui-button"
-                type="button"
-                onClick={() => alert('wen? soon!')}
-              >
-                Buy Tokens
-              </button>
-            </div>
-          </div>
-        </Tab> */}
         <Tab className="x" eventKey="myCryptomons" title="My Creatures">
           <div className="p1">Your Entries</div>
           {myCryptomonsDiv}
@@ -1441,6 +1399,34 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
         <Tab eventKey="sharedToMe" title="Shared To Me">
           <div className="p1">Shared To You</div>
           {sharedToMe}
+        </Tab>
+        <Tab eventKey="highscore" title="High Scores">
+          <div className="p1">Highscores Management</div>
+          <div className="sharing-area">
+            <div className="form-line">
+              <label className="form-label">Name:</label>
+              <input className="form-input" value={account} onChange={(e) => handleHighscoreChangeName(e)} />
+            </div>
+            <div className="form-line">
+              <label className="form-label">Session Wins:</label>
+              <input className="form-input" value="" disabled/>
+            </div>
+            <div className="form-line">
+              <label className="form-label">Session Losses:</label>
+              <input className="form-input" value="" disabled/>
+            </div>
+            <div className="form-line">
+              <button
+                className="rpgui-button"
+                type="button"
+                style={{ float: 'right' }}
+                
+              >
+                Record
+              </button>
+            </div>
+          </div>
+          {/* {highscoresDiv} */}
         </Tab>
       </Tabs>
     </div>
