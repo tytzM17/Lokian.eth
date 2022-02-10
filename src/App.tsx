@@ -55,13 +55,14 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.Injected]: injected,
 }
 
-// Contact deployment address, e.g. ganache
-const CONTRACT_ADDRESS = '0x6c32f90F6A53A753299e109E8CBB11e4C61e9734'
-// const CONTRACT_ADDRESS = '0x357dBC8d883adb2b13Be3F1F4802333A41966d33';
+// Contact deployment address, e.g. ganache, feb 2022 = 0x9338CE91B73D7A804f1B2b7b4e1220D1299eF9Dd
+const CONTRACT_ADDRESS = '0x9338CE91B73D7A804f1B2b7b4e1220D1299eF9Dd';
 
 // nft contract
 const ERC1155_CONTRACT_ADDRESS = '0x8ae9E353F2A06Fcae864E514cF8AFf6119B3F766'
-// const ERC20_CONTRACT_ADDRESS = '0x34F240a6559d3D93306b4412D616349D55cFE6A0'
+
+// erc20 stable coin address = 0x962c22c4aaB626d4C864c1FC6633138C2969ba66, feb 2022
+const ERC20_CONTRACT_ADDRESS = '0x962c22c4aaB626d4C864c1FC6633138C2969ba66'
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]
@@ -272,7 +273,6 @@ function App() {
   const [rounds, setRounds] = useState(null) // Used to display number of rounds the fight lasted
   const [shareId, setShareId] = useState('') // Used in shareId form input field
   const [shareAddress, setShareAddress] = useState('') // Used in shareAddress form input field
-  const [userLokianGold, setUserLokianGold] = useState(0)
   const [chosenPack, setChosenPack] = useState('freePack')
   const [coinData, setCoinData] = useState<AxiosResponse | null>(null)
   const [breedMintInfo, setBreedMintInfo] = useState(null)
@@ -340,13 +340,13 @@ function App() {
           atk: mon.atk,
           def: mon.def,
           evolve: mon.evolve,
-          forSale: mon.forSale,
+          // forSale: mon.forSale,
           hp: mon.hp,
           id: BigNumber.from(mon.id._hex).toNumber(),
           monType: mon.monType,
           owner: mon.owner,
           price: BigNumber.from(mon.price._hex).toBigInt(),
-          sharedTo: mon.sharedTo,
+          // sharedTo: mon.sharedTo,
           species: mon.species,
           speed: mon.speed,
         }))
@@ -370,38 +370,38 @@ function App() {
   }
 
   // Function that adds a Cryptomon for sale through a smart contract function
-  async function addForSale(id, price) {
-    if (price === 0 || price === '0') {
-      toast.error('🦄 Dude, price should be above 0')
-      return
-    }
-    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const tx = await contr.addForSale(id, price)
-    const receipt = await tx.wait()
-    if (receipt && receipt.status === 1) {
-      toast.success(`Success, Tx hash: ${receipt.transactionHash}`)
-      refreshMons()
-    }
+  // async function addForSale(id, price) {
+  //   if (price === 0 || price === '0') {
+  //     toast.error('🦄 Dude, price should be above 0')
+  //     return
+  //   }
+  //   const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+  //   const tx = await contr.addForSale(id, price)
+  //   const receipt = await tx.wait()
+  //   if (receipt && receipt.status === 1) {
+  //     toast.success(`Success, Tx hash: ${receipt.transactionHash}`)
+  //     refreshMons()
+  //   }
 
-    if (receipt && receipt.status === 0) {
-      toast.error(`Error, Tx hash: ${receipt.transactionHash}`)
-    }
-  }
+  //   if (receipt && receipt.status === 0) {
+  //     toast.error(`Error, Tx hash: ${receipt.transactionHash}`)
+  //   }
+  // }
 
   // Function that removes a Cryptomon from sale through a smart contract function
-  async function removeFromSale(id) {
-    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const tx = await contr.removeFromSale(id)
-    const recpt = await tx.wait()
-    if (recpt && recpt.status === 1) {
-      toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
-      refreshMons()
-    }
+  // async function removeFromSale(id) {
+  //   const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+  //   const tx = await contr.removeFromSale(id)
+  //   const recpt = await tx.wait()
+  //   if (recpt && recpt.status === 1) {
+  //     toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
+  //     refreshMons()
+  //   }
 
-    if (recpt && recpt.status === 0) {
-      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
-    }
-  }
+  //   if (recpt && recpt.status === 0) {
+  //     toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+  //   }
+  // }
 
   // Function that breeds 2 Cryptomons through a smart contract function
   async function breedMons(id1, id2) {
@@ -424,13 +424,13 @@ function App() {
         atk: latestMon.atk,
         def: latestMon.def,
         evolve: latestMon.evolve,
-        forSale: latestMon.forSale,
+        // forSale: latestMon.forSale,
         hp: latestMon.hp,
         id: BigNumber.from(latestMon.id._hex).toNumber(),
         monType: latestMon.monType,
         owner: latestMon.owner,
         price: BigNumber.from(latestMon.price._hex).toBigInt(),
-        sharedTo: latestMon.sharedTo,
+        // sharedTo: latestMon.sharedTo,
         species: latestMon.species,
         speed: latestMon.speed,
       }
@@ -826,22 +826,22 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
   }
 
   // Create the div with add for sale button
-  const addForSaleDiv = (mon) => {
-    return (
-      <div className="selling-div">
-        <label className="add-for-sale-label">Set creatures price (in Wei):</label>
-        <input type="number" className="add-for-sale-input" value={value} onChange={(e) => handleChange(mon?.id, e)} />
-        <button
-          className="rpgui-button"
-          type="button"
-          style={{ float: 'right' }}
-          onClick={() => addForSale(mon?.id, value)}
-        >
-          Add for sale
-        </button>
-      </div>
-    )
-  }
+  // const addForSaleDiv = (mon) => {
+  //   return (
+  //     <div className="selling-div">
+  //       <label className="add-for-sale-label">Set creatures price (in Wei):</label>
+  //       <input type="number" className="add-for-sale-input" value={value} onChange={(e) => handleChange(mon?.id, e)} />
+  //       <button
+  //         className="rpgui-button"
+  //         type="button"
+  //         style={{ float: 'right' }}
+  //         onClick={() => addForSale(mon?.id, value)}
+  //       >
+  //         Add for sale
+  //       </button>
+  //     </div>
+  //   )
+  // }
 
   // Create the div with remove from sale button
   const removeFromSaleDiv = (mon) => {
@@ -961,20 +961,20 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
     ))
 
   // div with user's Cryptomons that are for sale
-  const forSaleCryptomons = myCryptomons
-    .filter((mon) => mon.forSale)
-    .map((mon) => (
-      <React.Fragment key={mon.id}>
-        <div className="mon">
-          <figure className="my-figure">
-            {nameDiv(mon)}
-            {imgDiv(mon)}
-            <figcaption>{statDiv(mon)}</figcaption>
-          </figure>
-          {removeFromSaleDiv(mon)}
-        </div>
-      </React.Fragment>
-    ))
+  // const forSaleCryptomons = myCryptomons
+  //   .filter((mon) => mon.forSale)
+  //   .map((mon) => (
+  //     <React.Fragment key={mon.id}>
+  //       <div className="mon">
+  //         <figure className="my-figure">
+  //           {nameDiv(mon)}
+  //           {imgDiv(mon)}
+  //           <figcaption>{statDiv(mon)}</figcaption>
+  //         </figure>
+  //         {removeFromSaleDiv(mon)}
+  //       </div>
+  //     </React.Fragment>
+  //   ))
 
   // div with Cryptomons available for buy to the user
   const buyCryptomons = otherCryptomons
@@ -994,7 +994,7 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
 
   // div with user's Cryptomons that can be used for breeding
   const forBreedCryptomons = myCryptomons
-    .filter((mon) => !mon.forSale)
+    // .filter((mon) => !mon.forSale)
     .map((mon) => (
       <React.Fragment key={mon.id}>
         <div className="mon">
@@ -1009,9 +1009,9 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
     ))
 
   const cond = (mon) =>
-    (mon.owner.toString().toLowerCase() === account?.toString()?.toLowerCase() && !mon.forSale) ||
-    (mon.sharedTo.toString().toLowerCase() === account?.toString()?.toLowerCase() &&
-      mon.owner?.toString().toLowerCase() !== account?.toString()?.toLowerCase())
+    (mon.owner.toString().toLowerCase() === account?.toString()?.toLowerCase()) ||
+    // (mon.sharedTo.toString().toLowerCase() === account?.toString()?.toLowerCase() &&
+      mon.owner?.toString().toLowerCase() !== account?.toString()?.toLowerCase()
 
   // div with user's Cryptomons that can be used to fight with
   const forFightWithCryptomons = cryptomons.filter(cond).map((mon) => (
@@ -1040,7 +1040,7 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
 
   // div with Cryptomons that user can fight against
   const forFightAgainstCryptomons = otherCryptomons
-    .filter((mon) => !mon.forSale)
+    // .filter((mon) => !mon.forSale)
     .map((mon) => (
       <React.Fragment key={mon.id}>
         <div className="mon">
@@ -1066,56 +1066,56 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
     ))
 
   // div with user's shared Cryptomons
-  const sharedByMe = myCryptomons
-    .filter((mon) => mon.sharedTo.toLowerCase() !== account)
-    .map((mon) => (
-      <React.Fragment key={mon.id}>
-        <div className="mon">
-          <figure className="my-figure">
-            {nameDiv(mon)}
-            {imgDiv(mon)}
-            <figcaption>{statDiv(mon)}</figcaption>
-          </figure>
-          <div className="sharing-div">
-            <div className="shareTo-owner">Shared to address: {mon.sharedTo} </div>
-            <button
-              className="stop-sharing-btn rpgui-button"
-              type="button"
-              style={{ float: 'right' }}
-              onClick={() => stopSharing(mon.id)}
-            >
-              Stop sharing
-            </button>
-          </div>
-        </div>
-      </React.Fragment>
-    ))
+  // const sharedByMe = myCryptomons
+  //   .filter((mon) => mon.sharedTo.toLowerCase() !== account)
+  //   .map((mon) => (
+  //     <React.Fragment key={mon.id}>
+  //       <div className="mon">
+  //         <figure className="my-figure">
+  //           {nameDiv(mon)}
+  //           {imgDiv(mon)}
+  //           <figcaption>{statDiv(mon)}</figcaption>
+  //         </figure>
+  //         <div className="sharing-div">
+  //           <div className="shareTo-owner">Shared to address: {mon.sharedTo} </div>
+  //           <button
+  //             className="stop-sharing-btn rpgui-button"
+  //             type="button"
+  //             style={{ float: 'right' }}
+  //             onClick={() => stopSharing(mon.id)}
+  //           >
+  //             Stop sharing
+  //           </button>
+  //         </div>
+  //       </div>
+  //     </React.Fragment>
+  //   ))
 
   // div with Cryptomons shared to the user
-  const sharedToMe = otherCryptomons
-    .filter((mon) => mon.sharedTo === account)
-    .map((mon) => (
-      <React.Fragment key={mon.id}>
-        <div className="mon">
-          <figure className="my-figure">
-            {nameDiv(mon)}
-            {imgDiv(mon)}
-            <figcaption>{statDiv(mon)}</figcaption>
-          </figure>
-          <div className="sharing-div">
-            <label className="shared-owner">Creature Owner: {mon.owner} </label>
-            <button
-              className="stop-sharing-btn rpgui-button"
-              type="button"
-              style={{ float: 'right' }}
-              onClick={() => stopSharing(mon.id)}
-            >
-              Stop sharing
-            </button>
-          </div>
-        </div>
-      </React.Fragment>
-    ))
+  // const sharedToMe = otherCryptomons
+  //   .filter((mon) => mon.sharedTo === account)
+  //   .map((mon) => (
+  //     <React.Fragment key={mon.id}>
+  //       <div className="mon">
+  //         <figure className="my-figure">
+  //           {nameDiv(mon)}
+  //           {imgDiv(mon)}
+  //           <figcaption>{statDiv(mon)}</figcaption>
+  //         </figure>
+  //         <div className="sharing-div">
+  //           <label className="shared-owner">Creature Owner: {mon.owner} </label>
+  //           <button
+  //             className="stop-sharing-btn rpgui-button"
+  //             type="button"
+  //             style={{ float: 'right' }}
+  //             onClick={() => stopSharing(mon.id)}
+  //           >
+  //             Stop sharing
+  //           </button>
+  //         </div>
+  //       </div>
+  //     </React.Fragment>
+  //   ))
 
   // Function that does all the rendering of the application
   return (
@@ -1184,10 +1184,10 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
           <div className="p1">Your Entries</div>
           {myCryptomonsDiv}
         </Tab>
-        <Tab eventKey="forSale" title="For trade">
+        {/* <Tab eventKey="forSale" title="For trade">
           <div className="p1">Manage Trade</div>
           {forSaleCryptomons}
-        </Tab>
+        </Tab> */}
         <Tab eventKey="buyCryptomons" title="Trade Creatures">
           <div className="p1">Shop</div>
 
@@ -1372,7 +1372,7 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
             </div>
           </div>
         </Tab>
-        <Tab eventKey="share" title="Share Creatures">
+        {/* <Tab eventKey="share" title="Share Creatures">
           <div className="p1">Sharing Management</div>
           <div className="sharing-area">
             <div className="form-line">
@@ -1399,7 +1399,7 @@ if (maxPeak.species > 110 && maxPeak.species < 151) {
         <Tab eventKey="sharedToMe" title="Shared To Me">
           <div className="p1">Shared To You</div>
           {sharedToMe}
-        </Tab>
+        </Tab> */}
         <Tab eventKey="highscore" title="High Scores">
           <div className="p1">Highscores Management</div>
           <div className="sharing-area">

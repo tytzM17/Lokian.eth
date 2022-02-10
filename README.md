@@ -48,12 +48,11 @@ Finished
 - Create meme token functions (100 trillion, mvp) 12/8/2021
 - Fight function extension, earn meme token when you win (mvp) 12/8/2021
 - Record highscore function in game contract. 12/16/2021
+- Removed memetoken and highscore functions
+- Removed buyMon, addForSale, and removeFromSale functions
+- Removed startSharing and stopSharing functions
 
 Ongoing
-- Remove memetoken and highscore functions
-- Remove buyMon, addForSale, and removeFromSale functions
-- Remove startSharing and stopSharing functions
-
 - Test create, breed, mint mon packs functionality (mvp)
 
 - Set frontend in pinata or ipfs, (mvp)
