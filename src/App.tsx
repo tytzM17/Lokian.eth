@@ -55,8 +55,8 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.Injected]: injected,
 }
 
-// Contact deployment address, e.g. ganache, feb 2022 = 0x9338CE91B73D7A804f1B2b7b4e1220D1299eF9Dd
-const CONTRACT_ADDRESS = '0x9338CE91B73D7A804f1B2b7b4e1220D1299eF9Dd';
+// Contact deployment address, e.g. ganache, feb 2022 = 0x0e0Da8fBD95C43C0410fd053FB593451C6F10295
+const CONTRACT_ADDRESS = '0x0e0Da8fBD95C43C0410fd053FB593451C6F10295';
 
 // nft contract, feb 2022, 0x21e3d6d2a0b848F8C1F4cA18511498cA4952D370
 const ERC1155_CONTRACT_ADDRESS = '0x21e3d6d2a0b848F8C1F4cA18511498cA4952D370'
@@ -271,8 +271,8 @@ function App() {
   const [fightChoice2, setFightChoice2] = useState(null)
   const [winner, setWinner] = useState(null) // Used to display winner of the last fight
   const [rounds, setRounds] = useState(null) // Used to display number of rounds the fight lasted
-  const [shareId, setShareId] = useState('') // Used in shareId form input field
-  const [shareAddress, setShareAddress] = useState('') // Used in shareAddress form input field
+  // const [shareId, setShareId] = useState('') // Used in shareId form input field
+  // const [shareAddress, setShareAddress] = useState('') // Used in shareAddress form input field
   const [chosenPack, setChosenPack] = useState('freePack')
   const [coinData, setCoinData] = useState<AxiosResponse | null>(null)
   const [breedMintInfo, setBreedMintInfo] = useState(null)

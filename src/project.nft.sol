@@ -152,12 +152,6 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         require(msg.value > basicPackPrice, "Fee must equal pack price");
         require(ids.length == 47, "IDs length must be 47");
 
-        // uint256[] memory amounts;
-
-        // for (uint256 i = 0; i < ids.length; i++) {
-        //     amounts.push(1);
-        // }
-
         _mintBatch(to, ids, amounts, data);
         deposit(msg.value);
     }
@@ -171,12 +165,6 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
         require(msg.value > intermediatePackPrice, "Fee must equal pack price");
         require(ids.length == 45, "IDs length must be 45");
 
-        // uint256[] storage amounts;
-
-        // for (uint256 i = 0; i < ids.length; i++) {
-        //     amounts.push(1);
-        // }
-
         _mintBatch(to, ids, amounts, data);
         deposit(msg.value);
     }
@@ -189,12 +177,6 @@ contract Lokie is ERC1155, Ownable, ERC1155Burnable {
     ) public payable {
         require(msg.value > advancePackPrice, "Fee must equal pack price");
         require(ids.length == 40, "IDs length must be 40");
-
-        // uint256[] storage amounts;
-
-        // for (uint256 i = 0; i < ids.length; i++) {
-        //     amounts.push(1);
-        // }
 
         _mintBatch(to, ids, amounts, data);
         deposit(msg.value);

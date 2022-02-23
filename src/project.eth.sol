@@ -513,12 +513,12 @@ contract Cryptomons {
         _token = token;
 
         // Add initial cryptomons on contract deployment to start game
-        createFreeMon(Species(0), false);
-        createFreeMon(Species(1), false);
-        createFreeMon(Species(3), false);
-        createFreeMon(Species(6), false);
-        createFreeMon(Species(9), false);
-        createFreeMon(Species(15), false);
+        createFreeMon(Species(0));
+        createFreeMon(Species(1));
+        createFreeMon(Species(3));
+        createFreeMon(Species(6));
+        createFreeMon(Species(9));
+        createFreeMon(Species(15));
        
         basicPackPrice = 25000000000000000; // 0.025
         intermediatePackPrice = 50000000000000000; // 0.05;
@@ -565,7 +565,7 @@ contract Cryptomons {
         packPriceInfo = info;
     }
 
-    function createFreeMon(Species species, bool forSale) private {
+    function createFreeMon(Species species) private {
         assert(totalMons < max);
         require(uint256(species) < 19, "Species not in range");
 
@@ -574,7 +574,7 @@ contract Cryptomons {
         mon.owner = payable(msg.sender);
         mon.species = species;
         mon.price = 0;
-        mon.forSale = forSale;
+        // mon.forSale = forSale;
 
         mon.monType = monTypes[uint8(species)]; // Assign the type of the cryptomon
         mon.evolve = evolves[uint8(species)]; // Keep whether this cryptomon can evolve
@@ -585,7 +585,7 @@ contract Cryptomons {
         mon.def = 100 + randomGen(41);
         mon.speed = 100 + randomGen(41);
 
-        mon.sharedTo = msg.sender;
+        // mon.sharedTo = msg.sender;
 
         totalMons++;
     }
@@ -594,13 +594,12 @@ contract Cryptomons {
         assert(totalMons < max);
 
         for (uint256 i = 0; i < 19; i++) {
-            createFreeMon(Species(freemons[i]), false);
+            createFreeMon(Species(freemons[i]));
         }
     }
 
     function createPayableMon(
         Species species,
-        bool forSale,
         uint256 speciesLowerLimit,
         uint256 speciesUpperLimit
     ) private {
@@ -612,7 +611,7 @@ contract Cryptomons {
         mon.owner = payable(msg.sender);
         mon.species = species;
         mon.price = 0;
-        mon.forSale = forSale;
+        // mon.forSale = forSale;
 
         mon.monType = monTypes[uint8(species)]; // Assign the type of the cryptomon
         mon.evolve = evolves[uint8(species)]; // Keep whether this cryptomon can evolve
@@ -623,7 +622,7 @@ contract Cryptomons {
         mon.def = 110 + randomGen(41);
         mon.speed = 110 + randomGen(41);
 
-        mon.sharedTo = msg.sender;
+        // mon.sharedTo = msg.sender;
 
         totalMons++;
     }
@@ -634,7 +633,7 @@ contract Cryptomons {
         require(msg.value >= basicPackPrice, "Fee must be equal to pack price");
 
         for (uint256 i = 0; i < 47; i++) {
-            createPayableMon(Species(basicmons[i]), false, 18, 66);
+            createPayableMon(Species(basicmons[i]), 18, 66);
         }
 
         // approve then deposit to contract's erc20 e.g. usdt
@@ -647,7 +646,7 @@ contract Cryptomons {
         require(msg.value >= intermediatePackPrice, "Fee must be equal to pack price");
 
         for (uint256 i = 0; i < 45; i++) {
-            createPayableMon(Species(intermmons[i]), false, 65, 111);
+            createPayableMon(Species(intermmons[i]), 65, 111);
         }
 
         deposit(msg.value);
@@ -659,7 +658,7 @@ contract Cryptomons {
         require(msg.value >= advancePackPrice, "Fee must be equal to pack price");
 
         for (uint256 i = 0; i < 40; i++) {
-            createPayableMon(Species(advancemons[i]), false, 110, 151);
+            createPayableMon(Species(advancemons[i]), 110, 151);
         }
 
         deposit(msg.value);
@@ -804,14 +803,14 @@ contract Cryptomons {
 
         require(mons[id1].owner == msg.sender, "Only owner can breed a monster"); 
         require(mons[id1].owner == mons[id2].owner && id1 != id2, "Must both belong to the same person and be distinct mons"); 
-        require(!(mons[id1].forSale || mons[id1].forSale), "Breeding mons can't be for sale");
+        // require(!(mons[id1].forSale || mons[id1].forSale), "Breeding mons can't be for sale");
 
         Mon storage mon = mons[totalMons];
         mon.id = totalMons;
         mon.owner = payable(msg.sender);
         mon.species = findEggSpecies(id1, id2);
         mon.price = 0;
-        mon.forSale = false;
+        // mon.forSale = false;
 
         mon.monType = monTypes[uint8(mon.species)]; // Assign the type of the cryptomon
         mon.evolve = evolves[uint8(mon.species)]; // Keep whether this cryptomon can evolve
@@ -821,7 +820,7 @@ contract Cryptomons {
         mon.def = 110 + randomGen(41);
         mon.speed = 110 + randomGen(41);
 
-        mon.sharedTo = msg.sender;
+        // mon.sharedTo = msg.sender;
 
         totalMons++;
 
@@ -836,8 +835,8 @@ contract Cryptomons {
         assert(id1 < totalMons);
         assert(id2 < totalMons);
         // require(id1 != id2);        // A mon can't fight with itself
-        require(mons[id1].owner == msg.sender || mons[id1].sharedTo == msg.sender, "Only owner can fight with a mon or if the mon is shared to sender"); 
-        require(!(mons[id1].forSale || mons[id2].forSale), "Fighting mons can't be for sale"); 
+        // require(mons[id1].owner == msg.sender || mons[id1].sharedTo == msg.sender, "Only owner can fight with a mon or if the mon is shared to sender"); 
+        // require(!(mons[id1].forSale || mons[id2].forSale), "Fighting mons can't be for sale"); 
         uint8 hp1 = mons[id1].hp;
         uint8 hp2 = mons[id2].hp;
 

@@ -53,6 +53,10 @@ Finished
 - Removed startSharing and stopSharing functions
 
 Ongoing
+- Remove stable coin as payment.
+- Remove NFT pack buying
+- NFT will have numbering on top right, NFT will have atrribute bonus
+
 - Test create, breed, mint mon packs functionality (mvp)
 
 - Set frontend in pinata or ipfs, (mvp)
