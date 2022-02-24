@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+// import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Cryptomons {
 
     // The stable coin used for buying nfts
-    IERC20 private _token;
+    // IERC20 private _token;
 
     // 149 different Cryptomon species implemented and saved in the following enum variable.
     enum Species {
@@ -480,14 +480,14 @@ contract Cryptomons {
         address payable owner;
         Species species;
         uint256 price;
-        // bool forSale;
+        bool forSale;
         uint8 monType; // Used for breeding
         bool evolve; // Used for breeding
         uint8 hp; // Used for fighting
         uint8 atk; // Used for fighting
         uint8 def; // Used for fighting
         uint8 speed; // Used for fighting
-        // address sharedTo; // Used for sharing
+        address sharedTo; // Used for sharing
     }
 
     address public manager; // Manager of the contract
@@ -497,40 +497,40 @@ contract Cryptomons {
 
     uint256 private nonce = 0; // Number used for guessable pseudo-random generated number.
 
-    uint256 public basicPackPrice; // Set price for basic mon pack, half for this contract, half for nft contract
-    uint256 public intermediatePackPrice;
-    uint256 public advancePackPrice;
-    bytes32 public packPriceInfo; // e.g. date
+    // uint256 public basicPackPrice; // Set price for basic mon pack, half for this contract, half for nft contract
+    // uint256 public intermediatePackPrice;
+    // uint256 public advancePackPrice;
+    // bytes32 public packPriceInfo; // e.g. date
 
-    uint256 public basicSinglePrice; // Set price for basic mon pack, half for this contract, half for nft contract, divided by 47
-    uint256 public intermediateSinglePrice; // ", divided by 45
-    uint256 public advanceSinglePrice; // ", divided by 40
-    bytes32 public singlePriceInfo; // e.g. date
+    // uint256 public basicSinglePrice; // Set price for basic mon pack, half for this contract, half for nft contract, divided by 47
+    // uint256 public intermediateSinglePrice; // ", divided by 45
+    // uint256 public advanceSinglePrice; // ", divided by 40
+    // bytes32 public singlePriceInfo; // e.g. date
     
-    constructor(IERC20 token) {
+    constructor() {
         manager = msg.sender;
 
-        _token = token;
+        // _token = token;
 
         // Add initial cryptomons on contract deployment to start game
-        createFreeMon(Species(0));
-        createFreeMon(Species(1));
-        createFreeMon(Species(3));
-        createFreeMon(Species(6));
-        createFreeMon(Species(9));
-        createFreeMon(Species(15));
+        createMon(Species(0), 0, false);
+        createMon(Species(1), 0, false);
+        createMon(Species(2), 0, false);
+        createMon(Species(3), 0, false);
+        createMon(Species(4), 0, false);
+        createMon(Species(5), 0, false);
        
-        basicPackPrice = 25000000000000000; // 0.025
-        intermediatePackPrice = 50000000000000000; // 0.05;
-        advancePackPrice = 100000000000000000; // 0.1;
+        // basicPackPrice = 25000000000000000; // 0.025
+        // intermediatePackPrice = 50000000000000000; // 0.05;
+        // advancePackPrice = 100000000000000000; // 0.1;
 
-        // for breeding mons
-        basicSinglePrice = 532000000000000; // 0.000532; basicPackPrice / 47 mons
-        intermediateSinglePrice = 1111000000000000; // 0.001111; intermediatePackPrice / 45 mons
-        advanceSinglePrice = 2222000000000000;  // 0.002222; advancePackPrice / 45 mons
+        // // for breeding mons
+        // basicSinglePrice = 532000000000000; // 0.000532; basicPackPrice / 47 mons
+        // intermediateSinglePrice = 1111000000000000; // 0.001111; intermediatePackPrice / 45 mons
+        // advanceSinglePrice = 2222000000000000;  // 0.002222; advancePackPrice / 45 mons
 
-        packPriceInfo = '0x00';
-        singlePriceInfo = '0x00';
+        // packPriceInfo = '0x00';
+        // singlePriceInfo = '0x00';
     }
 
     modifier onlyManager() {
@@ -540,41 +540,41 @@ contract Cryptomons {
     }
 
     // erc20 functions
-    function deposit(uint256 amount) private {
-        require(amount > 0, "Amount must be greater than 0");
+    // function deposit(uint256 amount) private {
+    //     require(amount > 0, "Amount must be greater than 0");
 
-        _token.transferFrom(msg.sender, address(this), amount);
-    }
+    //     _token.transferFrom(msg.sender, address(this), amount);
+    // }
 
-    function withdraw(uint256 amount) public onlyManager {
-		require(amount > 0, "Amount must be greater than 0");
+    // function withdraw(uint256 amount) public onlyManager {
+	// 	require(amount > 0, "Amount must be greater than 0");
 
-        _token.transfer(msg.sender, amount);
-    }
+    //     _token.transfer(msg.sender, amount);
+    // }
 
     // set prices
-    function setPackPrices(
-        uint256 basicPrice,
-        uint256 intermPrice,
-        uint256 advPrice,
-        bytes32 info
-    ) public onlyManager {
-        basicPackPrice = basicPrice;
-        intermediatePackPrice = intermPrice;
-        advancePackPrice = advPrice;
-        packPriceInfo = info;
-    }
+    // function setPackPrices(
+    //     uint256 basicPrice,
+    //     uint256 intermPrice,
+    //     uint256 advPrice,
+    //     bytes32 info
+    // ) public onlyManager {
+    //     basicPackPrice = basicPrice;
+    //     intermediatePackPrice = intermPrice;
+    //     advancePackPrice = advPrice;
+    //     packPriceInfo = info;
+    // }
 
-    function createFreeMon(Species species) private {
+    function createMon(Species species, uint price, bool forSale) public onlyManager {
         assert(totalMons < max);
-        require(uint256(species) < 19, "Species not in range");
+        // require(uint256(species) < 19, "Species not in range");
 
         Mon storage mon = mons[totalMons];
         mon.id = totalMons;
         mon.owner = payable(msg.sender);
         mon.species = species;
-        mon.price = 0;
-        // mon.forSale = forSale;
+        mon.price = price;
+        mon.forSale = forSale;
 
         mon.monType = monTypes[uint8(species)]; // Assign the type of the cryptomon
         mon.evolve = evolves[uint8(species)]; // Keep whether this cryptomon can evolve
@@ -585,109 +585,109 @@ contract Cryptomons {
         mon.def = 100 + randomGen(41);
         mon.speed = 100 + randomGen(41);
 
-        // mon.sharedTo = msg.sender;
+        mon.sharedTo = msg.sender;
 
         totalMons++;
     }
 
-    function createFreePack(uint256[] memory freemons) public {
-        assert(totalMons < max);
+    // function createFreePack(uint256[] memory freemons) public {
+    //     assert(totalMons < max);
 
-        for (uint256 i = 0; i < 19; i++) {
-            createFreeMon(Species(freemons[i]));
-        }
-    }
-
-    function createPayableMon(
-        Species species,
-        uint256 speciesLowerLimit,
-        uint256 speciesUpperLimit
-    ) private {
-        assert(totalMons < max);
-        require(uint256(species) > speciesLowerLimit && uint256(species) < speciesUpperLimit, "Species not in range");
-
-        Mon storage mon = mons[totalMons];
-        mon.id = totalMons;
-        mon.owner = payable(msg.sender);
-        mon.species = species;
-        mon.price = 0;
-        // mon.forSale = forSale;
-
-        mon.monType = monTypes[uint8(species)]; // Assign the type of the cryptomon
-        mon.evolve = evolves[uint8(species)]; // Keep whether this cryptomon can evolve
-
-        // Assign stats of the cryptomon
-        mon.hp = 110 + randomGen(41);
-        mon.atk = 110 + randomGen(41);
-        mon.def = 110 + randomGen(41);
-        mon.speed = 110 + randomGen(41);
-
-        // mon.sharedTo = msg.sender;
-
-        totalMons++;
-    }
-
-    function createBasicMonPack(uint256[] memory basicmons) public payable {
-        assert(totalMons < max);
-        require(msg.value > 0, "Fee must be above 0");
-        require(msg.value >= basicPackPrice, "Fee must be equal to pack price");
-
-        for (uint256 i = 0; i < 47; i++) {
-            createPayableMon(Species(basicmons[i]), 18, 66);
-        }
-
-        // approve then deposit to contract's erc20 e.g. usdt
-        deposit(msg.value);
-    }
-
-    function createIntermMonPack(uint256[] memory intermmons) public payable {
-        assert(totalMons < max);
-        require(msg.value > 0, "Fee must be above 0");
-        require(msg.value >= intermediatePackPrice, "Fee must be equal to pack price");
-
-        for (uint256 i = 0; i < 45; i++) {
-            createPayableMon(Species(intermmons[i]), 65, 111);
-        }
-
-        deposit(msg.value);
-    }
-
-    function createAdvanceMonPack(uint256[] memory advancemons) public payable {
-        assert(totalMons < max);
-        require(msg.value > 0, "Fee must be above 0");
-        require(msg.value >= advancePackPrice, "Fee must be equal to pack price");
-
-        for (uint256 i = 0; i < 40; i++) {
-            createPayableMon(Species(advancemons[i]), 110, 151);
-        }
-
-        deposit(msg.value);
-    }
-
-    // function buyMon(uint256 id) public payable {
-    //     assert(id < totalMons);
-    //     require(msg.value > mons[id].price, "Must send enough money to buy"); 
-    //     require(mons[id].forSale == true, "Mon must be for sale");
-    //     address payable seller = mons[id].owner;
-    //     mons[id].owner = payable(msg.sender);
-    //     mons[id].sharedTo = msg.sender; // Stop sharing since owner changed
-    //     mons[id].forSale = false;
-    //     seller.transfer(msg.value);
+    //     for (uint256 i = 0; i < 19; i++) {
+    //         createFreeMon(Species(freemons[i]));
+    //     }
     // }
 
-    // function addForSale(uint256 id, uint256 price) public {
-    //     assert(id < totalMons);
-    //     require(mons[id].owner == msg.sender, "Only owner can add it to sale"); 
-    //     mons[id].forSale = true;
-    //     mons[id].sharedTo = msg.sender; // Stop sharing since you sell this
-    //     mons[id].price = price;
+    // function createPayableMon(
+    //     Species species,
+    //     uint256 speciesLowerLimit,
+    //     uint256 speciesUpperLimit
+    // ) private {
+    //     assert(totalMons < max);
+    //     require(uint256(species) > speciesLowerLimit && uint256(species) < speciesUpperLimit, "Species not in range");
+
+    //     Mon storage mon = mons[totalMons];
+    //     mon.id = totalMons;
+    //     mon.owner = payable(msg.sender);
+    //     mon.species = species;
+    //     mon.price = 0;
+    //     // mon.forSale = forSale;
+
+    //     mon.monType = monTypes[uint8(species)]; // Assign the type of the cryptomon
+    //     mon.evolve = evolves[uint8(species)]; // Keep whether this cryptomon can evolve
+
+    //     // Assign stats of the cryptomon
+    //     mon.hp = 110 + randomGen(41);
+    //     mon.atk = 110 + randomGen(41);
+    //     mon.def = 110 + randomGen(41);
+    //     mon.speed = 110 + randomGen(41);
+
+    //     // mon.sharedTo = msg.sender;
+
+    //     totalMons++;
     // }
 
-    // function removeFromSale(uint256 id) public {
-    //     assert(id < totalMons);
-    //     require(mons[id].owner == msg.sender, "Only owner can remove it from sale"); 
-    //     mons[id].forSale = false;
+    // function createBasicMonPack(uint256[] memory basicmons) public payable {
+    //     assert(totalMons < max);
+    //     require(msg.value > 0, "Fee must be above 0");
+    //     require(msg.value >= basicPackPrice, "Fee must be equal to pack price");
+
+    //     for (uint256 i = 0; i < 47; i++) {
+    //         createPayableMon(Species(basicmons[i]), 18, 66);
+    //     }
+
+    //     // approve then deposit to contract's erc20 e.g. usdt
+    //     deposit(msg.value);
     // }
+
+    // function createIntermMonPack(uint256[] memory intermmons) public payable {
+    //     assert(totalMons < max);
+    //     require(msg.value > 0, "Fee must be above 0");
+    //     require(msg.value >= intermediatePackPrice, "Fee must be equal to pack price");
+
+    //     for (uint256 i = 0; i < 45; i++) {
+    //         createPayableMon(Species(intermmons[i]), 65, 111);
+    //     }
+
+    //     deposit(msg.value);
+    // }
+
+    // function createAdvanceMonPack(uint256[] memory advancemons) public payable {
+    //     assert(totalMons < max);
+    //     require(msg.value > 0, "Fee must be above 0");
+    //     require(msg.value >= advancePackPrice, "Fee must be equal to pack price");
+
+    //     for (uint256 i = 0; i < 40; i++) {
+    //         createPayableMon(Species(advancemons[i]), 110, 151);
+    //     }
+
+    //     deposit(msg.value);
+    // }
+
+    function buyMon(uint256 id) public payable {
+        assert(id < totalMons);
+        require(msg.value > mons[id].price, "Must send enough money to buy"); 
+        require(mons[id].forSale == true, "Mon must be for sale");
+        address payable seller = mons[id].owner;
+        mons[id].owner = payable(msg.sender);
+        mons[id].sharedTo = msg.sender; // Stop sharing since owner changed
+        mons[id].forSale = false;
+        seller.transfer(msg.value);
+    }
+
+    function addForSale(uint256 id, uint256 price) public {
+        assert(id < totalMons);
+        require(mons[id].owner == msg.sender, "Only owner can add it to sale"); 
+        mons[id].forSale = true;
+        mons[id].sharedTo = msg.sender; // Stop sharing since you sell this
+        mons[id].price = price;
+    }
+
+    function removeFromSale(uint256 id) public {
+        assert(id < totalMons);
+        require(mons[id].owner == msg.sender, "Only owner can remove it from sale"); 
+        mons[id].forSale = false;
+    }
 
     // Function that defines the resulting egg species from breeding
     function findEggSpecies(uint256 id1, uint256 id2) private returns (Species) {
@@ -772,45 +772,45 @@ contract Cryptomons {
         return s;
     }
 
-    function checkBreedPrice(uint256 id1, uint256 id2, uint256 msgValue) private view returns (bool) {  
-        bool results;  
+    // function checkBreedPrice(uint256 id1, uint256 id2, uint256 msgValue) private view returns (bool) {  
+    //     bool results;  
 
-        // advance pack
-        if (id1 > 110 || id2 > 110) {
-            results = msgValue >= advanceSinglePrice;
-        }
+    //     // advance pack
+    //     if (id1 > 110 || id2 > 110) {
+    //         results = msgValue >= advanceSinglePrice;
+    //     }
 
-        // intermediate pack
-        if ((id1 > 65 && id1 < 111) || (id2 > 65 && id2 < 111)) {
-            results = msgValue >= intermediateSinglePrice;
-        }
+    //     // intermediate pack
+    //     if ((id1 > 65 && id1 < 111) || (id2 > 65 && id2 < 111)) {
+    //         results = msgValue >= intermediateSinglePrice;
+    //     }
 
-        // basic pack
-        if ((id1 > 18 && id1 < 66) || (id2 > 18 && id2 < 66)) {
-            results = msgValue >= basicSinglePrice;
-        }
+    //     // basic pack
+    //     if ((id1 > 18 && id1 < 66) || (id2 > 18 && id2 < 66)) {
+    //         results = msgValue >= basicSinglePrice;
+    //     }
 
-        return results;
-    }
+    //     return results;
+    // }
 
-    function breedMons(uint256 id1, uint256 id2) public payable {
+    function breedMons(uint256 id1, uint256 id2) public {
         assert(id1 < totalMons);
         assert(id2 < totalMons);
         assert(totalMons < max); // Not reached maximum number of mons allowed 
-        require(id1 > 18 && id2 > 18, "Not eligible for breeding");
-        require(msg.value > 0, "Fee must be above 0");
-        require(checkBreedPrice(id1, id2, msg.value), "Fee must be equal to pack price");
+        // require(id1 > 18 && id2 > 18, "Not eligible for breeding");
+        // require(msg.value > 0, "Fee must be above 0");
+        // require(checkBreedPrice(id1, id2, msg.value), "Fee must be equal to pack price");
 
         require(mons[id1].owner == msg.sender, "Only owner can breed a monster"); 
         require(mons[id1].owner == mons[id2].owner && id1 != id2, "Must both belong to the same person and be distinct mons"); 
-        // require(!(mons[id1].forSale || mons[id1].forSale), "Breeding mons can't be for sale");
+        require(!(mons[id1].forSale || mons[id1].forSale), "Breeding mons can't be for sale");
 
         Mon storage mon = mons[totalMons];
         mon.id = totalMons;
         mon.owner = payable(msg.sender);
         mon.species = findEggSpecies(id1, id2);
         mon.price = 0;
-        // mon.forSale = false;
+        mon.forSale = false;
 
         mon.monType = monTypes[uint8(mon.species)]; // Assign the type of the cryptomon
         mon.evolve = evolves[uint8(mon.species)]; // Keep whether this cryptomon can evolve
@@ -820,11 +820,11 @@ contract Cryptomons {
         mon.def = 110 + randomGen(41);
         mon.speed = 110 + randomGen(41);
 
-        // mon.sharedTo = msg.sender;
+        mon.sharedTo = msg.sender;
 
         totalMons++;
 
-        deposit(msg.value);
+        // deposit(msg.value);
     }
 
     function damage(uint256 id1, uint256 id2) private view returns (uint8) {
@@ -835,8 +835,8 @@ contract Cryptomons {
         assert(id1 < totalMons);
         assert(id2 < totalMons);
         // require(id1 != id2);        // A mon can't fight with itself
-        // require(mons[id1].owner == msg.sender || mons[id1].sharedTo == msg.sender, "Only owner can fight with a mon or if the mon is shared to sender"); 
-        // require(!(mons[id1].forSale || mons[id2].forSale), "Fighting mons can't be for sale"); 
+        require(mons[id1].owner == msg.sender || mons[id1].sharedTo == msg.sender, "Only owner can fight with a mon or if the mon is shared to sender"); 
+        require(!(mons[id1].forSale || mons[id2].forSale), "Fighting mons can't be for sale"); 
         uint8 hp1 = mons[id1].hp;
         uint8 hp2 = mons[id2].hp;
 
@@ -884,18 +884,18 @@ contract Cryptomons {
         return (winnerId, round);
     }
 
-    // function startSharing(uint256 id, address addr) public {
-    //     assert(id < totalMons);
-    //     require(!mons[id].forSale, "Sharing mon can't be for sale"); 
-    //     require(mons[id].owner == msg.sender, "Only owner can share a mon"); 
-    //     mons[id].sharedTo = addr;
-    // }
+    function startSharing(uint256 id, address addr) public {
+        assert(id < totalMons);
+        require(!mons[id].forSale, "Sharing mon can't be for sale"); 
+        require(mons[id].owner == msg.sender, "Only owner can share a mon"); 
+        mons[id].sharedTo = addr;
+    }
 
-    // function stopSharing(uint256 id) public {
-    //     assert(id < totalMons);
-    //     require(mons[id].owner == msg.sender || mons[id].sharedTo == msg.sender, "Only owner or the address that it is shared to can terminate the sharing of a mon"); 
-    //     mons[id].sharedTo = mons[id].owner;
-    // }
+    function stopSharing(uint256 id) public {
+        assert(id < totalMons);
+        require(mons[id].owner == msg.sender || mons[id].sharedTo == msg.sender, "Only owner or the address that it is shared to can terminate the sharing of a mon"); 
+        mons[id].sharedTo = mons[id].owner;
+    }
 
     // function that generates pseudorandom numbers
     function randomGen(uint256 i) private returns (uint8) {

@@ -55,16 +55,16 @@ Finished
 Ongoing
 - Remove stable coin as payment.
 - Remove NFT pack buying
-- NFT will have numbering on top right, NFT will have atrribute bonus
+- NFT will have numbering on top right, NFT will have +1 attribute bonus on all fighting stats
 
 - Test create, breed, mint mon packs functionality (mvp)
 
-- Set frontend in pinata or ipfs, (mvp)
-- Deploy and test to mumbai or other evm-compatible testnets (mvp)
-- Deploy to matic or other evm-compatible mainnets (mvp)
+- Create frontend in namecheap or pinata if possible, (mvp)
+- Deploy and test to mumbai or other evm compatible testnets (mvp)
+- Deploy to matic or other evm compatible mainnets (mvp)
 
-- Create landing page in ipfs (mvp)
-- Submit to dappradar, IGOs, state of the dapps, etc (mvp)
+- Create landing page in pinata/ipfs (mvp)
+- Submit to dappradar, state of the dapps, etc (mvp)
 
 
 
