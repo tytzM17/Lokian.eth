@@ -623,7 +623,7 @@ contract Cryptomons {
     //     mon.speed = 110 + randomGen(41);
 
     //     // mon.sharedTo = msg.sender;
-
+    
     //     totalMons++;
     // }
 
