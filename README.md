@@ -51,14 +51,16 @@ Finished
 - Removed memetoken and highscore functions
 - Removed buyMon, addForSale, and removeFromSale functions
 - Removed startSharing and stopSharing functions
-
-Ongoing
 - Remove stable coin as payment.
 - Remove NFT pack buying
-- NFT will have numbering on top right, NFT will have +1 attribute bonus on all fighting stats
-- NFT integration and Token for highscore recording
+- Token for duel rewards and donations (mvp) done
+- Test token functionalities (mvp) done
 
-- Test create, breed, nft, token functionalities (mvp)
+Ongoing
+- Create donate tab and donor table
+- Display token amount on top right
+- Maybe change donate to burn and donors to firebugs
+
 - Deploy and test to evm compatible testnets (mvp)
 - Deploy to evm compatible mainnets (mvp)
 

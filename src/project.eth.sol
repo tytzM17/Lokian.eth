@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
+import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
+
 contract Cryptomons {
+    IERC20 private _token;
+
     // 149 different Cryptomon species implemented and saved in the following enum variable.
     enum Species {
         DRYAD,
@@ -468,6 +472,9 @@ contract Cryptomons {
         false
     ];
 
+    // events
+    event Rewarded(address indexed _from, uint256 _winnerId, uint256 _reward);
+
     // Structure of 1 Cryptomon
     struct Mon {
         uint256 id;
@@ -484,15 +491,24 @@ contract Cryptomons {
         address sharedTo; // Used for sharing
     }
 
+    // Structure of a donation
+    struct Donation {
+        uint256 id;
+        address account;
+        uint256 amount;
+    }
+
     address public manager; // Manager of the contract
     mapping(uint256 => Mon) public mons; // Holds all created Cryptomons
     uint256 public totalMons = 0; // Number of created Cryptomons
     uint256 private max = 2**256 - 1; // Max number of Cryptomons
-
+    mapping(address => Donation) public donations; // Holds all recorded donations
+    uint256 public donateId = 0; // Number of recorded donations
     uint256 private nonce = 0; // Number used for guessable pseudo-random generated number.
 
-    constructor() {
+    constructor(IERC20 token) {
         manager = msg.sender;
+        _token = token;
 
         // Add initial cryptomons on contract deployment to start game
         createMon(Species(0), 0, false);
@@ -508,6 +524,21 @@ contract Cryptomons {
         require(msg.sender == manager, 'Only manager can call this.');
         _;
     }
+
+    // erc20 functions
+    function deposit(uint256 amount) public onlyManager{
+        // approve allowance first
+        uint256 allowance = _token.allowance(msg.sender, address(this));
+        require(allowance >= amount, "Check the token allowance");
+        _token.transferFrom(msg.sender, address(this), amount);
+    }
+
+    function withdraw(uint256 amount) public onlyManager {
+        uint256 balance = _token.balanceOf(address(this));
+        require(amount <= balance, "Not enough tokens in the reserve");
+        _token.transfer(msg.sender, amount);
+    }
+
 
     function createMon(
         Species species,
@@ -650,7 +681,7 @@ contract Cryptomons {
         assert(id1 < totalMons);
         assert(id2 < totalMons);
         assert(totalMons < max); // Not reached maximum number of mons allowed
-      
+
         require(mons[id1].owner == msg.sender, 'Only owner can breed a monster');
         require(
             mons[id1].owner == mons[id2].owner && id1 != id2,
@@ -682,7 +713,7 @@ contract Cryptomons {
         return (mons[id1].atk > mons[id2].def) ? 10 : 5;
     }
 
-    function fight(uint256 id1, uint256 id2) public view returns (uint256, uint8) {
+    function fight(uint256 id1, uint256 id2) public returns (uint256, uint8) {
         assert(id1 < totalMons);
         assert(id2 < totalMons);
         // require(id1 != id2);        // A mon can't fight with itself
@@ -732,8 +763,15 @@ contract Cryptomons {
         // check hp's
         if (hp1 == 0) winnerId = id2;
         if (hp2 == 0) winnerId = id1;
-        if (hp1 == hp2) winnerId = 1000; // it's a tie
-        if ((id1 != 0 || id2 != 0) && winnerId == 0) winnerId = 2000; // unknown winner
+        if (hp1 == hp2) winnerId = 12345678910; // it's a tie
+        if ((id1 != 0 || id2 != 0) && winnerId == 0) winnerId = 12345678910; // unknown winner
+
+        // reward winning sender with rounds won
+        if (mons[winnerId].owner == msg.sender) {
+            uint256 rewardAmount = round * 1000000000000000000;
+            reward(rewardAmount, msg.sender);
+            emit Rewarded(msg.sender, winnerId, rewardAmount);
+        }
 
         return (winnerId, round);
     }
@@ -759,5 +797,27 @@ contract Cryptomons {
         uint8 x = uint8(uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, nonce))) % i);
         nonce++;
         return x;
+    }
+
+    function donate(
+        uint256 _amount
+    ) public {
+        require(_amount > 0, 'Amount must be above 0');
+
+        Donation storage d = donations[msg.sender];
+        d.id = donateId;
+        d.account = msg.sender;
+        d.amount = _amount;
+
+        deposit(_amount);
+
+        donateId++;
+    }
+
+    function reward(uint256 _amount, address _sender) private {
+        uint256 tokenBalance = _token.balanceOf(address(this));
+        require(_amount > 0, 'You need to send reward amount');
+        require(_amount <= tokenBalance, 'Not enough tokens in the reserve');
+        _token.transfer(_sender, _amount);
     }
 }

@@ -17,13 +17,10 @@ import {
 import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { Contract } from '@ethersproject/contracts'
 import { BigNumber } from '@ethersproject/bignumber'
-import { WeiPerEther } from '@ethersproject/constants'
 import { formatUnits, parseEther } from '@ethersproject/units'
 
 // abis
 import contrInterface from './abi.json' // Load contract json file
-// import erc1155Interface from './erc1155Interface.json'
-// import erc1155Interface from './project.nft.abi.json'
 
 // Load all the background images for the 10 different Cryptomon types
 import bg0 from './sprites-copy/background/0.png'
@@ -40,10 +37,8 @@ import bg10 from './sprites-copy/background/10.png'
 
 // axios
 import axios, { AxiosResponse } from 'axios'
-// import { pinJSONToIPFS } from './rest/pinJSONToIPFS'
 
 // util
-// import cryptoRandom from './utils/cryptoRandom'
 import { Web3Provider } from '@ethersproject/providers'
 import txSuccess from './utils/txSuccess'
 import txFail from './utils/txFail'
@@ -57,13 +52,10 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
 }
 
 // Contact deployment address
-const CONTRACT_ADDRESS = '0x091D8a60397f090E1a74232993e15E14b7831755'
+const CONTRACT_ADDRESS = '0xc3F3A4AD4dF82111B131f65c56867346149822e0'
 
-// nft contract, feb 2022, 0x21e3d6d2a0b848F8C1F4cA18511498cA4952D370
-// const ERC1155_CONTRACT_ADDRESS = '0x21e3d6d2a0b848F8C1F4cA18511498cA4952D370'
-
-// erc20 stable coin address = 0x962c22c4aaB626d4C864c1FC6633138C2969ba66, feb 2022
-// const ERC20_CONTRACT_ADDRESS = '0x962c22c4aaB626d4C864c1FC6633138C2969ba66'
+// erc20 coin 
+const ERC20_CONTRACT_ADDRESS = '0x1b7A38b3C77e405750aF1C08d102eF4f23e8c3a2'
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]
@@ -229,6 +221,12 @@ async function getMons(_library, _account) {
   return Promise.all([...Array(totalMons).keys()].map((id) => contr.mons(id)))
 }
 
+async function approve(_library, _account, _amount) {
+  const erc20Contr = new Contract(ERC20_CONTRACT_ADDRESS, contrInterface, _library.getSigner(_account))
+  const newAmount = `${parseEther(_amount)}`
+  return await erc20Contr.approve(CONTRACT_ADDRESS, newAmount)
+}
+
 function Account() {
   const { account } = useWeb3React()
 
@@ -287,7 +285,6 @@ function App() {
   // Get network coin price e.g. eth or glmr price
   useEffect(() => {
     const eth = 'ethereum'
-    const glmr = 'moonbeam'
     const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${eth}`
     let unmounted = false
     let source = axios.CancelToken.source()
@@ -906,7 +903,6 @@ function App() {
           <div className="breeding-area">
             {breedOption(breedChoice1)}
             {breedOption(breedChoice2)}
-            <div className="p2">proceeed to mint nft ($0.05)</div>
             <button
               className="rpgui-button"
               type="button"
@@ -916,9 +912,6 @@ function App() {
               Breed choosen creatures
             </button>
           </div>
-
-          <br />
-          <div className="p1">Breeding Results</div>
           <br />
           {forBreedCryptomons}
         </Tab>
@@ -997,33 +990,21 @@ function App() {
           <div className="p1">Shared To You</div>
           {sharedToMe}
         </Tab>
-        {/* <Tab eventKey="highscore" title="High Scores">
-          <div className="p1">HIGHSCORES</div>
+        {/* <Tab eventKey="donate" title="Donate">
+          <div className="p1">Donate</div>
           <div className="sharing-area">
             <div className="form-line">
-              <label className="form-label">Name:</label>
+              <label className="form-label">Amount</label>
               <input className="form-input" 
-                value={account} 
+                value={donateAmount} 
                 onChange={(e) => 
                   {
-                    handleHighscoreChangeName(e)
+                    handleDonate(e)
                   }
                 }
                />
             </div>
-            <div className="form-line">
-              <label className="form-label">Session Wins:</label>
-              <input className="form-input" value="" disabled />
-            </div>
-            <div className="form-line">
-              <label className="form-label">Session Losses:</label>
-              <input className="form-input" value="" disabled />
-            </div>
-            <div className="form-line">
-              <button className="rpgui-button" type="button" style={{ float: 'right' }}>
-                Record
-              </button>
-            </div>
+              *probably a top 10 donors, e.g. table with headers -> rank | address | amount 
           </div>
           {highscoresDiv}
         </Tab> */}
