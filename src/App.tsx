@@ -18,31 +18,32 @@ import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { Contract } from '@ethersproject/contracts'
 import { BigNumber } from '@ethersproject/bignumber'
 import { WeiPerEther } from '@ethersproject/constants'
+import { formatUnits, parseEther } from '@ethersproject/units'
 
 // abis
 import contrInterface from './abi.json' // Load contract json file
 // import erc1155Interface from './erc1155Interface.json'
-import erc1155Interface from './project.nft.abi.json'
+// import erc1155Interface from './project.nft.abi.json'
 
 // Load all the background images for the 10 different Cryptomon types
-import bg0 from './sprites/background/0.png'
-import bg1 from './sprites/background/1.png'
-import bg2 from './sprites/background/2.png'
-import bg3 from './sprites/background/3.png'
-import bg4 from './sprites/background/4.png'
-import bg5 from './sprites/background/5.png'
-import bg6 from './sprites/background/6.png'
-import bg7 from './sprites/background/7.png'
-import bg8 from './sprites/background/8.png'
-import bg9 from './sprites/background/9.png'
-import bg10 from './sprites/background/10.png'
+import bg0 from './sprites-copy/background/0.png'
+import bg1 from './sprites-copy/background/1.png'
+import bg2 from './sprites-copy/background/2.png'
+import bg3 from './sprites-copy/background/3.png'
+import bg4 from './sprites-copy/background/4.png'
+import bg5 from './sprites-copy/background/5.png'
+import bg6 from './sprites-copy/background/6.png'
+import bg7 from './sprites-copy/background/7.png'
+import bg8 from './sprites-copy/background/8.png'
+import bg9 from './sprites-copy/background/9.png'
+import bg10 from './sprites-copy/background/10.png'
 
 // axios
 import axios, { AxiosResponse } from 'axios'
-import { pinJSONToIPFS } from './rest/pinJSONToIPFS'
+// import { pinJSONToIPFS } from './rest/pinJSONToIPFS'
 
 // util
-import cryptoRandom from './utils/cryptoRandom'
+// import cryptoRandom from './utils/cryptoRandom'
 import { Web3Provider } from '@ethersproject/providers'
 import txSuccess from './utils/txSuccess'
 import txFail from './utils/txFail'
@@ -55,8 +56,8 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.Injected]: injected,
 }
 
-// Contact deployment address, e.g. ganache, feb 2022 = 0x0e0Da8fBD95C43C0410fd053FB593451C6F10295
-const CONTRACT_ADDRESS = '0x0e0Da8fBD95C43C0410fd053FB593451C6F10295'
+// Contact deployment address
+const CONTRACT_ADDRESS = '0x091D8a60397f090E1a74232993e15E14b7831755'
 
 // nft contract, feb 2022, 0x21e3d6d2a0b848F8C1F4cA18511498cA4952D370
 // const ERC1155_CONTRACT_ADDRESS = '0x21e3d6d2a0b848F8C1F4cA18511498cA4952D370'
@@ -126,7 +127,7 @@ const names = [
   'Kappa',
   'Satori',
   'Shojo',
-  'Skohl',
+  //'Skohl',
   'Haet',
   'Vodyanoy',
   'Undine',
@@ -228,13 +229,6 @@ async function getMons(_library, _account) {
   return Promise.all([...Array(totalMons).keys()].map((id) => contr.mons(id)))
 }
 
-async function approve(_library, _account, _amount) {
-  const erc20Contr = new Contract(ERC20_CONTRACT_ADDRESS, contrInterface, _library.getSigner(_account))
-  const weiPerEth = WeiPerEther as any
-  const newAmount = `${BigInt(_amount * weiPerEth)}`
-  return await erc20Contr.approve(CONTRACT_ADDRESS, newAmount)
-}
-
 function Account() {
   const { account } = useWeb3React()
 
@@ -262,7 +256,7 @@ function App() {
   const [cryptomons, setCryptomons] = useState([])
   const [myCryptomons, setMyCryptomons] = useState([])
   const [otherCryptomons, setOtherCryptomons] = useState([])
-  // const [value, setValue] = useState(0) // Used in My Cryptomons tab for input in price text
+  const [value, setValue] = useState(0) // Used in My Cryptomons tab for input in price text
   // Used in breeding tab
   const [breedChoice1, setBreedChoice1] = useState(null)
   const [breedChoice2, setBreedChoice2] = useState(null)
@@ -341,13 +335,13 @@ function App() {
           atk: mon.atk,
           def: mon.def,
           evolve: mon.evolve,
-          // forSale: mon.forSale,
+          forSale: mon.forSale,
           hp: mon.hp,
           id: BigNumber.from(mon.id._hex).toNumber(),
           monType: mon.monType,
           owner: mon.owner,
           price: BigNumber.from(mon.price._hex).toBigInt(),
-          // sharedTo: mon.sharedTo,
+          sharedTo: mon.sharedTo,
           species: mon.species,
           speed: mon.speed,
         }))
@@ -361,9 +355,12 @@ function App() {
   // Function that buys a Cryptomon through a smart contract function
   async function buyMon(id, price) {
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const weiPerEth = WeiPerEther as any
-    const newprice = `${BigInt(price * weiPerEth)}`
+    // const weiPerEth = WeiPerEther as any
+    const newprice = `${BigInt(price)}`
+    // const newPrice =  BigNumber.from(parseEther(price)).toString();
     let overrides = { value: newprice }
+    console.log(overrides);
+    
     const tx = await contr.buyMon(id, overrides)
     const recpt = await tx.wait()
     txSuccess(recpt, toast, refreshMons)
@@ -373,11 +370,12 @@ function App() {
   // Function that adds a Cryptomon for sale through a smart contract function
   async function addForSale(id, price) {
     if (price === 0 || price === '0') {
-      toast.error('🦄 Dude, price should be above 0')
+      toast.error('🦄 Price is 0')
       return
     }
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const tx = await contr.addForSale(id, price)
+    // const tx = await contr.addForSale(id, `${BigInt(price * (WeiPerEther as any))}`)
+    const tx = await contr.addForSale(id, parseEther(price))
     const receipt = await tx.wait()
     if (receipt && receipt.status === 1) {
       toast.success(`Success, Tx hash: ${receipt.transactionHash}`)
@@ -407,88 +405,10 @@ function App() {
   // Function that breeds 2 Cryptomons through a smart contract function
   async function breedMons(id1, id2) {
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    // const nftcontr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
-
     const tx = await contr.breedMons(id1, id2)
     const recpt = await tx.wait()
     if (recpt && recpt.status) {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
-
-      // await refreshMons();
-
-      // const totalMons = parseInt(await contr.totalMons())
-      // const latestMon = await contr.mons(totalMons - 1)
-      // if (!latestMon) {
-      //   toast.error('Cannot find new breed!')
-      //   return
-      // }
-      // const maxPeak = {
-      //   atk: latestMon.atk,
-      //   def: latestMon.def,
-      //   evolve: latestMon.evolve,
-      //   // forSale: latestMon.forSale,
-      //   hp: latestMon.hp,
-      //   id: BigNumber.from(latestMon.id._hex).toNumber(),
-      //   monType: latestMon.monType,
-      //   owner: latestMon.owner,
-      //   price: BigNumber.from(latestMon.price._hex).toBigInt(),
-      //   // sharedTo: latestMon.sharedTo,
-      //   species: latestMon.species,
-      //   speed: latestMon.speed,
-      // }
-
-      // // get user mons, get highest mon id
-      // const monName = names[maxPeak.species]
-      // // mintPayable 1 param are account, mon idx species, amount=1, data='0x00'
-      // if (!coinData || !coinData[0].current_price) {
-      //   toast.error('Cannot fetch price, please reload')
-      //   return
-      // }
-      // const weiPerEth = WeiPerEther as any
-      // const price = BigInt(parseInt((parseFloat((0.05 / coinData[0].current_price).toString()) * weiPerEth).toString()))
-      // let overrides = { value: `${price}` }
-
-      // let txmint
-      // let recptmint
-      // // mint basic pack
-      // if (maxPeak.species > 18 && maxPeak.species < 66) {
-      //   txmint = await nftcontr.mintBasicPayable(account, maxPeak.species, '0x00', overrides)
-      //   recptmint = await txmint.wait()
-      // }
-
-      // // mint intermediate pack
-      // if (maxPeak.species > 65 && maxPeak.species < 110) {
-      //   txmint = await nftcontr.mintIntermPayable(account, maxPeak.species, '0x00', overrides)
-      //   recptmint = await txmint.wait()
-      // }
-
-      // // mint advance pack
-      // if (maxPeak.species > 110 && maxPeak.species < 151) {
-      //   txmint = await nftcontr.mintAdvancePayable(account, maxPeak.species, '0x00', overrides)
-      //   recptmint = await txmint.wait()
-      // }
-
-      // if (recptmint && recptmint.status) {
-      //   // upload img and mon stats to ipfs
-      //   try {
-      //     // axios pin to ipfs pinata
-      //     await pinJSONToIPFS({
-      //       mon: maxPeak,
-      //       monName,
-      //       success: (successResponse) => {
-      //         console.log(successResponse)
-      //         if (successResponse && successResponse.status === 200) {
-      //           toast.success(`Success, IpfsHash:${successResponse.data?.IpfsHash}`)
-      //           if (successResponse.data) setBreedMintInfo({ ipfs: successResponse.data, monName })
-      //         }
-      //       },
-      //       error: (errorResponse) => toast.error(errorResponse),
-      //     })
-      //     // success, error
-      //   } catch (error) {
-      //     toast.error('An error occurred while uploading nft to ipfs!')
-      //   }
-      // }
     }
 
     if (recpt && !recpt.status) {
@@ -543,220 +463,6 @@ function App() {
       toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
     }
   }
-
-  // Function to get test tokens
-  // async function getTestTokens() {
-  //   // prolly captcha first
-
-  //   // call test erc20 contract mint
-  //   const contr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
-  //   const tx = await contr.mintGold(account, '0x00')
-  //   const recpt = await tx.wait()
-
-  //   if (recpt && recpt.status) {
-  //     toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
-
-  //     refreshMons()
-  //   }
-
-  //   if (recpt && !recpt.status) {
-  //     toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
-  //   }
-  // }
-
-  // Function to mint batch tokens
-  // async function getMintBatch(mintBatchIds, mintBatchAmount) {
-  //   // call test erc20 contract mint
-  //   const contr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
-  //   const tx = await contr.mintBatch(account, mintBatchIds, mintBatchAmount, '0x00')
-  //   const recpt = await tx.wait()
-
-  //   if (recpt && recpt.status) {
-  //     toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
-
-  //     // refreshMons() or display nfts in my creatures tab
-  //   }
-
-  //   if (recpt && !recpt.status) {
-  //     toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
-  //   }
-  // }
-
-  // Function to create free mon batch
-  // async function setFreeBatch(freemons: number[]) {
-  //   const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-  //   const tx = await contr.createFreeMonPack(freemons)
-  //   const recpt = await tx.wait()
-  //   txSuccess(recpt, toast, refreshMons)
-  //   txFail(recpt, toast)
-  // }
-
-  // // Function to create basic mon batch
-  // async function setBasicBatch(basicmons: number[]) {
-  //   const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-  //   // const weiPerEth = WeiPerEther as any
-  //   // const packprice = 0.05 / 2
-  //   // const price = parseFloat((packprice / coinData[0].current_price).toString())
-  //   // const newprice = `${BigInt(price * weiPerEth)}`
-  //   approve(library, account, 0.025)
-  //     .then((result) => {
-  //       if (result) {
-  //         console.log('basic batch price:', `${BigInt(0.025 * (WeiPerEther as any))}`)
-  //         let overrides = { value: `${BigInt(0.025 * (WeiPerEther as any))}` }
-  //         // const tx = await contr.createBasicMonPack(basicmons, overrides)
-  //         // const recpt = await tx.wait()
-  //         // txSuccess(recpt, toast, refreshMons)
-  //         // txFail(recpt, toast)
-  //         // return recpt && recpt.status === 1
-  //       }
-  //     })
-  //     .catch((err) => toast.error(err))
-  // }
-  // // Function to mint basic mon batch
-  // async function mintBasicBatch(basicmons: number[], byteString: string) {
-  //   const nftcontr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
-  //   // const weiPerEth = WeiPerEther as any
-  //   // const packprice = 0.05 / 2
-  //   // const price = parseFloat((packprice / coinData[0].current_price).toString())
-  //   // const newprice = `${BigInt(price * weiPerEth)}`
-
-  //   approve(library, account, 0.025)
-  //     .then(async (result) => {
-  //       if (result) {
-  //         console.log('basic mint batch price:', `${BigInt(0.025 * (WeiPerEther as any))}`)
-  //         let overrides = { value: `${BigInt(0.025 * (WeiPerEther as any))}` }
-  //         const tx = await nftcontr.mintBatchBasicPayable(account, basicmons, byteString, overrides)
-  //         const recpt = await tx.wait()
-  //         txSuccess(recpt, toast, refreshMons)
-  //         txFail(recpt, toast)
-  //         return recpt && recpt.status === 1
-  //       }
-  //     })
-  //     .catch((err) => toast.error(err))
-
-  //   // let overrides = { value: newprice }
-  //   // const tx = await nftcontr.mintBatchBasicPayable(account, basicmons, byteString, overrides)
-  //   // const recpt = await tx.wait()
-  //   // txSuccess(recpt, toast, refreshMons)
-  //   // txFail(recpt, toast)
-  //   // return recpt && recpt.status === 1
-  // }
-  // // Function to create intermediate mon batch
-  // async function setIntermBatch(intermmons: number[]) {
-  //   const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-  //   // const weiPerEth = WeiPerEther as any
-  //   // const packprice = 0.10 / 2
-  //   // const price = parseFloat((packprice / coinData[0].current_price).toString())
-  //   // const newprice = `${BigInt(price * weiPerEth)}`
-
-  //   approve(library, account, 0.05)
-  //     .then((result) => {
-  //       if (result) {
-  //         console.log('interm batch price:', `${BigInt(0.05 * (WeiPerEther as any))}`)
-  //         let overrides = { value: `${BigInt(0.05 * (WeiPerEther as any))}` }
-  //         // const tx = await contr.createIntermMonPack(intermmons, overrides)
-  //         // const recpt = await tx.wait()
-  //         // txSuccess(recpt, toast, refreshMons)
-  //         // txFail(recpt, toast)
-  //         // return recpt && recpt.status === 1
-  //       }
-  //     })
-  //     .catch((err) => toast.error(err))
-
-  //   // console.log('interm batch price:', newprice);
-  //   // let overrides = { value: newprice }
-  //   // const tx = await contr.createIntermMonPack(freemons, overrides)
-  //   // const recpt = await tx.wait()
-  //   // txSuccess(recpt, toast, refreshMons)
-  //   // txFail(recpt, toast)
-  //   // return recpt && recpt.status === 1
-  // }
-  // // Function to mint intermediate mon batch
-  // async function mintIntermBatch(intermmons: number[], byteString: string) {
-  //   const nftcontr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
-  //   // const weiPerEth = WeiPerEther as any
-  //   // const packprice = 0.10 / 2
-  //   // const price = parseFloat((packprice / coinData[0].current_price).toString())
-  //   // const newprice = `${BigInt(price * weiPerEth)}`
-  //   // let overrides = { value: newprice }
-  //   // const tx = await nftcontr.mintBatchIntermPayable(account, intermmons, byteString, overrides)
-  //   // const recpt = await tx.wait()
-  //   // txSuccess(recpt, toast, refreshMons)
-  //   // txFail(recpt, toast)
-  //   // return recpt && recpt.status === 1
-
-  //   approve(library, account, 0.05)
-  //     .then(async (result) => {
-  //       if (result) {
-  //         console.log('interm mint batch price:', `${BigInt(0.05 * (WeiPerEther as any))}`)
-  //         let overrides = { value: `${BigInt(0.05 * (WeiPerEther as any))}` }
-  //         const tx = await nftcontr.mintBatchBasicPayable(account, intermmons, byteString, overrides)
-  //         const recpt = await tx.wait()
-  //         txSuccess(recpt, toast, refreshMons)
-  //         txFail(recpt, toast)
-  //         return recpt && recpt.status === 1
-  //       }
-  //     })
-  //     .catch((err) => toast.error(err))
-  // }
-  // // Function to create advance mon batch
-  // async function setAdvanceBatch(advmons: number[]) {
-  //   const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-  //   // const weiPerEth = WeiPerEther as any
-  //   // const packprice = 0.20 / 2
-  //   // const price = parseFloat((packprice / coinData[0].current_price).toString())
-  //   // const newprice = `${BigInt(price * weiPerEth)}`
-  //   // console.log('advance batch price:', newprice);
-  //   // let overrides = { value: newprice }
-
-  //   approve(library, account, 0.1)
-  //     .then((result) => {
-  //       if (result) {
-  //         console.log('advance batch price:', `${BigInt(0.1 * (WeiPerEther as any))}`)
-  //         let overrides = { value: `${BigInt(0.1 * (WeiPerEther as any))}` }
-  //         // const tx = await contr.createAdvanceMonPack(advmmons, overrides)
-  //         // const recpt = await tx.wait()
-  //         // txSuccess(recpt, toast, refreshMons)
-  //         // txFail(recpt, toast)
-  //         // return recpt && recpt.status === 1
-  //       }
-  //     })
-  //     .catch((err) => toast.error(err))
-
-  //   // const tx = await contr.createAdvanceMonPack(advmons, overrides)
-  //   // const recpt = await tx.wait()
-  //   // txSuccess(recpt, toast, refreshMons)
-  //   // txFail(recpt, toast)
-  //   // return recpt && recpt.status === 1
-  // }
-  // // Function to mint advance mon batch
-  // async function mintAdvanceBatch(advmons: number[], byteString: string) {
-  //   const nftcontr = new Contract(ERC1155_CONTRACT_ADDRESS, erc1155Interface, library.getSigner(account))
-  //   const weiPerEth = WeiPerEther as any
-  //   const packprice = 0.2 / 2
-  //   const price = parseFloat((packprice / coinData[0].current_price).toString())
-  //   const newprice = `${BigInt(price * weiPerEth)}`
-  //   let overrides = { value: newprice }
-  //   // const tx = await nftcontr.mintBatchAdvPayable(account, advmons, byteString, overrides)
-  //   // const recpt = await tx.wait()
-  //   // txSuccess(recpt, toast, refreshMons)
-  //   // txFail(recpt, toast)
-  //   // return recpt && recpt.status === 1
-
-  //   approve(library, account, 0.1)
-  //     .then(async (result) => {
-  //       if (result) {
-  //         console.log('advance mint batch price:', `${BigInt(0.1 * (WeiPerEther as any))}`)
-  //         let overrides = { value: `${BigInt(0.1 * (WeiPerEther as any))}` }
-  //         const tx = await nftcontr.mintBatchBasicPayable(account, advmons, byteString, overrides)
-  //         const recpt = await tx.wait()
-  //         txSuccess(recpt, toast, refreshMons)
-  //         txFail(recpt, toast)
-  //         return recpt && recpt.status === 1
-  //       }
-  //     })
-  //     .catch((err) => toast.error(err))
-  // }
 
   // Handlers for form inputs
   function handleShareId(event) {
@@ -830,7 +536,7 @@ function App() {
   const addForSaleDiv = (mon, value) => {
     return (
       <div className="selling-div">
-        <label className="add-for-sale-label">Set creatures price (in Wei):</label>
+        <label className="add-for-sale-label">Set creatures price:</label>
         <input type="number" className="add-for-sale-input" value={value} onChange={(e) => handleChange(mon?.id, e)} />
         <button
           className="rpgui-button"
@@ -849,9 +555,9 @@ function App() {
     return (
       <div className="selling-div">
         <label className="remove-from-sale-label">
-          Price (in Wei):
+          Price:
           <br />
-          {mon?.price}
+          {formatUnits(mon?.price)}
         </label>
         <button
           className="rpgui-button"
@@ -872,7 +578,7 @@ function App() {
         <div className="sale-price">
           Price:
           <br />
-          {mon?.price || 'price not found'}{' '}
+          {formatUnits(mon?.price, 18)}
         </div>
         <div className="sale-owner">Creature Owner: {mon?.owner} </div>
         <button
@@ -956,7 +662,7 @@ function App() {
             {imgDiv(mon)}
             <figcaption>{statDiv(mon)}</figcaption>
           </figure>
-          {addForSaleDiv(mon)}
+          {addForSaleDiv(mon, value)}
         </div>
       </React.Fragment>
     ))
@@ -995,7 +701,7 @@ function App() {
 
   // div with user's Cryptomons that can be used for breeding
   const forBreedCryptomons = myCryptomons
-    // .filter((mon) => !mon.forSale)
+    .filter((mon) => !mon.forSale)
     .map((mon) => (
       <React.Fragment key={mon.id}>
         <div className="mon">
@@ -1041,7 +747,7 @@ function App() {
 
   // div with Cryptomons that user can fight against
   const forFightAgainstCryptomons = otherCryptomons
-    // .filter((mon) => !mon.forSale)
+    .filter((mon) => !mon.forSale)
     .map((mon) => (
       <React.Fragment key={mon.id}>
         <div className="mon">
@@ -1129,6 +835,7 @@ function App() {
         {/* wallet buttons */}
         <span style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}>
           {/* wallet logout */}
+        
           <div>
             {(active || error) && (
               <button
@@ -1147,9 +854,8 @@ function App() {
               </button>
             )}
 
-            {!!error && <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>{getErrorMessage(error)}</h4>}
+            {/* {!!error && <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>{getErrorMessage(error)}</h4>} */}
           </div>
-
           {Object.keys(connectorsByName).map((name) => {
             const currentConnector = connectorsByName[name]
             const activating = currentConnector === activatingConnector
@@ -1177,6 +883,9 @@ function App() {
               </button>
             )
           })}
+
+        {!!error && <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>{getErrorMessage(error)}</h4>}
+
         </span>
       </div>
 
@@ -1190,107 +899,6 @@ function App() {
           {forSaleCryptomons}
         </Tab>
         <Tab eventKey="buyCryptomons" title="Trade Creatures">
-          <div className="p1">Shop</div>
-
-          {/* Buy random pack */}
-          {/* <>
-            <div className="p1">NFT packs has +10 attribute points compared to (non-nft) free packs</div>
-            <div className="rpgui-container framed-golden" style={{ display: 'flex', flexDirection: 'column' }}>
-              Choose an nft pack to buy
-              <select
-                className="rpgui-dropdown-buy-pack"
-                // className="rpgui-dropdown"
-                value={chosenPack}
-                onChange={(e) => {
-                  setChosenPack(e.target.value)
-                }}
-              >
-                <option value="freePack">Free Pack (non-nft) {coinData && `($0 or 0.00 ${coinData[0].symbol})`}</option>
-                <option value="basicPack">
-                  Basic Pack {coinData && '0.05 USDT'} */}
-                  {/* `($0.05 or ${parseFloat((0.05 / coinData[0].current_price).toString()).toFixed(6)} ${coinData[0].symbol})`} */}
-                {/* </option>
-                <option value="intermediatePack">
-                  Intermediate Pack {coinData && '0.10 USDT'} */}
-                  {/* `($0.10 or ${parseFloat((0.1 / coinData[0].current_price).toString()).toFixed(6)} ${coinData[0].symbol})`} */}
-                {/* </option>
-                <option value="advancePack">
-                  Advance Pack {coinData && '0.20 USDT'} */}
-                  {/* `($0.20 or ${parseFloat((0.2 / coinData[0].current_price).toString()).toFixed(6)} ${coinData[0].symbol})`} */}
-                {/* </option>
-              </select>
-              <button
-                className="rpgui-button"
-                type="button"
-                style={{ marginTop: '12px' }}
-                onClick={() => {
-                  // if free, 0-18, basic creature 19-65, if interm 66-110, adv 111-150
-                  switch (chosenPack) {
-                    case 'freePack':
-                      let freemons = []
-                      for (let index = 0; index < 19; index++) {
-                        freemons.push(cryptoRandom(0, 18))
-                      }
-                      // call game contract only
-                      if (freemons.length) setFreeBatch(freemons)
-                      break
-
-                    case 'basicPack':
-                      let basicmons = []
-                      for (let index = 0; index < 47; index++) {
-                        basicmons.push(cryptoRandom(19, 65))
-                      }
-                      // call game contract, 47 mons
-                      if (basicmons.length) {
-                        setBasicBatch(basicmons)
-                          // then call mint basic batch func in nft contract
-                          .then((isSuccess) => {
-                            // if (isSuccess) mintBasicBatch(basicmons, '0x66726f6d2067616d6520636f6e7472616374')
-                          })
-                      }
-                      break
-
-                    case 'intermediatePack':
-                      let intermmons = []
-                      for (let index = 0; index < 45; index++) {
-                        intermmons.push(cryptoRandom(66, 110))
-                      }
-                      // call game contract, 45 mons
-                      if (intermmons.length) {
-                        setIntermBatch(intermmons)
-                          // then call mint interm batch func in nft contract
-                          .then((isSuccess) => {
-                            // if (isSuccess) mintIntermBatch(intermmons, '0x66726f6d2067616d6520636f6e7472616374')
-                          })
-                      }
-                      break
-
-                    case 'advancePack':
-                      let advmons = []
-                      for (let index = 0; index < 40; index++) {
-                        advmons.push(cryptoRandom(111, 150))
-                      }
-                      // call game contract, 40 mons
-                      if (advmons.length) {
-                        setAdvanceBatch(advmons)
-                          // call mint advance func in nft contract
-                          .then((isSuccess) => {
-                            // if (isSuccess) mintAdvanceBatch(advmons, '0x66726f6d2067616d6520636f6e7472616374')
-                          })
-                      }
-                      break
-
-                    default:
-                      toast.info('Cannot find pack')
-                      break
-                  }
-                }}
-              > 
-                Buy Now
-              </button>
-            </div>
-          </> */}
-
           {buyCryptomons}
         </Tab>
         <Tab eventKey="breedCryptomons" title="Breed Creatures">
@@ -1312,15 +920,6 @@ function App() {
           <br />
           <div className="p1">Breeding Results</div>
           <br />
-
-          {/* <div className="p2">{`New Breed: ${breedMintInfo?.monName || ''}`}</div>
-          <div className="p2">{`IPFS Hash: ${breedMintInfo?.ipfs?.IpfsHash || ''}`}</div>
-          <div className="p2">
-            <a href={`https://gateway.pinata.cloud/ipfs/${breedMintInfo?.ipfs?.IpfsHash || ''}`} target="_blank">
-              NFT link
-            </a>
-          </div> */}
-
           {forBreedCryptomons}
         </Tab>
         <Tab eventKey="fight" title="Fight">
@@ -1398,7 +997,7 @@ function App() {
           <div className="p1">Shared To You</div>
           {sharedToMe}
         </Tab>
-        <Tab eventKey="highscore" title="High Scores">
+        {/* <Tab eventKey="highscore" title="High Scores">
           <div className="p1">HIGHSCORES</div>
           <div className="sharing-area">
             <div className="form-line">
@@ -1407,7 +1006,7 @@ function App() {
                 value={account} 
                 onChange={(e) => 
                   {
-                    //handleHighscoreChangeName(e)
+                    handleHighscoreChangeName(e)
                   }
                 }
                />
@@ -1426,8 +1025,8 @@ function App() {
               </button>
             </div>
           </div>
-          {/* {highscoresDiv} */}
-        </Tab>
+          {highscoresDiv}
+        </Tab> */}
       </Tabs>
     </div>
   )
