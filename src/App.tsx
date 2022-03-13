@@ -17,10 +17,11 @@ import {
 import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { Contract } from '@ethersproject/contracts'
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatUnits, parseEther } from '@ethersproject/units'
+import { formatUnits, parseEther, formatEther } from '@ethersproject/units'
 
 // abis
-import contrInterface from './abi.json' // Load contract json file
+import contrInterface from './interface.json' // Load contract json file
+import erc20Interface from './erc20Interface.json' // Load erc20 contract json file
 
 // Load all the background images for the 10 different Cryptomon types
 import bg0 from './sprites-copy/background/0.png'
@@ -222,7 +223,7 @@ async function getMons(_library, _account) {
 }
 
 async function approve(_library, _account, _amount) {
-  const erc20Contr = new Contract(ERC20_CONTRACT_ADDRESS, contrInterface, _library.getSigner(_account))
+  const erc20Contr = new Contract(ERC20_CONTRACT_ADDRESS, erc20Interface, _library.getSigner(_account))
   const newAmount = `${parseEther(_amount)}`
   return await erc20Contr.approve(CONTRACT_ADDRESS, newAmount)
 }
@@ -235,6 +236,18 @@ function Account() {
       {account === null ? '-' : account ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}` : ''}
     </span>
   )
+}
+
+async function getTokenBalance(_library, _account) {
+
+  if (!_library || !_account) {
+    return 
+  }
+  const erc20Contr = new Contract(ERC20_CONTRACT_ADDRESS, erc20Interface, _library.getSigner(_account))
+  const bal = await erc20Contr.balanceOf(_account)
+
+  return formatEther(BigNumber.from(bal?._hex).toBigInt()) 
+
 }
 
 function getErrorMessage(error: Error) {
@@ -265,9 +278,8 @@ function App() {
   const [rounds, setRounds] = useState(null) // Used to display number of rounds the fight lasted
   const [shareId, setShareId] = useState('') // Used in shareId form input field
   const [shareAddress, setShareAddress] = useState('') // Used in shareAddress form input field
-  // const [chosenPack, setChosenPack] = useState('freePack')
   const [coinData, setCoinData] = useState<AxiosResponse | null>(null)
-  // const [breedMintInfo, setBreedMintInfo] = useState(null)
+  const [tokenBalance, setTokenBalance] = useState('0')
 
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
@@ -315,6 +327,11 @@ function App() {
       source.cancel('Cancelling in cleanup')
     }
   }, [])
+
+  // Get token balance of user
+  useEffect(() => {
+    getTokenBalance(library, account).then(res => setTokenBalance(res))
+  }, [account, library, tokenBalance])
 
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
   const triedEager = useEagerConnect()
@@ -821,6 +838,8 @@ function App() {
       </React.Fragment>
     ))
 
+
+
   // Function that does all the rendering of the application
   return (
     // Creation of the different tabs of the UI
@@ -828,11 +847,27 @@ function App() {
       <ToastContainer />
 
       <div className="AppTitle">
-        <img src="/favicon-16x16.png" alt="lokian-logo" /> <span>L O K I A N </span>
-        {/* wallet buttons */}
-        <span style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}>
-          {/* wallet logout */}
-        
+      <div className="row">
+  <div className="column title-column">
+  <img src="/favicon-16x16.png" alt="lokian-logo" /> <span>L O K I A N </span>
+    </div>
+
+    <div className="column user-info-column">
+      {/* ERC20, LOKs */}
+<span className="rpgui-container framed-grey">
+{`${tokenBalance || '0'} LOKs `} {' '}
+  </span>
+
+ 
+        {/* Network Errors */}
+        {!!error && <h4 className="rpgui-container framed-golden-2" style={{ marginTop: '1rem', marginBottom: '0' }}>{getErrorMessage(error)}</h4>}
+
+    </div>
+
+  <div className="column wallet-column">
+     {/* wallet buttons */}
+     <span className='wallet-buttons'>
+          {/* wallet logout */}     
           <div>
             {(active || error) && (
               <button
@@ -850,8 +885,6 @@ function App() {
                 Logout
               </button>
             )}
-
-            {/* {!!error && <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>{getErrorMessage(error)}</h4>} */}
           </div>
           {Object.keys(connectorsByName).map((name) => {
             const currentConnector = connectorsByName[name]
@@ -880,10 +913,9 @@ function App() {
               </button>
             )
           })}
-
-        {!!error && <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>{getErrorMessage(error)}</h4>}
-
         </span>
+    </div>
+</div> 
       </div>
 
       <Tabs defaultActiveKey="tokens" id="uncontrolled-tab-example">
@@ -924,11 +956,10 @@ function App() {
             <label className="winner-label">
               And the winner is... {names[cryptomons.find((mon) => mon.id?.toString() === winner?.toString())?.species]}
               {/* untested */}
-              {winner === 1000 ? "no one, it's a tie" : ''}
-              {winner === 2000 ? 'unknown' : ''}
+              {winner === 12345678910 ? "unknown" : ''}
             </label>
 
-            {winner !== 1000 || winner !== 2000 ? (
+            {winner !== 12345678910 ? (
               <>
                 <br />
                 <label className="winner-label">Winning creature's Id: {winner}</label>
@@ -990,7 +1021,8 @@ function App() {
           <div className="p1">Shared To You</div>
           {sharedToMe}
         </Tab>
-        {/* <Tab eventKey="donate" title="Donate">
+        {/* <Tab eventKey="token" title="Token">
+
           <div className="p1">Donate</div>
           <div className="sharing-area">
             <div className="form-line">
@@ -1005,8 +1037,27 @@ function App() {
                />
             </div>
               *probably a top 10 donors, e.g. table with headers -> rank | address | amount 
-          </div>
-          {highscoresDiv}
+                   {donorsDiv}
+              </div>
+
+
+                      <div className="p1">Burn</div>
+          <div className="sharing-area">
+            <div className="form-line">
+              <label className="form-label">Amount</label>
+              <input className="form-input" 
+                value={burnAmount} 
+                onChange={(e) => 
+                  {
+                    handleBurn(e)
+                  }
+                }
+               />
+            </div>
+              *probably a top 10 firebugs, e.g. table with headers -> rank | address | amount 
+                   {burnersDiv}
+              </div>
+
         </Tab> */}
       </Tabs>
     </div>

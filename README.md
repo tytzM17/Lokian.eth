@@ -59,7 +59,6 @@ Finished
 Ongoing
 - Create donate tab and donor table
 - Display token amount on top right
-- Maybe change donate to burn and donors to firebugs
 
 - Deploy and test to evm compatible testnets (mvp)
 - Deploy to evm compatible mainnets (mvp)
