@@ -53,9 +53,9 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
 }
 
 // Contact deployment address
-const CONTRACT_ADDRESS = '0xc3F3A4AD4dF82111B131f65c56867346149822e0'
+const CONTRACT_ADDRESS = '0x1f354C182381267BfDe55f20E99C4F224eb5DEc8'
 
-// erc20 coin 
+// erc20 coin
 const ERC20_CONTRACT_ADDRESS = '0x1b7A38b3C77e405750aF1C08d102eF4f23e8c3a2'
 
 // Add background images in an array for easy access
@@ -120,7 +120,7 @@ const names = [
   'Kappa',
   'Satori',
   'Shojo',
-  //'Skohl',
+  'Skohl',
   'Haet',
   'Vodyanoy',
   'Undine',
@@ -222,11 +222,11 @@ async function getMons(_library, _account) {
   return Promise.all([...Array(totalMons).keys()].map((id) => contr.mons(id)))
 }
 
-async function approve(_library, _account, _amount) {
-  const erc20Contr = new Contract(ERC20_CONTRACT_ADDRESS, erc20Interface, _library.getSigner(_account))
-  const newAmount = `${parseEther(_amount)}`
-  return await erc20Contr.approve(CONTRACT_ADDRESS, newAmount)
-}
+// async function approve(_library, _account, _amount) {
+//   const erc20Contr = new Contract(ERC20_CONTRACT_ADDRESS, erc20Interface, _library.getSigner(_account))
+//   const newAmount = `${parseEther(_amount)}`
+//   return await erc20Contr.approve(CONTRACT_ADDRESS, newAmount)
+// }
 
 function Account() {
   const { account } = useWeb3React()
@@ -239,15 +239,13 @@ function Account() {
 }
 
 async function getTokenBalance(_library, _account) {
-
   if (!_library || !_account) {
-    return 
+    return
   }
   const erc20Contr = new Contract(ERC20_CONTRACT_ADDRESS, erc20Interface, _library.getSigner(_account))
   const bal = await erc20Contr.balanceOf(_account)
 
-  return formatEther(BigNumber.from(bal?._hex).toBigInt()) 
-
+  return formatEther(BigNumber.from(bal?._hex).toBigInt())
 }
 
 function getErrorMessage(error: Error) {
@@ -280,6 +278,8 @@ function App() {
   const [shareAddress, setShareAddress] = useState('') // Used in shareAddress form input field
   const [coinData, setCoinData] = useState<AxiosResponse | null>(null)
   const [tokenBalance, setTokenBalance] = useState('0')
+  const [fightTxDone, setFightTxDone] = useState(false)
+  const [rewards, setRewards] = useState(0)
 
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
@@ -330,8 +330,62 @@ function App() {
 
   // Get token balance of user
   useEffect(() => {
-    getTokenBalance(library, account).then(res => setTokenBalance(res))
-  }, [account, library, tokenBalance])
+    let mounted = true
+
+    getTokenBalance(library, account).then((res) => {
+      if (mounted) {
+        setTokenBalance(res)
+        refreshMons()
+      }
+    })
+
+    return () => {
+      mounted = false
+    }
+  }, [account, library, rewards])
+
+  // Get contract events
+  useEffect(() => {
+    if (!library || !account) {
+      return
+    }
+
+    let mounted = true
+
+    ;(async function fightResults() {
+      const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+
+      contr.on('FightResults', (_winnerId, _round) => {
+        if (mounted) {
+          const winId = BigNumber.from(_winnerId._hex).toNumber()
+          const round = BigNumber.from(_round._hex).toNumber()
+          setWinner(winId)
+          setRounds(round)
+          refreshMons()
+        }
+      })
+
+      contr.on('Rewards', (_winnerId, _rewards) => {
+        if (mounted) {
+          const rewards = BigNumber.from(_rewards._hex).toNumber()
+          setRewards(rewards)
+          refreshMons()
+        }
+      })
+    })()
+
+    return () => {
+      const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+      contr.off('FightResults', (_winnerId, _round) => {
+        console.log('unsubscribe event: fight results')
+      })
+      contr.off('Rewards', (_winnerId, _round) => {
+        console.log('unsubscribe event: rewards')
+      })
+
+      mounted = false
+    }
+  }, [account, library, fightTxDone])
 
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
   const triedEager = useEagerConnect()
@@ -373,8 +427,7 @@ function App() {
     const newprice = `${BigInt(price)}`
     // const newPrice =  BigNumber.from(parseEther(price)).toString();
     let overrides = { value: newprice }
-    console.log(overrides);
-    
+
     const tx = await contr.buyMon(id, overrides)
     const recpt = await tx.wait()
     txSuccess(recpt, toast, refreshMons)
@@ -388,7 +441,6 @@ function App() {
       return
     }
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    // const tx = await contr.addForSale(id, `${BigInt(price * (WeiPerEther as any))}`)
     const tx = await contr.addForSale(id, parseEther(price))
     const receipt = await tx.wait()
     if (receipt && receipt.status === 1) {
@@ -434,17 +486,23 @@ function App() {
 
   // Function that allows 2 Cryptomons to fight through a smart contract function
   async function fight(id1, id2) {
-    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const res = await contr.functions.fight(id1, id2)
-    if (res && res.length) {
-      const winner = BigNumber.from(res[0]._hex).toNumber()
-      setWinner(winner)
-      setRounds(res[1])
-      refreshMons()
+    if (id1 === null || id2 === null) {
+      return
     }
+    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+    try {
+      const tx = await contr.fight(id1, id2)
+      const recpt = await tx.wait()
+      if (recpt && recpt.status) {
+        setFightTxDone(true)
+      }
 
-    if (!res || !res.length) {
-      toast.error(`Error, Tx hash: ${res.transactionHash}`)
+      if (recpt && !recpt.status) {
+        toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+        setFightTxDone(false)
+      }
+    } catch (error) {
+      toast.error(`Fight function error: ${error.data?.message || ''}`)
     }
   }
 
@@ -732,7 +790,7 @@ function App() {
   const cond = (mon) =>
     mon.owner.toString().toLowerCase() === account?.toString()?.toLowerCase() ||
     (mon.sharedTo.toString().toLowerCase() === account?.toString()?.toLowerCase() &&
-    mon.owner?.toString().toLowerCase() !== account?.toString()?.toLowerCase())
+      mon.owner?.toString().toLowerCase() !== account?.toString()?.toLowerCase())
 
   // div with user's Cryptomons that can be used to fight with
   const forFightWithCryptomons = cryptomons.filter(cond).map((mon) => (
@@ -838,8 +896,6 @@ function App() {
       </React.Fragment>
     ))
 
-
-
   // Function that does all the rendering of the application
   return (
     // Creation of the different tabs of the UI
@@ -847,75 +903,77 @@ function App() {
       <ToastContainer />
 
       <div className="AppTitle">
-      <div className="row">
-  <div className="column title-column">
-  <img src="/favicon-16x16.png" alt="lokian-logo" /> <span>L O K I A N </span>
-    </div>
+        <div className="row">
+          <div className="column title-column">
+            <img src="/favicon-16x16.png" alt="lokian-logo" /> <span>L O K I A N </span>
+          </div>
 
-    <div className="column user-info-column">
-      {/* ERC20, LOKs */}
-<span className="rpgui-container framed-grey">
-{`${tokenBalance || '0'} LOKs `} {' '}
-  </span>
+          <div className="column user-info-column">
+            {/* ERC20, LOKs */}
+            <span className="rpgui-container framed-grey">
+              {`${Math.round(Number(tokenBalance) * 1e4) / 1e4 || '0'} LOKs `}{' '}
+            </span>
 
- 
-        {/* Network Errors */}
-        {!!error && <h4 className="rpgui-container framed-golden-2" style={{ marginTop: '1rem', marginBottom: '0' }}>{getErrorMessage(error)}</h4>}
-
-    </div>
-
-  <div className="column wallet-column">
-     {/* wallet buttons */}
-     <span className='wallet-buttons'>
-          {/* wallet logout */}     
-          <div>
-            {(active || error) && (
-              <button
-                className="rpgui-button"
-                onClick={() => {
-                  deactivate()
-                  setCryptomons([])
-                  setMyCryptomons([])
-                  setOtherCryptomons([])
-                  setWinner(null)
-                  setRounds(null)
-                  setValue(0)
-                }}
-              >
-                Logout
-              </button>
+            {/* Network Errors */}
+            {!!error && (
+              <h4 className="rpgui-container framed-golden-2" style={{ marginTop: '1rem', marginBottom: '0' }}>
+                {getErrorMessage(error)}
+              </h4>
             )}
           </div>
-          {Object.keys(connectorsByName).map((name) => {
-            const currentConnector = connectorsByName[name]
-            const activating = currentConnector === activatingConnector
-            const connected = currentConnector === connector
-            const disabled = !triedEager || !!activatingConnector || connected || !!error
 
-            return (
-              <button
-                className="rpgui-button golden"
-                type="button"
-                style={{
-                  fontSize: '20px',
-                  paddingTop: '14px',
-                }}
-                onClick={() => {
-                  setActivatingConnector(currentConnector)
-                  activate(currentConnector)
-                }}
-                disabled={disabled}
-                key={name}
-              >
-                {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
-                <Account /> <div style={{ display: 'none' }}>{name}</div>
-                {!account ? `Connect wallet` : ''}
-              </button>
-            )
-          })}
-        </span>
-    </div>
-</div> 
+          <div className="column wallet-column">
+            {/* wallet buttons */}
+            <span className="wallet-buttons">
+              {/* wallet logout */}
+              <div>
+                {(active || error) && (
+                  <button
+                    className="rpgui-button"
+                    onClick={() => {
+                      deactivate()
+                      setCryptomons([])
+                      setMyCryptomons([])
+                      setOtherCryptomons([])
+                      setWinner(null)
+                      setRounds(null)
+                      setValue(0)
+                    }}
+                  >
+                    Logout
+                  </button>
+                )}
+              </div>
+              {Object.keys(connectorsByName).map((name) => {
+                const currentConnector = connectorsByName[name]
+                const activating = currentConnector === activatingConnector
+                const connected = currentConnector === connector
+                const disabled = !triedEager || !!activatingConnector || connected || !!error
+
+                return (
+                  <button
+                    className="rpgui-button golden"
+                    type="button"
+                    style={{
+                      fontSize: '20px',
+                      paddingTop: '14px',
+                    }}
+                    onClick={() => {
+                      setActivatingConnector(currentConnector)
+                      activate(currentConnector)
+                    }}
+                    disabled={disabled}
+                    key={name}
+                  >
+                    {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
+                    <Account /> <div style={{ display: 'none' }}>{name}</div>
+                    {!account ? `Connect wallet` : ''}
+                  </button>
+                )
+              })}
+            </span>
+          </div>
+        </div>
       </div>
 
       <Tabs defaultActiveKey="tokens" id="uncontrolled-tab-example">
@@ -948,24 +1006,38 @@ function App() {
           {forBreedCryptomons}
         </Tab>
         <Tab eventKey="fight" title="Fight">
-          <div className="p1">Arena</div>
+          <div className="p1">V S</div>
           <div className="fighting-area">
-            {}
             {breedOption(fightChoice1)}
             {breedOption(fightChoice2)}
+
             <label className="winner-label">
-              And the winner is... {names[cryptomons.find((mon) => mon.id?.toString() === winner?.toString())?.species]}
-              {/* untested */}
-              {winner === 12345678910 ? "unknown" : ''}
+              And the winner is...{' '}
+              {fightTxDone ? names[cryptomons.find((mon) => mon.id?.toString() === winner?.toString())?.species] : ''}
+              {!winner || winner === 12345678911 ? 'still unknown' : ''}
+              {winner === 12345678910 ? "no one, it's a tie" : ''}
             </label>
 
-            {winner !== 12345678910 ? (
+            {fightTxDone && winner !== 12345678910 ? (
               <>
                 <br />
                 <label className="winner-label">Winning creature's Id: {winner}</label>
                 <br />
                 <label className="winner-label">Rounds the fight lasted: {rounds}</label>
+                <br />
+
+                {!fightTxDone && rewards === 0 && !winner ? (
+                  ''
+                ) : (
+                  <label className="winner-label">{rewards === 0 ? '' : `You got ${rewards} LOKs!`}</label>
+                )}
               </>
+            ) : (
+              ''
+            )}
+
+            {!fightTxDone || !winner ? (
+              <Spinner color="gray" style={{ marginLeft: '50%', marginRight: 'auto', padding: '8px' }} />
             ) : (
               ''
             )}
@@ -976,8 +1048,11 @@ function App() {
               onClick={() => {
                 setWinner(null)
                 setRounds(null)
+                setFightTxDone(false)
+                setRewards(0)
                 fight(fightChoice1, fightChoice2)
               }}
+              disabled={!winner}
             >
               Fight with choosen creatures
             </button>
@@ -1021,44 +1096,33 @@ function App() {
           <div className="p1">Shared To You</div>
           {sharedToMe}
         </Tab>
-        {/* <Tab eventKey="token" title="Token">
+        <Tab eventKey="token" title="Token">
 
-          <div className="p1">Donate</div>
+        <div className="p1" style={{padding: '12px'}}>{tokenBalance} Lokians</div>
+	
+        <div className="rpgui-container framed-grey">
+        <div className="p1">Buy somethin</div>
+	</div>
+       
+                 <div className="rpgui-container framed-grey">
+          <div className="p1">Burn</div>
           <div className="sharing-area">
             <div className="form-line">
               <label className="form-label">Amount</label>
               <input className="form-input" 
-                value={donateAmount} 
+                // value={burnAmount} 
                 onChange={(e) => 
                   {
-                    handleDonate(e)
+                   // handleBurn(e)
                   }
                 }
                />
             </div>
-              *probably a top 10 donors, e.g. table with headers -> rank | address | amount 
-                   {donorsDiv}
               </div>
+	</div>
+     
 
-
-                      <div className="p1">Burn</div>
-          <div className="sharing-area">
-            <div className="form-line">
-              <label className="form-label">Amount</label>
-              <input className="form-input" 
-                value={burnAmount} 
-                onChange={(e) => 
-                  {
-                    handleBurn(e)
-                  }
-                }
-               />
-            </div>
-              *probably a top 10 firebugs, e.g. table with headers -> rank | address | amount 
-                   {burnersDiv}
-              </div>
-
-        </Tab> */}
+        </Tab>
       </Tabs>
     </div>
   )

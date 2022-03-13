@@ -55,10 +55,11 @@ Finished
 - Remove NFT pack buying
 - Token for duel rewards and donations (mvp) done
 - Test token functionalities (mvp) done
+- Display token amount on top right
+- fix fight function
 
 Ongoing
-- Create donate tab and donor table
-- Display token amount on top right
+- Create token tab, buy and burn functions (mvp)
 
 - Deploy and test to evm compatible testnets (mvp)
 - Deploy to evm compatible mainnets (mvp)

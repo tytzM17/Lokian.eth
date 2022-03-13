@@ -473,7 +473,9 @@ contract Cryptomons {
     ];
 
     // events
-    event Rewarded(address indexed _from, uint256 _winnerId, uint256 _reward);
+    event FightResults(uint256 _winnerId, uint256 _round);
+    event Rewards(uint256 _winnerId, uint256 _rewards);
+
 
     // Structure of 1 Cryptomon
     struct Mon {
@@ -491,19 +493,10 @@ contract Cryptomons {
         address sharedTo; // Used for sharing
     }
 
-    // Structure of a donation
-    struct Donation {
-        uint256 id;
-        address account;
-        uint256 amount;
-    }
-
     address public manager; // Manager of the contract
     mapping(uint256 => Mon) public mons; // Holds all created Cryptomons
     uint256 public totalMons = 0; // Number of created Cryptomons
     uint256 private max = 2**256 - 1; // Max number of Cryptomons
-    mapping(address => Donation) public donations; // Holds all recorded donations
-    uint256 public donateId = 0; // Number of recorded donations
     uint256 private nonce = 0; // Number used for guessable pseudo-random generated number.
 
     constructor(IERC20 token) {
@@ -517,6 +510,9 @@ contract Cryptomons {
         createMon(Species(3), 0, false);
         createMon(Species(4), 0, false);
         createMon(Species(5), 0, false);
+        createMon(Species(6), 0, false);
+        createMon(Species(7), 0, false);
+        createMon(Species(8), 0, false);
     }
 
     modifier onlyManager() {
@@ -546,7 +542,6 @@ contract Cryptomons {
         bool forSale
     ) public onlyManager {
         assert(totalMons < max);
-        // require(uint256(species) < 19, "Species not in range");
 
         Mon storage mon = mons[totalMons];
         mon.id = totalMons;
@@ -713,7 +708,7 @@ contract Cryptomons {
         return (mons[id1].atk > mons[id2].def) ? 10 : 5;
     }
 
-    function fight(uint256 id1, uint256 id2) public returns (uint256, uint8) {
+    function fight(uint256 id1, uint256 id2) public {
         assert(id1 < totalMons);
         assert(id2 < totalMons);
         // require(id1 != id2);        // A mon can't fight with itself
@@ -764,16 +759,16 @@ contract Cryptomons {
         if (hp1 == 0) winnerId = id2;
         if (hp2 == 0) winnerId = id1;
         if (hp1 == hp2) winnerId = 12345678910; // it's a tie
-        if ((id1 != 0 || id2 != 0) && winnerId == 0) winnerId = 12345678910; // unknown winner
+        if ((id1 != 0 || id2 != 0) && winnerId == 0) winnerId = 12345678911; // unknown winner
 
         // reward winning sender with rounds won
         if (mons[winnerId].owner == msg.sender) {
             uint256 rewardAmount = round * 1000000000000000000;
             reward(rewardAmount, msg.sender);
-            emit Rewarded(msg.sender, winnerId, rewardAmount);
+            emit Rewards(winnerId, round);
         }
 
-        return (winnerId, round);
+        emit FightResults(winnerId, round);
     }
 
     function startSharing(uint256 id, address addr) public {
@@ -797,21 +792,6 @@ contract Cryptomons {
         uint8 x = uint8(uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, nonce))) % i);
         nonce++;
         return x;
-    }
-
-    function donate(
-        uint256 _amount
-    ) public {
-        require(_amount > 0, 'Amount must be above 0');
-
-        Donation storage d = donations[msg.sender];
-        d.id = donateId;
-        d.account = msg.sender;
-        d.amount = _amount;
-
-        deposit(_amount);
-
-        donateId++;
     }
 
     function reward(uint256 _amount, address _sender) private {
