@@ -2,9 +2,12 @@
 pragma solidity ^0.8.2;
 
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
+import '@openzeppelin/contracts/token/ERC1155/IERC1155.sol';
+import '@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol';
 
-contract Cryptomons {
+contract Cryptomons is ERC1155Holder {
     IERC20 private _token;
+    IERC1155 private _items;
 
     // 149 different Cryptomon species implemented and saved in the following enum variable.
     enum Species {
@@ -499,9 +502,10 @@ contract Cryptomons {
     uint256 private max = 2**256 - 1; // Max number of Cryptomons
     uint256 private nonce = 0; // Number used for guessable pseudo-random generated number.
 
-    constructor(IERC20 token) {
+    constructor(IERC20 token, IERC1155 items) {
         manager = msg.sender;
         _token = token;
+        _items = items;
 
         // Add initial cryptomons on contract deployment to start game
         createMon(Species(0), 0, false);
@@ -533,6 +537,35 @@ contract Cryptomons {
         uint256 balance = _token.balanceOf(address(this));
         require(amount <= balance, "Not enough tokens in the reserve");
         _token.transfer(msg.sender, amount);
+    }
+
+    function burn(uint256 amount) public {
+        uint256 balance = _token.balanceOf(msg.sender);
+        require(amount <= balance, "Not enough tokens");
+        _token.burn(amount);
+    }
+
+    // erc1155 functions
+    function buyHealthPotion(uint256 itemAmount) public {
+        require(itemAmount > 0, "Item amount must be greater than 0");
+        uint256 hpBalance = _items.balanceOf(address(this), 0);
+        require(hpBalance >= itemAmount, "Healing potion is out of stock");
+        uint256 fee = 5000000000000000000 * itemAmount;
+        burn(fee);
+
+        // get hp
+        _items.safeTransferFrom(address(this), msg.sender, 0, itemAmount, "0x0");
+    }
+
+    function buyManaPotion(uint256 itemAmount) public {
+        require(itemAmount > 0, "Item amount must be greater than 0");
+        uint256 mpBalance = _items.balanceOf(address(this), 1);
+        require(mpBalance >= itemAmount, "Mana potion is out of stock");
+        uint256 fee = 5000000000000000000 * itemAmount;
+        burn(fee);
+
+        // get mana
+        _items.safeTransferFrom(address(this), msg.sender, 1, itemAmount, "0x0");
     }
 
 

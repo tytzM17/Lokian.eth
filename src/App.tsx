@@ -55,8 +55,11 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
 // Contact deployment address
 const CONTRACT_ADDRESS = '0x1f354C182381267BfDe55f20E99C4F224eb5DEc8'
 
-// erc20 coin
+// ERC20 coin
 const ERC20_CONTRACT_ADDRESS = '0x1b7A38b3C77e405750aF1C08d102eF4f23e8c3a2'
+
+// ERC1155 lokian items
+const ERC1155_CONTRACT_ADDRESS = '0x77a9BD3C0ae2e65c699D53b011667c642b2c68C8'
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]

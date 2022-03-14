@@ -59,7 +59,7 @@ Finished
 - fix fight function
 
 Ongoing
-- Create token tab, buy and burn functions (mvp)
+- Create token tab, buy items (ERC1155) and burn functions (mvp)
 
 - Deploy and test to evm compatible testnets (mvp)
 - Deploy to evm compatible mainnets (mvp)
