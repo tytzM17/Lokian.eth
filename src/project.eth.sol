@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
-import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import '@openzeppelin/contracts/token/ERC1155/IERC1155.sol';
 import '@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol';
+import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
+import '@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol';
 
 contract Cryptomons is ERC1155Holder {
-    IERC20 private _token;
+    ERC20Burnable private _token;
     IERC1155 private _items;
 
     // 149 different Cryptomon species implemented and saved in the following enum variable.
@@ -479,7 +480,6 @@ contract Cryptomons is ERC1155Holder {
     event FightResults(uint256 _winnerId, uint256 _round);
     event Rewards(uint256 _winnerId, uint256 _rewards);
 
-
     // Structure of 1 Cryptomon
     struct Mon {
         uint256 id;
@@ -501,8 +501,10 @@ contract Cryptomons is ERC1155Holder {
     uint256 public totalMons = 0; // Number of created Cryptomons
     uint256 private max = 2**256 - 1; // Max number of Cryptomons
     uint256 private nonce = 0; // Number used for guessable pseudo-random generated number.
+    uint128 public potionsPrice = 50000000000000000000; // 50
+    uint128 public equipmentsPrice = 500000000000000000000; // 500
 
-    constructor(IERC20 token, IERC1155 items) {
+    constructor(ERC20Burnable token, IERC1155 items) {
         manager = msg.sender;
         _token = token;
         _items = items;
@@ -526,48 +528,54 @@ contract Cryptomons is ERC1155Holder {
     }
 
     // erc20 functions
-    function deposit(uint256 amount) public onlyManager{
+    function deposit(uint256 amount) public onlyManager {
         // approve allowance first
         uint256 allowance = _token.allowance(msg.sender, address(this));
-        require(allowance >= amount, "Check the token allowance");
+        require(allowance >= amount, 'Check your token allowance');
         _token.transferFrom(msg.sender, address(this), amount);
     }
 
     function withdraw(uint256 amount) public onlyManager {
         uint256 balance = _token.balanceOf(address(this));
-        require(amount <= balance, "Not enough tokens in the reserve");
+        require(amount <= balance, 'Not enough tokens in the reserve');
         _token.transfer(msg.sender, amount);
     }
 
     function burn(uint256 amount) public {
+        uint256 allowance = _token.allowance(msg.sender, address(this));
+        require(allowance >= amount, 'Check your token allowance');
         uint256 balance = _token.balanceOf(msg.sender);
-        require(amount <= balance, "Not enough tokens");
-        _token.burn(amount);
+        require(amount <= balance, 'Not enough tokens');
+        _token.burnFrom(msg.sender, amount);
     }
 
     // erc1155 functions
-    function buyHealthPotion(uint256 itemAmount) public {
-        require(itemAmount > 0, "Item amount must be greater than 0");
-        uint256 hpBalance = _items.balanceOf(address(this), 0);
-        require(hpBalance >= itemAmount, "Healing potion is out of stock");
-        uint256 fee = 5000000000000000000 * itemAmount;
-        burn(fee);
-
-        // get hp
-        _items.safeTransferFrom(address(this), msg.sender, 0, itemAmount, "0x0");
+    function setItemPrices(uint128 _potionsPrice, uint128 _equipmentsPrice) public onlyManager {
+        potionsPrice = _potionsPrice;
+        equipmentsPrice = _equipmentsPrice;
     }
 
-    function buyManaPotion(uint256 itemAmount) public {
-        require(itemAmount > 0, "Item amount must be greater than 0");
-        uint256 mpBalance = _items.balanceOf(address(this), 1);
-        require(mpBalance >= itemAmount, "Mana potion is out of stock");
-        uint256 fee = 5000000000000000000 * itemAmount;
-        burn(fee);
+    function buyItem(
+        uint256 units,
+        uint256 price,
+        uint8 itemNumber,
+        bytes memory data
+    ) public {
+        uint256 itemBalance = _items.balanceOf(address(this), itemNumber);
+        require(itemBalance >= units, 'Out of stock');
 
-        // get mana
-        _items.safeTransferFrom(address(this), msg.sender, 1, itemAmount, "0x0");
+        // hp
+        if (itemNumber == 0 || itemNumber == 1 || itemNumber == 2) {
+            require(price >= potionsPrice, 'Wrong price for potions');
+        } else {
+            require(price >= equipmentsPrice, 'Wrong price for equipments');
+        }
+
+        uint256 payment = units * price;
+        burn(payment);
+
+        _items.safeTransferFrom(address(this), msg.sender, itemNumber, units, data);
     }
-
 
     function createMon(
         Species species,
@@ -792,7 +800,7 @@ contract Cryptomons is ERC1155Holder {
         if (hp1 == 0) winnerId = id2;
         if (hp2 == 0) winnerId = id1;
         if (hp1 == hp2) winnerId = 12345678910; // it's a tie
-        if ((id1 != 0 || id2 != 0) && winnerId == 0) winnerId = 12345678911; // unknown winner
+        if ((id1 != 0 && id2 != 0) && winnerId == 0) winnerId = 12345678911; // unknown winner
 
         // reward winning sender with rounds won
         if (mons[winnerId].owner == msg.sender) {
@@ -831,6 +839,7 @@ contract Cryptomons is ERC1155Holder {
         uint256 tokenBalance = _token.balanceOf(address(this));
         require(_amount > 0, 'You need to send reward amount');
         require(_amount <= tokenBalance, 'Not enough tokens in the reserve');
+        _token.increaseAllowance(address(this), _amount);
         _token.transfer(_sender, _amount);
     }
 }
