@@ -56,10 +56,13 @@ Finished
 - Token for duel rewards and donations (mvp) done
 - Test token functionalities (mvp) done
 - Display token amount on top right
-- fix fight function
+- Fix fight function
+- Contract tests, okay
+- Create token tab, buy items (ERC1155) and burn functions (mvp)
 
 Ongoing
-- Create token tab, buy items (ERC1155) and burn functions (mvp)
+- Create token tab, your items, buy items, give to skeleton people(burn) UI (mvp)
+- UI Tests
 
 - Deploy and test to evm compatible testnets (mvp)
 - Deploy to evm compatible mainnets (mvp)
