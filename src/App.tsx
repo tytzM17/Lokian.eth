@@ -291,6 +291,8 @@ function App() {
   const [swords, setSwords] = useState(null)
   const [shields, setShields] = useState(null)
 
+  const [disableFightBtn, setDisableFightBtn] = useState(false)
+
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
 
@@ -535,15 +537,19 @@ function App() {
       const recpt = await tx.wait()
       if (recpt && recpt.status) {
         setFightTxDone(true)
+        setDisableFightBtn(false)
       }
 
       if (recpt && !recpt.status) {
         toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
         setFightTxDone(false)
+        setDisableFightBtn(false)
       }
     } catch (error) {
       toast.error(`Fight function error: ${error.data?.message || ''}`)
+      setDisableFightBtn(false)
     }
+   
   }
 
   // Function that starts sharing a Cryptomon to another address through a smart contract function
@@ -1069,7 +1075,7 @@ function App() {
                 {!fightTxDone && rewards === 0 && !winner ? (
                   ''
                 ) : (
-                  <label className="winner-label">{rewards === 0 ? '' : `You got ${rewards} LOKs!`}</label>
+                  <label className="winner-label">{rewards === 0 ? '' : `You have won ${rewards} LOKs!`}</label>
                 )}
               </>
             ) : (
@@ -1083,6 +1089,7 @@ function App() {
             )}
 
             <button
+              id='fight-btn'
               className="rpgui-button"
               type="button"
               onClick={() => {
@@ -1090,9 +1097,10 @@ function App() {
                 setRounds(null)
                 setFightTxDone(false)
                 setRewards(0)
+                setDisableFightBtn(true)
                 fight(fightChoice1, fightChoice2)
               }}
-              disabled={!winner}
+              disabled={disableFightBtn}
             >
               Fight with choosen creatures
             </button>
@@ -1184,7 +1192,7 @@ function App() {
               </span>
               <div className="form-line">
                 <label className="form-label">Amount</label>
-                <input className="form-input" value={0} />
+                <input className="form-input" placeholder='0' />
               </div>
               <div className="form-line">
                 <button
@@ -1204,7 +1212,7 @@ function App() {
               </span>
               <div className="form-line">
                 <label className="form-label">Amount</label>
-                <input className="form-input" value={0} />
+                <input className="form-input" placeholder='0' />
               </div>
               <div className="form-line">
                 <button
@@ -1224,7 +1232,7 @@ function App() {
               </span>
               <div className="form-line">
                 <label className="form-label">Amount</label>
-                <input className="form-input" value={0} />
+                <input className="form-input" placeholder='0' />
               </div>
               <div className="form-line">
                 <button
@@ -1264,7 +1272,7 @@ function App() {
               </span>
               <div className="form-line">
                 <label className="form-label">Amount</label>
-                <input className="form-input" value={0} />
+                <input className="form-input" placeholder='0' />
               </div>
               <div className="form-line">
                 <button
@@ -1289,7 +1297,7 @@ function App() {
             <div className="sharing-area">
               <div className="form-line">
                 <label className="form-label">Amount</label>
-                <input className="form-input" value={0} />
+                <input className="form-input" placeholder='0' />
               </div>
               <div className="form-line">
                 <button
