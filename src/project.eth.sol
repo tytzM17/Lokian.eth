@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
-import '@openzeppelin/contracts/token/ERC1155/IERC1155.sol';
-import '@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol';
-import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
-import '@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol';
+import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
 contract Cryptomons is ERC1155Holder {
     ERC20Burnable private _token;
@@ -480,6 +480,7 @@ contract Cryptomons is ERC1155Holder {
     event FightResults(uint256 _winnerId, uint256 _round);
     event Rewards(uint256 _winnerId, uint256 _rewards);
 
+
     // Structure of 1 Cryptomon
     struct Mon {
         uint256 id;
@@ -528,55 +529,50 @@ contract Cryptomons is ERC1155Holder {
     }
 
     // erc20 functions
-    function deposit(uint256 amount) public onlyManager {
+    function deposit(uint256 amount) public onlyManager{
         // approve allowance first
         uint256 allowance = _token.allowance(msg.sender, address(this));
-        require(allowance >= amount, 'Check your token allowance');
+        require(allowance >= amount, "Check your token allowance");
         _token.transferFrom(msg.sender, address(this), amount);
     }
 
     function withdraw(uint256 amount) public onlyManager {
         uint256 balance = _token.balanceOf(address(this));
-        require(amount <= balance, 'Not enough tokens in the reserve');
+        require(amount <= balance, "Not enough tokens in the reserve");
         _token.transfer(msg.sender, amount);
     }
 
     function burn(uint256 amount) public {
         uint256 allowance = _token.allowance(msg.sender, address(this));
-        require(allowance >= amount, 'Check your token allowance');
+        require(allowance >= amount, "Check your token allowance");
         uint256 balance = _token.balanceOf(msg.sender);
-        require(amount <= balance, 'Not enough tokens');
+        require(amount <= balance, "Not enough tokens");
         _token.burnFrom(msg.sender, amount);
     }
 
     // erc1155 functions
-    function setItemPrices(uint128 _potionsPrice, uint128 _equipmentsPrice) public onlyManager {
+    function setItemPrices (uint128 _potionsPrice, uint128 _equipmentsPrice) public onlyManager {
         potionsPrice = _potionsPrice;
         equipmentsPrice = _equipmentsPrice;
     }
 
-    function buyItem(
-        uint256 units,
-        uint256 price,
-        uint8 itemNumber,
-        bytes memory data
-    ) public {
+    function buyItem(uint256 units, uint256 price, uint8 itemNumber, bytes memory data) public {
         uint256 itemBalance = _items.balanceOf(address(this), itemNumber);
-        require(itemBalance >= units, 'Out of stock');
-
+        require(itemBalance >= units, "Out of stock");
+        
         // hp
         if (itemNumber == 0 || itemNumber == 1 || itemNumber == 2) {
-            require(price >= potionsPrice, 'Wrong price for potions');
+            require(price >= potionsPrice, "Wrong price for potions");
         } else {
-            require(price >= equipmentsPrice, 'Wrong price for equipments');
+            require(price >= equipmentsPrice, "Wrong price for equipments");
         }
-
+          
         uint256 payment = units * price;
         burn(payment);
 
         _items.safeTransferFrom(address(this), msg.sender, itemNumber, units, data);
     }
-
+    
     function createMon(
         Species species,
         uint256 price,

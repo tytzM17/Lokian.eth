@@ -22,6 +22,7 @@ import { formatUnits, parseEther, formatEther } from '@ethersproject/units'
 // abis
 import contrInterface from './interface.json' // Load contract json file
 import erc20Interface from './erc20Interface.json' // Load erc20 contract json file
+import nftInterface from './project.nft.abi.json'
 
 // Load all the background images for the 10 different Cryptomon types
 import bg0 from './sprites-copy/background/0.png'
@@ -53,7 +54,7 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
 }
 
 // Contact deployment address
-const CONTRACT_ADDRESS = '0x1f354C182381267BfDe55f20E99C4F224eb5DEc8'
+const CONTRACT_ADDRESS = '0x5A4c15d98ef9cfC953ef131dD25e855ce11816Dd'
 
 // ERC20 coin
 const ERC20_CONTRACT_ADDRESS = '0x1b7A38b3C77e405750aF1C08d102eF4f23e8c3a2'
@@ -225,11 +226,11 @@ async function getMons(_library, _account) {
   return Promise.all([...Array(totalMons).keys()].map((id) => contr.mons(id)))
 }
 
-// async function approve(_library, _account, _amount) {
-//   const erc20Contr = new Contract(ERC20_CONTRACT_ADDRESS, erc20Interface, _library.getSigner(_account))
-//   const newAmount = `${parseEther(_amount)}`
-//   return await erc20Contr.approve(CONTRACT_ADDRESS, newAmount)
-// }
+async function approve(_library, _account, _amount) {
+  const erc20Contr = new Contract(ERC20_CONTRACT_ADDRESS, erc20Interface, _library.getSigner(_account))
+  const newAmount = `${parseEther(_amount)}`
+  return await erc20Contr.approve(CONTRACT_ADDRESS, newAmount)
+}
 
 function Account() {
   const { account } = useWeb3React()
@@ -283,6 +284,12 @@ function App() {
   const [tokenBalance, setTokenBalance] = useState('0')
   const [fightTxDone, setFightTxDone] = useState(false)
   const [rewards, setRewards] = useState(0)
+
+  const [healingPotions, setHealingPotions] = useState(null)
+  const [manaPotions, setManaPotions] = useState(null)
+  const [magicPotions, setMagicPotions] = useState(null)
+  const [swords, setSwords] = useState(null)
+  const [shields, setShields] = useState(null)
 
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
@@ -389,6 +396,36 @@ function App() {
       mounted = false
     }
   }, [account, library, fightTxDone])
+
+  // Get items from nft contract
+  useEffect(() => {
+    if (!library || !account) {
+      return
+    }
+
+    let mounted = true
+
+    ;(async function () {
+      if (mounted) {
+        const nftContr = new Contract(ERC1155_CONTRACT_ADDRESS, nftInterface, library.getSigner(account))
+        const healpot = await nftContr.balanceOf(account, 0)
+        const manapot = await nftContr.balanceOf(account, 1)
+        const magicpot = await nftContr.balanceOf(account, 2)
+        const _swords = await nftContr.balanceOf(account, 3)
+        const _shields = await nftContr.balanceOf(account, 4)
+
+        setHealingPotions(BigNumber.from(healpot._hex).toBigInt())
+        setManaPotions(BigNumber.from(manapot._hex).toBigInt())
+        setMagicPotions(BigNumber.from(magicpot._hex).toBigInt())
+        setSwords(BigNumber.from(_swords._hex).toBigInt())
+        setShields(BigNumber.from(_shields._hex).toBigInt())
+      }
+    })()
+
+    return () => {
+      mounted = false
+    }
+  }, [library, account])
 
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
   const triedEager = useEagerConnect()
@@ -1100,31 +1137,172 @@ function App() {
           {sharedToMe}
         </Tab>
         <Tab eventKey="token" title="Token">
-
-        <div className="p1" style={{padding: '12px'}}>{tokenBalance} Lokians</div>
-	
-        <div className="rpgui-container framed-grey">
-        <div className="p1">Buy somethin</div>
-	</div>
-       
-                 <div className="rpgui-container framed-grey">
-          <div className="p1">Burn</div>
-          <div className="sharing-area">
-            <div className="form-line">
-              <label className="form-label">Amount</label>
-              <input className="form-input" 
-                // value={burnAmount} 
-                onChange={(e) => 
-                  {
-                   // handleBurn(e)
-                  }
-                }
-               />
-            </div>
+          <div className="p1">Your money</div>
+          <div className="p1" style={{ padding: '12px' }}>
+            {tokenBalance} Lokians
+          </div>
+          <br />
+          <br />
+          <div className="p1">
+            Your items
+            <div style={{ marginLeft: '45%', marginRight: 'auto' }}>
+              <div className="row">
+                <div className="column">
+                  {!swords ? <div className="rpgui-icon weapon-slot"></div> : <div className="rpgui-icon sword"></div>}
+                  {!shields ? (
+                    <div className="rpgui-icon shield-slot"></div>
+                  ) : (
+                    <div className="rpgui-icon shield"></div>
+                  )}
+                  {healingPotions || manaPotions || magicPotions ? (
+                    <div className="rpgui-icon potion-red"></div>
+                  ) : (
+                    <div className="rpgui-icon potion-slot"></div>
+                  )}
+                </div>
               </div>
-	</div>
-     
+            </div>
+            <br />
+            <div style={{ marginLeft: '40%', marginRight: 'auto' }}>
+              <div className="row">
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                  <p>You have {`${swords}`} swords!</p>
+                  <p>You have {`${shields}`} shields!</p>
+                  <p>You have {`${healingPotions}`} healing potions!</p>
+                  <p>You have {`${manaPotions}`} mana potions!</p>
+                  <p>You have {`${magicPotions}`} magic potions!</p>
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <div className="rpgui-container framed-grey">
+            <div className="p1">Buy somethin</div>
+            <div className="sharing-area">
+              <span>
+                <div className="rpgui-icon sword"></div> A Sword
+              </span>
+              <div className="form-line">
+                <label className="form-label">Amount</label>
+                <input className="form-input" value={0} />
+              </div>
+              <div className="form-line">
+                <button
+                  className="rpgui-button"
+                  type="button"
+                  style={{ float: 'right' }}
+                  // onClick={() => buyItem()}
+                >
+                  Buy
+                </button>
+              </div>
+            </div>
+
+            <div className="sharing-area">
+              <span>
+                <div className="rpgui-icon shield"></div> A Shield
+              </span>
+              <div className="form-line">
+                <label className="form-label">Amount</label>
+                <input className="form-input" value={0} />
+              </div>
+              <div className="form-line">
+                <button
+                  className="rpgui-button"
+                  type="button"
+                  style={{ float: 'right' }}
+                  // onClick={() => buyItem()}
+                >
+                  Buy
+                </button>
+              </div>
+            </div>
+
+            <div className="sharing-area">
+              <span>
+                <div className="rpgui-icon potion-red"></div> A Healing Potion
+              </span>
+              <div className="form-line">
+                <label className="form-label">Amount</label>
+                <input className="form-input" value={0} />
+              </div>
+              <div className="form-line">
+                <button
+                  className="rpgui-button"
+                  type="button"
+                  style={{ float: 'right' }}
+                  // onClick={() => buyItem()}
+                >
+                  Buy
+                </button>
+              </div>
+            </div>
+
+            <div className="sharing-area">
+              <span>
+                <div className="rpgui-icon potion-blue"></div> A Mana Potion
+              </span>
+              <div className="form-line">
+                <label className="form-label">Amount</label>
+                <input className="form-input" value="0" />
+              </div>
+              <div className="form-line">
+                <button
+                  className="rpgui-button"
+                  type="button"
+                  style={{ float: 'right' }}
+                  // onClick={() => buyItem()}
+                >
+                  Buy
+                </button>
+              </div>
+            </div>
+
+            <div className="sharing-area">
+              <span>
+                <div className="rpgui-icon potion-green"></div> A Magic Potion
+              </span>
+              <div className="form-line">
+                <label className="form-label">Amount</label>
+                <input className="form-input" value={0} />
+              </div>
+              <div className="form-line">
+                <button
+                  className="rpgui-button"
+                  type="button"
+                  style={{ float: 'right' }}
+                  // onClick={() => buyItem()}
+                >
+                  Buy
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="rpgui-container framed-grey">
+            <div className="p1">Give to the skeleton people (burn token)</div>
+            <div style={{ display: 'flex', width: '20%', marginLeft: '40%', marginRight: 'auto' }}>
+              <img className="monImg" src={require('./sprites-copy/skelly.png')} alt="skeleton-people-1" />
+              <img className="monImg" src={require('./sprites-copy/skelly2.png')} alt="skeleton-people-1" />
+              <img className="monImg" src={require('./sprites-copy/skelly-rip.png')} alt="skeleton-people-1" />
+            </div>
+            <div className="sharing-area">
+              <div className="form-line">
+                <label className="form-label">Amount</label>
+                <input className="form-input" value={0} />
+              </div>
+              <div className="form-line">
+                <button
+                  className="rpgui-button"
+                  type="button"
+                  style={{ float: 'right' }}
+                  // onClick={() => burnToken()}
+                >
+                  Give
+                </button>
+              </div>
+            </div>
+          </div>
         </Tab>
       </Tabs>
     </div>
