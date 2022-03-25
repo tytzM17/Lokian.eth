@@ -293,6 +293,10 @@ function App() {
 
   const [disableFightBtn, setDisableFightBtn] = useState(false)
 
+  const [buyItemAmount, setBuyItemAmount] = useState('0')
+  const [burnAmount, setBurnAmount] = useState('0')
+  const [disableBuyItemBtn, setDisableBuyItem] = useState(false)
+
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
 
@@ -354,7 +358,7 @@ function App() {
     return () => {
       mounted = false
     }
-  }, [account, library, rewards])
+  }, [account, library, disableBuyItemBtn, disableFightBtn])
 
   // Get contract events
   useEffect(() => {
@@ -374,6 +378,7 @@ function App() {
           setWinner(winId)
           setRounds(round)
           refreshMons()
+          setDisableFightBtn(false)
         }
       })
 
@@ -382,6 +387,7 @@ function App() {
           const rewards = BigNumber.from(_rewards._hex).toNumber()
           setRewards(rewards)
           refreshMons()
+          setDisableFightBtn(false)
         }
       })
     })()
@@ -390,9 +396,11 @@ function App() {
       const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
       contr.off('FightResults', (_winnerId, _round) => {
         console.log('unsubscribe event: fight results')
+        setDisableFightBtn(false)
       })
       contr.off('Rewards', (_winnerId, _round) => {
         console.log('unsubscribe event: rewards')
+        setDisableFightBtn(false)
       })
 
       mounted = false
@@ -427,7 +435,7 @@ function App() {
     return () => {
       mounted = false
     }
-  }, [library, account])
+  }, [library, account, disableBuyItemBtn])
 
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
   const triedEager = useEagerConnect()
@@ -528,6 +536,7 @@ function App() {
 
   // Function that allows 2 Cryptomons to fight through a smart contract function
   async function fight(id1, id2) {
+    setDisableFightBtn(true)
     if (id1 === null || id2 === null) {
       return
     }
@@ -537,19 +546,16 @@ function App() {
       const recpt = await tx.wait()
       if (recpt && recpt.status) {
         setFightTxDone(true)
-        setDisableFightBtn(false)
       }
 
       if (recpt && !recpt.status) {
         toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
         setFightTxDone(false)
-        setDisableFightBtn(false)
       }
     } catch (error) {
       toast.error(`Fight function error: ${error.data?.message || ''}`)
       setDisableFightBtn(false)
     }
-   
   }
 
   // Function that starts sharing a Cryptomon to another address through a smart contract function
@@ -592,6 +598,65 @@ function App() {
 
   function handleChange(id, event) {
     setValue(event.target.value)
+  }
+
+  function handleBuyItemAmount(event) {
+    setBuyItemAmount(event.target.value)
+  }
+  function handleBurn(event) {
+    setBurnAmount(event.target.value)
+  }
+
+  async function buyItem(units: string, price: string, itemNumber: string, data: string = '0x00') {
+    setDisableBuyItem(true)
+    if (!units || !price || !itemNumber) {
+      return
+    }
+    const _price = parseEther(price)
+    const priceInWei = `${BigNumber.from(_price._hex).toBigInt()}`
+    approve(library, account, price)
+      .then(async (results) => {
+        if (results) {
+          const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+          const tx = await contr.buyItem(units, priceInWei, itemNumber, data)
+          const recpt = await tx.wait()
+          txSuccess(recpt, toast, refreshMons)
+          txFail(recpt, toast)
+        } else {
+          toast.error(`Error in approving`)
+        }
+        setDisableBuyItem(false)
+      })
+      .catch((e) => {
+        toast.error(`Error: ${e}`)
+        setDisableBuyItem(false)
+      })
+  }
+
+  async function burn(amount: string) {
+    setDisableBuyItem(true)
+    if (!amount) {
+      return
+    }
+    const _amount = parseEther(amount)
+    const amountInWei = `${BigNumber.from(_amount._hex).toBigInt()}`
+    approve(library, account, amountInWei)
+      .then(async (results) => {
+        if (results) {
+          const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+          const tx = await contr.burn(amountInWei)
+          const recpt = await tx.wait()
+          txSuccess(recpt, toast, refreshMons)
+          txFail(recpt, toast)
+        } else {
+          toast.error(`Error in approving`)
+        }
+        setDisableBuyItem(false)
+      })
+      .catch((e) => {
+        toast.error(`Error: ${e}`)
+        setDisableBuyItem(false)
+      })
   }
 
   // Components
@@ -833,11 +898,10 @@ function App() {
       </React.Fragment>
     ))
 
-  const cond = (mon) =>
-    mon.owner.toString().toLowerCase() === account?.toString()?.toLowerCase() ||
-    (mon.sharedTo.toString().toLowerCase() === account?.toString()?.toLowerCase() &&
-      mon.owner?.toString().toLowerCase() !== account?.toString()?.toLowerCase())
-
+  const cond = (mon) => (
+    ((mon.owner.toString().toLowerCase() === account?.toString()?.toLowerCase()) && (!mon.forSale)) ||
+    ((mon.sharedTo.toString().toLowerCase() === account?.toString()?.toLowerCase()) && (mon.owner.toString().toLowerCase() !== account?.toString()?.toLowerCase()))
+  );
   // div with user's Cryptomons that can be used to fight with
   const forFightWithCryptomons = cryptomons.filter(cond).map((mon) => (
     <React.Fragment key={mon.id}>
@@ -865,7 +929,7 @@ function App() {
 
   // div with Cryptomons that user can fight against
   const forFightAgainstCryptomons = otherCryptomons
-    .filter((mon) => !mon.forSale)
+    .filter((mon) => ((!mon.forSale) && (mon.sharedTo.toLowerCase() !== account?.toString().toLocaleLowerCase())) )
     .map((mon) => (
       <React.Fragment key={mon.id}>
         <div className="mon">
@@ -892,7 +956,7 @@ function App() {
 
   // div with user's shared Cryptomons
   const sharedByMe = myCryptomons
-    .filter((mon) => mon.sharedTo.toLowerCase() !== account)
+    .filter((mon) => ((mon.sharedTo.toLowerCase() !== account?.toString().toLocaleLowerCase()) && (!mon.forSale)))
     .map((mon) => (
       <React.Fragment key={mon.id}>
         <div className="mon">
@@ -1082,14 +1146,14 @@ function App() {
               ''
             )}
 
-            {!fightTxDone || !winner ? (
+            {disableFightBtn ? (
               <Spinner color="gray" style={{ marginLeft: '50%', marginRight: 'auto', padding: '8px' }} />
             ) : (
               ''
             )}
 
             <button
-              id='fight-btn'
+              id="fight-btn"
               className="rpgui-button"
               type="button"
               onClick={() => {
@@ -1097,7 +1161,6 @@ function App() {
                 setRounds(null)
                 setFightTxDone(false)
                 setRewards(0)
-                setDisableFightBtn(true)
                 fight(fightChoice1, fightChoice2)
               }}
               disabled={disableFightBtn}
@@ -1192,14 +1255,20 @@ function App() {
               </span>
               <div className="form-line">
                 <label className="form-label">Amount</label>
-                <input className="form-input" placeholder='0' />
+                <input
+                  className="form-input"
+                  placeholder="0"
+                  value={buyItemAmount}
+                  onChange={(e) => handleBuyItemAmount(e)}
+                />
               </div>
               <div className="form-line">
                 <button
                   className="rpgui-button"
                   type="button"
                   style={{ float: 'right' }}
-                  // onClick={() => buyItem()}
+                  onClick={() => buyItem(buyItemAmount, '500', '3')}
+                  disabled={disableBuyItemBtn}
                 >
                   Buy
                 </button>
@@ -1212,14 +1281,20 @@ function App() {
               </span>
               <div className="form-line">
                 <label className="form-label">Amount</label>
-                <input className="form-input" placeholder='0' />
+                <input
+                  className="form-input"
+                  placeholder="0"
+                  value={buyItemAmount}
+                  onChange={(e) => handleBuyItemAmount(e)}
+                />
               </div>
               <div className="form-line">
                 <button
                   className="rpgui-button"
                   type="button"
                   style={{ float: 'right' }}
-                  // onClick={() => buyItem()}
+                  onClick={() => buyItem(buyItemAmount, '500', '4')}
+                  disabled={disableBuyItemBtn}
                 >
                   Buy
                 </button>
@@ -1232,14 +1307,20 @@ function App() {
               </span>
               <div className="form-line">
                 <label className="form-label">Amount</label>
-                <input className="form-input" placeholder='0' />
+                <input
+                  className="form-input"
+                  placeholder="0"
+                  value={buyItemAmount}
+                  onChange={(e) => handleBuyItemAmount(e)}
+                />
               </div>
               <div className="form-line">
                 <button
                   className="rpgui-button"
                   type="button"
                   style={{ float: 'right' }}
-                  // onClick={() => buyItem()}
+                  onClick={() => buyItem(buyItemAmount, '50', '0')}
+                  disabled={disableBuyItemBtn}
                 >
                   Buy
                 </button>
@@ -1252,14 +1333,20 @@ function App() {
               </span>
               <div className="form-line">
                 <label className="form-label">Amount</label>
-                <input className="form-input" value="0" />
+                <input
+                  className="form-input"
+                  placeholder="0"
+                  value={buyItemAmount}
+                  onChange={(e) => handleBuyItemAmount(e)}
+                />
               </div>
               <div className="form-line">
                 <button
                   className="rpgui-button"
                   type="button"
                   style={{ float: 'right' }}
-                  // onClick={() => buyItem()}
+                  onClick={() => buyItem(buyItemAmount, '50', '1')}
+                  disabled={disableBuyItemBtn}
                 >
                   Buy
                 </button>
@@ -1272,14 +1359,20 @@ function App() {
               </span>
               <div className="form-line">
                 <label className="form-label">Amount</label>
-                <input className="form-input" placeholder='0' />
+                <input
+                  className="form-input"
+                  placeholder="0"
+                  value={buyItemAmount}
+                  onChange={(e) => handleBuyItemAmount(e)}
+                />
               </div>
               <div className="form-line">
                 <button
                   className="rpgui-button"
                   type="button"
                   style={{ float: 'right' }}
-                  // onClick={() => buyItem()}
+                  onClick={() => buyItem(buyItemAmount, '50', '2')}
+                  disabled={disableBuyItemBtn}
                 >
                   Buy
                 </button>
@@ -1297,14 +1390,15 @@ function App() {
             <div className="sharing-area">
               <div className="form-line">
                 <label className="form-label">Amount</label>
-                <input className="form-input" placeholder='0' />
+                <input className="form-input" placeholder="0" value={burnAmount} onChange={(e) => handleBurn(e)} />
               </div>
               <div className="form-line">
                 <button
                   className="rpgui-button"
                   type="button"
                   style={{ float: 'right' }}
-                  // onClick={() => burnToken()}
+                  onClick={() => burn(burnAmount)}
+                  disabled={disableBuyItemBtn}
                 >
                   Give
                 </button>

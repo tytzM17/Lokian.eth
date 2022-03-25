@@ -59,16 +59,16 @@ Finished
 - Fix fight function
 - Contract tests, okay
 - Create token tab, buy items (ERC1155) and burn functions (mvp)
-
-Ongoing
 - Create token tab, your items, buy items, give to skeleton people(burn) UI (mvp)
 - UI Tests
 
+Ongoing
+- Extensive UI test
 - Deploy and test to evm compatible testnets (mvp)
 - Deploy to evm compatible mainnets (mvp)
-
-- Create frontend in namecheap or pinata if possible, (mvp)
-- Create landing page in pinata/ipfs (mvp)
+- Buy domain for $10-15
+- Create frontend in namecheap or gh-pages, (mvp)
+- Create landing page in pinata/ipfs or gh-pages (mvp)
 - Submit to dappradar, state of the dapps, etc (mvp)
 
 
