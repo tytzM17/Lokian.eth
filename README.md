@@ -63,8 +63,9 @@ Finished
 - UI Tests
 
 Ongoing
-- Extensive UI test
-- Deploy and test to evm compatible testnets (mvp)
+- Extensive tests in local
+- Deploy and test to evm compatible testnet (mvp)
+- Extensive tests in testnet
 - Deploy to evm compatible mainnets (mvp)
 
 - Create frontend in namecheap or gh-pages, (mvp)
