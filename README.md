@@ -66,10 +66,11 @@ Ongoing
 - Extensive UI test
 - Deploy and test to evm compatible testnets (mvp)
 - Deploy to evm compatible mainnets (mvp)
-- Buy domain for $10-15
+
 - Create frontend in namecheap or gh-pages, (mvp)
 - Create landing page in pinata/ipfs or gh-pages (mvp)
 - Submit to dappradar, state of the dapps, etc (mvp)
+- Buy domain for $10-15, if accepted in dappradar or state of the dapps
 
 
 
