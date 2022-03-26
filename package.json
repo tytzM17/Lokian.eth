@@ -35,7 +35,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build-waffle": "waffle",
-    "test-waffle": "set NODE_ENV=test && mocha"
+    "test-waffle": "set TS_NODE_COMPILER_OPTIONS={\"module\": \"commonjs\" } && mocha -r ts-node/register --timeout 50000 'test/**/*.ts'"
   },
   "eslintConfig": {
     "extends": "react-app"
