@@ -28,5 +28,5 @@
     "**/*.ts",
     "**/*.tsx",
     "src/serviceWorker.js"
-  ]
+, "test/BasicTest.test.js"  ]
 }

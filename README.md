@@ -70,7 +70,7 @@ Ongoing
 
 - Create frontend in namecheap or gh-pages, (mvp)
 - Create landing page in pinata/ipfs or gh-pages (mvp)
-- Submit to dappradar, state of the dapps, etc (mvp)
+- Check guide on dapp submission and Submit to dappradar, state of the dapps, etc (mvp)
 - Buy domain for $10-15, if accepted in dappradar or state of the dapps
 
 
