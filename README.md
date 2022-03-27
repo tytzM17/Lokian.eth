@@ -63,7 +63,7 @@ Finished
 - UI Tests
 
 Ongoing
-- Extensive tests in local
+- Extensive tests in local or add unit tests 
 - Deploy and test to evm compatible testnet (mvp)
 - Extensive tests in testnet
 - Deploy to evm compatible mainnets (mvp)

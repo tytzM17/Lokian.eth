@@ -9,13 +9,13 @@ describe('BasicToken', () => {
   const [wallet, walletTo] = new MockProvider().getWallets();
   let token: Contract;
 
-  beforeEach(async () => {
-    token = await deployContract(wallet, BasicToken, [1000]);
-  });
+  // beforeEach(async () => {
+  //   token = await deployContract(wallet, BasicToken, [1000]);
+  // });
 
-  it('Assigns initial balance', async () => {
-    expect(await token.balanceOf(wallet.address)).to.equal(1000);
-  });
+  // it('Assigns initial balance', async () => {
+  //   expect(await token.balanceOf(wallet.address)).to.equal(1000);
+  // });
 
   // it('Transfer adds amount to destination account', async () => {
   //   await token.transfer(walletTo.address, 7);
