@@ -40,94 +40,110 @@ describe('Lokian', () => {
   })
 
   // token
-  it('Assigns token balance', async () => {
-    // transfer tokens and nft to contract
-    const hasApprovedOwner = await token.approve(wallet.address, amountInWei)
-    const hasApproved = await token.approve(lokian.address, amountInWei)
-    if (hasApprovedOwner && hasApproved) {
-      await token.transferFrom(wallet.address, lokian.address, amountInWei)
-      expect(await token.balanceOf(lokian.address)).to.equal(amountInWei)
-    }
-  })
+  // it('Assigns token balance', async () => {
+  //   // transfer tokens and nft to contract
+  //   const hasApprovedOwner = await token.approve(wallet.address, amountInWei)
+  //   const hasApproved = await token.approve(lokian.address, amountInWei)
+  //   if (hasApprovedOwner && hasApproved) {
+  //     await token.transferFrom(wallet.address, lokian.address, amountInWei)
+  //     expect(await token.balanceOf(lokian.address)).to.equal(amountInWei)
+  //   }
+  // })
 
-  it('Deposits token', async () => {
-    const hasApprovedOwner = await token.approve(wallet.address, 1)
-    const hasApproved = await token.approve(lokian.address, 1)
-    if (hasApprovedOwner && hasApproved) {
-      await lokian.deposit(1)
-      expect(await token.balanceOf(lokian.address)).to.equal(1)
-    }
-  })
+  // it('Deposits token', async () => {
+  //   const hasApprovedOwner = await token.approve(wallet.address, 1)
+  //   const hasApproved = await token.approve(lokian.address, 1)
+  //   if (hasApprovedOwner && hasApproved) {
+  //     await lokian.deposit(1)
+  //     expect(await token.balanceOf(lokian.address)).to.equal(1)
+  //   }
+  // })
 
-  it('Withdraws token', async () => {
-    await token.approve(wallet.address, 100)
-    await token.approve(lokian.address, 100)
-    const hasTransferred = await token.transferFrom(wallet.address, lokian.address, 100)
-    if (hasTransferred) {
-      await lokian.withdraw(100)
-      expect(await token.balanceOf(lokian.address)).to.equal(0)
-    }
-  })
+  // it('Withdraws token', async () => {
+  //   await token.approve(wallet.address, 100)
+  //   await token.approve(lokian.address, 100)
+  //   const hasTransferred = await token.transferFrom(wallet.address, lokian.address, 100)
+  //   if (hasTransferred) {
+  //     await lokian.withdraw(100)
+  //     expect(await token.balanceOf(lokian.address)).to.equal(0)
+  //   }
+  // })
 
-  it('Burns token', async () => {
-    const _token = parseEther('100')
-    const tokenInWei = `${BigNumber.from(_token._hex).toBigInt()}`
-    const _contrToken = parseEther('1000')
-    const contrTokenInWei = `${BigNumber.from(_contrToken._hex).toBigInt()}`
-    const hasTransferredToAnotherWallet = await token.transfer(walletTo.address, tokenInWei)
-    await token.transfer(lokian.address, contrTokenInWei)
+  // it('Burns token', async () => {
+  //   const _token = parseEther('100')
+  //   const tokenInWei = `${BigNumber.from(_token._hex).toBigInt()}`
+  //   const _contrToken = parseEther('1000')
+  //   const contrTokenInWei = `${BigNumber.from(_contrToken._hex).toBigInt()}`
+  //   const hasTransferredToAnotherWallet = await token.transfer(walletTo.address, tokenInWei)
+  //   await token.transfer(lokian.address, contrTokenInWei)
 
-    token.connect(walletTo)
-    lokian.connect(walletTo)
-    if (hasTransferredToAnotherWallet) {
+  //   token.connect(walletTo)
+  //   lokian.connect(walletTo)
+  //   if (hasTransferredToAnotherWallet) {
 
-      const _price = parseEther('50')
-      const priceInWei = `${BigNumber.from(_price._hex).toBigInt()}`
+  //     const _price = parseEther('50')
+  //     const priceInWei = `${BigNumber.from(_price._hex).toBigInt()}`
 
-      const hasApproved = await token.approve(lokian.address, priceInWei) 
+  //     const hasApproved = await token.approve(lokian.address, priceInWei) 
 
-      if (hasApproved) {
-        const tx = await lokian.burn(priceInWei)    
-        const recpt = tx.wait()
-        if (recpt?.status) expect(await token.balanceOf(walletTo.address)).to.equal(50)
-      }
+  //     if (hasApproved) {
+  //       const tx = await lokian.burn(priceInWei)    
+  //       const recpt = tx.wait()
+  //       if (recpt?.status) expect(await token.balanceOf(walletTo.address)).to.equal(50)
+  //     }
     
-    }
-  })
+  //   }
+  // })
 
-  // nft
-  it('Assigns nft balances', async () => {
-    expect(await nft.balanceOf(lokian.address, 0)).to.equal(99)
-    expect(await nft.balanceOf(lokian.address, 1)).to.equal(99)
-    expect(await nft.balanceOf(lokian.address, 2)).to.equal(99)
-    expect(await nft.balanceOf(lokian.address, 3)).to.equal(99)
-    expect(await nft.balanceOf(lokian.address, 4)).to.equal(99)
-  })
-  it('Buys a potion', async () => {
-    const _price = parseEther('50')
-    const priceInWei = `${BigNumber.from(_price._hex).toBigInt()}`
+  // // nft
+  // it('Assigns nft balances', async () => {
+  //   expect(await nft.balanceOf(lokian.address, 0)).to.equal(99)
+  //   expect(await nft.balanceOf(lokian.address, 1)).to.equal(99)
+  //   expect(await nft.balanceOf(lokian.address, 2)).to.equal(99)
+  //   expect(await nft.balanceOf(lokian.address, 3)).to.equal(99)
+  //   expect(await nft.balanceOf(lokian.address, 4)).to.equal(99)
+  // })
+  // it('Buys a potion', async () => {
+  //   const _price = parseEther('50')
+  //   const priceInWei = `${BigNumber.from(_price._hex).toBigInt()}`
 
-    token.connect(walletTo)
-    lokian.connect(walletTo)
+  //   token.connect(walletTo)
+  //   lokian.connect(walletTo)
 
-    const hasApprovedOwner = await token.approve(walletTo.address, 1)
-    const hasApproved = await token.approve(lokian.address, 1) // 1
+  //   const hasApprovedOwner = await token.approve(walletTo.address, 1)
+  //   const hasApproved = await token.approve(lokian.address, 1) // 1
 
-    const contractNftBalance = nft.balanceOf(lokian.address, 0)
-    const units = 1
+  //   const contractNftBalance = nft.balanceOf(lokian.address, 0)
+  //   const units = 1
 
-    if (contractNftBalance >= units && hasApproved && hasApprovedOwner) {
-      await lokian.buyItem(units, priceInWei, 0, '0x00')
-      expect(await nft.balanceOf(walletTo.address, 0)).to.equal(1)
-    }
-  })
-  it('Set item prices',async () => {
-    const _potionPrice = parseEther('50')
-    const potionPrice = `${BigNumber.from(_potionPrice._hex).toBigInt()}`
-    const _eqptPrice = parseEther('50')
-    const equipmentPrice = `${BigNumber.from(_eqptPrice._hex).toBigInt()}`
-  })
-  it('Create mons',async () => {
-    
+  //   if (contractNftBalance >= units && hasApproved && hasApprovedOwner) {
+  //     await lokian.buyItem(units, priceInWei, 0, '0x00')
+  //     expect(await nft.balanceOf(walletTo.address, 0)).to.equal(1)
+  //   }
+  // })
+  // it('Set item prices',async () => {
+  //   const _potionPrice = parseEther('50')
+  //   const potionPrice = `${BigNumber.from(_potionPrice._hex).toBigInt()}`
+  //   const _eqptPrice = parseEther('50')
+  //   const equipmentPrice = `${BigNumber.from(_eqptPrice._hex).toBigInt()}`
+  //   await lokian.setItemPrices(potionPrice, equipmentPrice)
+  //   expect(await lokian.potionsPrice()).to.equal(potionPrice)
+  //   expect(await lokian.equipmentsPrice()).to.equal(equipmentPrice)
+  // })
+  // it('Create mons',async () => {
+  //   // param = species, price, forSale
+  //   await lokian.createMon(0,0,false)
+  //   await lokian.createMon(1,0,false)
+  //   // already created 9 mons upon deployment, so should equal 11
+  //   expect(await lokian.totalMons()).to.equal(11)
+  // })
+  it('Add mon for sale',async () => {
+    const _price = parseEther('5')
+    const price = `${BigNumber.from(_price._hex).toBigInt()}`
+    await lokian.createMon(0,0,false)
+    await lokian.addForSale(0, price)
+    const mon = await lokian.mons(0)
+    expect(mon.forSale).to.be.true
+    expect(mon.price).to.be.equal(price)
   })
 })
