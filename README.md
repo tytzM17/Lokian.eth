@@ -63,15 +63,14 @@ Finished
 - UI Tests
 
 Ongoing
-- Extensive tests in local or add unit tests 
+- Add unit tests (mvp)
 - Deploy and test to evm compatible testnet (mvp)
-- Extensive tests in testnet
+- Beta test in testnet
 - Deploy to evm compatible mainnets (mvp)
-
-- Create frontend in namecheap or gh-pages, (mvp)
-- Create landing page in pinata/ipfs or gh-pages (mvp)
-- Check guide on dapp submission and Submit to dappradar, state of the dapps, etc (mvp)
-- Buy domain for $10-15, if accepted in dappradar or state of the dapps
+- Create app in namecheap, moralis or gh-pages or depends on dappradar, (mvp)
+- Create site in namecheap, moralis or gh-pages (mvp)
+- Check guide on dapp submission and Submit to dappradar, etc (mvp)
+- Buy domain for $5-10, if accepted in dappradar or state of the dapps
 
 
 
