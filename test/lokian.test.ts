@@ -190,19 +190,17 @@ describe('Lokian', () => {
     const mon1 = await lokian.mons(0)
     const mon2 = await lokian.mons(1)
     const totalMons = await lokian.totalMons()
-    const prevTotalMons = totalMons
     expect(mon1.id).to.be.lt(totalMons)
     expect(mon2.id).to.be.lt(totalMons)
     expect(mon1.owner).to.be.equal(wallet.address)
     expect(mon1.owner).to.be.equal(mon2.owner)
-    // expect(mon1.id !== mon2.id).to.be.true
+    expect(mon1.id != mon2.id).to.be.true
     expect(mon1.forSale).to.be.false
     expect(mon2.forSale).to.be.false
     const tx = await lokian.breedMons(mon1.id, mon2.id)
     const recpt = tx.wait()
     if (recpt?.status) {
       const newTotalMons = await lokian.totalMons()
-      // expect(prevTotalMons + 1).to.be.equal(newTotalMons)
       expect(newTotalMons).to.be.equal(10)
     }
   })
