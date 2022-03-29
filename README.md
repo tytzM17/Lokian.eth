@@ -1,7 +1,5 @@
 # Lokian.eth: A trading card game dapp featuring NFT cards, share, fight and breed mythical creatures in solidity blockchains.
 
-<!-- <img src="./screenshots/fighting_tab.png" alt="" width="1000em" height="500em">
- -->
  <img src="./screenshots/project.eth.ss2.png" alt="" width="1000em" height="500em">
 
 ***

@@ -140,10 +140,52 @@ describe('Lokian', () => {
   it('Add mon for sale',async () => {
     const _price = parseEther('5')
     const price = `${BigNumber.from(_price._hex).toBigInt()}`
-    await lokian.createMon(0,0,false)
     await lokian.addForSale(0, price)
     const mon = await lokian.mons(0)
+    const totalMons = await lokian.totalMons()
+    expect(mon.id).to.be.lt(totalMons)
     expect(mon.forSale).to.be.true
     expect(mon.price).to.be.equal(price)
+  })
+  it('Remove mon for sale',async () => {
+    const _price = parseEther('5')
+    const price = `${BigNumber.from(_price._hex).toBigInt()}`
+    await lokian.addForSale(0, price)
+    const mon = await lokian.mons(0)
+    const totalMons = await lokian.totalMons()
+    expect(mon.owner).to.be.equal(wallet.address)
+    expect(mon.id).to.be.lt(totalMons)
+    const tx = await lokian.removeFromSale(mon.id)
+    const recpt = tx.wait()
+    if (recpt?.status) expect(mon.forSale).to.be.false
+  })
+  it('Buys a mon',async () => {
+    const _price = parseEther('50')
+    const price = `${BigNumber.from(_price._hex).toBigInt()}`
+    // await lokian.createMon(9,0,false)
+    await lokian.addForSale(0, price)
+    const mon = await lokian.mons(0)
+    const totalMons = await lokian.totalMons()
+    expect(mon.id).to.be.lt(totalMons)
+    expect(mon.forSale).to.be.true
+    const _token = parseEther('100')
+    const tokenInWei = `${BigNumber.from(_token._hex).toBigInt()}`
+    const _fee = parseEther('50')
+    const feeInWei = `${BigNumber.from(_fee._hex).toBigInt()}`
+    const hasTransferredToAnotherWallet = await token.transfer(walletTo.address, tokenInWei)
+    if (hasTransferredToAnotherWallet) {
+      token.connect(walletTo)
+      lokian.connect(walletTo)
+      let overrides = { value: feeInWei }
+      const tx = await lokian.buyMon(0, overrides)
+      const recpt = tx.wait()
+      if (recpt?.status) {
+        expect(mon.forSale).to.be.false
+        expect(mon.sharedTo).to.be.equal(walletTo.address)
+        expect(mon.owner).to.be.equal(walletTo.address)
+        expect(await token.balanceOf(walletTo.address)).to.be.equal(50)
+      }
+    }
+
   })
 })
