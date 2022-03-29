@@ -59,9 +59,9 @@ Finished
 - Create token tab, buy items (ERC1155) and burn functions (mvp)
 - Create token tab, your items, buy items, give to skeleton people(burn) UI (mvp)
 - UI Tests
+- Add unit tests (mvp)
 
 Ongoing
-- Add unit tests (mvp)
 - Deploy and test to evm compatible testnet (mvp)
 - Beta test in testnet
 - Deploy to evm compatible mainnets (mvp)
