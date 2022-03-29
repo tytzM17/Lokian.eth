@@ -186,58 +186,64 @@ describe('Lokian', () => {
   //     }
   //   }
   // })
-  it('Breed mons',async () => {
-    const mon1 = await lokian.mons(0)
-    const mon2 = await lokian.mons(1)
-    const totalMons = await lokian.totalMons()
-    expect(mon1.id).to.be.lt(totalMons)
-    expect(mon2.id).to.be.lt(totalMons)
-    expect(mon1.owner).to.be.equal(wallet.address)
-    expect(mon1.owner).to.be.equal(mon2.owner)
-    expect(mon1.id != mon2.id).to.be.true
-    expect(mon1.forSale).to.be.false
-    expect(mon2.forSale).to.be.false
-    const tx = await lokian.breedMons(mon1.id, mon2.id)
-    const recpt = tx.wait()
-    if (recpt?.status) {
-      const newTotalMons = await lokian.totalMons()
-      expect(newTotalMons).to.be.equal(10)
-    }
+  // it('Breed mons',async () => {
+  //   const mon1 = await lokian.mons(0)
+  //   const mon2 = await lokian.mons(1)
+  //   const totalMons = await lokian.totalMons()
+  //   expect(mon1.id).to.be.lt(totalMons)
+  //   expect(mon2.id).to.be.lt(totalMons)
+  //   expect(mon1.owner).to.be.equal(wallet.address)
+  //   expect(mon1.owner).to.be.equal(mon2.owner)
+  //   expect(mon1.id != mon2.id).to.be.true
+  //   expect(mon1.forSale).to.be.false
+  //   expect(mon2.forSale).to.be.false
+  //   const tx = await lokian.breedMons(mon1.id, mon2.id)
+  //   const recpt = tx.wait()
+  //   if (recpt?.status) {
+  //     const newTotalMons = await lokian.totalMons()
+  //     expect(newTotalMons).to.be.equal(10)
+  //   }
+  // })
+  // it('Fight mons',async () => {
+  //   const _price = parseEther('50')
+  //   const price = `${BigNumber.from(_price._hex).toBigInt()}`
+  //   await lokian.addForSale(1, price)
+  //   const mon = await lokian.mons(1)
+  //   const monEnemy = await lokian.mons(4)
+  //   const totalMons = await lokian.totalMons()
+  //   const _token = parseEther('100')
+  //   const tokenInWei = `${BigNumber.from(_token._hex).toBigInt()}`
+  //   const _fee = parseEther('50')
+  //   const feeInWei = `${BigNumber.from(_fee._hex).toBigInt()}`
+  //   const hasTransferredToAnotherWallet = await token.transfer(walletTo.address, tokenInWei)
+  //   if (hasTransferredToAnotherWallet) {
+  //     token.connect(walletTo)
+  //     lokian.connect(walletTo)
+  //     let overrides = { value: feeInWei }
+  //     const tx = await lokian.buyMon(1, overrides)
+  //     const recpt = tx.wait()
+  //     if (recpt?.status) {
+  //       expect(mon.id).to.be.lt(totalMons)
+  //       expect(monEnemy.id).to.be.lt(totalMons)
+  //       expect(mon.forSale).to.be.false
+  //       expect(monEnemy.forSale).to.be.false
+  //       const tx = await lokian.fight(mon.id, monEnemy.id)
+  //       const recpt = await tx.wait()
+  //       if (recpt?.status) {
+  //         lokian.on('FightResults', (_winnerId, _round) => {
+  //           const winId = BigNumber.from(_winnerId._hex).toNumber()
+  //           const round = BigNumber.from(_round._hex).toNumber()
+  //           expect(winId).to.be.gt(0)
+  //           expect(round).to.be.gt(0)
+  //         })
+  //       }
+  //     }
+  //   }
+  // })
+  it('Start sharing mons',async () => {
+
   })
-  it('Fight mons',async () => {
-    const _price = parseEther('50')
-    const price = `${BigNumber.from(_price._hex).toBigInt()}`
-    await lokian.addForSale(1, price)
-    const mon = await lokian.mons(1)
-    const monEnemy = await lokian.mons(4)
-    const totalMons = await lokian.totalMons()
-    const _token = parseEther('100')
-    const tokenInWei = `${BigNumber.from(_token._hex).toBigInt()}`
-    const _fee = parseEther('50')
-    const feeInWei = `${BigNumber.from(_fee._hex).toBigInt()}`
-    const hasTransferredToAnotherWallet = await token.transfer(walletTo.address, tokenInWei)
-    if (hasTransferredToAnotherWallet) {
-      token.connect(walletTo)
-      lokian.connect(walletTo)
-      let overrides = { value: feeInWei }
-      const tx = await lokian.buyMon(1, overrides)
-      const recpt = tx.wait()
-      if (recpt?.status) {
-        expect(mon.id).to.be.lt(totalMons)
-        expect(monEnemy.id).to.be.lt(totalMons)
-        expect(mon.forSale).to.be.false
-        expect(monEnemy.forSale).to.be.false
-        const tx = await lokian.fight(mon.id, monEnemy.id)
-        const recpt = await tx.wait()
-        if (recpt?.status) {
-          lokian.on('FightResults', (_winnerId, _round) => {
-            const winId = BigNumber.from(_winnerId._hex).toNumber()
-            const round = BigNumber.from(_round._hex).toNumber()
-            expect(winId).to.be.gt(0)
-            expect(round).to.be.gt(0)
-          })
-        }
-      }
-    }
+  it('Stop sharing mons',async () => {
+      
   })
 })
