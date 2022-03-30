@@ -60,16 +60,19 @@ Finished
 - Create token tab, your items, buy items, give to skeleton people(burn) UI (mvp)
 - UI Tests
 - Add unit tests (mvp)
+- Deploy and test to evm compatible testnet (mvp)
+- ERC20 Lokians deployed to polygon mumbai testnet: 0x2683EbB22FE772dB15C09b99897bD38B2Bf2487E
+- ERC1155 LokianItems NFT to polygon mumbai testnet: 
+0xC924448D65D0b20629eaAD25eE79bC2911E8690a
+- Contract Lokian.eth to polygon mumbai testnet: 
+0xb1e821c9550463b0d3d2aA4846bE79D6aB5Ec6ea
 
 Ongoing
-- Deploy and test to evm compatible testnet (mvp)
-- Beta test in testnet
+- Beta test in testnet (transfer/deposit tokens, transfer NFTs, buy, sell, breed, fight mons)
 - Deploy to evm compatible mainnets (mvp)
-- Create app in namecheap, moralis or gh-pages or depends on dappradar, (mvp)
-- Create site in namecheap, moralis or gh-pages (mvp)
+- Buy domain for site and app(subdomain?) for $5-10 one time, and host monthly
+- Create app and site in namecheap, moralis or gh-pages or depends on listing requirements, (mvp)
 - Check guide on dapp submission and Submit to dappradar, etc (mvp)
-- Buy domain for $5-10, if accepted in dappradar or state of the dapps
-
 
 
 

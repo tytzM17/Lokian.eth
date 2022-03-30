@@ -12,17 +12,18 @@ async function main() {
   // If this script is run directly using `node` you may want to call compile
   // manually to make sure everything is compiled
   // await hre.run('compile');
-  // param addresses
-  const tokenAddress = '';
-  const nftAddress = '';
+  
+  // Polygon mumbai testnet addresses
+  const tokenAddress = '0x2683EbB22FE772dB15C09b99897bD38B2Bf2487E';
+  const nftAddress = '0xC924448D65D0b20629eaAD25eE79bC2911E8690a';
 
   // We get the contract to deploy
-  const Cryptomons = await hre.ethers.getContractFactory("Cryptomons");
-  const cryptomons = await Cryptomons.deploy(tokenAddress, nftAddress);
+  const LokianEth = await hre.ethers.getContractFactory("Cryptomons");
+  const lokianEth = await LokianEth.deploy(tokenAddress, nftAddress);
 
-  await cryptomons.deployed();
+  await lokianEth.deployed();
 
-  console.log("Cryptomons deployed to:", cryptomons.address);
+  console.log("LokianEth deployed to:", lokianEth.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

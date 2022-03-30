@@ -19,7 +19,7 @@ async function main() {
 
   await lokianItems.deployed();
 
-  console.log("DarkleafNFT deployed to:", lokianItems.address);
+  console.log("LokianItems deployed to:", lokianItems.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

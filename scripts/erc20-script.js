@@ -15,7 +15,7 @@ async function main() {
 
   // We get the contract to deploy
   const Lokians = await hre.ethers.getContractFactory("Lokians");
-  const lokians = await lokians.deploy();
+  const lokians = await Lokians.deploy();
 
   await lokians.deployed();
 
