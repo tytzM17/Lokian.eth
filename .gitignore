@@ -12,6 +12,7 @@
 /build
 /dist
 /cache
+/artifacts
 
 # misc
 .DS_Store
@@ -20,6 +21,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.secret
 
 npm-debug.log*
 yarn-debug.log*
@@ -27,3 +29,5 @@ yarn-error.log*
 
 # arts
 /src/sprites-copy/*
+
+

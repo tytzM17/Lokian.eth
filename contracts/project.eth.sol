@@ -515,6 +515,11 @@ contract Cryptomons is ERC1155Holder {
         createMon(Species(1), 0, false);
         createMon(Species(2), 0, false);
         createMon(Species(3), 0, false);
+        createMon(Species(4), 0, false);
+        createMon(Species(5), 0, false);
+        createMon(Species(6), 0, false);
+        createMon(Species(7), 0, false);
+        createMon(Species(8), 0, false);
     }
 
     modifier onlyManager() {

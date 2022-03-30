@@ -22,11 +22,15 @@
   },
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "build",
+    "cache",
+    "contracts",
+    "scripts"
   ],
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "src/serviceWorker.js"
-, "test/basicTest.test.js"  ]
+  ]
 }
