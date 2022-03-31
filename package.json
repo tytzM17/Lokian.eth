@@ -51,8 +51,9 @@
     ]
   },
   "devDependencies": {
-    "@openzeppelin/contracts": "^4.5.0",
     "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-etherscan": "^3.0.3",
+    "@openzeppelin/contracts": "^4.5.0",
     "hardhat": "^2.9.2",
     "image-webpack-loader": "^7.0.1",
     "source-map-loader": "^1.0.0",

@@ -1,0 +1,6 @@
+module.exports = [
+    // erc20
+    "0x2683EbB22FE772dB15C09b99897bD38B2Bf2487E",
+    // erc1155
+    "0xC924448D65D0b20629eaAD25eE79bC2911E8690a"
+  ];

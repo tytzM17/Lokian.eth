@@ -68,7 +68,7 @@ Finished
 0xb1e821c9550463b0d3d2aA4846bE79D6aB5Ec6ea
 
 Ongoing
-- Beta test in testnet (verify contracts, transfer/deposit tokens, transfer NFTs, buy, sell, breed, fight mons)
+- Beta test in testnet (verify contracts OK, transfer/deposit tokens, transfer NFTs, buy, sell, breed, fight mons)
 - Deploy to evm compatible mainnets (mvp)
 - Buy domain for site and app(subdomain?) for $5-10 one time, and host monthly
 - Create app and site in namecheap, moralis or gh-pages or depends on listing requirements, (mvp)
