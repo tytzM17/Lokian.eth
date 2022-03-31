@@ -70,11 +70,14 @@ Finished
 Ongoing
 - Beta test in testnet (verify contracts OK, transfer/deposit tokens, transfer NFTs, buy, sell, breed, fight mons)
 - Deploy to evm compatible mainnets (mvp)
-- Buy domain for site and app(subdomain?) for $5-10 one time, and host monthly
-- Create app and site in namecheap, moralis or gh-pages or depends on listing requirements, (mvp)
+- Buy domain in cloudfare registrar for site and app(subdomain?) for $5-10 one time
+- Host app and site in cloudfare, moralis or gh-pages with ssl or depends on listing requirements, (mvp)
 - Check guide on dapp submission and Submit to dappradar, etc (mvp)
 
-
+Future
+- GameFi, staking
+- DAO
+- Metaverse, with duels or royal rumble
 
 
 
