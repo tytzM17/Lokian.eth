@@ -2,6 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://tytzm17.github.io/Lokian.eth/",
   "dependencies": {
     "@ethersproject/bignumber": "^5.4.2",
     "@ethersproject/constants": "^5.5.0",
