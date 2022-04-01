@@ -1021,7 +1021,7 @@ function App() {
       <div className="AppTitle">
         <div className="row">
           <div className="column title-column">
-            <img src="/favicon-16x16.png" alt="lokian-logo" /> <span>L O K I A N </span>
+            <img src={MonImages['favicon16x16']} alt="lokian-logo" /> <span>L O K I A N </span>
           </div>
 
           <div className="column user-info-column">
