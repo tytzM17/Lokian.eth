@@ -18,7 +18,8 @@
     "jsx": "react",
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
-    "noEmit": true
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true
   },
   "exclude": [
     "node_modules",

@@ -37,6 +37,8 @@ import bg8 from './sprites-copy/background/8.png'
 import bg9 from './sprites-copy/background/9.png'
 import bg10 from './sprites-copy/background/10.png'
 
+import MonImages from "./sprites-copy";
+
 // axios
 import axios, { AxiosResponse } from 'axios'
 
@@ -54,13 +56,14 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
 }
 
 // Contact deployment address
-const CONTRACT_ADDRESS = '0x5A4c15d98ef9cfC953ef131dD25e855ce11816Dd'
-
+// const CONTRACT_ADDRESS = '0x5A4c15d98ef9cfC953ef131dD25e855ce11816Dd'
+const CONTRACT_ADDRESS = '0xb1e821c9550463b0d3d2aA4846bE79D6aB5Ec6ea'
 // ERC20 coin
-const ERC20_CONTRACT_ADDRESS = '0x1b7A38b3C77e405750aF1C08d102eF4f23e8c3a2'
-
+// const ERC20_CONTRACT_ADDRESS = '0x1b7A38b3C77e405750aF1C08d102eF4f23e8c3a2'
+const ERC20_CONTRACT_ADDRESS = '0x2683EbB22FE772dB15C09b99897bD38B2Bf2487E'
 // ERC1155 lokian items
-const ERC1155_CONTRACT_ADDRESS = '0x77a9BD3C0ae2e65c699D53b011667c642b2c68C8'
+// const ERC1155_CONTRACT_ADDRESS = '0x77a9BD3C0ae2e65c699D53b011667c642b2c68C8'
+const ERC1155_CONTRACT_ADDRESS = '0xC924448D65D0b20629eaAD25eE79bC2911E8690a'
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]
@@ -307,7 +310,7 @@ function App() {
       setActivatingConnector(undefined)
     }
 
-    refreshMons()
+    refreshMons()   
   }, [activatingConnector, connector])
 
   // Get network coin price e.g. eth or glmr price
@@ -614,7 +617,7 @@ function App() {
     }
     const _price = parseEther(price)
     const priceInWei = `${BigNumber.from(_price._hex).toBigInt()}`
-    approve(library, account, price)
+    approve(library, account, priceInWei)
       .then(async (results) => {
         if (results) {
           const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
@@ -650,11 +653,14 @@ function App() {
           txFail(recpt, toast)
         } else {
           toast.error(`Error in approving`)
+          console.log(`Error in approving`);
+          
         }
         setDisableBuyItem(false)
       })
       .catch((e) => {
         toast.error(`Error: ${e}`)
+        console.log(`Error: ${e}`);
         setDisableBuyItem(false)
       })
   }
@@ -684,7 +690,7 @@ function App() {
       <div className="monBox" style={bgStyle(mon?.monType)}>
         <img
           className="monImg"
-          src={require('./sprites-copy/' + (parseInt(mon?.species) + 1) + '.png')}
+          src={MonImages[`${parseInt(mon?.species) + 1}`]}
           alt={mon?.species}
         />
       </div>
@@ -812,7 +818,7 @@ function App() {
             <figcaption>
               <div className="monBox">
                 {' '}
-                <img className="monImg" src={require('./sprites-copy/0.png')} alt={'empty'} />
+                <img className="monImg" src={MonImages['0']} alt={'empty'} />
               </div>
             </figcaption>
           </figure>
@@ -1249,6 +1255,7 @@ function App() {
 
           <div className="rpgui-container framed-grey">
             <div className="p1">Buy somethin</div>
+            <div className="p1">note: if transaction fails, set gas fees above 100k</div>
             <div className="sharing-area">
               <span>
                 <div className="rpgui-icon sword"></div> A Sword
@@ -1382,10 +1389,11 @@ function App() {
 
           <div className="rpgui-container framed-grey">
             <div className="p1">Give to the skeleton people (burn token)</div>
+            <div className="p1">note: if transaction fails, set gas fees above 100k</div>
             <div style={{ display: 'flex', width: '20%', marginLeft: '40%', marginRight: 'auto' }}>
-              <img className="monImg" src={require('./sprites-copy/skelly.png')} alt="skeleton-people-1" />
-              <img className="monImg" src={require('./sprites-copy/skelly2.png')} alt="skeleton-people-1" />
-              <img className="monImg" src={require('./sprites-copy/skelly-rip.png')} alt="skeleton-people-1" />
+              <img className="monImg" src={MonImages['skelly']} alt="skeleton-people-1" />
+              <img className="monImg" src={MonImages['skelly2']} alt="skeleton-people-1" />
+              <img className="monImg" src={MonImages['skellyrip']} alt="skeleton-people-1" />
             </div>
             <div className="sharing-area">
               <div className="form-line">
