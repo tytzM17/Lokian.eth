@@ -66,10 +66,10 @@ Finished
 0xC924448D65D0b20629eaAD25eE79bC2911E8690a
 - Contract Lokian.eth to polygon mumbai testnet: 
 0xb1e821c9550463b0d3d2aA4846bE79D6aB5Ec6ea
+- Game prototype deployed at https://tytzm17.github.io/Lokian.eth/
 
 Ongoing
-- Beta test in testnet (verify contracts OK, transfer/deposit tokens OK, transfer NFTs OK, buy OK, sell OK, removeFromsell OK, breed OK, share OK, shareToMe, fight mons,
-burn FAIL(solution: set gas limit t0 140k or set gas limit in app), buy potions FAIL(check token allowance, solved in approve function in app), buy equipments FAIL(check token allowance, solved in approve function in app))
+- Beta test in testnet (burn FAIL(solution: set gas limit t0 140k or set gas limit in app))
 - Add spinner in breed and sharing mons, remove from sale, add to sale
 - Deploy to evm compatible mainnets (mvp)
 - Buy domain in cloudfare registrar for site and app(subdomain?) for $5-10 one time
