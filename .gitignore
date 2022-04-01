@@ -32,4 +32,5 @@ yarn-error.log*
 # arts
 /src/sprites-copy/*
 
+.idea/
 
