@@ -2,8 +2,8 @@ import axios from 'axios';
 
 export const pinJSONToIPFS = (params) => {
     const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`;
-    const pinataApiKey = process.env.REACT_APP_PINATA_API_KEY;
-    const pinataSecretApiKey = process.env.REACT_APP_PINATA_SECRET_API_KEY;
+    const pinataApiKey = process?.env.REACT_APP_PINATA_API_KEY;
+    const pinataSecretApiKey = process?.env.REACT_APP_PINATA_SECRET_API_KEY;
     const speciesImgIdx = params?.mon?.species ? parseInt(params.mon.species)+1 : 0; // add 1
 
     const JSONBody = {

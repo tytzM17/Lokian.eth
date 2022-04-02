@@ -1,11 +1,10 @@
 import axios from 'axios'
-import bg10 from '../sprites/background/10.png' // test
 import { dataURItoBlob } from "../utils/dataURItoBlob";
 
 export const pinFileToIPFS = (params) => {
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
-    const pinataApiKey = process.env.REACT_APP_PINATA_API_KEY;
-    const pinataSecretApiKey = process.env.REACT_APP_PINATA_SECRET_API_KEY;
+    const pinataApiKey = process?.env.REACT_APP_PINATA_API_KEY;
+    const pinataSecretApiKey = process?.env.REACT_APP_PINATA_SECRET_API_KEY;
 
     const monName = params?.monName;
     //we gather a local file for this example, but any valid readStream source will work here.
