@@ -69,9 +69,9 @@ Finished
 - Game prototype deployed at https://tytzm17.github.io/Lokian.eth/
 - Beta test in testnet (burn FAIL(solution: set gas limit t0 140k or set gas limit in app)), test OK
 - Add spinner in breed and sharing mons, remove from sale, add to sale, test OK
+- Refactor UI code, remove and clean (mvp)
 
 Ongoing
-- Refactor UI code, remove and clean (mvp)
 - Deploy to evm compatible mainnets (mvp)
 - Buy domain in cloudfare registrar for site and app(subdomain?) for $5-10 one time
 - Host app and site in cloudfare, moralis or gh-pages with ssl or depends on listing requirements, Refactor react code upon hosting (mvp)
