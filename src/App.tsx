@@ -37,10 +37,7 @@ import bg8 from './sprites/background/8.png'
 import bg9 from './sprites/background/9.png'
 import bg10 from './sprites/background/10.png'
 
-import MonImages from "./sprites";
-
-// axios
-import axios, { AxiosResponse } from 'axios'
+import MonImages from './sprites'
 
 // util
 import { Web3Provider } from '@ethersproject/providers'
@@ -237,7 +234,6 @@ async function approve(_library, _account, _amount) {
 
 function Account() {
   const { account } = useWeb3React()
-
   return (
     <span>
       {account === null ? '-' : account ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}` : ''}
@@ -251,7 +247,6 @@ async function getTokenBalance(_library, _account) {
   }
   const erc20Contr = new Contract(ERC20_CONTRACT_ADDRESS, erc20Interface, _library.getSigner(_account))
   const bal = await erc20Contr.balanceOf(_account)
-
   return formatEther(BigNumber.from(bal?._hex).toBigInt())
 }
 
@@ -283,23 +278,24 @@ function App() {
   const [rounds, setRounds] = useState(null) // Used to display number of rounds the fight lasted
   const [shareId, setShareId] = useState('') // Used in shareId form input field
   const [shareAddress, setShareAddress] = useState('') // Used in shareAddress form input field
-  const [coinData, setCoinData] = useState<AxiosResponse | null>(null)
   const [tokenBalance, setTokenBalance] = useState('0')
   const [fightTxDone, setFightTxDone] = useState(false)
   const [rewards, setRewards] = useState(0)
-
   const [healingPotions, setHealingPotions] = useState(null)
   const [manaPotions, setManaPotions] = useState(null)
   const [magicPotions, setMagicPotions] = useState(null)
   const [swords, setSwords] = useState(null)
   const [shields, setShields] = useState(null)
-
   const [disableFightBtn, setDisableFightBtn] = useState(false)
-
   const [buyItemAmount, setBuyItemAmount] = useState('0')
   const [burnAmount, setBurnAmount] = useState('0')
   const [disableBuyItemBtn, setDisableBuyItem] = useState(false)
-
+  const [isShareLoading, setIsShareLoading] = useState(false)
+  const [isStopSharingLoading, setIsStopSharingLoading] = useState(false)
+  const [isBreedMonLoading, setIsBreedMonLoading] = useState(false)
+  const [isBuyMonLoading, setIsBuyMonLoading] = useState(false)
+  const [isAddForSaleLoading, setIsAddForSaleLoading] = useState(false)
+  const [isRemoveFromSaleLoading, setIsRemoveFromSaleLoading] = useState(false)
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
 
@@ -310,42 +306,8 @@ function App() {
       setActivatingConnector(undefined)
     }
 
-    refreshMons()   
+    refreshMons()
   }, [activatingConnector, connector])
-
-  // Get network coin price e.g. eth or glmr price
-  useEffect(() => {
-    const eth = 'ethereum'
-    const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${eth}`
-    let unmounted = false
-    let source = axios.CancelToken.source()
-
-    axios
-      .get(url, {
-        cancelToken: source.token,
-      })
-      .then((res) => {
-        if (!unmounted) {
-          // @ts-ignore
-          setCoinData(res.data)
-        }
-      })
-      .catch(function (e) {
-        if (!unmounted) {
-          toast.error(`Error: ${e.message}`)
-        }
-        if (axios.isCancel(e)) {
-          console.log(`request cancelled:${e.message}`)
-        } else {
-          console.log('another error happened:' + e.message)
-        }
-      })
-
-    return () => {
-      unmounted = true
-      source.cancel('Cancelling in cleanup')
-    }
-  }, [])
 
   // Get token balance of user
   useEffect(() => {
@@ -398,11 +360,9 @@ function App() {
     return () => {
       const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
       contr.off('FightResults', (_winnerId, _round) => {
-        console.log('unsubscribe event: fight results')
         setDisableFightBtn(false)
       })
       contr.off('Rewards', (_winnerId, _round) => {
-        console.log('unsubscribe event: rewards')
         setDisableFightBtn(false)
       })
 
@@ -475,63 +435,78 @@ function App() {
 
   // Function that buys a Cryptomon through a smart contract function
   async function buyMon(id, price) {
+    setIsBuyMonLoading(true)
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    // const weiPerEth = WeiPerEther as any
     const newprice = `${BigInt(price)}`
-    // const newPrice =  BigNumber.from(parseEther(price)).toString();
-    let overrides = { value: newprice }
+    let overrides = {
+      value: newprice,
+      gasLimit: 120000,
+    }
 
-    const tx = await contr.buyMon(id, overrides)
-    const recpt = await tx.wait()
-    txSuccess(recpt, toast, refreshMons)
-    txFail(recpt, toast)
+    const tx = await contr.buyMon(id, overrides).catch((err) => setIsBuyMonLoading(false))
+    const recpt = await tx?.wait()
+    txSuccess(recpt, toast, refreshMons, (loadVal: boolean) => setIsBuyMonLoading(loadVal))
+    txFail(recpt, toast, (loadVal: boolean) => setIsBuyMonLoading(loadVal))
   }
 
   // Function that adds a Cryptomon for sale through a smart contract function
   async function addForSale(id, price) {
+    setIsAddForSaleLoading(true)
     if (price === 0 || price === '0') {
       toast.error('🦄 Price is 0')
       return
     }
+    let overrides = {
+      gasLimit: 120000,
+    }
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const tx = await contr.addForSale(id, parseEther(price))
-    const receipt = await tx.wait()
+    const tx = await contr.addForSale(id, parseEther(price), overrides).catch((err) => setIsAddForSaleLoading(false))
+    const receipt = await tx?.wait()
     if (receipt && receipt.status === 1) {
       toast.success(`Success, Tx hash: ${receipt.transactionHash}`)
       refreshMons()
+      setIsAddForSaleLoading(false)
     }
-
     if (receipt && receipt.status === 0) {
       toast.error(`Error, Tx hash: ${receipt.transactionHash}`)
+      setIsAddForSaleLoading(false)
     }
   }
 
   // Function that removes a Cryptomon from sale through a smart contract function
   async function removeFromSale(id) {
+    setIsRemoveFromSaleLoading(true)
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const tx = await contr.removeFromSale(id)
-    const recpt = await tx.wait()
+    let overrides = {
+      gasLimit: 120000,
+    }
+    const tx = await contr.removeFromSale(id, overrides).catch((err) => setIsRemoveFromSaleLoading(false))
+    const recpt = await tx?.wait()
     if (recpt && recpt.status === 1) {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
       refreshMons()
+      setIsRemoveFromSaleLoading(false)
     }
-
     if (recpt && recpt.status === 0) {
       toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+      setIsRemoveFromSaleLoading(false)
     }
   }
 
   // Function that breeds 2 Cryptomons through a smart contract function
   async function breedMons(id1, id2) {
+    setIsBreedMonLoading(true)
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const tx = await contr.breedMons(id1, id2)
-    const recpt = await tx.wait()
+    const tx = await contr.breedMons(id1, id2).catch((err) => setIsBreedMonLoading(false))
+    const recpt = await tx?.wait()
     if (recpt && recpt.status) {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
+      setIsBreedMonLoading(false)
     }
 
     if (recpt && !recpt.status) {
       toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+      setIsBreedMonLoading(false)
     }
 
     await refreshMons()
@@ -544,9 +519,12 @@ function App() {
       return
     }
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+    let overrides = {
+      gasLimit: 120000,
+    }
     try {
-      const tx = await contr.fight(id1, id2)
-      const recpt = await tx.wait()
+      const tx = await contr.fight(id1, id2, overrides).catch((err) => setDisableFightBtn(false))
+      const recpt = await tx?.wait()
       if (recpt && recpt.status) {
         setFightTxDone(true)
       }
@@ -563,31 +541,42 @@ function App() {
 
   // Function that starts sharing a Cryptomon to another address through a smart contract function
   async function startSharing(id, address) {
+    setIsShareLoading(true)
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const tx = await contr.startSharing(id, address)
-    const recpt = await tx.wait()
+    let overrides = {
+      gasLimit: 120000,
+    }
+    const tx = await contr.startSharing(id, address, overrides).catch((err) => setIsShareLoading(false))
+    const recpt = await tx?.wait()
     if (recpt && recpt.status) {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
       refreshMons()
+      setIsShareLoading(false)
     }
-
     if (recpt && !recpt.status) {
       toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+      setIsShareLoading(false)
     }
   }
 
   // Function that stops sharing a Cryptomon with other addresses through a smart contrct function
   async function stopSharing(id) {
+    setIsStopSharingLoading(true)
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const tx = await contr.stopSharing(id)
-    const recpt = await tx.wait()
+    let overrides = {
+      gasLimit: 120000,
+    }
+    const tx = await contr.stopSharing(id, overrides).catch((err) => setIsStopSharingLoading(false))
+    const recpt = await tx?.wait()
     if (recpt && recpt.status) {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
       refreshMons()
+      setIsStopSharingLoading(false)
     }
 
     if (recpt && !recpt.status) {
       toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
+      setIsStopSharingLoading(false)
     }
   }
 
@@ -615,14 +604,17 @@ function App() {
     if (!units || !price || !itemNumber) {
       return
     }
+    let overrides = {
+      gasLimit: 120000,
+    }
     const _price = parseEther(price)
     const priceInWei = `${BigNumber.from(_price._hex).toBigInt()}`
     approve(library, account, priceInWei)
       .then(async (results) => {
         if (results) {
           const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-          const tx = await contr.buyItem(units, priceInWei, itemNumber, data)
-          const recpt = await tx.wait()
+          const tx = await contr.buyItem(units, priceInWei, itemNumber, data, overrides)
+          const recpt = await tx?.wait()
           txSuccess(recpt, toast, refreshMons)
           txFail(recpt, toast)
         } else {
@@ -631,7 +623,7 @@ function App() {
         setDisableBuyItem(false)
       })
       .catch((e) => {
-        toast.error(`Error: ${e}`)
+        toast.error(`Error: ${e?.message}`)
         setDisableBuyItem(false)
       })
   }
@@ -643,24 +635,24 @@ function App() {
     }
     const _amount = parseEther(amount)
     const amountInWei = `${BigNumber.from(_amount._hex).toBigInt()}`
+    let overrides = {
+      gasLimit: 120000,
+    }
     approve(library, account, amountInWei)
       .then(async (results) => {
         if (results) {
           const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-          const tx = await contr.burn(amountInWei)
+          const tx = await contr.burn(amountInWei, overrides)
           const recpt = await tx.wait()
           txSuccess(recpt, toast, refreshMons)
           txFail(recpt, toast)
         } else {
           toast.error(`Error in approving`)
-          console.log(`Error in approving`);
-          
         }
         setDisableBuyItem(false)
       })
       .catch((e) => {
-        toast.error(`Error: ${e}`)
-        console.log(`Error: ${e}`);
+        toast.error(`Error: ${e?.message}`)
         setDisableBuyItem(false)
       })
   }
@@ -688,11 +680,7 @@ function App() {
   const imgDiv = (mon) => {
     return (
       <div className="monBox" style={bgStyle(mon?.monType)}>
-        <img
-          className="monImg"
-          src={MonImages[`${parseInt(mon?.species) + 1}`]}
-          alt={mon?.species}
-        />
+        <img className="monImg" src={MonImages[`${parseInt(mon?.species) + 1}`]} alt={mon?.species} />
       </div>
     )
   }
@@ -727,14 +715,20 @@ function App() {
       <div className="selling-div">
         <label className="add-for-sale-label">Set creatures price:</label>
         <input type="number" className="add-for-sale-input" value={value} onChange={(e) => handleChange(mon?.id, e)} />
-        <button
-          className="rpgui-button"
-          type="button"
-          style={{ float: 'right' }}
-          onClick={() => addForSale(mon?.id, value)}
-        >
-          Add for sale
-        </button>
+        {isAddForSaleLoading ? (
+          <button className="rpgui-button" type="button" style={{ width: '100%' }}>
+            <Spinner color="#000" />
+          </button>
+        ) : (
+          <button
+            className="rpgui-button"
+            type="button"
+            style={{ float: 'right' }}
+            onClick={() => addForSale(mon?.id, value)}
+          >
+            Add for sale
+          </button>
+        )}
       </div>
     )
   }
@@ -748,14 +742,21 @@ function App() {
           <br />
           {formatUnits(mon?.price)}
         </label>
-        <button
-          className="rpgui-button"
-          type="button"
-          style={{ float: 'right' }}
-          onClick={() => removeFromSale(mon?.id)}
-        >
-          Remove from sale
-        </button>
+        {isRemoveFromSaleLoading ? (
+          <button className="rpgui-button" type="button" style={{ width: '100%' }}>
+            <Spinner color="#000" />
+          </button>
+        ) : (
+          <button
+            className="rpgui-button"
+            type="button"
+            style={{ float: 'right' }}
+            onClick={() => removeFromSale(mon?.id)}
+          >
+            Remove from sale
+            {isRemoveFromSaleLoading && <Spinner color="#000" />}
+          </button>
+        )}
       </div>
     )
   }
@@ -770,14 +771,20 @@ function App() {
           {formatUnits(mon?.price, 18)}
         </div>
         <div className="sale-owner">Creature Owner: {mon?.owner} </div>
-        <button
-          className="sale-btn rpgui-button"
-          type="button"
-          style={{ float: 'right' }}
-          onClick={() => buyMon(mon?.id, mon?.price)}
-        >
-          Buy
-        </button>
+        {isBuyMonLoading ? (
+          <button className="rpgui-button" type="button" style={{ width: '100%' }}>
+            <Spinner color="#000" />
+          </button>
+        ) : (
+          <button
+            className="sale-btn rpgui-button"
+            type="button"
+            style={{ float: 'right' }}
+            onClick={() => buyMon(mon?.id, mon?.price)}
+          >
+            Buy
+          </button>
+        )}
       </div>
     )
   }
@@ -904,10 +911,11 @@ function App() {
       </React.Fragment>
     ))
 
-  const cond = (mon) => (
-    ((mon.owner.toString().toLowerCase() === account?.toString()?.toLowerCase()) && (!mon.forSale)) ||
-    ((mon.sharedTo.toString().toLowerCase() === account?.toString()?.toLowerCase()) && (mon.owner.toString().toLowerCase() !== account?.toString()?.toLowerCase()))
-  );
+  const cond = (mon) =>
+    (mon.owner.toString().toLowerCase() === account?.toString()?.toLowerCase() && !mon.forSale) ||
+    (mon.sharedTo.toString().toLowerCase() === account?.toString()?.toLowerCase() &&
+      mon.owner.toString().toLowerCase() !== account?.toString()?.toLowerCase())
+
   // div with user's Cryptomons that can be used to fight with
   const forFightWithCryptomons = cryptomons.filter(cond).map((mon) => (
     <React.Fragment key={mon.id}>
@@ -935,7 +943,7 @@ function App() {
 
   // div with Cryptomons that user can fight against
   const forFightAgainstCryptomons = otherCryptomons
-    .filter((mon) => ((!mon.forSale) && (mon.sharedTo.toLowerCase() !== account?.toString().toLocaleLowerCase())) )
+    .filter((mon) => !mon.forSale && mon.sharedTo.toLowerCase() !== account?.toString().toLocaleLowerCase())
     .map((mon) => (
       <React.Fragment key={mon.id}>
         <div className="mon">
@@ -962,7 +970,7 @@ function App() {
 
   // div with user's shared Cryptomons
   const sharedByMe = myCryptomons
-    .filter((mon) => ((mon.sharedTo.toLowerCase() !== account?.toString().toLocaleLowerCase()) && (!mon.forSale)))
+    .filter((mon) => mon.sharedTo.toLowerCase() !== account?.toString().toLocaleLowerCase() && !mon.forSale)
     .map((mon) => (
       <React.Fragment key={mon.id}>
         <div className="mon">
@@ -973,14 +981,20 @@ function App() {
           </figure>
           <div className="sharing-div">
             <div className="shareTo-owner">Shared to address: {mon.sharedTo} </div>
-            <button
-              className="stop-sharing-btn rpgui-button"
-              type="button"
-              style={{ float: 'right' }}
-              onClick={() => stopSharing(mon.id)}
-            >
-              Stop sharing
-            </button>
+            {isStopSharingLoading ? (
+              <button className="rpgui-button" type="button" style={{ width: '100%' }}>
+                <Spinner color="#000" />
+              </button>
+            ) : (
+              <button
+                className="stop-sharing-btn rpgui-button"
+                type="button"
+                style={{ float: 'right' }}
+                onClick={() => stopSharing(mon.id)}
+              >
+                Stop sharing
+              </button>
+            )}
           </div>
         </div>
       </React.Fragment>
@@ -999,14 +1013,20 @@ function App() {
           </figure>
           <div className="sharing-div">
             <label className="shared-owner">Creature Owner: {mon.owner} </label>
-            <button
-              className="stop-sharing-btn rpgui-button"
-              type="button"
-              style={{ float: 'right' }}
-              onClick={() => stopSharing(mon.id)}
-            >
-              Stop sharing
-            </button>
+            {isStopSharingLoading ? (
+              <button className="rpgui-button" type="button" style={{ width: '100%' }}>
+                <Spinner color="#000" />
+              </button>
+            ) : (
+              <button
+                className="stop-sharing-btn rpgui-button"
+                type="button"
+                style={{ float: 'right' }}
+                onClick={() => stopSharing(mon.id)}
+              >
+                Stop sharing
+              </button>
+            )}
           </div>
         </div>
       </React.Fragment>
@@ -1019,30 +1039,22 @@ function App() {
       <ToastContainer />
 
       <div className="AppTitle">
-        <div className="row">
-          <div className="column title-column">
+        <div className="row" style={{ maxWidth: '100%' }}>
+          <div className="column title-column col-lg-3 col-sm-12">
             <img src={MonImages['favicon16x16']} alt="lokian-logo" /> <span>L O K I A N </span>
           </div>
 
-          <div className="column user-info-column">
+          <div className="column user-info-column col-lg-3 col-sm-12">
             {/* ERC20, LOKs */}
             <span className="rpgui-container framed-grey">
               {`${Math.round(Number(tokenBalance) * 1e4) / 1e4 || '0'} LOKs `}{' '}
             </span>
-
-            {/* Network Errors */}
-            {!!error && (
-              <h4 className="rpgui-container framed-golden-2" style={{ marginTop: '1rem', marginBottom: '0' }}>
-                {getErrorMessage(error)}
-              </h4>
-            )}
           </div>
 
-          <div className="column wallet-column">
-            {/* wallet buttons */}
-            <span className="wallet-buttons">
+          <div className="column wallet-info-column col-lg-6 col-sm-12">
+            <div className="row wallet-buttons">
               {/* wallet logout */}
-              <div>
+              <div className="column wallet-column col-lg-3 col-sm-12">
                 {(active || error) && (
                   <button
                     className="rpgui-button"
@@ -1060,6 +1072,7 @@ function App() {
                   </button>
                 )}
               </div>
+              {/* wallet info */}
               {Object.keys(connectorsByName).map((name) => {
                 const currentConnector = connectorsByName[name]
                 const activating = currentConnector === activatingConnector
@@ -1067,61 +1080,81 @@ function App() {
                 const disabled = !triedEager || !!activatingConnector || connected || !!error
 
                 return (
-                  <button
-                    className="rpgui-button golden"
-                    type="button"
-                    style={{
-                      fontSize: '20px',
-                      paddingTop: '14px',
-                    }}
-                    onClick={() => {
-                      setActivatingConnector(currentConnector)
-                      activate(currentConnector)
-                    }}
-                    disabled={disabled}
-                    key={name}
-                  >
-                    {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
-                    <Account /> <div style={{ display: 'none' }}>{name}</div>
-                    {!account ? `Connect wallet` : ''}
-                  </button>
+                  <div className="column wallet-column col-lg-9 col-sm-12">
+                    <button
+                      className="rpgui-button golden"
+                      type="button"
+                      style={{
+                        fontSize: '20px',
+                        paddingTop: '14px',
+                        width: '100%',
+                      }}
+                      onClick={() => {
+                        setActivatingConnector(currentConnector)
+                        activate(currentConnector)
+                      }}
+                      disabled={disabled}
+                      key={name}
+                    >
+                      {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
+                      <Account />
+                      <div style={{ display: 'none' }}>{name}</div>
+                      {!account ? `Connect wallet` : ''}
+                    </button>
+                  </div>
                 )
               })}
-            </span>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="column user-info-column col-lg-12 col-sm-12">
+            {/* Network Errors */}
+            {!!error && (
+              <h4 className="rpgui-container framed-golden-2" style={{ marginTop: '1rem', marginBottom: '0' }}>
+                {getErrorMessage(error)}
+              </h4>
+            )}
           </div>
         </div>
       </div>
 
-      <Tabs defaultActiveKey="tokens" id="uncontrolled-tab-example">
+      <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example">
         <Tab className="x" eventKey="myCryptomons" title="My Creatures">
           <div className="p1">Your Entries</div>
           {myCryptomonsDiv}
         </Tab>
-        <Tab eventKey="forSale" title="For trade">
-          <div className="p1">Manage Trade</div>
+        <Tab eventKey="forSale" title="My Shop">
+          <div className="p1">My Shop</div>
           {forSaleCryptomons}
         </Tab>
-        <Tab eventKey="buyCryptomons" title="Trade Creatures">
+        <Tab eventKey="buyCryptomons" title="Marketplace">
           {buyCryptomons}
         </Tab>
-        <Tab eventKey="breedCryptomons" title="Breed Creatures">
-          <div className="p1">Breeding Grounds</div>
+        <Tab eventKey="breedCryptomons" title="Breed">
+          <div className="p1">Breed</div>
           <div className="breeding-area">
             {breedOption(breedChoice1)}
             {breedOption(breedChoice2)}
-            <button
-              className="rpgui-button"
-              type="button"
-              style={{ width: '420px' }}
-              onClick={() => breedMons(breedChoice1, breedChoice2)}
-            >
-              Breed choosen creatures
-            </button>
+            {isBreedMonLoading ? (
+              <button className="rpgui-button" type="button" style={{ width: '100%' }}>
+                <Spinner color="#000" />
+              </button>
+            ) : (
+              <button
+                className="rpgui-button"
+                type="button"
+                style={{ width: '420px' }}
+                onClick={() => breedMons(breedChoice1, breedChoice2)}
+              >
+                Breed choosen creatures
+              </button>
+            )}
           </div>
           <br />
           {forBreedCryptomons}
         </Tab>
-        <Tab eventKey="fight" title="Fight">
+        <Tab eventKey="fight" title="Arena">
           <div className="p1">V S</div>
           <div className="fighting-area">
             {breedOption(fightChoice1)}
@@ -1155,37 +1188,35 @@ function App() {
             {disableFightBtn ? (
               <Spinner color="gray" style={{ marginLeft: '50%', marginRight: 'auto', padding: '8px' }} />
             ) : (
-              ''
+              <button
+                id="fight-btn"
+                className="rpgui-button"
+                type="button"
+                onClick={() => {
+                  setWinner(null)
+                  setRounds(null)
+                  setFightTxDone(false)
+                  setRewards(0)
+                  fight(fightChoice1, fightChoice2)
+                }}
+                disabled={disableFightBtn}
+              >
+                Fight with choosen creatures
+              </button>
             )}
-
-            <button
-              id="fight-btn"
-              className="rpgui-button"
-              type="button"
-              onClick={() => {
-                setWinner(null)
-                setRounds(null)
-                setFightTxDone(false)
-                setRewards(0)
-                fight(fightChoice1, fightChoice2)
-              }}
-              disabled={disableFightBtn}
-            >
-              Fight with choosen creatures
-            </button>
           </div>
-          <div className="fight-mons-<h1>Sharing Management</h1>area">
-            <div className="fightWith-area border-gradient border-gradient-purple">
+          <div className="fight-mons-area">
+            <div className="fightWith-area">
               <div className="p2">Your Creatures</div>
               {forFightWithCryptomons}
             </div>
-            <div className="fightAgainst-area border-gradient border-gradient-purple">
+            <div className="fightAgainst-area">
               <div className="p2">Opponent Creatures</div>
               {forFightAgainstCryptomons}
             </div>
           </div>
         </Tab>
-        <Tab eventKey="share" title="Share Creatures">
+        <Tab eventKey="share" title="Share">
           <div className="p1">Sharing Management</div>
           <div className="sharing-area">
             <div className="form-line">
@@ -1197,14 +1228,20 @@ function App() {
               <input className="form-input" value={shareAddress} onChange={(e) => handleShareAddress(e)} />
             </div>
             <div className="form-line">
-              <button
-                className="rpgui-button"
-                type="button"
-                style={{ float: 'right' }}
-                onClick={() => startSharing(shareId, shareAddress)}
-              >
-                Share
-              </button>
+              {isShareLoading ? (
+                <button className="rpgui-button" type="button" style={{ width: '100%' }}>
+                  <Spinner color="#000" />
+                </button>
+              ) : (
+                <button
+                  className="rpgui-button"
+                  type="button"
+                  style={{ float: 'right' }}
+                  onClick={() => startSharing(shareId, shareAddress)}
+                >
+                  Share
+                </button>
+              )}
             </div>
           </div>
           {sharedByMe}
@@ -1254,7 +1291,7 @@ function App() {
           </div>
 
           <div className="rpgui-container framed-grey">
-            <div className="p1">Buy somethin</div>
+            <div className="p1">Buy somethin (NFT)</div>
             <div className="p1">note: if transaction fails, set gas fees above 100k</div>
             <div className="sharing-area">
               <span>
@@ -1269,7 +1306,7 @@ function App() {
                   onChange={(e) => handleBuyItemAmount(e)}
                 />
               </div>
-              <div className="form-line">
+              <div className="form-line with-buy-item">
                 <button
                   className="rpgui-button"
                   type="button"
@@ -1295,7 +1332,7 @@ function App() {
                   onChange={(e) => handleBuyItemAmount(e)}
                 />
               </div>
-              <div className="form-line">
+              <div className="form-line with-buy-item">
                 <button
                   className="rpgui-button"
                   type="button"
@@ -1321,7 +1358,7 @@ function App() {
                   onChange={(e) => handleBuyItemAmount(e)}
                 />
               </div>
-              <div className="form-line">
+              <div className="form-line with-buy-item">
                 <button
                   className="rpgui-button"
                   type="button"
@@ -1347,7 +1384,7 @@ function App() {
                   onChange={(e) => handleBuyItemAmount(e)}
                 />
               </div>
-              <div className="form-line">
+              <div className="form-line with-buy-item">
                 <button
                   className="rpgui-button"
                   type="button"
@@ -1373,7 +1410,7 @@ function App() {
                   onChange={(e) => handleBuyItemAmount(e)}
                 />
               </div>
-              <div className="form-line">
+              <div className="form-line with-buy-item">
                 <button
                   className="rpgui-button"
                   type="button"
@@ -1400,7 +1437,7 @@ function App() {
                 <label className="form-label">Amount</label>
                 <input className="form-input" placeholder="0" value={burnAmount} onChange={(e) => handleBurn(e)} />
               </div>
-              <div className="form-line">
+              <div className="form-line with-burn">
                 <button
                   className="rpgui-button"
                   type="button"

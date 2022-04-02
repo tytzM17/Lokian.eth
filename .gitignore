@@ -23,6 +23,7 @@
 .env.production.local
 .secret
 .polygonScanApi
+.github
 package-lock.json
 
 npm-debug.log*

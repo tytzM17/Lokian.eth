@@ -7,13 +7,10 @@
 }
 
 .AppTitle {
-  /* text-align: center; */
   color: #6c757d;
-  /* background-color: #e6f2ff; */
   width: 100%;
   padding-left: 12px;
   padding-top: 2px;
-  /* font-size: calc(10px + 6vmin); */
   color: #fff;
   text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
 }
@@ -21,9 +18,7 @@
 .p1 {
   padding-top: 0.2em;
   text-align: center;
-  /* #007bff */
   color: #6c757d;
-  /* font-size: calc(10px + 3vmin); */
   width: 100%;
   color: #fff;
   text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
@@ -33,7 +28,6 @@
   padding-top: 0.2em;
   padding-bottom: 0.2em;
   text-align: center;
-  /* color: #6c757d; #007bff */
   font-size: calc(5px + 0.5vmin);
   color: #e9e9e9;
   width: 100%;
@@ -68,12 +62,10 @@
   border: 2px outset;
   margin: 0;
   padding: 3%;
-  /* background-color: #ffe6b3; */
   background-color: #ffe6b3;
   background-image: url(./sprites/background/9.png);
   width: 15em;
   background-size: 280px 200px;
-  /* background-color: rgb(209, 203, 199) !important; */
 }
 
 .monBox {
@@ -250,7 +242,6 @@
 }
 
 .nav-link.active {
-  /* color: #7e8a96 !important */
   color: #f3a718 !important;
 }
 
@@ -260,7 +251,6 @@
   border-bottom-color: rgb(255, 255, 255) !important;
   border-left-color: rgb(222, 226, 230) !important;
   background-color: rgb(34, 36, 37) !important;
-  /* border-width: 2px !important; */
 }
 
 .nav-tabs .nav-item.show .nav-link,
@@ -293,7 +283,6 @@
 
 .rpgui-content input,
 .rpgui-content textarea {
-  /* background: repeating-linear-gradient(171deg, black, transparent 100px); */
   background: linear-gradient(45deg, black, transparent);
 }
 
@@ -313,12 +302,68 @@
   justify-items: flex-start;
 }
 
+.wallet-info-column {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@media (min-width:280px) { /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */ 
+  .with-buy-item, .with-burn {
+    max-width: 80%;
+  }
+
+  .p1 {
+    max-width: 80%;
+  }
+
+  .title-column,
+  .user-info-column,
+  .wallet-info-column {
+    width: 100%;
+  }
+
+  .wallet-info-column {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+
+@media (min-width:320px) { /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */ 
+  .with-buy-item, .with-burn {
+    max-width: 80%;
+  }
+
+  .p1 {
+    max-width: 80%;
+  }
+
+  .title-column,
+  .user-info-column,
+  .wallet-info-column {
+    width: 100%;
+  }
+
+  .wallet-info-column {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+
+
 /* Small Devices, Tablets */
 @media only screen and (min-width: 768px) {
   .title-column,
   .user-info-column,
   .wallet-column {
     width: 100%;
+  }
+  .wallet-info-column {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
 }
 
@@ -332,6 +377,12 @@
   .wallet-column {
     width: 40%;
   }
+
+  .wallet-info-column {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
 }
 
 /* Large Devices, Wide Screens */
@@ -343,5 +394,11 @@
   .user-info-column,
   .wallet-column {
     width: 40%;
+  }
+
+  .wallet-info-column {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 }

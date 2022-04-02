@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://tytzm17.github.io/Lokian.eth/",
+  "homepage": "/",
   "dependencies": {
     "@ethersproject/bignumber": "^5.4.2",
     "@ethersproject/constants": "^5.5.0",
@@ -32,7 +32,7 @@
   "scripts": {
     "start": "react-scripts start",
     "start-pc": "set PORT=8000 && react-scripts start",
-    "build": "react-scripts build && mv build docs",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

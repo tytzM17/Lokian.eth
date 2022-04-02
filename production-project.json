@@ -2,6 +2,7 @@
     "name": "my-app",
     "version": "0.1.0",
     "private": true,
+    "homepage": "https://tytzm17.github.io/Lokian.eth/",
     "dependencies": {
       "@ethersproject/bignumber": "^5.4.2",
       "@ethersproject/constants": "^5.5.0",
@@ -25,17 +26,15 @@
       "react": ">=16.8",
       "react-bootstrap": "^1.0.0-beta.16",
       "react-dom": ">=16.8",
-      "react-scripts": "3.3.1",
+      "react-scripts": "4.0.1",
       "react-toastify": "^7.0.3"
     },
     "scripts": {
       "start": "react-scripts start",
       "start-pc": "set PORT=8000 && react-scripts start",
-      "build": "react-scripts build",
+      "build": "react-scripts build && mv build docs",
       "test": "react-scripts test",
-      "eject": "react-scripts eject",
-      "build-waffle": "waffle",
-      "test-waffle": "set TS_NODE_COMPILER_OPTIONS={\"module\": \"commonjs\" } && mocha -r ts-node/register --timeout 50000 'test/**/*.ts'"
+      "eject": "react-scripts eject"
     },
     "eslintConfig": {
       "extends": "react-app"
@@ -53,17 +52,15 @@
       ]
     },
     "devDependencies": {
+      "@nomiclabs/hardhat-ethers": "^2.0.5",
+      "@nomiclabs/hardhat-etherscan": "^3.0.3",
       "@openzeppelin/contracts": "^4.5.0",
-      "chai": "^4.3.6",
-      "ethereum-waffle": "^3.4.4",
       "hardhat": "^2.9.2",
       "image-webpack-loader": "^7.0.1",
-      "mocha": "^9.2.2",
-      "source-map-loader": "^3.0.0",
-      "ts-loader": "^9.2.5",
-      "ts-node": "^10.7.0",
-      "typescript": "^4.4.3",
-      "webpack": "4.41.5"
+      "react-error-overlay": "^6.0.9",
+      "source-map-loader": "^1.0.0",
+      "ts-loader": "^8.0.0",
+      "typescript": "^3.0.0"
     },
     "prettier": {
       "semi": false,
