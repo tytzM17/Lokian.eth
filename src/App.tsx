@@ -39,9 +39,6 @@ import bg10 from './sprites/background/10.png'
 
 import MonImages from './sprites'
 
-// axios
-import axios, { AxiosResponse } from 'axios'
-
 // util
 import { Web3Provider } from '@ethersproject/providers'
 import txSuccess from './utils/txSuccess'
