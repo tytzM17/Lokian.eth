@@ -52,9 +52,15 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.Injected]: injected,
 }
 
-const CONTRACT_ADDRESS = '0xb1e821c9550463b0d3d2aA4846bE79D6aB5Ec6ea'
-const ERC20_CONTRACT_ADDRESS = '0x2683EbB22FE772dB15C09b99897bD38B2Bf2487E'
-const ERC1155_CONTRACT_ADDRESS = '0xC924448D65D0b20629eaAD25eE79bC2911E8690a'
+// Contact deployment address
+// const CONTRACT_ADDRESS = '0x5A4c15d98ef9cfC953ef131dD25e855ce11816Dd'
+const CONTRACT_ADDRESS = '0x170CE6059Bc91aa58cAf895F1805F3240bd7c205'
+// ERC20 coin
+// const ERC20_CONTRACT_ADDRESS = '0x1b7A38b3C77e405750aF1C08d102eF4f23e8c3a2'
+const ERC20_CONTRACT_ADDRESS = '0x82126Dee107245a8ae8A875ed20938D752007C99'
+// ERC1155 lokian items
+// const ERC1155_CONTRACT_ADDRESS = '0x77a9BD3C0ae2e65c699D53b011667c642b2c68C8'
+const ERC1155_CONTRACT_ADDRESS = '0x76056aEb1C5A194cB0F0B3570552F58Add1F1584'
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]

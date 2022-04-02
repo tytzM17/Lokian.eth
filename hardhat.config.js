@@ -3,7 +3,7 @@ require("@nomiclabs/hardhat-etherscan");
 
 const fs = require('fs');
 const privateKey = fs.readFileSync(".secret").toString().trim();
-const polygonScanApi = fs.readFileSync(".polygonScanApi").toString().trim();
+// const polygonScanApi = fs.readFileSync(".polygonScanApi").toString().trim();
 
 
 module.exports = {
@@ -11,13 +11,17 @@ module.exports = {
   networks: {
     hardhat: {
     },
+    boba_rinkeby: {
+      url: 'https://rinkeby.boba.network',
+      accounts: [privateKey],
+    },
     matic: {
       url: "https://rpc-mumbai.maticvigil.com",
       accounts: [privateKey]
     }
   },
   etherscan: {
-    apiKey: polygonScanApi
+    // apiKey: polygonScanApi
   },
   solidity: {
     version: "0.8.4",
