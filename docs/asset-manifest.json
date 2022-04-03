@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Lokian.eth/static/css/main.45e8d210.chunk.css",
-    "main.js": "/Lokian.eth/static/js/main.7f128eaf.chunk.js",
-    "main.js.map": "/Lokian.eth/static/js/main.7f128eaf.chunk.js.map",
+    "main.js": "/Lokian.eth/static/js/main.9f9e4ce5.chunk.js",
+    "main.js.map": "/Lokian.eth/static/js/main.9f9e4ce5.chunk.js.map",
     "runtime-main.js": "/Lokian.eth/static/js/runtime-main.3322643b.js",
     "runtime-main.js.map": "/Lokian.eth/static/js/runtime-main.3322643b.js.map",
     "static/css/2.097c1d5e.chunk.css": "/Lokian.eth/static/css/2.097c1d5e.chunk.css",
@@ -31,6 +31,6 @@
     "static/css/2.097c1d5e.chunk.css",
     "static/js/2.076df8c9.chunk.js",
     "static/css/main.45e8d210.chunk.css",
-    "static/js/main.7f128eaf.chunk.js"
+    "static/js/main.9f9e4ce5.chunk.js"
   ]
 }
