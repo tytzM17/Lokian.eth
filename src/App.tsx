@@ -1048,7 +1048,7 @@ function App() {
           <div className="column wallet-info-column col-lg-6 col-sm-12">
             <div className="row wallet-buttons">
               {/* wallet logout */}
-              <div className="column wallet-column col-lg-3 col-sm-12">
+              <div className={`column wallet-column ${active ? 'col-lg-3' : ''} col-sm-12`}>
                 {(active || error) && (
                   <button
                     className="rpgui-button"
@@ -1074,7 +1074,7 @@ function App() {
                 const disabled = !triedEager || !!activatingConnector || connected || !!error
 
                 return (
-                  <div className="column wallet-column col-lg-9 col-sm-12">
+                  <div className={`column wallet-column col-lg-${active ? '9' : '12'} col-sm-12`}>
                     <button
                       className="rpgui-button golden"
                       type="button"
@@ -1093,7 +1093,7 @@ function App() {
                       {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
                       <Account />
                       <div style={{ display: 'none' }}>{name}</div>
-                      {!account ? `Connect wallet` : ''}
+                      {!account ? 'Connect Wallet' : ''}
                     </button>
                   </div>
                 )
@@ -1291,7 +1291,7 @@ function App() {
               <span>
                 <div className="rpgui-icon sword"></div> A Sword
               </span>
-              <div className="form-line">
+              <div className="form-line with-buy-item">
                 <label className="form-label">Amount</label>
                 <input
                   className="form-input"
@@ -1317,7 +1317,7 @@ function App() {
               <span>
                 <div className="rpgui-icon shield"></div> A Shield
               </span>
-              <div className="form-line">
+              <div className="form-line with-buy-item">
                 <label className="form-label">Amount</label>
                 <input
                   className="form-input"
@@ -1343,7 +1343,7 @@ function App() {
               <span>
                 <div className="rpgui-icon potion-red"></div> A Healing Potion
               </span>
-              <div className="form-line">
+              <div className="form-line with-buy-item">
                 <label className="form-label">Amount</label>
                 <input
                   className="form-input"
@@ -1369,7 +1369,7 @@ function App() {
               <span>
                 <div className="rpgui-icon potion-blue"></div> A Mana Potion
               </span>
-              <div className="form-line">
+              <div className="form-line with-buy-item">
                 <label className="form-label">Amount</label>
                 <input
                   className="form-input"
@@ -1395,7 +1395,7 @@ function App() {
               <span>
                 <div className="rpgui-icon potion-green"></div> A Magic Potion
               </span>
-              <div className="form-line">
+              <div className="form-line with-buy-item">
                 <label className="form-label">Amount</label>
                 <input
                   className="form-input"
@@ -1421,13 +1421,13 @@ function App() {
           <div className="rpgui-container framed-grey">
             <div className="p1">Give to the skeleton people (burn token)</div>
             <div className="p1">note: if transaction fails, set gas fees above 100k</div>
-            <div style={{ display: 'flex', width: '20%', marginLeft: '40%', marginRight: 'auto' }}>
+            <div className="skellies">
               <img className="monImg" src={MonImages['skelly']} alt="skeleton-people-1" />
               <img className="monImg" src={MonImages['skelly2']} alt="skeleton-people-1" />
               <img className="monImg" src={MonImages['skellyrip']} alt="skeleton-people-1" />
             </div>
             <div className="sharing-area">
-              <div className="form-line">
+              <div className="form-line with-burn">
                 <label className="form-label">Amount</label>
                 <input className="form-input" placeholder="0" value={burnAmount} onChange={(e) => handleBurn(e)} />
               </div>

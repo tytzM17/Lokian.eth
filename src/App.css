@@ -308,8 +308,48 @@
   justify-content: flex-end;
 }
 
-@media (min-width:280px) { /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */ 
-  .with-buy-item, .with-burn {
+@media (min-width: 280px) {
+  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  .skellies {
+    display: flex;
+    width: 100%;
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .with-buy-item,
+  .with-burn {
+    max-width: 61%;
+  }
+
+  .p1 {
+    max-width: 60%;
+  }
+
+  .title-column,
+  .user-info-column,
+  .wallet-info-column {
+    width: 100%;
+  }
+
+  .wallet-info-column {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+
+@media (min-width: 320px) {
+  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  .skellies {
+    display: flex;
+    width: 100%;
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .with-buy-item,
+  .with-burn {
     max-width: 80%;
   }
 
@@ -329,32 +369,16 @@
     justify-content: flex-start;
   }
 }
-
-@media (min-width:320px) { /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */ 
-  .with-buy-item, .with-burn {
-    max-width: 80%;
-  }
-
-  .p1 {
-    max-width: 80%;
-  }
-
-  .title-column,
-  .user-info-column,
-  .wallet-info-column {
-    width: 100%;
-  }
-
-  .wallet-info-column {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-}
-
 
 /* Small Devices, Tablets */
 @media only screen and (min-width: 768px) {
+  .skellies {
+    display: flex;
+    width: 20%;
+    margin-left: 25%;
+    margin-right: auto;
+  }
+
   .title-column,
   .user-info-column,
   .wallet-column {
@@ -369,13 +393,11 @@
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width: 992px) {
-  .title-column {
+  .skellies {
+    display: flex;
     width: 20%;
-  }
-
-  .user-info-column,
-  .wallet-column {
-    width: 40%;
+    margin-left: 40%;
+    margin-right: auto;
   }
 
   .wallet-info-column {
@@ -387,15 +409,16 @@
 
 /* Large Devices, Wide Screens */
 @media only screen and (min-width: 1200px) {
-  .title-column {
+  .skellies {
+    display: flex;
     width: 20%;
+    margin-left: 40%;
+    margin-right: auto;
   }
 
-  .user-info-column,
-  .wallet-column {
-    width: 40%;
+  .p1 {
+    max-width: 100%;
   }
-
   .wallet-info-column {
     display: flex;
     align-items: center;

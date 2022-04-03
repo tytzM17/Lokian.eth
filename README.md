@@ -70,6 +70,7 @@ Finished
 - Beta test in testnet (burn FAIL(solution: set gas limit t0 140k or set gas limit in app)), test OK
 - Add spinner in breed and sharing mons, remove from sale, add to sale, test OK
 - Refactor UI code, remove and clean (mvp)
+- fix connect wallet UI (OK) and Token UI buy nft alignment is off (OK)
 
 Ongoing
 - Deploy to evm compatible mainnets (mvp)
