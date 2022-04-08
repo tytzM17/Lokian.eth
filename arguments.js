@@ -1,6 +1,7 @@
+// mainnet polygon
 module.exports = [
     // erc20
-    "0x2683EbB22FE772dB15C09b99897bD38B2Bf2487E",
+    "0x4d8d24968458af521ef02aefD95f161dF3f9Ea01",
     // erc1155
-    "0xC924448D65D0b20629eaAD25eE79bC2911E8690a"
+    "0x8227767903Fa90A90060E28a45506318E03997aD"
   ];

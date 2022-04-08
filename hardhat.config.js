@@ -4,16 +4,20 @@ require("@nomiclabs/hardhat-etherscan");
 const fs = require('fs');
 const privateKey = fs.readFileSync(".secret").toString().trim();
 const polygonScanApi = fs.readFileSync(".polygonScanApi").toString().trim();
-
+const ALCHEMY_URL = fs.readFileSync(".alchemyUrl").toString().trim();
 
 module.exports = {
   defaultNetwork: "matic",
   networks: {
     hardhat: {
     },
-    matic: {
+    mumbai: {
       url: "https://rpc-mumbai.maticvigil.com",
       accounts: [privateKey]
+    },
+    matic: {
+      url: ALCHEMY_URL,
+      accounts: [privateKey],
     }
   },
   etherscan: {
@@ -27,5 +31,11 @@ module.exports = {
         runs: 200
       }
     }
+  },
+  paths: {
+    sources: "./contracts",
+    tests: "./test",
+    cache: "./cache",
+    artifacts: "./artifacts"
   },
 }

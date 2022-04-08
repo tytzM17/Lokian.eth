@@ -23,6 +23,8 @@
 .env.production.local
 .secret
 .polygonScanApi
+.secretAlchemy
+.alchemyUrl
 .github
 package-lock.json
 

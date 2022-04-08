@@ -52,9 +52,9 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.Injected]: injected,
 }
 
-const CONTRACT_ADDRESS = '0xb1e821c9550463b0d3d2aA4846bE79D6aB5Ec6ea'
-const ERC20_CONTRACT_ADDRESS = '0x2683EbB22FE772dB15C09b99897bD38B2Bf2487E'
-const ERC1155_CONTRACT_ADDRESS = '0xC924448D65D0b20629eaAD25eE79bC2911E8690a'
+const CONTRACT_ADDRESS = '0x5148A559cFaaEC1A915ae41e00A8Dd2Fa17ba64f'
+const ERC20_CONTRACT_ADDRESS = '0x4d8d24968458af521ef02aefD95f161dF3f9Ea01'
+const ERC1155_CONTRACT_ADDRESS = '0x8227767903Fa90A90060E28a45506318E03997aD'
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]
@@ -1289,7 +1289,7 @@ function App() {
             <div className="p1">note: if transaction fails, set gas fees above 100k</div>
             <div className="sharing-area">
               <span>
-                <div className="rpgui-icon sword"></div> A Sword
+                <div className="rpgui-icon sword"></div> A Sword for 50 Loks
               </span>
               <div className="form-line with-buy-item">
                 <label className="form-label">Amount</label>
@@ -1315,7 +1315,7 @@ function App() {
 
             <div className="sharing-area">
               <span>
-                <div className="rpgui-icon shield"></div> A Shield
+                <div className="rpgui-icon shield"></div> A Shield for 500 Loks
               </span>
               <div className="form-line with-buy-item">
                 <label className="form-label">Amount</label>
@@ -1341,7 +1341,7 @@ function App() {
 
             <div className="sharing-area">
               <span>
-                <div className="rpgui-icon potion-red"></div> A Healing Potion
+                <div className="rpgui-icon potion-red"></div> A Healing Potion for 50 Loks
               </span>
               <div className="form-line with-buy-item">
                 <label className="form-label">Amount</label>
@@ -1367,7 +1367,7 @@ function App() {
 
             <div className="sharing-area">
               <span>
-                <div className="rpgui-icon potion-blue"></div> A Mana Potion
+                <div className="rpgui-icon potion-blue"></div> A Mana Potion for 50 Loks
               </span>
               <div className="form-line with-buy-item">
                 <label className="form-label">Amount</label>
@@ -1393,7 +1393,7 @@ function App() {
 
             <div className="sharing-area">
               <span>
-                <div className="rpgui-icon potion-green"></div> A Magic Potion
+                <div className="rpgui-icon potion-green"></div> A Magic Potion for 50 Loks
               </span>
               <div className="form-line with-buy-item">
                 <label className="form-label">Amount</label>
