@@ -83,8 +83,8 @@ Finished
 
 Ongoing
 - Submit to dappradar, state of dapps, etc (mvp)
+- List erc20 token in coingecko and gate.io (mvp)
 - Create whitepaper/litepaper for gate.io, see report.pdf 
-- List erc20 token in coingecko and gate.io
 
 Future
 - GameFi, staking

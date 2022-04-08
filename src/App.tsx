@@ -1289,7 +1289,7 @@ function App() {
             <div className="p1">note: if transaction fails, set gas fees above 100k</div>
             <div className="sharing-area">
               <span>
-                <div className="rpgui-icon sword"></div> A Sword for 50 Loks
+                <div className="rpgui-icon sword"></div> A Sword (500 Loks)
               </span>
               <div className="form-line with-buy-item">
                 <label className="form-label">Amount</label>
@@ -1315,7 +1315,7 @@ function App() {
 
             <div className="sharing-area">
               <span>
-                <div className="rpgui-icon shield"></div> A Shield for 500 Loks
+                <div className="rpgui-icon shield"></div> A Shield (500 Loks)
               </span>
               <div className="form-line with-buy-item">
                 <label className="form-label">Amount</label>
@@ -1341,7 +1341,7 @@ function App() {
 
             <div className="sharing-area">
               <span>
-                <div className="rpgui-icon potion-red"></div> A Healing Potion for 50 Loks
+                <div className="rpgui-icon potion-red"></div>A Healing Potion (50 Loks)
               </span>
               <div className="form-line with-buy-item">
                 <label className="form-label">Amount</label>
@@ -1367,7 +1367,7 @@ function App() {
 
             <div className="sharing-area">
               <span>
-                <div className="rpgui-icon potion-blue"></div> A Mana Potion for 50 Loks
+                <div className="rpgui-icon potion-blue"></div> A Mana Potion (50 Loks)
               </span>
               <div className="form-line with-buy-item">
                 <label className="form-label">Amount</label>
@@ -1393,7 +1393,7 @@ function App() {
 
             <div className="sharing-area">
               <span>
-                <div className="rpgui-icon potion-green"></div> A Magic Potion for 50 Loks
+                <div className="rpgui-icon potion-green"></div> A Magic Potion (50 Loks)
               </span>
               <div className="form-line with-buy-item">
                 <label className="form-label">Amount</label>
