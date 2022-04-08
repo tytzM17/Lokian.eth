@@ -23,6 +23,7 @@
 .env.production.local
 .secret
 .polygonScanApi
+.moonscanApi
 .secretAlchemy
 .alchemyUrl
 .github

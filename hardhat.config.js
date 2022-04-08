@@ -4,6 +4,7 @@ require("@nomiclabs/hardhat-etherscan");
 const fs = require('fs');
 const privateKey = fs.readFileSync(".secret").toString().trim();
 const polygonScanApi = fs.readFileSync(".polygonScanApi").toString().trim();
+const moonScanApi = fs.readFileSync(".moonscanApi").toString().trim();
 const ALCHEMY_URL = fs.readFileSync(".alchemyUrl").toString().trim();
 
 module.exports = {
@@ -20,7 +21,7 @@ module.exports = {
       accounts: [privateKey],
     },
     moonriver: {
-      url: "wss://wss.api.moonriver.moonbeam.network",
+      url: "https://moonriver.api.onfinality.io/public",
       accounts: [privateKey],
     },
     moonbeam: {
@@ -41,7 +42,10 @@ module.exports = {
     },
   },
   etherscan: {
-    apiKey: polygonScanApi
+    apiKey: {
+      moonriver: moonScanApi,
+      polygon: polygonScanApi,
+    }
   },
   solidity: {
     version: "0.8.4",
