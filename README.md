@@ -80,9 +80,9 @@ Finished
 - Host app and site in cloudfare, moralis or gh-pages with ssl or depends on listing requirements, Refactor react code upon hosting (mvp)
 - Deploy to evm compatible mainnets, polygon OK and moonbeam (mvp)
 - Provide liquidity on dexes first, sushiswap OK , quickswap, or uniswap.
+- Submit to dappradar, state of dapps, etc (mvp)
 
 Ongoing
-- Submit to dappradar, state of dapps, etc (mvp)
 - List erc20 token in coingecko and gate.io (mvp)
 - Create whitepaper/litepaper for gate.io, see report.pdf 
 
