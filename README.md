@@ -71,12 +71,15 @@ Finished
 - Add spinner in breed and sharing mons, remove from sale, add to sale, test OK
 - Refactor UI code, remove and clean (mvp)
 - fix connect wallet UI (OK) and Token UI buy nft alignment is off (OK)
-
-Ongoing
-- Deploy to evm compatible mainnets (mvp)
 - Buy domain in cloudfare registrar for site and app(subdomain?) for $5-10 one time
 - Host app and site in cloudfare, moralis or gh-pages with ssl or depends on listing requirements, Refactor react code upon hosting (mvp)
-- Check guide on dapp submission and Submit to dappradar, etc (mvp)
+
+Ongoing
+- Deploy to evm compatible mainnets, polygon and moonbeam (mvp)
+- Provide liquidity on dexes first, sushiswap, quickswap, or uniswap.
+- Submit to dappradar, state of dapps, etc (mvp)
+- Create whitepaper/litepaper for gate.io, see report.pdf 
+- List erc20 token in coingecko and gate.io
 
 Future
 - GameFi, staking
