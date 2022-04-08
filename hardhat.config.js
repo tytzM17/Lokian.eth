@@ -18,7 +18,27 @@ module.exports = {
     matic: {
       url: ALCHEMY_URL,
       accounts: [privateKey],
-    }
+    },
+    moonriver: {
+      url: "wss://wss.api.moonriver.moonbeam.network",
+      accounts: [privateKey],
+    },
+    moonbeam: {
+      url: 'https://rpc.api.moonbeam.network',
+      accounts: [privateKey],	
+    },
+    bsc: {
+      url: 'https://bsc-dataseed2.binance.org',
+      accounts: [privateKey],	
+    },
+    avax: {
+      url: 'https://rpc.ankr.com/avalanche	',
+      accounts: [privateKey],	
+    },
+    boba_rinkeby: {
+      url: 'https://rinkeby.boba.network',
+      accounts: [privateKey],
+    },
   },
   etherscan: {
     apiKey: polygonScanApi
