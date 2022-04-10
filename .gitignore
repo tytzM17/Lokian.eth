@@ -26,6 +26,9 @@
 .moonscanApi
 .secretAlchemy
 .alchemyUrl
+.avaxUrl
+etherscan.json
+moralisNodes.json
 .github
 package-lock.json
 

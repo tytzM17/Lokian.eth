@@ -27,10 +27,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - Open [http://localhost:3000](http://localhost:3000) to view it in the browser. You can see all the Creatures owned by the current metamask account and play the game.
 
-## Polygon and Moonriver mainnet official addresses
+## Polygon, Moonriver, Fantom and Avalanche mainnet official addresses
 - lokians erc20 deployed to: 0x4d8d24968458af521ef02aefD95f161dF3f9Ea01
-- LokianItems deployed to: 0x8227767903Fa90A90060E28a45506318E03997aD
+- LokianItems erc1155 deployed to: 0x8227767903Fa90A90060E28a45506318E03997aD
 - LokianEth deployed to: 0x5148A559cFaaEC1A915ae41e00A8Dd2Fa17ba64f
+
+## BSC mainnet official addresses, visit bsc.lokians.monster
+- Lokians erc20 deployed to: 0x7664e0A3862819C48A01648CE5139Ad25dAC12c0
+- LokianItems erc1155 deployed to: 0xD2f9F7C2CD1b8e1C91d89F271EF80eBFf75F183C
+- LokianEth deployed to: 0x6d88cBBD35E19958eFB4500f93D346c126bB7Df2
 
 ## Remaining Tasks
 

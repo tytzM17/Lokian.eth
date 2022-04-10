@@ -6,6 +6,9 @@ const privateKey = fs.readFileSync(".secret").toString().trim();
 const polygonScanApi = fs.readFileSync(".polygonScanApi").toString().trim();
 const moonScanApi = fs.readFileSync(".moonscanApi").toString().trim();
 const ALCHEMY_URL = fs.readFileSync(".alchemyUrl").toString().trim();
+const moralisNodes = require("./moralisNodes")
+const etherscanKeys = require("./etherscan")
+const AVAX_URL = fs.readFileSync(".avaxUrl").toString().trim();
 
 module.exports = {
   defaultNetwork: "matic",
@@ -25,19 +28,27 @@ module.exports = {
       accounts: [privateKey],
     },
     moonbeam: {
-      url: 'https://rpc.api.moonbeam.network',
+      url: "https://rpc.api.moonbeam.network",
       accounts: [privateKey],	
     },
     bsc: {
-      url: 'https://bsc-dataseed2.binance.org',
+      url: moralisNodes?.bscMainnet || "https://bsc-dataseed2.binance.org",
       accounts: [privateKey],	
     },
+    // bscTest: {
+    //   url: moralisNodes?.bscTestnet || "https://bsc-dataseed2.binance.org",
+    //   accounts: [privateKey],	
+    // },
     avax: {
-      url: 'https://rpc.ankr.com/avalanche	',
+      url: moralisNodes?.avaxMainnet || AVAX_URL,
+      accounts: [privateKey],	
+    },
+    ftm: {
+      url: moralisNodes?.ftmMainnet || "https://rpc2.fantom.network	",
       accounts: [privateKey],	
     },
     boba_rinkeby: {
-      url: 'https://rinkeby.boba.network',
+      url: "https://rinkeby.boba.network",
       accounts: [privateKey],
     },
   },
@@ -45,6 +56,9 @@ module.exports = {
     apiKey: {
       moonriver: moonScanApi,
       polygon: polygonScanApi,
+      bsc: etherscanKeys.bsc,
+      avalanche: etherscanKeys.avax,
+      opera: etherscanKeys.ftm,
     }
   },
   solidity: {
@@ -55,11 +69,5 @@ module.exports = {
         runs: 200
       }
     }
-  },
-  paths: {
-    sources: "./contracts",
-    tests: "./test",
-    cache: "./cache",
-    artifacts: "./artifacts"
-  },
+  }
 }
