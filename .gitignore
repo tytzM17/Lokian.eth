@@ -29,6 +29,7 @@
 .avaxUrl
 etherscan.json
 moralisNodes.json
+bwareLabsNodes.json
 .github
 package-lock.json
 

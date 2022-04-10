@@ -6,6 +6,7 @@ const privateKey = fs.readFileSync(".secret").toString().trim();
 const polygonScanApi = fs.readFileSync(".polygonScanApi").toString().trim();
 const moonScanApi = fs.readFileSync(".moonscanApi").toString().trim();
 const ALCHEMY_URL = fs.readFileSync(".alchemyUrl").toString().trim();
+const bwareLabsNodes =  require("./bwareLabsNodes")
 const moralisNodes = require("./moralisNodes")
 const etherscanKeys = require("./etherscan")
 const AVAX_URL = fs.readFileSync(".avaxUrl").toString().trim();
@@ -35,10 +36,10 @@ module.exports = {
       url: moralisNodes?.bscMainnet || "https://bsc-dataseed2.binance.org",
       accounts: [privateKey],	
     },
-    // bscTest: {
-    //   url: moralisNodes?.bscTestnet || "https://bsc-dataseed2.binance.org",
-    //   accounts: [privateKey],	
-    // },
+    astar: {
+      url: bwareLabsNodes?.astarMainnet || "https://rpc.astar.network:8545",
+      accounts: [privateKey],	
+    },
     avax: {
       url: moralisNodes?.avaxMainnet || AVAX_URL,
       accounts: [privateKey],	

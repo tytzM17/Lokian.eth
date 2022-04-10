@@ -1,0 +1,4 @@
+{
+    "astarMainnet": "https://astar-api.bwarelabs.com/c65f68cc-8d7a-40a8-8312-91a0fe342cc8",
+    "astarMainnetWss": "wss://astar-api.bwarelabs.com/ws/c65f68cc-8d7a-40a8-8312-91a0fe342cc8"
+}
