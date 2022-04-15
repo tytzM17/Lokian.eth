@@ -88,12 +88,11 @@ Finished
 - Submit to dappradar, state of dapps, etc (mvp)
 
 Ongoing
-- Add moonriver addresses in lokian.monster site
-- List erc20 token in coingecko and gate.io (mvp)
-- Create whitepaper/litepaper for gate.io, see report.pdf 
+- marketing and partnership, e.g. astar, boba network, etc
+- improve graphics
 
 Future
-- GameFi, staking
+- GameFi (staking)
 - DAO
 - Metaverse, with duels or royal rumble
 
