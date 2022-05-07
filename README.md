@@ -1,4 +1,4 @@
-# Lokian.eth: A trading card game dapp featuring NFTs, share, fight and breed mythical creatures in solidity blockchains.
+# Lokian.eth: A trading card game dapp featuring NFT monsters (Turing Monsters), share, fight and breed in solidity blockchains (L2 Boba Network).
 
  <img src="./screenshots/project.eth.ss2.png" alt="" width="1000em" height="500em">
 
@@ -30,57 +30,16 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Remaining Tasks
 
 Finished
-- Change naming e.g. cryptoMons to creatures 6/28/2021
-- Change to 8bit theme for ui 07/02/2021
-- Fix ui responsiveness and css, 07/14/2021
-- Change creature names and artwork (mvp) 09/13/2021
-- Convert frontend to typescript (mvp) 10/10/2021
-- Fix wallet, use web3-react and injected connector (mvp) 10/10/2021
-- Fix logo, create an 8 bit representation of the logo (mvp) 10/26/2021
-- Create erc-1155 smart contract that will mint nfts, tests (mvp) 10/27/2021
-- Create faucet page for getting nfts or tokens (mvp) 11/9/2021
-- Breed then mint, pinJson, payable (mvp) 11/21/2021
-- free packs are not nft not payable, basic to advance packs are nfts and payable (mvp) 11/29/2021
-- breed mons are nft, payable (mvp) 11/29/2021
-- Change contract to accept IERC20 e.g. USDT, instead of native token. For easy price maintenance. (mvp)  12/8/2021
-- Create meme token functions (100 trillion, mvp) 12/8/2021
-- Fight function extension, earn meme token when you win (mvp) 12/8/2021
-- Record highscore function in game contract. 12/16/2021
-- Removed memetoken and highscore functions
-- Removed buyMon, addForSale, and removeFromSale functions
-- Removed startSharing and stopSharing functions
-- Remove stable coin as payment.
-- Remove NFT pack buying
-- Token for duel rewards and donations (mvp) done
-- Test token functionalities (mvp) done
-- Display token amount on top right
-- Fix fight function
-- Contract tests, okay
-- Create token tab, buy items (ERC1155) and burn functions (mvp)
-- Create token tab, your items, buy items, give to skeleton people(burn) UI (mvp)
-- UI Tests (mvp)
-- Add unit tests (mvp)
-- Deploy and test to evm compatible testnet (mvp)
-- ERC20 Lokians deployed to polygon mumbai testnet: 0x2683EbB22FE772dB15C09b99897bD38B2Bf2487E
-- ERC1155 LokianItems NFT to polygon mumbai testnet: 
-0xC924448D65D0b20629eaAD25eE79bC2911E8690a
-- Contract Lokian.eth to polygon mumbai testnet: 
-0xb1e821c9550463b0d3d2aA4846bE79D6aB5Ec6ea
-- Game prototype deployed at https://tytzm17.github.io/Lokian.eth/
-- Beta test in testnet (burn FAIL(solution: set gas limit t0 140k or set gas limit in app)), test OK
-- Add spinner in breed and sharing mons, remove from sale, add to sale, test OK
-- Refactor UI code, remove and clean (mvp)
+- 
 
 Ongoing
-- Deploy to evm compatible mainnets (mvp)
-- Buy domain in cloudfare registrar for site and app(subdomain?) for $5-10 one time
-- Host app and site in cloudfare, moralis or gh-pages with ssl or depends on listing requirements, Refactor react code upon hosting (mvp)
-- Check guide on dapp submission and Submit to dappradar, etc (mvp)
+- Get Turing Monster nft data from rinkeby boba, (needs boba token, need to deploy tumo nft contract)
+- Remove shop and marketplace contract functions coz nft would be transacted outside
+- Modify fight/duel and breed
+- Test and deploy
+- Improve, simplify, polish graphics
 
-Future
-- GameFi, staking
-- DAO
-- Metaverse, with duels or royal rumble
+
 
 
 

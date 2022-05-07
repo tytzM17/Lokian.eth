@@ -24,6 +24,12 @@
 .secret
 .polygonScanApi
 .github
+.alchemyUrl
+.avaxUrl
+.moonscanApi
+.secretAlchemy
+etherscan.json
+moralisNodes.json
 package-lock.json
 
 npm-debug.log*

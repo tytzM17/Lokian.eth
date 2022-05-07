@@ -338,7 +338,7 @@ function App() {
 
       contr.on('FightResults', (_winnerId, _round) => {
         if (mounted) {
-          const winId = BigNumber.from(_winnerId._hex).toNumber()
+          const winId = BigNumber.from(_winnerId._hex).toNumber()     
           const round = BigNumber.from(_round._hex).toNumber()
           setWinner(winId)
           setRounds(round)
@@ -1163,8 +1163,8 @@ function App() {
             <label className="winner-label">
               And the winner is...{' '}
               {fightTxDone ? names[cryptomons.find((mon) => mon.id?.toString() === winner?.toString())?.species] : ''}
-              {!winner || winner === 12345678911 ? 'still unknown' : ''}
-              {winner === 12345678910 ? "no one, it's a tie" : ''}
+              {!winner || winner == 12345678911 ? 'still unknown' : ''}
+              {winner == 12345678910 ? "no one, it's a tie" : ''}
             </label>
 
             {fightTxDone && winner !== 12345678910 ? (
@@ -1181,9 +1181,9 @@ function App() {
                   <label className="winner-label">{rewards === 0 ? '' : `You have won ${rewards} LOKs!`}</label>
                 )}
               </>
-            ) : (
-              ''
-            )}
+            ) : 
+             ''
+            }
 
             {disableFightBtn ? (
               <Spinner color="gray" style={{ marginLeft: '50%', marginRight: 'auto', padding: '8px' }} />
