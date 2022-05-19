@@ -1,5 +1,26 @@
+.rpgui-content {
+  /* padding: 12px 24px ; */
+  background-image: linear-gradient(to right top, #000000, #0e0c0e, #171618, #1c1d20, #212529);
+}
+
 .rpgui-content a {
   text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
+
+.navbar-dark .navbar-brand {
+  color: #fff !important;
+  font-size: initial;
+}
+
+.navbar-nav { align-items: center; }
+
+.dropdown-menu {
+  background-color: #343a40 !important
+}
+
+.dropdown-item:hover {
+  background: green !important;
+  filter: drop-shadow(8px 12px 20px green) invert(1%);
 }
 
 .App {
@@ -16,7 +37,7 @@
 }
 
 .p1 {
-  padding-top: 0.2em;
+  padding-top: 0.8em;
   text-align: center;
   color: #6c757d;
   width: 100%;
@@ -45,6 +66,8 @@
   color: white;
 }
 
+.nav-tabs {margin-top: 4%;}
+
 .mon {
   display: block;
   float: left;
@@ -56,6 +79,11 @@
 .monName {
   font-weight: bold;
   text-shadow: 2px 2px #ffffff;
+  font-size: 0.85em !important;
+}
+
+label {
+  line-height: 16px !important;
 }
 
 .my-figure {
@@ -174,9 +202,7 @@
 .fightAgainst-area {
   display: inline-block;
   width: 50%;
-  border-right: 2px outset;
-  border-left: 2px outset;
-  border-top: 2px outset;
+  margin-top: 2%;
   height: 100%;
 }
 
@@ -221,14 +247,14 @@
 }
 
 .rpgui-content {
-  overflow: auto !important;
+  overflow-y: auto !important;
 }
 
 .rpgui-content label,
 .rpgui-content li {
   color: #fff;
   text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-  font-size: 0.65em;
+  font-size: 0.9em;
 }
 
 .rpgui-dropdown-buy-pack {
@@ -239,6 +265,10 @@
   background-color: rgb(34, 36, 37) !important;
   color: rgb(209, 203, 199) !important;
   border-color: rgb(123, 107, 101) !important;
+}
+
+.tab-content {
+  margin-top: 3%;
 }
 
 .nav-link.active {
@@ -260,6 +290,7 @@
   border-bottom-color: rgb(34, 36, 37) !important;
   border-left-color: rgb(222, 226, 230) !important;
   background-color: rgb(34, 36, 37) !important;
+  filter: drop-shadow(8px 12px 20px green) invert(1%);
 }
 
 .nav-link:hover {
@@ -274,6 +305,7 @@
 
 .nav {
   width: 100%;
+  border-bottom-width: 0 !important;
 }
 
 .rpgui-content label {
@@ -308,6 +340,10 @@
   justify-content: flex-end;
 }
 
+.green-glow {
+  filter: drop-shadow(8px 12px 20px green) invert(1%);
+}
+
 @media (min-width: 280px) {
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
   .skellies {
@@ -319,7 +355,8 @@
 
   .with-buy-item,
   .with-burn {
-    max-width: 61%;
+    /* max-width: 61%; */
+    max-width: 100%;
   }
 
   .p1 {
@@ -337,6 +374,10 @@
     align-items: center;
     justify-content: flex-start;
   }
+
+  .navbar {
+    padding: 0.5rem 0.25rem !important;
+  }
 }
 
 @media (min-width: 320px) {
@@ -348,10 +389,10 @@
     margin-right: auto;
   }
 
-  .with-buy-item,
+  /* .with-buy-item,
   .with-burn {
     max-width: 80%;
-  }
+  } */
 
   .p1 {
     max-width: 80%;
@@ -375,8 +416,6 @@
   .skellies {
     display: flex;
     width: 20%;
-    margin-left: 25%;
-    margin-right: auto;
   }
 
   .title-column,
@@ -396,8 +435,6 @@
   .skellies {
     display: flex;
     width: 20%;
-    margin-left: 40%;
-    margin-right: auto;
   }
 
   .wallet-info-column {
@@ -412,10 +449,7 @@
   .skellies {
     display: flex;
     width: 20%;
-    margin-left: 40%;
-    margin-right: auto;
   }
-
   .p1 {
     max-width: 100%;
   }
@@ -423,5 +457,8 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+  }
+  .token-input-btn {
+    height: 40px;
   }
 }

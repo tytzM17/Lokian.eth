@@ -88,12 +88,12 @@ Finished
 - Submit to dappradar, state of dapps, etc (mvp)
 
 Ongoing
-- marketing and partnership, e.g. astar, boba network, etc
-- improve graphics
+- Fix fight function bug, fix overall UI
+- Add multiplayer pvp, chat with moralis
+- Add skellies + armours + weapons mini pvp
 
 Future
 - GameFi (staking)
-- DAO
 - Metaverse, with duels or royal rumble
 
 

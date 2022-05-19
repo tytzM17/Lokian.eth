@@ -1,7 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
+import { createRoot } from "react-dom/client";
 
 import './index.css';
 import AppContainer from "./AppContainer";
 
-ReactDOM.render(<AppContainer />, document.getElementById('root'));
+const container = document.getElementById('root')
+const root = createRoot(container!)
+root.render(<AppContainer />)
+// ReactDOM.render(<AppContainer />, document.getElementById('root'));

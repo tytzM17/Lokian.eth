@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link
+} from "react-router-dom";
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Tab, Tabs } from 'react-bootstrap'
+import { Nav, Navbar, NavDropdown, Tab, Tabs } from 'react-bootstrap'
 import StatBar from './StatBar'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { Spinner } from './components/Spinner'
+import { MyLokiMons, ArenaV2, Breed, MyShop, Marketplace, Spinner, Share, SharedToMe, Token  } from "./components";
 
 // Library to work with Ethereum like blockchain
 import { injected } from './wallet/connectors'
@@ -52,9 +58,24 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.Injected]: injected,
 }
 
-const CONTRACT_ADDRESS = '0x5148A559cFaaEC1A915ae41e00A8Dd2Fa17ba64f'
-const ERC20_CONTRACT_ADDRESS = '0x4d8d24968458af521ef02aefD95f161dF3f9Ea01'
-const ERC1155_CONTRACT_ADDRESS = '0x8227767903Fa90A90060E28a45506318E03997aD'
+let CONTRACT_ADDRESS: string
+let ERC20_CONTRACT_ADDRESS: string
+let ERC1155_CONTRACT_ADDRESS: string
+if (process && process.env) {
+  CONTRACT_ADDRESS =
+    process.env.NODE_ENV === 'production'
+      ? process.env.REACT_APP_MAIN_CONTRACT_ADDRESS
+      : process.env.REACT_APP_TEST_CONTRACT_ADDRESS
+  ERC20_CONTRACT_ADDRESS =
+    process.env.NODE_ENV === 'production' ? process.env.REACT_APP_MAIN_ERC20 : process.env.REACT_APP_TEST_ERC20
+  ERC1155_CONTRACT_ADDRESS =
+    process.env.NODE_ENV === 'production' ? process.env.REACT_APP_MAIN_ERC1155 : process.env.REACT_APP_TEST_ERC1155
+} else {
+  // polygon mainnet
+  CONTRACT_ADDRESS = '0x5148A559cFaaEC1A915ae41e00A8Dd2Fa17ba64f'
+  ERC20_CONTRACT_ADDRESS = '0x4d8d24968458af521ef02aefD95f161dF3f9Ea01'
+  ERC1155_CONTRACT_ADDRESS = '0x8227767903Fa90A90060E28a45506318E03997aD'
+}
 
 // Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]
@@ -576,21 +597,21 @@ function App() {
 
   // Handlers for form inputs
   function handleShareId(event) {
-    setShareId(event.target.value)
+    setShareId(event.target?.value)
   }
   function handleShareAddress(event) {
-    setShareAddress(event.target.value)
+    setShareAddress(event.target?.value)
   }
 
-  function handleChange(id, event) {
-    setValue(event.target.value)
+  function handleChange(event) {
+    setValue(event.target?.value)
   }
 
   function handleBuyItemAmount(event) {
-    setBuyItemAmount(event.target.value)
+    setBuyItemAmount(event.target?.value)
   }
   function handleBurn(event) {
-    setBurnAmount(event.target.value)
+    setBurnAmount(event.target?.value)
   }
 
   async function buyItem(units: string, price: string, itemNumber: string, data: string = '0x00') {
@@ -1031,102 +1052,119 @@ function App() {
     // Creation of the different tabs of the UI
     <div className="rpgui-content">
       <ToastContainer />
+      <Router>
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
+        <Navbar.Brand as="li">
+          <img alt="" src={MonImages['favicon32x32']} width="30" height="30" className="d-inline-block" /> 
+          <Link to='/'>Lokian Monsters</Link>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto">
+          <Nav.Link as="li"><Link to='/myLokiMons'>My LokiMons</Link></Nav.Link>
+          <Nav.Link as="li"><Link to='/myShop'>My Shop</Link></Nav.Link>
+          <Nav.Link as="li"><Link to='/arena'>Arena</Link></Nav.Link>
+          <Nav.Link as="li"><Link to='/breed'>Breed</Link></Nav.Link>
+            <NavDropdown title="Others" id="collasible-nav-dropdown">
+                 <NavDropdown.Item as="li"><Link to='/marketplace'>Marketplace</Link></NavDropdown.Item>
+                 <NavDropdown.Item as="li"><Link to='/share'>Share</Link></NavDropdown.Item>
+              <NavDropdown.Item as="li"><Link to='/sharedToMe'>Shared To Me</Link></NavDropdown.Item>
+              <NavDropdown.Item as="li"><Link to='/token'>Token</Link></NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item as="li"><Link to='https://lokian.monster'>Website</Link></NavDropdown.Item>
+            </NavDropdown>
+            <Nav.Link as="li">
+              {/* Network Errors */}
+              {!!error && <h4>{getErrorMessage(error)}</h4>}
+            </Nav.Link>
+          </Nav>
+          <Nav>
+            {/* wallet info */}
+            {Object.keys(connectorsByName).map((name, idx) => {
+              const currentConnector = connectorsByName[name]
+              const activating = currentConnector === activatingConnector
+              const connected = currentConnector === connector
+              const disabled = !triedEager || !!activatingConnector || connected || !!error
 
-      <div className="AppTitle">
-        <div className="row" style={{ maxWidth: '100%' }}>
-          <div className="column title-column col-lg-3 col-sm-12">
-            <img src={MonImages['favicon16x16']} alt="lokian-logo" /> <span>L O K I A N </span>
-          </div>
-
-          <div className="column user-info-column col-lg-3 col-sm-12">
-            {/* ERC20, LOKs */}
-            <span className="rpgui-container framed-grey">
-              {`${Math.round(Number(tokenBalance) * 1e4) / 1e4 || '0'} LOKs `}{' '}
-            </span>
-          </div>
-
-          <div className="column wallet-info-column col-lg-6 col-sm-12">
-            <div className="row wallet-buttons">
-              {/* wallet logout */}
-              <div className={`column wallet-column ${active ? 'col-lg-3' : ''} col-sm-12`}>
-                {(active || error) && (
+              return (
+                <Nav.Link key={name + idx} as="li">
                   <button
-                    className="rpgui-button"
-                    onClick={() => {
-                      deactivate()
-                      setCryptomons([])
-                      setMyCryptomons([])
-                      setOtherCryptomons([])
-                      setWinner(null)
-                      setRounds(null)
-                      setValue(0)
+                    className="rpgui-button golden"
+                    type="button"
+                    style={{
+                      fontSize: '20px',
+                      paddingTop: '14px',
+                      width: '100%',
                     }}
+                    onClick={() => {
+                      setActivatingConnector(currentConnector)
+                      activate(currentConnector)
+                    }}
+                    disabled={disabled}
+                    key={name}
                   >
-                    Logout
+                    {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
+                    <Account />
+                    <div style={{ display: 'none' }}>{name}</div>
+                    {!account ? 'Connect Wallet' : ''}
                   </button>
-                )}
-              </div>
-              {/* wallet info */}
-              {Object.keys(connectorsByName).map((name) => {
-                const currentConnector = connectorsByName[name]
-                const activating = currentConnector === activatingConnector
-                const connected = currentConnector === connector
-                const disabled = !triedEager || !!activatingConnector || connected || !!error
-
-                return (
-                  <div className={`column wallet-column col-lg-${active ? '9' : '12'} col-sm-12`}>
-                    <button
-                      className="rpgui-button golden"
-                      type="button"
-                      style={{
-                        fontSize: '20px',
-                        paddingTop: '14px',
-                        width: '100%',
-                      }}
-                      onClick={() => {
-                        setActivatingConnector(currentConnector)
-                        activate(currentConnector)
-                      }}
-                      disabled={disabled}
-                      key={name}
-                    >
-                      {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
-                      <Account />
-                      <div style={{ display: 'none' }}>{name}</div>
-                      {!account ? 'Connect Wallet' : ''}
-                    </button>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="column user-info-column col-lg-12 col-sm-12">
-            {/* Network Errors */}
-            {!!error && (
-              <h4 className="rpgui-container framed-golden-2" style={{ marginTop: '1rem', marginBottom: '0' }}>
-                {getErrorMessage(error)}
-              </h4>
-            )}
-          </div>
-        </div>
-      </div>
-
+                </Nav.Link>
+              )
+            })}
+            {/* wallet logout */}
+            <Nav.Link as="li">
+              {(active || error) && (
+                <button
+                  className="rpgui-button"
+                  onClick={() => {
+                    deactivate()
+                    setCryptomons([])
+                    setMyCryptomons([])
+                    setOtherCryptomons([])
+                    setWinner(null)
+                    setRounds(null)
+                    setValue(0)
+                  }}
+                >
+                  Logout
+                </button>
+              )}
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+      <Routes>
+      <Route path="/" element={<MyLokiMons myCryptomons={myCryptomons} value={value} onHandleChange={(e) => handleChange(e)} isAddForSaleLoading={isAddForSaleLoading} addForSale={addForSale}/>} />        
+          <Route path="/myLokiMons" element={<MyLokiMons myCryptomons={myCryptomons} value={value} onHandleChange={(e) => handleChange(e)} isAddForSaleLoading={isAddForSaleLoading} addForSale={addForSale}/>} />        
+          <Route path="/myShop" element={<MyShop myCryptomons={myCryptomons} isRemoveFromSaleLoading={isRemoveFromSaleLoading} removeFromSale={removeFromSale} />} />
+          <Route path="/marketplace" element={<Marketplace otherCryptomons={otherCryptomons} isBuyMonLoading={isBuyMonLoading} buyMon={buyMon}/>} />
+          <Route path="/breed"  element={<Breed myCryptomons={myCryptomons} isBreedMonLoading={isBreedMonLoading} breedMons={breedMons} setBreedChoice1Func={setBreedChoice1} setBreedChoice2Func={setBreedChoice2} breedChoice1={breedChoice1} breedChoice2={breedChoice2} />} />
+          <Route path="/arena" element={<ArenaV2 />} />
+          <Route path="/share" element={<Share myCryptomons={myCryptomons} shareId={shareId} onHandleShareAddress={handleShareAddress} onHandleShareId={handleShareId} shareAddress={shareAddress} 
+            isShareLoading={isShareLoading} startSharingFunc={startSharing} account={account} isStopSharingLoading={isStopSharingLoading} stopSharingFunc={stopSharing}
+          />} />
+          <Route path="/sharedToMe" element={<SharedToMe otherCryptomons={otherCryptomons} account={account} isStopSharingLoading={isStopSharingLoading} stopSharingFunc={stopSharing} />} />
+          <Route path="/token" element={<Token 
+            tokenBalance={tokenBalance} swords={swords} shields={shields} healingPotions={healingPotions} manaPotions={manaPotions} magicPotions={magicPotions}
+            buyItemAmount={buyItemAmount} onHandleBuyItemAmount={handleBuyItemAmount} buyItemFunc={buyItem} disableBuyItemBtn={disableBuyItemBtn} burnAmount={burnAmount} burnFunc={burn} onHandleBurn={handleBurn}
+          />} />
+        </Routes>
+      </Router>
       <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example">
-        <Tab className="x" eventKey="myCryptomons" title="My Creatures">
-          <div className="p1">Your Entries</div>
+        {/* <Tab className="x" eventKey="myCryptomons" title="My LokiMons">
+          <div className="p1 green-glow">My LokiMons</div>
           {myCryptomonsDiv}
-        </Tab>
-        <Tab eventKey="forSale" title="My Shop">
-          <div className="p1">My Shop</div>
+        </Tab> */}
+        {/* <Tab eventKey="forSale" title="My Shop">
+          <div className="p1 green-glow">My Shop</div>
           {forSaleCryptomons}
         </Tab>
         <Tab eventKey="buyCryptomons" title="Marketplace">
+          <div className="p1 green-glow">Marketplace</div>
           {buyCryptomons}
-        </Tab>
-        <Tab eventKey="breedCryptomons" title="Breed">
-          <div className="p1">Breed</div>
+        </Tab> */}
+        {/* <Tab eventKey="breedCryptomons" title="Breed">
+          <div className="p1 green-glow">Breed</div>
           <div className="breeding-area">
             {breedOption(breedChoice1)}
             {breedOption(breedChoice2)}
@@ -1147,9 +1185,9 @@ function App() {
           </div>
           <br />
           {forBreedCryptomons}
-        </Tab>
-        <Tab eventKey="fight" title="Arena">
-          <div className="p1">V S</div>
+        </Tab> */}
+        {/* <Tab eventKey="fight" title="Arena">
+          <div className="p1 green-glow">V S</div>
           <div className="fighting-area">
             {breedOption(fightChoice1)}
             {breedOption(fightChoice2)}
@@ -1157,8 +1195,8 @@ function App() {
             <label className="winner-label">
               And the winner is...{' '}
               {fightTxDone ? names[cryptomons.find((mon) => mon.id?.toString() === winner?.toString())?.species] : ''}
-              {!winner || winner === 12345678911 ? 'still unknown' : ''}
-              {winner === 12345678910 ? "no one, it's a tie" : ''}
+              {!winner || winner == 12345678911 ? 'still unknown' : ''}
+              {winner == 12345678910 ? "no one, it's a tie" : ''}
             </label>
 
             {fightTxDone && winner !== 12345678910 ? (
@@ -1201,17 +1239,20 @@ function App() {
           </div>
           <div className="fight-mons-area">
             <div className="fightWith-area">
-              <div className="p2">Your Creatures</div>
+              <div className="p2">Your LokiMons</div>
               {forFightWithCryptomons}
             </div>
             <div className="fightAgainst-area">
-              <div className="p2">Opponent Creatures</div>
+              <div className="p2">Opponent LokiMons</div>
               {forFightAgainstCryptomons}
             </div>
           </div>
-        </Tab>
-        <Tab eventKey="share" title="Share">
-          <div className="p1">Sharing Management</div>
+        </Tab> */}
+        {/* <Tab eventKey="arenav2" title="ArenaV2">
+          <ArenaV2 />
+        </Tab> */}
+        {/* <Tab eventKey="share" title="Share">
+          <div className="p1 green-glow">Sharing Management</div>
           <div className="sharing-area">
             <div className="form-line">
               <label className="form-label">Creature Id:</label>
@@ -1239,19 +1280,20 @@ function App() {
             </div>
           </div>
           {sharedByMe}
-        </Tab>
-        <Tab eventKey="sharedToMe" title="Shared To Me">
-          <div className="p1">Shared To You</div>
+        </Tab> */}
+        {/* <Tab eventKey="sharedToMe" title="Shared To Me">
+          <div className="p1 green-glow">Shared To You</div>
           {sharedToMe}
         </Tab>
         <Tab eventKey="token" title="Token">
-          <div className="p1">Your money</div>
+          <div className="p1 green-glow">Your tokens</div>
+
           <div className="p1" style={{ padding: '12px' }}>
             {tokenBalance} Lokians
           </div>
           <br />
           <br />
-          <div className="p1">
+          <div className="p1 green-glow">
             Your items
             <div style={{ marginLeft: '45%', marginRight: 'auto' }}>
               <div className="row">
@@ -1444,7 +1486,7 @@ function App() {
               </div>
             </div>
           </div>
-        </Tab>
+        </Tab> */}
       </Tabs>
     </div>
   )
