@@ -57,7 +57,7 @@
     "@openzeppelin/contracts": "^4.5.0",
     "hardhat": "^2.9.2",
     "image-webpack-loader": "^7.0.1",
-    "react-error-overlay": "^6.0.9",
+    "react-error-overlay": "6.0.9",
     "source-map-loader": "^1.0.0",
     "ts-loader": "^8.0.0",
     "typescript": "^3.0.0"

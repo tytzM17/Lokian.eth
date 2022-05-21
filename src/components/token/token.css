@@ -1,0 +1,64 @@
+.inventory-item-count {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 12px;
+}
+
+.token-input-btn {
+    height: 40px;
+  }
+
+@media (min-width: 280px) {
+
+  }
+  
+  @media (min-width: 320px) {
+    /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  
+  }
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+    .inventory-item-count p {
+        max-width: 85%;
+        overflow-x: auto;
+    }
+
+    .nft-item {
+        display: flex; 
+        align-items: center;
+        width: 95%;
+    }
+
+    .nft-item div {
+        margin-right: 12px;
+        margin-left: 12px;
+    }
+
+    .nft-item-count  {
+        overflow-x: auto; 
+        margin-left: 8px;
+    }
+      .with-buy-item-input{
+    width: 37%;
+  }
+  .buy-item-input-container {
+    display: flex; 
+    justify-content: start; 
+    align-items: end;
+  }
+  }
+  
+  /* Medium Devices, Desktops */
+  @media only screen and (min-width: 992px) {
+
+  }
+  
+  /* Large Devices, Wide Screens */
+  @media only screen and (min-width: 1200px) {
+
+
+  }
+  

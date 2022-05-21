@@ -1,6 +1,8 @@
 import React from 'react'
-import MonImages from '../../sprites-copy'
+import MonImages from '../../sprites'
 import { Container, Row, Col } from 'react-bootstrap'
+import './token.css'
+import NftItem from './nftItem'
 
 const Token = ({
   tokenBalance,
@@ -19,68 +21,45 @@ const Token = ({
 }) => {
   return (
     <>
-      <div className="p1 green-glow">Your Tokens</div>
+      <div className="p1 green-glow" style={{display:'flex', justifyContent: 'center'}}>Your Tokens</div>
 
-      <Container>
+      <Container style={{ marginTop: '24px' }}>
         <Row>
           <Col xs={12} sm={12} md={6} lg={6} xl={6}>
             <Row>
               <Col lg={12} xl={12}>
                 <div className="rpgui-container framed-grey">
-                  <div className=""> {tokenBalance} Lokians </div>
+                  <span style={{ fontSize: '1.5em' }}> {tokenBalance} </span>Lokians
+                </div>
+              </Col>
+              <Col lg={12} xl={12}>
+                <div className="rpgui-container framed-grey">
                   <div className="" style={{ marginTop: '12px' }}>
-                    Inventory
+                    <span>Inventory</span>
                     <Row style={{ marginTop: '12px' }}>
                       <Col>
-                        {swords ? (
-                          <div className="rpgui-icon sword"></div>
-                        ) : (
-                          <div className="rpgui-icon sword-slot"></div>
-                        )}
-                        {shields ? (
-                          <div className="rpgui-icon shield"></div>
-                        ) : (
-                          <div className="rpgui-icon shield-slot"></div>
-                        )}
-                        {healingPotions || manaPotions || magicPotions ? (
-                          <div className="rpgui-icon potion-red"></div>
-                        ) : (
-                          <div className="rpgui-icon potion-slot"></div>
-                        )}
+                        {swords && <NftItem item={swords} icon="sword" slot="weapon-slot" />}
+                        {shields && <NftItem item={shields} icon="shield" slot="shield-slot" />}
+                        {healingPotions && <NftItem item={healingPotions} icon="potion-red" slot="potion-slot" />}
+                        {manaPotions && <NftItem item={manaPotions} icon="potion-blue" slot="potion-slot" />}
+                        {magicPotions && <NftItem item={magicPotions} icon="potion-green" slot="potion-slot" />}
                       </Col>
                     </Row>
-                    <div className="row">
-                      <div
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'flex-start',
-                          flexWrap: 'wrap',
-                          padding: '12px',
-                        }}
-                      >
-                        <p>You have {`${swords}`} swords!</p>
-                        <p>You have {`${shields}`} shields!</p>
-                        <p>You have {`${healingPotions}`} healing potions!</p>
-                        <p>You have {`${manaPotions}`} mana potions!</p>
-                        <p>You have {`${magicPotions}`} magic potions!</p>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </Col>
               <Col lg={12} xl={12}>
                 <div className="rpgui-container framed-grey">
-                  <div className="">Give to the skellies (burn token)</div>
+                  <span>Give to the skellies </span> burn token
                   {/* <div className="">note: if transaction fails, set gas fees above 100k</div> */}
                   <div className="skellies">
                     <img className="monImg" src={MonImages['skelly']} alt="skeleton-people-1" />
                     <img className="monImg" src={MonImages['skelly2']} alt="skeleton-people-1" />
                     <img className="monImg" src={MonImages['skellyrip']} alt="skeleton-people-1" />
                   </div>
-                  <div className="" style={{display:'flex', justifyContent:'center', alignItems: 'end'}}>
+                  <div className="" style={{ display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
                     <div className="form-line with-burn">
-                      <label className="form-label">Amount</label>
+                      <label className="form-label">Units</label>
                       <input
                         className="form-input"
                         placeholder="0"
@@ -105,135 +84,149 @@ const Token = ({
           </Col>
           <Col xs={12} sm={12} md={6} lg={6} xl={6}>
             <div className="rpgui-container framed-grey">
-              <div className="p1">Buy somethin (NFT)</div>
-              <div className="p1">note: if transaction fails, set gas fees above 100k</div>
+              <div className="p1" style={{ marginBottom: '24px' }}>
+                Buy Items (NFT)
+              </div>
               <div className="sharing-area">
                 <span>
-                  <div className="rpgui-icon sword"></div> A Sword (500 Loks)
-                </span>
-                <div className="form-line with-buy-item">
-                  <label className="form-label">Amount</label>
-                  <input
-                    className="form-input"
-                    placeholder="0"
-                    value={buyItemAmount}
-                    onChange={(e) => onHandleBuyItemAmount(e)}
-                  />
-                </div>
-                <div className="form-line with-buy-item">
-                  <button
-                    className="rpgui-button"
-                    type="button"
-                    style={{ float: 'right' }}
-                    onClick={() => buyItemFunc(buyItemAmount, '500', '3')}
-                    disabled={disableBuyItemBtn}
-                  >
-                    Buy
-                  </button>
+                  <div className="rpgui-icon sword"></div> Sword
+                </span>{' '}
+                500 Loks
+                <div className="buy-item-input-container">
+                  <div className="with-buy-item-input">
+                    <label className="form-label">Units</label>
+                    <input
+                      className="form-input"
+                      placeholder="0"
+                      value={buyItemAmount}
+                      onChange={(e) => onHandleBuyItemAmount(e)}
+                    />
+                  </div>
+                  <div className="with-buy-item">
+                    <button
+                      className="rpgui-button token-input-btn"
+                      type="button"
+                      onClick={() => buyItemFunc(buyItemAmount, '500', '3')}
+                      disabled={disableBuyItemBtn}
+                    >
+                      Buy
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <div className="sharing-area">
+              <div className="sharing-area" style={{ marginTop: '24px' }}>
                 <span>
-                  <div className="rpgui-icon shield"></div> A Shield (500 Loks)
-                </span>
-                <div className="form-line with-buy-item">
-                  <label className="form-label">Amount</label>
-                  <input
-                    className="form-input"
-                    placeholder="0"
-                    value={buyItemAmount}
-                    onChange={(e) => onHandleBuyItemAmount(e)}
-                  />
-                </div>
-                <div className="form-line with-buy-item">
-                  <button
-                    className="rpgui-button"
-                    type="button"
-                    style={{ float: 'right' }}
-                    onClick={() => buyItemFunc(buyItemAmount, '500', '4')}
-                    disabled={disableBuyItemBtn}
-                  >
-                    Buy
-                  </button>
+                  <div className="rpgui-icon shield"></div> Shield
+                </span>{' '}
+                500 Loks
+                <div className="buy-item-input-container">
+                  <div className="with-buy-item-input">
+                    <label className="form-label">Units</label>
+                    <input
+                      className="form-input"
+                      placeholder="0"
+                      value={buyItemAmount}
+                      onChange={(e) => onHandleBuyItemAmount(e)}
+                    />
+                  </div>
+                  <div className="with-buy-item">
+                    <button
+                      className="rpgui-button token-input-btn"
+                      type="button"
+                      onClick={() => buyItemFunc(buyItemAmount, '500', '4')}
+                      disabled={disableBuyItemBtn}
+                    >
+                      Buy
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <div className="sharing-area">
+              <div className="sharing-area" style={{ marginTop: '24px' }}>
                 <span>
-                  <div className="rpgui-icon potion-red"></div>A Healing Potion (50 Loks)
-                </span>
-                <div className="form-line with-buy-item">
-                  <label className="form-label">Amount</label>
-                  <input
-                    className="form-input"
-                    placeholder="0"
-                    value={buyItemAmount}
-                    onChange={(e) => onHandleBuyItemAmount(e)}
-                  />
-                </div>
-                <div className="form-line with-buy-item">
-                  <button
-                    className="rpgui-button"
-                    type="button"
-                    style={{ float: 'right' }}
-                    onClick={() => buyItemFunc(buyItemAmount, '50', '0')}
-                    disabled={disableBuyItemBtn}
-                  >
-                    Buy
-                  </button>
+                  <div className="rpgui-icon potion-red"></div>Healing Potion
+                </span>{' '}
+                50
+                <div className="buy-item-input-container">
+                  <div className="with-buy-item-input">
+                    <label className="form-label">Units</label>
+                    <input
+                      className="form-input"
+                      placeholder="0"
+                      value={buyItemAmount}
+                      onChange={(e) => onHandleBuyItemAmount(e)}
+                    />
+                  </div>
+                  <div className="with-buy-item">
+                    <button
+                      className="rpgui-button"
+                      type="button"
+                      style={{ float: 'right' }}
+                      onClick={() => buyItemFunc(buyItemAmount, '50', '0')}
+                      disabled={disableBuyItemBtn}
+                    >
+                      Buy
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <div className="sharing-area">
+              <div className="sharing-area" style={{ marginTop: '24px' }}>
                 <span>
-                  <div className="rpgui-icon potion-blue"></div> A Mana Potion (50 Loks)
-                </span>
-                <div className="form-line with-buy-item">
-                  <label className="form-label">Amount</label>
-                  <input
-                    className="form-input"
-                    placeholder="0"
-                    value={buyItemAmount}
-                    onChange={(e) => onHandleBuyItemAmount(e)}
-                  />
-                </div>
-                <div className="form-line with-buy-item">
-                  <button
-                    className="rpgui-button"
-                    type="button"
-                    style={{ float: 'right' }}
-                    onClick={() => buyItemFunc(buyItemAmount, '50', '1')}
-                    disabled={disableBuyItemBtn}
-                  >
-                    Buy
-                  </button>
+                  <div className="rpgui-icon potion-blue"></div>Mana Potion
+                </span>{' '}
+                50
+                <div className="buy-item-input-container">
+                  <div className="with-buy-item-input">
+                    <label className="form-label">Units</label>
+                    <input
+                      className="form-input"
+                      placeholder="0"
+                      value={buyItemAmount}
+                      onChange={(e) => onHandleBuyItemAmount(e)}
+                    />
+                  </div>
+                  <div className="with-buy-item">
+                    <button
+                      className="rpgui-button"
+                      type="button"
+                      style={{ float: 'right' }}
+                      onClick={() => buyItemFunc(buyItemAmount, '50', '1')}
+                      disabled={disableBuyItemBtn}
+                    >
+                      Buy
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <div className="sharing-area">
+              <div className="sharing-area" style={{ marginTop: '24px' }}>
                 <span>
-                  <div className="rpgui-icon potion-green"></div> A Magic Potion (50 Loks)
-                </span>
-                <div className="form-line with-buy-item">
-                  <label className="form-label">Amount</label>
-                  <input
-                    className="form-input"
-                    placeholder="0"
-                    value={buyItemAmount}
-                    onChange={(e) => onHandleBuyItemAmount(e)}
-                  />
-                </div>
-                <div className="form-line with-buy-item">
-                  <button
-                    className="rpgui-button"
-                    type="button"
-                    style={{ float: 'right' }}
-                    onClick={() => buyItemFunc(buyItemAmount, '50', '2')}
-                    disabled={disableBuyItemBtn}
-                  >
-                    Buy
-                  </button>
+                  <div className="rpgui-icon potion-green"></div>Magic Potion
+                </span>{' '}
+                50
+                <div className="buy-item-input-container">
+                  <div className="with-buy-item-input">
+                    <label className="form-label">Units</label>
+                    <input
+                      className="form-input"
+                      placeholder="0"
+                      value={buyItemAmount}
+                      onChange={(e) => onHandleBuyItemAmount(e)}
+                    />
+                  </div>
+                  <div className="with-buy-item">
+                    <button
+                      className="rpgui-button"
+                      type="button"
+                      style={{ float: 'right' }}
+                      onClick={() => buyItemFunc(buyItemAmount, '50', '2')}
+                      disabled={disableBuyItemBtn}
+                    >
+                      Buy
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

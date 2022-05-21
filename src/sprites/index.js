@@ -35,7 +35,6 @@ import img129 from './129.png'
 import img13 from './13.png'
 import img130 from './130.png'
 import img131 from './131.png'
-import imgfavicon16x16 from './favicon16x16.png'
 import img132 from './132.png'
 import img133 from './133.png'
 import img134 from './134.png'
@@ -147,6 +146,8 @@ import img95 from './95.png'
 import img96 from './96.png'
 import img98 from './98.png'
 import img99 from './99.png'
+import imgfavicon16x16 from './favicon16x16.png'
+import imgfavicon32x32 from './favicon-32x32.png'
 import imgskellyrip from './skelly-rip.png'
 import imgskelly from './skelly.png'
 import imgskelly2 from './skelly2.png'
@@ -304,6 +305,7 @@ const MonImages = {
   'skelly': imgskelly,
   'skelly2': imgskelly2,
   'favicon16x16': imgfavicon16x16,
+  'favicon32x32': imgfavicon32x32,
 }
 
 export default MonImages

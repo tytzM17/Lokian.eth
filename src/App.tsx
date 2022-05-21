@@ -31,19 +31,19 @@ import erc20Interface from './erc20Interface.json' // Load erc20 contract json f
 import nftInterface from './project.nft.abi.json'
 
 // Load all the background images for the 10 different Cryptomon types
-import bg0 from './sprites-copy/background/0.png'
-import bg1 from './sprites-copy/background/1.png'
-import bg2 from './sprites-copy/background/2.png'
-import bg3 from './sprites-copy/background/3.png'
-import bg4 from './sprites-copy/background/4.png'
-import bg5 from './sprites-copy/background/5.png'
-import bg6 from './sprites-copy/background/6.png'
-import bg7 from './sprites-copy/background/7.png'
-import bg8 from './sprites-copy/background/8.png'
-import bg9 from './sprites-copy/background/9.png'
-import bg10 from './sprites-copy/background/10.png'
+import bg0 from './sprites/background/0.png'
+import bg1 from './sprites/background/1.png'
+import bg2 from './sprites/background/2.png'
+import bg3 from './sprites/background/3.png'
+import bg4 from './sprites/background/4.png'
+import bg5 from './sprites/background/5.png'
+import bg6 from './sprites/background/6.png'
+import bg7 from './sprites/background/7.png'
+import bg8 from './sprites/background/8.png'
+import bg9 from './sprites/background/9.png'
+import bg10 from './sprites/background/10.png'
 
-import MonImages from './sprites-copy'
+import MonImages from './sprites'
 
 // util
 import { Web3Provider } from '@ethersproject/providers'
@@ -679,7 +679,7 @@ function App() {
       <div>
         <label className="monName">{names[mon?.species]}</label>
         <label className="" style={{ float: 'right' }}>
-          {'ID: ' + mon?.id}
+          {'#' + mon?.id}
         </label>
       </div>
     )
@@ -1056,29 +1056,29 @@ function App() {
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
         <Navbar.Brand as="li">
           <img alt="" src={MonImages['favicon32x32']} width="30" height="30" className="d-inline-block" /> 
-          <Link to='/'>Lokian Monsters</Link>
+          <Link to='/' className='LokiMons'>Lokian Monsters</Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="mr-auto">
+          <Nav className="mr-auto lokimons-nav">
           <Nav.Link as="li"><Link to='/myLokiMons'>My LokiMons</Link></Nav.Link>
           <Nav.Link as="li"><Link to='/myShop'>My Shop</Link></Nav.Link>
           <Nav.Link as="li"><Link to='/arena'>Arena</Link></Nav.Link>
           <Nav.Link as="li"><Link to='/breed'>Breed</Link></Nav.Link>
-            <NavDropdown title="Others" id="collasible-nav-dropdown">
-                 <NavDropdown.Item as="li"><Link to='/marketplace'>Marketplace</Link></NavDropdown.Item>
-                 <NavDropdown.Item as="li"><Link to='/share'>Share</Link></NavDropdown.Item>
-              <NavDropdown.Item as="li"><Link to='/sharedToMe'>Shared To Me</Link></NavDropdown.Item>
-              <NavDropdown.Item as="li"><Link to='/token'>Token</Link></NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item as="li"><Link to='https://lokian.monster'>Website</Link></NavDropdown.Item>
-            </NavDropdown>
+            {/* <NavDropdown title="Others" id="collasible-nav-dropdown"> */}
+                 <Nav.Link as="li"><Link to='/marketplace'>Marketplace</Link></Nav.Link>
+                 <Nav.Link as="li"><Link to='/share'>Share</Link></Nav.Link>
+              <Nav.Link as="li"><Link to='/sharedToMe'>Shared To Me</Link></Nav.Link>
+              <Nav.Link as="li"><Link to='/token'>Token</Link></Nav.Link>
+              {/* <NavDropdown.Divider />
+              <NavDropdown.Item as="li"><Link to='https://lokian.monster'>Website</Link></NavDropdown.Item> */}
+            {/* </NavDropdown> */}
             <Nav.Link as="li">
               {/* Network Errors */}
               {!!error && <h4>{getErrorMessage(error)}</h4>}
             </Nav.Link>
           </Nav>
-          <Nav>
+          <Nav className="lokimons-nav-wallet">
             {/* wallet info */}
             {Object.keys(connectorsByName).map((name, idx) => {
               const currentConnector = connectorsByName[name]
