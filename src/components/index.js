@@ -1,4 +1,4 @@
-export {default as ArenaV2} from "./arenaV2";
+export {default as ArenaV2} from "./arena";
 export {default as MyLokiMons} from "./myLokiMons";
 export {default as Breed} from "./breed";
 export {default as MyShop} from "./myShop";

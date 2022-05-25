@@ -160,7 +160,7 @@ const Token = ({
                   </div>
                   <div className="with-buy-item">
                     <button
-                      className="rpgui-button"
+                      className="rpgui-button token-input-btn"
                       type="button"
                       style={{ float: 'right' }}
                       onClick={() => buyItemFunc(buyItemAmount, '50', '0')}
@@ -189,7 +189,7 @@ const Token = ({
                   </div>
                   <div className="with-buy-item">
                     <button
-                      className="rpgui-button"
+                      className="rpgui-button token-input-btn"
                       type="button"
                       style={{ float: 'right' }}
                       onClick={() => buyItemFunc(buyItemAmount, '50', '1')}
@@ -218,7 +218,7 @@ const Token = ({
                   </div>
                   <div className="with-buy-item">
                     <button
-                      className="rpgui-button"
+                      className="rpgui-button token-input-btn"
                       type="button"
                       style={{ float: 'right' }}
                       onClick={() => buyItemFunc(buyItemAmount, '50', '2')}

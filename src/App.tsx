@@ -49,6 +49,7 @@ import MonImages from './sprites'
 import { Web3Provider } from '@ethersproject/providers'
 import txSuccess from './utils/txSuccess'
 import txFail from './utils/txFail'
+import Dojo from './components/dojo';
 
 enum ConnectorNames {
   Injected = 'Injected',
@@ -1063,18 +1064,14 @@ function App() {
           <Nav className="mr-auto lokimons-nav">
           <Nav.Link as="li"><Link to='/myLokiMons'>My LokiMons</Link></Nav.Link>
           <Nav.Link as="li"><Link to='/myShop'>My Shop</Link></Nav.Link>
+          <Nav.Link as="li"><Link to='/dojo'>Dojo</Link></Nav.Link>
           <Nav.Link as="li"><Link to='/arena'>Arena</Link></Nav.Link>
           <Nav.Link as="li"><Link to='/breed'>Breed</Link></Nav.Link>
-            {/* <NavDropdown title="Others" id="collasible-nav-dropdown"> */}
                  <Nav.Link as="li"><Link to='/marketplace'>Marketplace</Link></Nav.Link>
                  <Nav.Link as="li"><Link to='/share'>Share</Link></Nav.Link>
               <Nav.Link as="li"><Link to='/sharedToMe'>Shared To Me</Link></Nav.Link>
               <Nav.Link as="li"><Link to='/token'>Token</Link></Nav.Link>
-              {/* <NavDropdown.Divider />
-              <NavDropdown.Item as="li"><Link to='https://lokian.monster'>Website</Link></NavDropdown.Item> */}
-            {/* </NavDropdown> */}
             <Nav.Link as="li">
-              {/* Network Errors */}
               {!!error && <h4>{getErrorMessage(error)}</h4>}
             </Nav.Link>
           </Nav>
@@ -1139,6 +1136,7 @@ function App() {
           <Route path="/myShop" element={<MyShop myCryptomons={myCryptomons} isRemoveFromSaleLoading={isRemoveFromSaleLoading} removeFromSale={removeFromSale} />} />
           <Route path="/marketplace" element={<Marketplace otherCryptomons={otherCryptomons} isBuyMonLoading={isBuyMonLoading} buyMon={buyMon}/>} />
           <Route path="/breed"  element={<Breed myCryptomons={myCryptomons} isBreedMonLoading={isBreedMonLoading} breedMons={breedMons} setBreedChoice1Func={setBreedChoice1} setBreedChoice2Func={setBreedChoice2} breedChoice1={breedChoice1} breedChoice2={breedChoice2} />} />
+          <Route path="/dojo" element={<Dojo />} />
           <Route path="/arena" element={<ArenaV2 />} />
           <Route path="/share" element={<Share myCryptomons={myCryptomons} shareId={shareId} onHandleShareAddress={handleShareAddress} onHandleShareId={handleShareId} shareAddress={shareAddress} 
             isShareLoading={isShareLoading} startSharingFunc={startSharing} account={account} isStopSharingLoading={isStopSharingLoading} stopSharingFunc={stopSharing}

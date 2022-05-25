@@ -86,9 +86,12 @@ Finished
 - Deploy to evm compatible mainnets, polygon OK and moonbeam (mvp)
 - Provide liquidity on dexes first, sushiswap OK , quickswap, or uniswap.
 - Submit to dappradar, state of dapps, etc (mvp)
+- Fix fight function bug, fix overall UI
 
 Ongoing
-- Fix fight function bug, fix overall UI
+- Change 'Fight' to 'Dojo', include in menu
+- Fix UI, in different media queries or devices
+- Add onclick monster card, show modal with bigger card UI and monster info
 - Add multiplayer pvp, chat with moralis
 - Add skellies + armours + weapons mini pvp
 
