@@ -14,9 +14,9 @@ const Breed = ({
   return (
     <>
       <div className="p1 green-glow">Breed</div>
-      <div className="breeding-area">
-        {breedOption(breedChoice1)}
-        {breedOption(breedChoice2)}
+      <div className="breeding-area" style={{marginTop:'24px'}}>
+        {breedOption(breedChoice1, myCryptomons)}
+        {breedOption(breedChoice2, myCryptomons)}
         {isBreedMonLoading ? (
           <button className="rpgui-button" type="button" style={{ width: '100%' }}>
             <Spinner color="#000" />
@@ -32,6 +32,7 @@ const Breed = ({
           </button>
         )}
       </div>
+      <div style={{display:'flex', justifyContent:'space-evenly', marginTop:'24px'}}>
       {myCryptomons &&
         myCryptomons
           .filter((mon) => !mon.forSale)
@@ -47,6 +48,7 @@ const Breed = ({
               </div>
             </React.Fragment>
           ))}
+          </div>
     </>
   )
 }

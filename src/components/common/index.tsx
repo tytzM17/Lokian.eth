@@ -16,7 +16,7 @@ import StatBar from "../../StatBar";
 import Spinner from "../spinner";
 import { formatUnits } from '@ethersproject/units'
 import React from "react";
-
+// import '../../App.css'
 
 // Add all 151 Cryptomon names in an array
 const names = [
@@ -334,7 +334,7 @@ export const nameDiv = (mon) => {
     )
   }
 
-  export const breedOption = (breedchoice, cryptomons) => {
+  export const breedOption = (breedchoice, lokimons=[]) => {
     if (breedchoice === null) {
       return (
         <div className="mon">
@@ -349,7 +349,7 @@ export const nameDiv = (mon) => {
         </div>
       )
     } else {
-      return cryptomons
+      return lokimons
         .filter((mon) => mon.id === breedchoice)
         .map((mon) => (
           <React.Fragment key={mon.id}>

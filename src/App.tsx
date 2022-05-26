@@ -1136,7 +1136,7 @@ function App() {
           <Route path="/myShop" element={<MyShop myCryptomons={myCryptomons} isRemoveFromSaleLoading={isRemoveFromSaleLoading} removeFromSale={removeFromSale} />} />
           <Route path="/marketplace" element={<Marketplace otherCryptomons={otherCryptomons} isBuyMonLoading={isBuyMonLoading} buyMon={buyMon}/>} />
           <Route path="/breed"  element={<Breed myCryptomons={myCryptomons} isBreedMonLoading={isBreedMonLoading} breedMons={breedMons} setBreedChoice1Func={setBreedChoice1} setBreedChoice2Func={setBreedChoice2} breedChoice1={breedChoice1} breedChoice2={breedChoice2} />} />
-          <Route path="/dojo" element={<Dojo />} />
+          <Route path="/dojo" element={<Dojo myCryptomons={myCryptomons} fightChoice1={fightChoice1} fightChoice2={fightChoice2}/>} />
           <Route path="/arena" element={<ArenaV2 />} />
           <Route path="/share" element={<Share myCryptomons={myCryptomons} shareId={shareId} onHandleShareAddress={handleShareAddress} onHandleShareId={handleShareId} shareAddress={shareAddress} 
             isShareLoading={isShareLoading} startSharingFunc={startSharing} account={account} isStopSharingLoading={isStopSharingLoading} stopSharingFunc={stopSharing}
