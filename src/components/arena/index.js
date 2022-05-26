@@ -11,7 +11,7 @@ const btnStyle = {
   height: '38px',
 }
 
-const ArenaV2 = () => {
+const Arena = () => {
   const [online, setOnline] = useState('6')
   const [duels, setDuels] = useState('1')
 
@@ -152,4 +152,4 @@ const ArenaV2 = () => {
   )
 }
 
-export default ArenaV2
+export default Arena

@@ -933,7 +933,7 @@ function App() {
       mon.owner.toString().toLowerCase() !== account?.toString()?.toLowerCase())
 
   // div with user's Cryptomons that can be used to fight with
-  const forFightWithCryptomons = cryptomons.filter(cond).map((mon) => (
+  const forFightWithCryptomons = myCryptomons.filter(cond).map((mon) => (
     <React.Fragment key={mon.id}>
       <div className="mon">
         <figure className="my-figure">
@@ -959,7 +959,7 @@ function App() {
 
   // div with Cryptomons that user can fight against
   const forFightAgainstCryptomons = otherCryptomons
-    .filter((mon) => !mon.forSale && mon.sharedTo.toLowerCase() !== account?.toString().toLocaleLowerCase())
+    .filter((mon) => !mon.forSale && mon.sharedTo.toLowerCase() !== account?.toString().toLowerCase())
     .map((mon) => (
       <React.Fragment key={mon.id}>
         <div className="mon">
@@ -1136,7 +1136,7 @@ function App() {
           <Route path="/myShop" element={<MyShop myCryptomons={myCryptomons} isRemoveFromSaleLoading={isRemoveFromSaleLoading} removeFromSale={removeFromSale} />} />
           <Route path="/marketplace" element={<Marketplace otherCryptomons={otherCryptomons} isBuyMonLoading={isBuyMonLoading} buyMon={buyMon}/>} />
           <Route path="/breed"  element={<Breed myCryptomons={myCryptomons} isBreedMonLoading={isBreedMonLoading} breedMons={breedMons} setBreedChoice1Func={setBreedChoice1} setBreedChoice2Func={setBreedChoice2} breedChoice1={breedChoice1} breedChoice2={breedChoice2} />} />
-          <Route path="/dojo" element={<Dojo myCryptomons={myCryptomons} fightChoice1={fightChoice1} fightChoice2={fightChoice2}/>} />
+          <Route path="/dojo" element={<Dojo myCryptomons={myCryptomons} account={account} setFightChoice1Func={setFightChoice1} cryptomons={cryptomons} fightChoice1={fightChoice1} fightChoice2={fightChoice2} winner={winner} monNames={names} fightTxDone={fightTxDone} rewards={rewards} rounds={rounds} disableFightBtn={disableFightBtn} fight={fight} />} />
           <Route path="/arena" element={<ArenaV2 />} />
           <Route path="/share" element={<Share myCryptomons={myCryptomons} shareId={shareId} onHandleShareAddress={handleShareAddress} onHandleShareId={handleShareId} shareAddress={shareAddress} 
             isShareLoading={isShareLoading} startSharingFunc={startSharing} account={account} isStopSharingLoading={isStopSharingLoading} stopSharingFunc={stopSharing}

@@ -1,0 +1,27 @@
+@media (min-width: 280px) {
+    /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  }
+  
+  @media (min-width: 320px) {
+    /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  }
+  
+  /* Small Devices, Tablets */
+  @media only screen and (min-width: 768px) {
+    .vs-container {
+      position: relative;
+      width: 50%;
+      display: block;
+      margin-left: 25%;
+      margin-right: auto;
+      margin-top: 24px;
+    }
+  }
+  
+  /* Medium Devices, Desktops */
+  @media only screen and (min-width: 992px) {
+  }
+  
+  /* Large Devices, Wide Screens */
+  @media only screen and (min-width: 1200px) {
+  }
