@@ -1,16 +1,20 @@
 import React from 'react'
 import { nameDiv, imgDiv, statDiv } from '../common'
 
-const MySparringMons = ({ myCryptomons, setFightChoice1Func, account }) => {
-  const cond = (mon) =>
+const MySparringMons = ({ mons, setFightChoiceFunc, account, choice }) => {
+  const yourLokimonsCond = (mon) =>
     (mon.owner.toString().toLowerCase() === account?.toString()?.toLowerCase() && !mon.forSale) ||
     (mon.sharedTo.toString().toLowerCase() === account?.toString()?.toLowerCase() &&
       mon.owner.toString().toLowerCase() !== account?.toString()?.toLowerCase())
 
+  const opponentCond = (mon) => !mon.forSale && mon.sharedTo.toLowerCase() !== account?.toString().toLowerCase()
+  
+  let cond = choice === '1' ? yourLokimonsCond : opponentCond
+
   return (
     <>
-      {myCryptomons &&
-        myCryptomons.filter(cond).map((mon) => (
+      {mons &&
+        mons.filter(cond).map((mon) => (
           <React.Fragment key={mon.id}>
             <div className="mon">
               <figure className="my-figure">
@@ -22,12 +26,12 @@ const MySparringMons = ({ myCryptomons, setFightChoice1Func, account }) => {
                 <button
                   className="fight-Choice-btn rpgui-button"
                   type="button"
-                  style={{ float: 'right' }}
+                  // style={{ float: 'right' }}
                   onClick={() => {
-                    setFightChoice1Func(mon.id)
+                    setFightChoiceFunc(mon.id)
                   }}
                 >
-                  Choice 1
+                  Choice {choice}
                 </button>
               </div>
             </div>

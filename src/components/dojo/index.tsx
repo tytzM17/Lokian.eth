@@ -18,7 +18,9 @@ interface Params {
   fight: (fightChoice1: string, fightChoice2: string) => void
   account: string
   myCryptomons: any[]
+  otherCryptomons: any[]
   setFightChoice1Func: any
+  setFightChoice2Func: any
 }
 
 const Dojo = (params: Params) => {
@@ -57,6 +59,8 @@ const Dojo = (params: Params) => {
                   params.cryptomons.find((mon) => mon.id?.toString() === params.fightChoice1?.toString())?.species
                 ]
               }
+              {' '}
+              {params.fightChoice1  ? `no.${params.fightChoice1}`: ''}
             </Col>
             <Col md="auto">VS</Col>
             <Col xs lg="2">
@@ -65,6 +69,8 @@ const Dojo = (params: Params) => {
                   params.cryptomons.find((mon) => mon.id?.toString() === params.fightChoice2?.toString())?.species
                 ]
               }
+              {' '}
+              {params.fightChoice2  ? `no.${params.fightChoice2}`: ''}
             </Col>
           </Row>
         </Container>
@@ -104,7 +110,7 @@ const Dojo = (params: Params) => {
               <Spinner color="gray" style={{ marginLeft: '50%', marginRight: 'auto', padding: '8px' }} />
             ) : (
               <button
-                style={{width:'100%'}}
+                style={{ width: '100%' }}
                 id="fight-btn"
                 className="rpgui-button"
                 type="button"
@@ -135,9 +141,10 @@ const Dojo = (params: Params) => {
           <Row>
             <Col xs md={12}>
               <MySparringMons
-                myCryptomons={params.myCryptomons}
-                setFightChoice1Func={params.setFightChoice1Func}
+                mons={params.myCryptomons}
+                setFightChoiceFunc={params.setFightChoice1Func}
                 account={params.account}
+                choice="1"
               />
             </Col>
           </Row>
@@ -152,7 +159,14 @@ const Dojo = (params: Params) => {
             </Col>
           </Row>
           <Row>
-            <Col xs md={12}></Col>
+            <Col xs md={12}>
+              <MySparringMons
+                mons={params.otherCryptomons}
+                setFightChoiceFunc={params.setFightChoice2Func}
+                account={params.account}
+                choice="2"
+              />
+            </Col>
           </Row>
         </Container>
       </div>
