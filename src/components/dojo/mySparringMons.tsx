@@ -24,9 +24,8 @@ const MySparringMons = ({ mons, setFightChoiceFunc, account, choice }) => {
               </figure>
               <div className="fight-choice-div">
                 <button
-                  className="fight-Choice-btn rpgui-button"
+                  className="fight-Choice-btn rpgui-button rpgui-cursor-point"
                   type="button"
-                  // style={{ float: 'right' }}
                   onClick={() => {
                     setFightChoiceFunc(mon.id)
                   }}

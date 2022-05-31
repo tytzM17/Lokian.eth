@@ -58,9 +58,8 @@ const Dojo = (params: Params) => {
                 params.monNames[
                   params.cryptomons.find((mon) => mon.id?.toString() === params.fightChoice1?.toString())?.species
                 ]
-              }
-              {' '}
-              {params.fightChoice1  ? `no.${params.fightChoice1}`: ''}
+              }{' '}
+              {params.fightChoice1 ? `no.${params.fightChoice1}` : ''}
             </Col>
             <Col md="auto">VS</Col>
             <Col xs lg="2">
@@ -68,9 +67,8 @@ const Dojo = (params: Params) => {
                 params.monNames[
                   params.cryptomons.find((mon) => mon.id?.toString() === params.fightChoice2?.toString())?.species
                 ]
-              }
-              {' '}
-              {params.fightChoice2  ? `no.${params.fightChoice2}`: ''}
+              }{' '}
+              {params.fightChoice2 ? `no.${params.fightChoice2}` : ''}
             </Col>
           </Row>
         </Container>
@@ -152,23 +150,25 @@ const Dojo = (params: Params) => {
       </div>
 
       <div className="rpgui-container framed-grey table-container">
-        <Container fluid>
-          <Row>
-            <Col xs md={12}>
-              <span>Select Opponent</span>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs md={12}>
+        {/* <Container fluid> */}
+        <Row>
+          <Col xs md={12}>
+            <span>Select Opponent</span>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs md={12}>
+            <div className="dojo-selection">
               <MySparringMons
                 mons={params.otherCryptomons}
                 setFightChoiceFunc={params.setFightChoice2Func}
                 account={params.account}
                 choice="2"
               />
-            </Col>
-          </Row>
-        </Container>
+            </div>
+          </Col>
+        </Row>
+        {/* </Container> */}
       </div>
     </>
   )

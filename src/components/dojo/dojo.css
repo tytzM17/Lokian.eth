@@ -16,6 +16,11 @@
       margin-right: auto;
       margin-top: 24px;
     }
+
+    .dojo-selection {
+      display: flex;
+      overflow-x: scroll;
+    }
   }
   
   /* Medium Devices, Desktops */

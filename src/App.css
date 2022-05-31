@@ -89,7 +89,7 @@
   padding: 0;
   margin: 2%;
   background-color: rgb(209, 203, 199) !important;
-  border-radius: 3px;
+  border-radius: 6px;
 }
 
 .monName {
@@ -263,6 +263,7 @@ label {
   margin-left: auto;
   margin-right: auto;
   width: 15em;
+  height: 40px;
 }
 
 .rpgui-content {
