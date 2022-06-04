@@ -1,17 +1,17 @@
 // Load all the background images for the 10 different Cryptomon types
-import bg0 from '../../sprites/background/0.png'
-import bg1 from '../../sprites/background/1.png'
-import bg2 from '../../sprites/background/2.png'
-import bg3 from '../../sprites/background/3.png'
-import bg4 from '../../sprites/background/4.png'
-import bg5 from '../../sprites/background/5.png'
-import bg6 from '../../sprites/background/6.png'
-import bg7 from '../../sprites/background/7.png'
-import bg8 from '../../sprites/background/8.png'
-import bg9 from '../../sprites/background/9.png'
-import bg10 from '../../sprites/background/10.png'
+import bg0 from '../../sprites-copy/background/0.png'
+import bg1 from '../../sprites-copy/background/1.png'
+import bg2 from '../../sprites-copy/background/2.png'
+import bg3 from '../../sprites-copy/background/3.png'
+import bg4 from '../../sprites-copy/background/4.png'
+import bg5 from '../../sprites-copy/background/5.png'
+import bg6 from '../../sprites-copy/background/6.png'
+import bg7 from '../../sprites-copy/background/7.png'
+import bg8 from '../../sprites-copy/background/8.png'
+import bg9 from '../../sprites-copy/background/9.png'
+import bg10 from '../../sprites-copy/background/10.png'
 
-import MonImages from "../../sprites";
+import MonImages from "../../sprites-copy";
 import StatBar from "../../StatBar";
 import Spinner from "../spinner";
 import { formatUnits } from '@ethersproject/units'

@@ -22,6 +22,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - In the project directory run:
 
     **`npm install`** This installs all the necessary dependencies to build our application
+
+    **`sprites-copy to sprites`** In all files, change all occurences of sprites-copy to sprites.<br />
     
     **`npm start`** This runs the app in development mode.<br />
 
@@ -87,6 +89,8 @@ Finished
 - Provide liquidity on dexes first, sushiswap OK , quickswap, or uniswap.
 - Submit to dappradar, state of dapps, etc (mvp)
 - Fix fight function bug, fix overall UI
+- Create a pitch deck PDF file 
+- Add missing graphics for some lokimons
 
 Ongoing
 - Change 'Fight' to 'Dojo', include in menu

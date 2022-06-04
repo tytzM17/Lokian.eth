@@ -1,5 +1,5 @@
 import React from 'react'
-import MonImages from '../../sprites'
+import MonImages from '../../sprites-copy'
 import { Container, Row, Col } from 'react-bootstrap'
 import './token.css'
 import NftItem from './nftItem'
