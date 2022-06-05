@@ -1,6 +1,7 @@
 import React from 'react'
-import { nameDiv, imgDiv, statDiv, breedOption, breedDiv } from '../common'
+import { nameDiv, imgDiv, statDiv, breedOption, breedDiv, monName } from '../common'
 import Spinner from '../spinner'
+import { Row, Col, Container } from 'react-bootstrap'
 
 const Breed = ({
   myCryptomons,
@@ -14,7 +15,28 @@ const Breed = ({
   return (
     <>
       <div className="p1 green-glow">Breed</div>
-      <div className="breeding-area" style={{marginTop:'24px'}}>
+
+      <div className="rpgui-container framed-grey vs-container" style={{ marginTop: '24px' }}>
+        <Container fluid>
+          <Row className="justify-content-md-center">
+            <Col xs lg="2" className="text-right">
+              {
+                breedChoice1 !== null ? monName(myCryptomons?.find((mon) => mon.id?.toString() === breedChoice1?.toString())?.species) : ''
+              }{' '}
+              {breedChoice1 !== null ? `no.${breedChoice1}` : ''}
+            </Col>
+            <Col md="auto">+</Col>
+            <Col xs lg="2">
+            {
+                breedChoice2 !== null ? monName(myCryptomons?.find((mon) => mon.id?.toString() === breedChoice2?.toString())?.species) : ''
+              }{' '}
+              {breedChoice2 !== null ? `no.${breedChoice2}` : ''}
+            </Col>
+          </Row>
+        </Container>
+      </div>
+
+      <div className="breeding-area" style={{marginTop:'6px'}}>
         {breedOption(breedChoice1, myCryptomons)}
         {breedOption(breedChoice2, myCryptomons)}
         {isBreedMonLoading ? (
@@ -32,7 +54,11 @@ const Breed = ({
           </button>
         )}
       </div>
-      <div style={{display:'flex', justifyContent:'space-evenly', marginTop:'24px'}}>
+      {/* <div style={{display:'flex', justifyContent:'space-evenly', marginTop:'24px'}}> */}
+      <div className="rpgui-container framed-grey table-container">
+      <Row>
+          <Col xs md={12}>
+            <div className="dojo-selection">
       {myCryptomons &&
         myCryptomons
           .filter((mon) => !mon.forSale)
@@ -49,6 +75,10 @@ const Breed = ({
             </React.Fragment>
           ))}
           </div>
+          </Col>
+          </Row>
+          </div>
+          {/* </div> */}
     </>
   )
 }

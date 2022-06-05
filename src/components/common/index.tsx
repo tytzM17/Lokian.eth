@@ -16,7 +16,6 @@ import StatBar from "../../StatBar";
 import Spinner from "../spinner";
 import { formatUnits } from '@ethersproject/units'
 import React from "react";
-// import '../../App.css'
 
 // Add all 151 Cryptomon names in an array
 const names = [
@@ -171,10 +170,12 @@ const names = [
     'Fafnir',
     'Baba_Yaga',
     'Baba_Roga',
-  ]
+]
 
-  // Add background images in an array for easy access
+// Add background images in an array for easy access
 const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]
+
+export const monName = (specie: number) => names[specie]
 
 export const nameDiv = (mon) => {
     return (

@@ -30,6 +30,8 @@ const Dojo = (params: Params) => {
   const [rewardAmount, setRewardAmount] = useState(0)
 
   useEffect(() => {
+    console.log(params);
+    
     if (!params.fightTxDone) return
     if (!params.winner || !params.cryptomons || !params.monNames) return
 
@@ -44,7 +46,7 @@ const Dojo = (params: Params) => {
       setMatches(params.rounds)
       if (params.rewards) setRewardAmount(params.rewards)
     }
-  }, [params.fightTxDone])
+  }, [params, params.fightTxDone])
 
   return (
     <>
@@ -130,27 +132,26 @@ const Dojo = (params: Params) => {
 
       {/* fight mons area, fight against area */}
       <div className="rpgui-container framed-grey table-container">
-        <Container fluid>
-          <Row>
-            <Col xs md={12}>
-              <span>Select LokiMon</span>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs md={12}>
+        <Row>
+          <Col xs md={12}>
+            <span>Select LokiMon</span>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs md={12}>
+            <div className="dojo-selection">
               <MySparringMons
                 mons={params.myCryptomons}
                 setFightChoiceFunc={params.setFightChoice1Func}
                 account={params.account}
                 choice="1"
               />
-            </Col>
-          </Row>
-        </Container>
+            </div>
+          </Col>
+        </Row>
       </div>
 
       <div className="rpgui-container framed-grey table-container">
-        {/* <Container fluid> */}
         <Row>
           <Col xs md={12}>
             <span>Select Opponent</span>
@@ -168,7 +169,6 @@ const Dojo = (params: Params) => {
             </div>
           </Col>
         </Row>
-        {/* </Container> */}
       </div>
     </>
   )
