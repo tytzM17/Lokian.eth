@@ -94,7 +94,6 @@ Finished
 - Change 'Fight' to 'Dojo', include in menu
 
 Ongoing
-
 - Fix UI for marketplace, have some table with display options
     like list by date, price, etc. then onClick row, mons modal will show,
     table row could have a thumbnail for the sold monster

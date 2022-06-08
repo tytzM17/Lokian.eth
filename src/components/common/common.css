@@ -1,0 +1,13 @@
+.display-style-btn {
+    margin-left: 0.5em;
+}
+
+.order-dropdown {
+    position: absolute;
+    top: 0px;
+    left: 30%;
+}
+
+.list-render {
+    margin-top: 1.5em;
+}
