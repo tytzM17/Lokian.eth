@@ -50,7 +50,7 @@ const Dojo = (params: Params) => {
 
   return (
     <>
-      <div className="p1 green-glow">Dojo</div>
+      <div className="p1A green-glow">Dojo</div>
 
       <div className="rpgui-container framed-grey vs-container" style={{ marginTop: '24px' }}>
         <Container fluid>

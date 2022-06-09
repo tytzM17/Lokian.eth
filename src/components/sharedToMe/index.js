@@ -5,7 +5,7 @@ import Spinner from '../spinner'
 const SharedToMe = ({ otherCryptomons, account, isStopSharingLoading, stopSharingFunc }) => {
   return (
     <>
-      <div className="p1 green-glow">Shared To You</div>
+      <div className="p1A green-glow">Shared To You</div>
 
       {otherCryptomons &&
         otherCryptomons

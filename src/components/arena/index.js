@@ -17,7 +17,7 @@ const Arena = () => {
 
   return (
     <>
-      <div className="p1 green-glow">Arena V2</div>
+      <div className="p1A green-glow">Arena</div>
       <div
         className="rpgui-container framed-grey table-container"
       >

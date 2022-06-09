@@ -1,6 +1,8 @@
 import React from 'react'
 import { nameDiv, imgDiv, statDiv } from '../common'
 import Spinner from '../spinner'
+import './share.css'
+import { Row, Col } from "react-bootstrap";
 
 const Share = ({
   myCryptomons,
@@ -16,18 +18,18 @@ const Share = ({
 }) => {
   return (
     <>
-      <div className="p1 green-glow">Sharing Management</div>
+      <div className="p1A green-glow">Share</div>
 
-      <div className="sharing-area" style={{marginTop: '24px'}}>
-        <div className="form-line">
+      <div className="rpgui-container framed-grey vs-container" style={{ marginTop: '24px', marginBottom: '48px' }}>
+        <div className="form-line-share">
           <label className="form-label">Creature Id:</label>
           <input className="form-input" value={shareId} onChange={(e) => onHandleShareId(e)} />
         </div>
-        <div className="form-line">
+        <div className="form-line-share">
           <label className="form-label">Share to address:</label>
           <input className="form-input" value={shareAddress} onChange={(e) => onHandleShareAddress(e)} />
         </div>
-        <div className="form-line">
+        <div className="form-line-share">
           {isShareLoading ? (
             <button className="rpgui-button" type="button" style={{ width: '100%' }}>
               <Spinner color="#000" />
@@ -36,7 +38,6 @@ const Share = ({
             <button
               className="rpgui-button"
               type="button"
-              style={{ float: 'right' }}
               onClick={() => startSharingFunc(shareId, shareAddress)}
             >
               Share
@@ -45,7 +46,16 @@ const Share = ({
         </div>
       </div>
 
-      {myCryptomons &&
+      <div className="rpgui-container framed-grey table-container">
+        <Row>
+          <Col xs md={12}>
+            <div style={{textAlign: 'center'}}>Shared LokiMon</div>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs md={12}>
+            <div className="dojo-selection">
+            {myCryptomons &&
         myCryptomons
           .filter((mon) => mon.sharedTo.toLowerCase() !== account?.toString().toLocaleLowerCase() && !mon.forSale)
           .map((mon) => (
@@ -76,6 +86,13 @@ const Share = ({
               </div>
             </React.Fragment>
           ))}
+
+            </div>
+          </Col>
+        </Row>
+      </div>
+
+
     </>
   )
 }

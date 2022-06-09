@@ -1,11 +1,3 @@
-.display-style-btn {
-  margin-left: 0.5em;
-}
-
-.list-render {
-  margin: 1.5em 1.5em;
-}
-
 @media (min-width: 280px) {
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
 }
@@ -16,11 +8,28 @@
 
 /* Small Devices, Tablets */
 @media only screen and (min-width: 768px) {
-    .order-dropdown {
-        position: absolute;
-        top: 0px;
-        left: 30%;
-      }
+  .vs-container {
+    position: relative;
+    width: 50%;
+    display: block;
+    margin-left: 25%;
+    margin-right: auto;
+    margin-top: 24px;
+  }
+
+  .form-line-share {
+    display: grid;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5em;
+  }
+
+  .stop-sharing-btn {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15em;
+  }
 }
 
 /* Medium Devices, Desktops */

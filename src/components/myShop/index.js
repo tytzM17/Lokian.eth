@@ -1,10 +1,12 @@
 import React from 'react'
 import { nameDiv, imgDiv, statDiv, removeFromSaleDiv } from '../common'
+import ListRender from '../common/listRender'
 
 const MyShop = ({ myCryptomons, isRemoveFromSaleLoading, removeFromSale }) => {
   return (
     <>
-      <div className="p1 green-glow">My Shop</div>
+      <ListRender pageName={'My Shop'} />
+
       {myCryptomons &&
         myCryptomons
           .filter((mon) => mon.forSale)
