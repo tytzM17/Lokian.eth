@@ -93,9 +93,9 @@ Finished
 - Add missing graphics for some lokimons
 - Change 'Fight' to 'Dojo', include in menu
 - Fix UI, e.g. a selection button for list or grid display
+- Fix UI, shared to me page
 
 Ongoing
-- Fix UI, shared to me page
 - List or grid display function
 - Fix UI, in different media queries or devices
 - Add onclick monster card, show modal with bigger card UI and monster info

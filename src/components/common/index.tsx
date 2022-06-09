@@ -231,7 +231,7 @@ export const nameDiv = (mon) => {
   export const addForSaleDiv = (mon, value, handleChange, isAddForSaleLoading, addForSale) => {
     return (
       <div className="selling-div">
-        <label className="add-for-sale-label">Set creatures price:</label>
+        <label className="add-for-sale-label">Set lokimons price:</label>
         <input type="number" className="add-for-sale-input" value={value} onChange={(e) => handleChange(mon?.id, e)} />
         {isAddForSaleLoading ? (
           <button className="rpgui-button" type="button" style={{ width: '100%' }}>

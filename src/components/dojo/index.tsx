@@ -30,8 +30,8 @@ const Dojo = (params: Params) => {
   const [rewardAmount, setRewardAmount] = useState(0)
 
   useEffect(() => {
-    console.log(params);
-    
+    console.log(params)
+
     if (!params.fightTxDone) return
     if (!params.winner || !params.cryptomons || !params.monNames) return
 
@@ -134,7 +134,7 @@ const Dojo = (params: Params) => {
       <div className="rpgui-container framed-grey table-container">
         <Row>
           <Col xs md={12}>
-            <span>Select LokiMon</span>
+            <div style={{ textAlign: 'center' }}>Select LokiMon</div>
           </Col>
         </Row>
         <Row>
@@ -154,7 +154,7 @@ const Dojo = (params: Params) => {
       <div className="rpgui-container framed-grey table-container">
         <Row>
           <Col xs md={12}>
-            <span>Select Opponent</span>
+            <div style={{ textAlign: 'center' }}>Select Opponent</div>
           </Col>
         </Row>
         <Row>

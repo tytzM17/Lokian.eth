@@ -2,7 +2,7 @@ import React from 'react'
 import { nameDiv, imgDiv, statDiv } from '../common'
 import Spinner from '../spinner'
 import './share.css'
-import { Row, Col } from "react-bootstrap";
+import { Row, Col } from 'react-bootstrap'
 
 const Share = ({
   myCryptomons,
@@ -35,11 +35,7 @@ const Share = ({
               <Spinner color="#000" />
             </button>
           ) : (
-            <button
-              className="rpgui-button"
-              type="button"
-              onClick={() => startSharingFunc(shareId, shareAddress)}
-            >
+            <button className="rpgui-button" type="button" onClick={() => startSharingFunc(shareId, shareAddress)}>
               Share
             </button>
           )}
@@ -49,50 +45,49 @@ const Share = ({
       <div className="rpgui-container framed-grey table-container">
         <Row>
           <Col xs md={12}>
-            <div style={{textAlign: 'center'}}>Shared LokiMon</div>
+            <div style={{ textAlign: 'center' }}>Shared LokiMon</div>
           </Col>
         </Row>
         <Row>
           <Col xs md={12}>
             <div className="dojo-selection">
-            {myCryptomons &&
-        myCryptomons
-          .filter((mon) => mon.sharedTo.toLowerCase() !== account?.toString().toLocaleLowerCase() && !mon.forSale)
-          .map((mon) => (
-            <React.Fragment key={mon.id}>
-              <div className="mon">
-                <figure className="my-figure">
-                  {nameDiv(mon)}
-                  {imgDiv(mon)}
-                  <figcaption>{statDiv(mon)}</figcaption>
-                </figure>
-                <div className="sharing-div">
-                  <div className="shareTo-owner">Shared to address: {mon.sharedTo} </div>
-                  {isStopSharingLoading ? (
-                    <button className="rpgui-button" type="button" style={{ width: '100%' }}>
-                      <Spinner color="#000" />
-                    </button>
-                  ) : (
-                    <button
-                      className="stop-sharing-btn rpgui-button"
-                      type="button"
-                      style={{ float: 'right' }}
-                      onClick={() => stopSharingFunc(mon.id)}
-                    >
-                      Stop sharing
-                    </button>
-                  )}
-                </div>
-              </div>
-            </React.Fragment>
-          ))}
-
+              {myCryptomons &&
+                myCryptomons
+                  .filter(
+                    (mon) => mon.sharedTo.toLowerCase() !== account?.toString().toLocaleLowerCase() && !mon.forSale
+                  )
+                  .map((mon) => (
+                    <React.Fragment key={mon.id}>
+                      <div className="mon">
+                        <figure className="my-figure">
+                          {nameDiv(mon)}
+                          {imgDiv(mon)}
+                          <figcaption>{statDiv(mon)}</figcaption>
+                        </figure>
+                        <div className="sharing-div">
+                          <div className="shareTo-owner">Shared to address: {mon.sharedTo} </div>
+                          {isStopSharingLoading ? (
+                            <button className="rpgui-button" type="button" style={{ width: '100%' }}>
+                              <Spinner color="#000" />
+                            </button>
+                          ) : (
+                            <button
+                              className="stop-sharing-btn rpgui-button"
+                              type="button"
+                              style={{ float: 'right' }}
+                              onClick={() => stopSharingFunc(mon.id)}
+                            >
+                              Stop sharing
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </React.Fragment>
+                  ))}
             </div>
           </Col>
         </Row>
       </div>
-
-
     </>
   )
 }

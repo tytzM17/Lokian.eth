@@ -729,7 +729,7 @@ function App() {
   const addForSaleDiv = (mon, value) => {
     return (
       <div className="selling-div">
-        <label className="add-for-sale-label">Set creatures price:</label>
+        <label className="add-for-sale-label">Set lokimons price:</label>
         <input type="number" className="add-for-sale-input" value={value} onChange={(e) => handleChange(mon?.id, e)} />
         {isAddForSaleLoading ? (
           <button className="rpgui-button" type="button" style={{ width: '100%' }}>
@@ -1177,7 +1177,7 @@ function App() {
                 style={{ width: '420px' }}
                 onClick={() => breedMons(breedChoice1, breedChoice2)}
               >
-                Breed choosen creatures
+                Breed choosen lokimons
               </button>
             )}
           </div>
@@ -1231,7 +1231,7 @@ function App() {
                 }}
                 disabled={disableFightBtn}
               >
-                Fight with choosen creatures
+                Fight with choosen lokimons
               </button>
             )}
           </div>
