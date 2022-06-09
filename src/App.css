@@ -242,7 +242,7 @@ label {
 
 .breeding-area,
 .fighting-area
-/* .sharing-area  */
+.sharing-area 
 {
   display: block;
   width: 32.7em;
@@ -271,7 +271,6 @@ label {
 
 .rpgui-content label,
 .rpgui-content li {
-  /* color: #fff; */
   text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
   font-size: 0.5em;
 }
@@ -325,11 +324,6 @@ label {
 .nav {
   width: 100%;
   border-bottom-width: 0 !important;
-}
-
-.rpgui-content label {
-  /* line-height: 12px;
-  display: inline; */
 }
 
 .rpgui-content input,
