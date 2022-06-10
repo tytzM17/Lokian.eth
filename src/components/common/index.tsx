@@ -241,7 +241,7 @@ export const nameDiv = (mon) => {
           <button
             className="rpgui-button"
             type="button"
-            style={{ float: 'right' }}
+            // style={{ float: 'right' }}
             onClick={() => addForSale(mon?.id, value)}
           >
             Add for sale

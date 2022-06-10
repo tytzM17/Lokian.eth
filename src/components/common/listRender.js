@@ -4,30 +4,60 @@ import ListIcon from '../common/listIcon'
 import GridIcon from '../common/gridIcon'
 import './common.css'
 
-const ListRender = ({ pageName }) => {
+const ListRender = ({ pageName, onSetDisplay, onSetOrder }) => {
   return (
-    <div className='list-render'>
+    <div className="list-render">
       <Row>
         <Col xs sm={6}>
           <div className="p1 green-glow">{pageName}</div>
         </Col>
         <Col xs sm={6}>
-          <Button className="display-style-btn" variant="outline-dark">
+          <Button
+            className="display-style-btn"
+            variant="outline-dark"
+            onClick={() => {
+              if (onSetDisplay) {
+                onSetDisplay('list')
+              }
+            }}
+          >
             <ListIcon />
           </Button>
-          <Button className="display-style-btn" variant="outline-dark">
+          <Button
+            className="display-style-btn"
+            variant="outline-dark"
+            onClick={() => {
+              if (onSetDisplay) {
+                onSetDisplay('grid')
+              }
+            }}
+          >
             <GridIcon />
           </Button>
-          <Dropdown className="order-dropdown" onSelect={(ek, e) => console.log(ek,e)}>
+          <Dropdown className="order-dropdown" onSelect={(evtK, e) => {
+            if (onSetOrder) onSetOrder(evtK, e)
+          }}>
             <Dropdown.Toggle variant="secondary" id="dropdown-basic">
               Order
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item eventKey="pricehilo">By Price High-Low</Dropdown.Item>
-              <Dropdown.Item eventKey="pricelohi">By Price Low-High</Dropdown.Item>
-              <Dropdown.Item eventKey="idhilo">By ID High-Low</Dropdown.Item>
-              <Dropdown.Item eventKey="idlohi">By ID Low-High </Dropdown.Item>
+              {pageName === 'My LokiMons' && (
+                <>
+                  <Dropdown.Item eventKey="nameAZ">By Name A-Z</Dropdown.Item>
+                  <Dropdown.Item eventKey="nameZA">By Name Z-A</Dropdown.Item>
+                </>
+              )}
+              {(pageName === 'Marketplace' ||
+                pageName === 'My Shop') && (
+                  <>
+                    <Dropdown.Item eventKey="pricehilo">By Price High-Low</Dropdown.Item>
+                    <Dropdown.Item eventKey="pricelohi">By Price Low-High</Dropdown.Item>
+                  </>
+                )}
+
+              <Dropdown.Item eventKey="idDesc">By ID Descending</Dropdown.Item>
+              <Dropdown.Item eventKey="idAsc">By ID Ascending</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Col>

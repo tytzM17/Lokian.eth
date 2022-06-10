@@ -1091,7 +1091,7 @@ function App() {
                     style={{
                       fontSize: '20px',
                       paddingTop: '14px',
-                      width: '100%',
+                      width: '350px',
                     }}
                     onClick={() => {
                       setActivatingConnector(currentConnector)
@@ -1102,8 +1102,7 @@ function App() {
                   >
                     {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
                     <Account />
-                    <div style={{ display: 'none' }}>{name}</div>
-                    {!account ? 'Connect Wallet' : ''}
+                    <span>{!account ? 'Connect Wallet' : ''}</span>
                   </button>
                 </Nav.Link>
               )
