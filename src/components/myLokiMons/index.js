@@ -17,7 +17,7 @@ const MyLokiMons = ({ myCryptomons, value, onHandleChange, isAddForSaleLoading, 
   }, [myCryptomons])
 
   const getMonsOrder = (_orderBy) => {
-    if (!_orderBy) return
+    if (!_orderBy || !myLokimons) return
 
     let lokimons = myLokimons
 
