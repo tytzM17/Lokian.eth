@@ -198,12 +198,15 @@ label {
 .selling-div,
 .buying-div,
 .sharing-div {
-  display: block;
+  display: flex;
   margin-left: auto;
   margin-right: auto;
   margin-top: 1em;
-  border: 2px outset;
+  border-radius: 3px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
   width: 15em;
+  padding: 3px;
   background: linear-gradient(45deg, black, transparent);
 }
 
