@@ -30,6 +30,7 @@ const getMonsOrder = (_orderBy: string, _myLokimons: Lokimon[]) => {
       case 'idAsc':
         lokimons.sort((a, b) => a.id - b.id)
         break
+      // add priceAsc and priceDesc
       default:
         lokimons.sort((a, b) => {
           const speciesA3 = monName(a.species).toLowerCase()

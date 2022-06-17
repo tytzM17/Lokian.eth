@@ -199,6 +199,7 @@ label {
 .buying-div,
 .sharing-div {
   display: flex;
+  flex-direction: column;
   margin-left: auto;
   margin-right: auto;
   margin-top: 1em;

@@ -96,7 +96,8 @@ Finished
 - Fix UI, shared to me page
 
 Ongoing
-- List or grid display function
+- List or grid display function (marketplace, myShop and myLokimons pages)
+- Add priceDesc and priceAsc in myShop and marketplace
 - Fix UI, in different media queries or devices
 - Add onclick monster card, show modal with bigger card UI and monster info
 - Add multiplayer pvp, chat with moralis

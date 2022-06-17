@@ -1135,7 +1135,7 @@ function App() {
       <Route path="/" element={<MyLokiMons myCryptomons={myCryptomons} value={value} onHandleChange={(e) => handleChange(e)} isAddForSaleLoading={isAddForSaleLoading} addForSale={addForSale}/>} />        
           <Route path="/myLokiMons" element={<MyLokiMons myCryptomons={myCryptomons} value={value} onHandleChange={(e) => handleChange(e)} isAddForSaleLoading={isAddForSaleLoading} addForSale={addForSale}/>} />        
           <Route path="/myShop" element={<MyShop myCryptomons={myCryptomons} isRemoveFromSaleLoading={isRemoveFromSaleLoading} removeFromSale={removeFromSale} nativeTok={library?._network?.name} />} />
-          <Route path="/marketplace" element={<Marketplace otherCryptomons={otherCryptomons} isBuyMonLoading={isBuyMonLoading} buyMon={buyMon}/>} />
+          <Route path="/marketplace" element={<Marketplace otherCryptomons={otherCryptomons} isBuyMonLoading={isBuyMonLoading} buyMon={buyMon} nativeTok={library?._network?.name} />} />
           <Route path="/breed"  element={<Breed myCryptomons={myCryptomons} isBreedMonLoading={isBreedMonLoading} breedMons={breedMons} setBreedChoice1Func={setBreedChoice1} setBreedChoice2Func={setBreedChoice2} breedChoice1={breedChoice1} breedChoice2={breedChoice2} />} />
           <Route path="/dojo" element={<Dojo myCryptomons={myCryptomons} account={account} setFightChoice1Func={setFightChoice1} setFightChoice2Func={setFightChoice2} otherCryptomons={otherCryptomons} cryptomons={cryptomons} fightChoice1={fightChoice1} fightChoice2={fightChoice2} winner={winner} monNames={names} fightTxDone={fightTxDone} rewards={rewards} rounds={rounds} disableFightBtn={disableFightBtn} fight={fight} />} />
           <Route path="/arena" element={<ArenaV2 />} />
