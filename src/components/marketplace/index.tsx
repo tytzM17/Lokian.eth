@@ -20,7 +20,7 @@ const Marketplace = ({ otherCryptomons, isBuyMonLoading, buyMon, nativeTok = '' 
 
   useEffect(() => {
     if (!orderBy) return
-    const _otherLokimons = getMonsOrder(orderBy, otherLokimons)
+    const _otherLokimons = getMonsOrder(orderBy, otherCryptomons)
     setOtherLokimons([..._otherLokimons])
   }, [orderBy])
 

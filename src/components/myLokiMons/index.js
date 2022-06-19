@@ -44,12 +44,6 @@ const MyLokiMons = ({ myCryptomons, value, onHandleChange, isAddForSaleLoading, 
       case 'idAsc':
         lokimons.sort((a, b) => a.id - b.id)
         break
-      // case 'priceDesc':
-      //   lokimons.sort((a, b) => b.price - a.price)
-      //   break;
-      // case 'priceAsc':
-      //   lokimons.sort((a, b) => a.price - b.price)
-      //   break;
       default:
         lokimons.sort((a, b) => {
           const speciesA3 = monName(a.species).toLowerCase()

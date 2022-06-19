@@ -20,7 +20,7 @@ const MyShop = ({ myCryptomons, isRemoveFromSaleLoading, removeFromSale, nativeT
 
   useEffect(() => {
     if (!orderBy) return
-    const _lokimons = getMonsOrder(orderBy, myLokimons)
+    const _lokimons = getMonsOrder(orderBy, myCryptomons)
     setMyLokimons([..._lokimons])
   }, [orderBy])
 
