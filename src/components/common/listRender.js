@@ -51,8 +51,8 @@ const ListRender = ({ pageName, onSetDisplay, onSetOrder }) => {
               {(pageName === 'Marketplace' ||
                 pageName === 'My Shop') && (
                   <>
-                    <Dropdown.Item eventKey="pricehilo">By Price High-Low</Dropdown.Item>
-                    <Dropdown.Item eventKey="pricelohi">By Price Low-High</Dropdown.Item>
+                    <Dropdown.Item eventKey="priceDesc">By Price High-Low</Dropdown.Item>
+                    <Dropdown.Item eventKey="priceAsc">By Price Low-High</Dropdown.Item>
                   </>
                 )}
 
