@@ -30,8 +30,6 @@ const Dojo = (params: Params) => {
   const [rewardAmount, setRewardAmount] = useState(0)
 
   useEffect(() => {
-    console.log(params)
-
     if (!params.fightTxDone) return
     if (!params.winner || !params.cryptomons || !params.monNames) return
 
@@ -54,23 +52,29 @@ const Dojo = (params: Params) => {
 
       <div className="rpgui-container framed-grey vs-container" style={{ marginTop: '24px' }}>
         <Container fluid>
-          <Row className="justify-content-md-center">
-            <Col xs lg="2" className="text-right">
-              {
-                params.monNames[
-                  params.cryptomons.find((mon) => mon.id?.toString() === params.fightChoice1?.toString())?.species
-                ]
-              }{' '}
-              {params.fightChoice1 ? `no.${params.fightChoice1}` : ''}
+          <Row>
+            <Col xs="12" lg="12" className="col-text-center">
+              <span>
+                {
+                  params.monNames[
+                    params.cryptomons.find((mon) => mon.id?.toString() === params.fightChoice1?.toString())?.species
+                  ]
+                }{' '}
+                {params.fightChoice1 ? `no.${params.fightChoice1}` : params.fightChoice1 == '0' ? `no.${0}` : ''}
+              </span>
             </Col>
-            <Col md="auto">VS</Col>
-            <Col xs lg="2">
-              {
-                params.monNames[
-                  params.cryptomons.find((mon) => mon.id?.toString() === params.fightChoice2?.toString())?.species
-                ]
-              }{' '}
-              {params.fightChoice2 ? `no.${params.fightChoice2}` : ''}
+            <Col xs md="12" className="col-text-center">
+              VS
+            </Col>
+            <Col xs="12" lg="12" className="col-text-center">
+              <span>
+                {
+                  params.monNames[
+                    params.cryptomons.find((mon) => mon.id?.toString() === params.fightChoice2?.toString())?.species
+                  ]
+                }{' '}
+                {params.fightChoice2 ? `no.${params.fightChoice2}` : ''}
+              </span>
             </Col>
           </Row>
         </Container>

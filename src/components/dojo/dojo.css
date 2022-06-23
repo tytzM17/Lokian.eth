@@ -1,32 +1,55 @@
-@media (min-width: 280px) {
-    /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
-  }
-  
-  @media (min-width: 320px) {
-    /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
-  }
-  
-  /* Small Devices, Tablets */
-  @media only screen and (min-width: 768px) {
-    .vs-container {
-      position: relative;
-      width: 50%;
-      display: block;
-      margin-left: 25%;
-      margin-right: auto;
-      margin-top: 24px;
-    }
+.p1A {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  margin-left: 45%;
+  margin-right: auto;
+  width: 100%;
+  color: #00c853;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  font-size: 1.75em;
+}
+.col-text-center { text-align: center;}
 
-    .dojo-selection {
-      display: flex;
-      overflow-x: scroll;
-    }
+@media (min-width: 320px) {
+  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  .p1A {
+    margin-left: 40%;
   }
-  
-  /* Medium Devices, Desktops */
-  @media only screen and (min-width: 992px) {
+  .fighting-area {
+    display: block;
+    width: 32.7em;
+    margin-left: auto;
+    margin-right: auto;
   }
-  
-  /* Large Devices, Wide Screens */
-  @media only screen and (min-width: 1200px) {
+  .vs-container {
+    position: relative;
+    width: 80%;
+    display: block;
+    margin-left: 12%;
+    margin-right: auto;
+    margin-top: 24px;
   }
+  .dojo-selection {
+    display: flex;
+    overflow-x: scroll;
+    border: 1px inset darkgray;
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+  .vs-container {
+    width: 50%;
+  }
+  .p1A {
+    margin-left: 45%;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: 1200px) {
+}

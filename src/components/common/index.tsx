@@ -17,6 +17,7 @@ import Spinner from '../spinner'
 import { formatUnits } from '@ethersproject/units'
 import React from 'react'
 import { Lokimon } from '../models'
+import './common.css'
 
 // Add all 151 Cryptomon names in an array
 const names = [
@@ -198,11 +199,11 @@ export const bgStyle = (Type) => ({
 // div that holds the images (Cryptomon image and background image) of a Cryptomon
 export const imgDiv = (mon: Lokimon) => {
   return (
-    <div className="monBox" style={bgStyle(mon?.monType)}>
+    <div className="monBox monBox-320-scrn" style={bgStyle(mon?.monType)}>
       <img
         className="monImg"
-        src={MonImages[`${parseInt(mon?.species) + 1}`]}
-        alt={mon?.species}
+        src={MonImages[`${parseInt(mon?.species?.toString()) + 1}`]}
+        alt={mon?.species?.toString()}
         height="32"
         width="32"
       />
@@ -251,7 +252,8 @@ export const addForSaleDiv = (mon: Lokimon, value, handleChange, isAddForSaleLoa
           // style={{ float: 'right' }}
           onClick={() => addForSale(mon?.id, value)}
         >
-          Add for sale
+          {/* Add for sale */}
+          Sell
         </button>
       )}
     </div>
@@ -341,13 +343,13 @@ export const breedDiv = (mon: Lokimon, setBreedChoice1Func, setBreedChoice2Func)
   )
 }
 
-export const breedOption = (breedchoice, lokimons = []) => {
+export const breedOption = (breedchoice: number, lokimons = []) => {
   if (breedchoice === null) {
     return (
-      <div className="mon">
-        <figure className="my-figure">
+      <div className="mon mon-320-scrn">
+        <figure className="my-figure my-figure-320-scrn">
           <figcaption>
-            <div className="monBox">
+            <div className="monBox monBox-320-scrn">
               {' '}
               <img className="monImg" src={MonImages['0']} alt={'empty'} />
             </div>
@@ -360,8 +362,8 @@ export const breedOption = (breedchoice, lokimons = []) => {
       .filter((mon) => mon.id === breedchoice)
       .map((mon) => (
         <React.Fragment key={mon.id}>
-          <div className="mon">
-            <figure className="my-figure">
+          <div className="mon mon-320-scrn">
+            <figure className="my-figure my-figure-320-scrn">
               {imgDiv(mon)}
               <figcaption></figcaption>
             </figure>

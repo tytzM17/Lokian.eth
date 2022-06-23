@@ -3,26 +3,13 @@
 
 @media (min-width: 320px) {
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
-  .order-dropdown {
-    margin-top: 12px;
-  }
+ .p1-for-centering { text-align:  center;}
+ .col-for-centering { text-align: center;}
 }
 
 /* Small Devices, Tablets */
 @media only screen and (min-width: 768px) {
-  .mylokimons-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .add-for-sale-input {
-    margin-top: 6px;
-  }
-
-  .order-dropdown {
-    margin-top: 0px;
-  }
+ 
 }
 
 /* Medium Devices, Desktops */

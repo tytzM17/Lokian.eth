@@ -2,6 +2,7 @@ import React from 'react'
 import { nameDiv, imgDiv, statDiv, breedOption, breedDiv, monName } from '../common'
 import Spinner from '../spinner'
 import { Row, Col, Container } from 'react-bootstrap'
+import { Lokimon } from '../models'
 
 const Breed = ({
   myCryptomons,
@@ -64,8 +65,8 @@ const Breed = ({
             <div className="dojo-selection">
               {myCryptomons &&
                 myCryptomons
-                  .filter((mon) => !mon.forSale)
-                  .map((mon) => (
+                  .filter((mon: Lokimon) => !mon.forSale)
+                  .map((mon: Lokimon) => (
                     <React.Fragment key={mon?.id}>
                       <div className="mon">
                         <figure className="my-figure">

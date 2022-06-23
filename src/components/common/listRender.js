@@ -9,9 +9,9 @@ const ListRender = ({ pageName, onSetDisplay, onSetOrder }) => {
     <div className="list-render">
       <Row>
         <Col xs sm={6}>
-          <div className="p1 green-glow">{pageName}</div>
+          <div className="p1 p1-for-centering green-glow">{pageName}</div>
         </Col>
-        <Col xs sm={6}>
+        <Col xs sm={6} className='col-for-centering'>
           <Button
             className="display-style-btn"
             variant="outline-dark"

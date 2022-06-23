@@ -7,6 +7,7 @@ import ListRender from '../common/listRender'
 import { Lokimon } from '../models'
 import Spinner from '../spinner'
 import { Table } from 'react-bootstrap'
+import './marketplace.css'
 
 const Marketplace = ({ otherCryptomons, isBuyMonLoading, buyMon, nativeTok = '' }) => {
   const [display, setDisplay] = useState('grid')

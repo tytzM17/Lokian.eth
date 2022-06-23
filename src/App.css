@@ -245,7 +245,7 @@ label {
 }
 
 .breeding-area,
-.fighting-area
+/* .fighting-area, */
 .sharing-area 
 {
   display: block;
