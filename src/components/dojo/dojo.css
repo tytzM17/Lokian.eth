@@ -11,22 +11,17 @@
 .col-text-center { text-align: center;}
 
 @media (min-width: 320px) {
-  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
   .p1A {
     margin-left: 40%;
   }
   .fighting-area {
-    display: block;
-    width: 32.7em;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    flex-direction: column;
   }
   .vs-container {
     position: relative;
-    width: 80%;
+    width: 100%;
     display: block;
-    margin-left: 12%;
-    margin-right: auto;
     margin-top: 24px;
   }
   .dojo-selection {

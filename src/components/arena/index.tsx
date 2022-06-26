@@ -24,12 +24,12 @@ const Arena = () => {
         <Container fluid>
           <Row>
             <Col sm={12} xs={12} md={6} lg={6} xl={6}>
-              <span style={{ fontSize: '18px' }} className="float-left">
+              <span className='online-count'>
                 Online: {online || '0'}
               </span>
             </Col>
             <Col sm={12} xs={12} md={6} lg={6} xl={6}>
-              <div className="float-right">
+              <div className="create-room-btn">
                 <button className="rpgui-button" type="button">
                   <span style={{ fontSize: '18px' }}>+</span> Create Room
                 </button>
@@ -107,7 +107,7 @@ const Arena = () => {
         <Container fluid>
         <Row style={{marginBottom: '12px'}}>
             <Col sm={12} xs={12} md={6} lg={6} xl={6}>
-              <span style={{ fontSize: '18px' }} className="float-left">
+              <span className="my-duels">
                 My Duels: {duels || '0'}
               </span>
             </Col>

@@ -79,14 +79,14 @@ const Dojo = (params: Params) => {
           </Row>
         </Container>
       </div>
-      <div className="fighting-area" style={{ marginTop: '6px' }}>
-        {breedOption(params.fightChoice1, params.cryptomons)}
-        {breedOption(params.fightChoice2, params.cryptomons)}
+      <div className="fighting-area" style={{ marginTop: '9px' }}>
+        <div>
+        {breedOption(parseInt(params.fightChoice1), params.cryptomons)}
+        {breedOption(parseInt(params.fightChoice2), params.cryptomons)}
+        </div>
 
-        <Container fluid>
-          <Row className="">
-            <Col>
-              <Table striped bordered hover variant="dark" responsive style={{ marginTop: '12px' }}>
+            <div>
+            <Table striped bordered hover variant="dark" responsive style={{ marginTop: '8px' }}>
                 <thead>
                   <tr>
                     <th>Winner</th>
@@ -104,13 +104,10 @@ const Dojo = (params: Params) => {
                   </tr>
                 </tbody>
               </Table>
-            </Col>
-          </Row>
-        </Container>
+            </div>
 
-        <Row className="">
-          <Col xs md="12">
-            {params.disableFightBtn ? (
+          <div style={{marginBottom:'12px'}}>
+          {params.disableFightBtn ? (
               <Spinner color="gray" style={{ marginLeft: '50%', marginRight: 'auto', padding: '8px' }} />
             ) : (
               <button
@@ -130,8 +127,7 @@ const Dojo = (params: Params) => {
                 Start sparring!
               </button>
             )}
-          </Col>
-        </Row>
+          </div>
       </div>
 
       {/* fight mons area, fight against area */}

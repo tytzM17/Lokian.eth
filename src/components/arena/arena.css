@@ -1,9 +1,13 @@
-@media (min-width: 280px) {
-  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
-}
 
 @media (min-width: 320px) {
-  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  .create-room-btn {
+    text-align: left;
+    margin: 8px 0px 8px 0px;
+  }
+  .online-count, .my-duels {
+    text-align: left;
+    font-size: 16px !important;
+  }
 }
 
 /* Small Devices, Tablets */
