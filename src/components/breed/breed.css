@@ -1,0 +1,22 @@
+@media (min-width: 320px) {
+    .breed-btn { 
+        width: 90%;
+        margin-top: 9px;
+        margin-bottom: 9px;
+    }
+    .p1A {
+        margin-left: 38%;
+      }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: 1200px) {
+}

@@ -1,9 +1,8 @@
-@media (min-width: 280px) {
-  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
-}
-
 @media (min-width: 320px) {
-  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  .share-btn {
+    width: 100%;
+    margin-top: 16px;
+  }
 }
 
 /* Small Devices, Tablets */

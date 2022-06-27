@@ -35,7 +35,7 @@ const Share = ({
               <Spinner color="#000" />
             </button>
           ) : (
-            <button className="rpgui-button" type="button" onClick={() => startSharingFunc(shareId, shareAddress)}>
+            <button className="rpgui-button share-btn" type="button" onClick={() => startSharingFunc(shareId, shareAddress)}>
               Share
             </button>
           )}

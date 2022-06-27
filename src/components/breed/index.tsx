@@ -3,6 +3,7 @@ import { nameDiv, imgDiv, statDiv, breedOption, breedDiv, monName } from '../com
 import Spinner from '../spinner'
 import { Row, Col, Container } from 'react-bootstrap'
 import { Lokimon } from '../models'
+import './breed.css'
 
 const Breed = ({
   myCryptomons,
@@ -19,25 +20,35 @@ const Breed = ({
 
       <div className="rpgui-container framed-grey vs-container" style={{ marginTop: '24px' }}>
         <Container fluid>
-          <Row className="justify-content-md-center">
-            <Col xs lg="2" className="text-right">
-              {breedChoice1 !== null
-                ? monName(myCryptomons?.find((mon) => mon.id?.toString() === breedChoice1?.toString())?.species)
-                : ''}{' '}
-              {breedChoice1 !== null ? `no.${breedChoice1}` : ''}
+          <Row>
+            <Col xs="12" lg="12" className="col-text-center">
+              <span>
+                {breedChoice1 !== null
+                  ? monName(
+                      myCryptomons?.find((mon: Lokimon) => mon.id?.toString() === breedChoice1?.toString())?.species
+                    )
+                  : ''}{' '}
+                {breedChoice1 !== null ? `no.${breedChoice1}` : ''}
+              </span>
             </Col>
-            <Col md="auto">+</Col>
-            <Col xs lg="2">
-              {breedChoice2 !== null
-                ? monName(myCryptomons?.find((mon) => mon.id?.toString() === breedChoice2?.toString())?.species)
-                : ''}{' '}
-              {breedChoice2 !== null ? `no.${breedChoice2}` : ''}
+            <Col md="12" className="col-text-center">
+              {breedChoice1 !== null ? '+' : ''}
+            </Col>
+            <Col xs="12" lg="12" className="col-text-center">
+              <span>
+                {breedChoice2 !== null
+                  ? monName(
+                      myCryptomons?.find((mon: Lokimon) => mon.id?.toString() === breedChoice2?.toString())?.species
+                    )
+                  : ''}{' '}
+                {breedChoice2 !== null ? `no.${breedChoice2}` : ''}
+              </span>
             </Col>
           </Row>
         </Container>
       </div>
 
-      <div className="breeding-area" style={{ marginTop: '6px' }}>
+      <div className="breeding-area" style={{ marginTop: '9px' }}>
         {breedOption(breedChoice1, myCryptomons)}
         {breedOption(breedChoice2, myCryptomons)}
         {isBreedMonLoading ? (
@@ -46,10 +57,10 @@ const Breed = ({
           </button>
         ) : (
           <button
-            className="rpgui-button"
+            className="rpgui-button breed-btn"
             type="button"
-            style={{ width: '420px' }}
             onClick={() => breedMons(breedChoice1, breedChoice2)}
+            disabled={breedChoice1 === breedChoice2}
           >
             Breed choosen lokimons
           </button>

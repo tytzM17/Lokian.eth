@@ -1,7 +1,8 @@
 .LokiMons {
   text-decoration: none !important;
 }
-.lokimons-nav li a, .lokimons-nav-wallet li button {
+.lokimons-nav li a,
+.lokimons-nav-wallet li button {
   text-decoration: none !important;
   font-size: 1.5em;
   padding: 4px;
@@ -28,10 +29,12 @@
   font-size: initial;
 }
 
-.navbar-nav { align-items: center; }
+.navbar-nav {
+  align-items: center;
+}
 
 .dropdown-menu {
-  background-color: #343a40 !important
+  background-color: #343a40 !important;
 }
 
 .dropdown-item:hover {
@@ -81,7 +84,9 @@
   color: white;
 }
 
-.nav-tabs {margin-top: 4%;}
+.nav-tabs {
+  margin-top: 4%;
+}
 
 .mon {
   display: block;
@@ -106,7 +111,7 @@ label {
 
 .my-figure {
   /* border: 2px outset; */
-  border-radius: 3px ;
+  border-radius: 3px;
   margin: 0;
   padding: 3%;
   background-color: #ffe6b3;
@@ -246,8 +251,7 @@ label {
 
 .breeding-area,
 /* .fighting-area, */
-.sharing-area 
-{
+.sharing-area {
   display: block;
   width: 32.7em;
   margin-left: auto;
@@ -259,9 +263,7 @@ label {
 .sale-btn,
 .br-Choice-btn,
 .fight-Choice-btn,
-.breed-btn,
-.fight-btn,
-.share-btn {
+.fight-btn {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -471,5 +473,4 @@ label {
     align-items: center;
     justify-content: flex-end;
   }
-
 }
