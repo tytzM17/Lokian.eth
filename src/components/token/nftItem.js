@@ -1,7 +1,6 @@
 import React from 'react'
 import { Row } from 'react-bootstrap'
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatUnits, parseEther, formatEther } from '@ethersproject/units'
 import './token.css'
 
 const NftItem = ({ item, icon, slot }) => {

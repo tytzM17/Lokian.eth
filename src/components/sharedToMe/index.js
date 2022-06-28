@@ -2,11 +2,12 @@ import React from 'react'
 import { nameDiv, imgDiv, statDiv } from '../common'
 import Spinner from '../spinner'
 import { Row, Col } from "react-bootstrap";
+import "./sharedToMe.css"
 
 const SharedToMe = ({ otherCryptomons, account, isStopSharingLoading, stopSharingFunc }) => {
   return (
     <>
-      <div className="p1A p1-shared-to-u green-glow">Shared To You</div>
+      <div className="p1-shared-to-u green-glow">Shared To You</div>
 
       <div className="rpgui-container framed-grey table-container">
         <Row>

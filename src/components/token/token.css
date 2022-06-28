@@ -10,18 +10,16 @@
   height: 40px;
 }
 
-@media (min-width: 280px) {
-}
-
 @media (min-width: 320px) {
-  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
-}
-
-/* Small Devices, Tablets */
-@media only screen and (min-width: 768px) {
-  .inventory-item-count p {
-    max-width: 85%;
-    overflow-x: auto;
+  .p1-token {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    width: 100%;
+    color: #00c853;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    font-size: 1.75em;
+    margin-left: 16%;
+    margin-right: auto;
   }
 
   .nft-item {
@@ -39,18 +37,30 @@
     overflow-x: auto;
     margin-left: 8px;
   }
-  /* .with-buy-item-input {
-    width: 37%;
-  } */
+
   .buy-item-input-container {
     display: flex;
     justify-content: start;
     align-items: end;
     margin-top: 12px;
   }
+
+  .give-to-skellies-input-btn {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+  }
+  .with-buy-item-input { width: 40%;}
+}
+
+@media only screen and (min-width: 768px) {
+  .inventory-item-count p {
+    max-width: 85%;
+    overflow-x: auto;
+  }
+
   .p1-token { margin-left: 35% }
   .titles-token { font-size:  1.12em; }
-  .item-label { font-size: 0.85em !important;}
 }
 
 /* Medium Devices, Desktops */

@@ -21,7 +21,7 @@ const Token = ({
 }) => {
   return (
     <>
-      <div className="p1A p1-token green-glow">Your Tokens</div>
+      <div className="p1-token green-glow">Your Tokens</div>
 
       <Container style={{ marginTop: '24px' }}>
         <Row>
@@ -51,15 +51,13 @@ const Token = ({
               <Col lg={12} xl={12}>
                 <div className="rpgui-container framed-grey">
                   <span className='titles-token'>Give to the skellies </span> burn token
-                  {/* <div className="">note: if transaction fails, set gas fees above 100k</div> */}
                   <div className="skellies">
                     <img className="monImg" src={MonImages['skelly']} alt="skeleton-people-1" />
                     <img className="monImg" src={MonImages['skelly2']} alt="skeleton-people-1" />
                     <img className="monImg" src={MonImages['skellyrip']} alt="skeleton-people-1" />
                   </div>
-                  <div className="" style={{ display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
+                  <div className="give-to-skellies-input-btn">
                     <div className="form-line with-burn">
-                      <label className="form-label">Units</label>
                       <input
                         className="form-input"
                         placeholder="0"
@@ -92,11 +90,11 @@ const Token = ({
               <div className="sharing-area">
                 <div style={{ marginBottom: '24px' }}>Equipment</div>
                 <span className='item-label'>
-                  <div className="rpgui-icon sword"></div> Sword @ 500 Loks
-                </span>{' '}
+                  <div className="rpgui-icon sword"></div> Sword 
+                </span>{' '}500 
                 <div className="buy-item-input-container">
                   <div className="with-buy-item-input">
-                    <label className="form-label">Units</label>
+                    {/* <label className="form-label">Units</label> */}
                     <input
                       className="form-input"
                       placeholder="0"
@@ -119,11 +117,11 @@ const Token = ({
 
               <div className="sharing-area" style={{ marginTop: '24px' }}>
                 <span className='item-label'>
-                  <div className="rpgui-icon shield"></div> Shield @ 500 Loks
-                </span>{' '}
+                  <div className="rpgui-icon shield"></div> Shield
+                </span>{' '}500
                 <div className="buy-item-input-container">
                   <div className="with-buy-item-input">
-                    <label className="form-label">Units</label>
+                    {/* <label className="form-label">Units</label> */}
                     <input
                       className="form-input"
                       placeholder="0"
@@ -151,7 +149,7 @@ const Token = ({
                 50
                 <div className="buy-item-input-container">
                   <div className="with-buy-item-input">
-                    <label className="form-label">Units</label>
+                    {/* <label className="form-label">Units</label> */}
                     <input
                       className="form-input"
                       placeholder="0"
@@ -180,7 +178,7 @@ const Token = ({
                 50
                 <div className="buy-item-input-container">
                   <div className="with-buy-item-input">
-                    <label className="form-label">Units</label>
+                    {/* <label className="form-label">Units</label> */}
                     <input
                       className="form-input"
                       placeholder="0"
@@ -209,7 +207,7 @@ const Token = ({
                 50
                 <div className="buy-item-input-container">
                   <div className="with-buy-item-input">
-                    <label className="form-label">Units</label>
+                    {/* <label className="form-label">Units</label> */}
                     <input
                       className="form-input"
                       placeholder="0"
