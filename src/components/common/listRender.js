@@ -7,11 +7,19 @@ import './common.css'
 const ListRender = ({ pageName, onSetDisplay, onSetOrder }) => {
   return (
     <div className="list-render">
-      <Row>
+      <div>
         <Col xs sm={6}>
           <div className="p1 p1-for-centering green-glow">{pageName}</div>
         </Col>
-        <Col xs sm={6} className='col-for-centering'>
+        <Col
+          xs
+          sm={6}
+          className={
+            pageName === 'My LokiMons' || pageName === 'My Shop' || pageName === 'Marketplace'
+              ? 'col-for-mylokimons'
+              : 'col-for-centering'
+          }
+        >
           <Button
             className="display-style-btn"
             variant="outline-dark"
@@ -34,9 +42,12 @@ const ListRender = ({ pageName, onSetDisplay, onSetOrder }) => {
           >
             <GridIcon />
           </Button>
-          <Dropdown className="order-dropdown" onSelect={(evtK, e) => {
-            if (onSetOrder) onSetOrder(evtK, e)
-          }}>
+          <Dropdown
+            className="order-dropdown"
+            onSelect={(evtK, e) => {
+              if (onSetOrder) onSetOrder(evtK, e)
+            }}
+          >
             <Dropdown.Toggle variant="secondary" id="dropdown-basic">
               Order
             </Dropdown.Toggle>
@@ -48,20 +59,19 @@ const ListRender = ({ pageName, onSetDisplay, onSetOrder }) => {
                   <Dropdown.Item eventKey="nameZA">By Name Z-A</Dropdown.Item>
                 </>
               )}
-              {(pageName === 'Marketplace' ||
-                pageName === 'My Shop') && (
-                  <>
-                    <Dropdown.Item eventKey="priceDesc">By Price High-Low</Dropdown.Item>
-                    <Dropdown.Item eventKey="priceAsc">By Price Low-High</Dropdown.Item>
-                  </>
-                )}
+              {(pageName === 'Marketplace' || pageName === 'My Shop') && (
+                <>
+                  <Dropdown.Item eventKey="priceDesc">By Price High-Low</Dropdown.Item>
+                  <Dropdown.Item eventKey="priceAsc">By Price Low-High</Dropdown.Item>
+                </>
+              )}
 
               <Dropdown.Item eventKey="idDesc">By ID Descending</Dropdown.Item>
               <Dropdown.Item eventKey="idAsc">By ID Ascending</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Col>
-      </Row>
+      </div>
     </div>
   )
 }

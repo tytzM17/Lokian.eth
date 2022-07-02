@@ -4,6 +4,7 @@ import MonImages from '../../sprites-copy'
 import { nameDiv, imgDiv, statDiv, addForSaleDiv, monName } from '../common'
 import getMonsOrder from '../common/getMonsOrder'
 import ListRender from '../common/listRender'
+import { Lokimon } from '../models'
 import Spinner from '../spinner'
 import './mylokimons.css'
 
@@ -27,16 +28,16 @@ const MyLokiMons = ({ myCryptomons, value, onHandleChange, isAddForSaleLoading, 
     <>
       <ListRender
         pageName={'My LokiMons'}
-        onSetDisplay={(value) => setDisplay(value)}
-        onSetOrder={(evtKey, e) => setOrderBy(evtKey)}
+        onSetDisplay={(value: string) => setDisplay(value)}
+        onSetOrder={(evtKey: string) => setOrderBy(evtKey)}
       />
 
       {display === 'grid' && (
         <div className="mylokimons-container">
           {myLokimons &&
             myLokimons
-              .filter((mon) => !mon.forSale)
-              .map((mon) => (
+              .filter((mon: Lokimon) => !mon.forSale)
+              .map((mon: Lokimon) => (
                 <React.Fragment key={mon.id}>
                   <div className="mon">
                     <figure className="my-figure">
@@ -66,8 +67,8 @@ const MyLokiMons = ({ myCryptomons, value, onHandleChange, isAddForSaleLoading, 
           <tbody>
             {myLokimons &&
               myLokimons
-                .filter((mon) => !mon.forSale)
-                .map((mon) => (
+                .filter((mon: Lokimon) => !mon.forSale)
+                .map((mon: Lokimon) => (
                   <tr key={mon.id}>
                     <td>{mon?.id}</td>
                     <td>
@@ -75,8 +76,8 @@ const MyLokiMons = ({ myCryptomons, value, onHandleChange, isAddForSaleLoading, 
                       <div style={{ border: '2px solid gray', padding: '3px', borderRadius: '4px' }}>
                         <img
                           className=""
-                          src={MonImages[`${parseInt(mon?.species) + 1}`]}
-                          alt={mon?.species}
+                          src={MonImages[`${parseInt(mon?.species?.toString()) + 1}`]}
+                          alt={mon?.species?.toString()}
                           height="45"
                           width="45"
                         />

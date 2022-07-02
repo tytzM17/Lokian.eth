@@ -35,7 +35,7 @@ const Token = ({
               <Col lg={12} xl={12}>
                 <div className="rpgui-container framed-grey">
                   <div className="" style={{ marginTop: '12px' }}>
-                    <span className='titles-token'>Inventory</span>
+                    <span className="titles-token">Inventory</span>
                     <Row style={{ marginTop: '12px' }}>
                       <Col>
                         {swords && <NftItem item={swords} icon="sword" slot="weapon-slot" />}
@@ -50,7 +50,7 @@ const Token = ({
               </Col>
               <Col lg={12} xl={12}>
                 <div className="rpgui-container framed-grey">
-                  <span className='titles-token'>Give to the skellies </span> burn token
+                  <span className="titles-token">Give to the skellies </span> burn token
                   <div className="skellies">
                     <img className="monImg" src={MonImages['skelly']} alt="skeleton-people-1" />
                     <img className="monImg" src={MonImages['skelly2']} alt="skeleton-people-1" />
@@ -83,18 +83,16 @@ const Token = ({
           <Col xs={12} sm={12} md={6} lg={6} xl={6}>
             <div className="rpgui-container framed-grey">
               <div className="" style={{ marginBottom: '24px' }}>
-              <span className='titles-token'>
-                Buy Items (NFT)
-              </span>
+                <span className="titles-token">Buy Items (NFT)</span>
               </div>
               <div className="sharing-area">
                 <div style={{ marginBottom: '24px' }}>Equipment</div>
-                <span className='item-label'>
-                  <div className="rpgui-icon sword"></div> Sword 
-                </span>{' '}500 
+                <span className="item-label">
+                  <div className="rpgui-icon sword"></div> Sword
+                </span>{' '}
+                500
                 <div className="buy-item-input-container">
                   <div className="with-buy-item-input">
-                    {/* <label className="form-label">Units</label> */}
                     <input
                       className="form-input"
                       placeholder="0"
@@ -116,12 +114,12 @@ const Token = ({
               </div>
 
               <div className="sharing-area" style={{ marginTop: '24px' }}>
-                <span className='item-label'>
+                <span className="item-label">
                   <div className="rpgui-icon shield"></div> Shield
-                </span>{' '}500
+                </span>{' '}
+                500
                 <div className="buy-item-input-container">
                   <div className="with-buy-item-input">
-                    {/* <label className="form-label">Units</label> */}
                     <input
                       className="form-input"
                       placeholder="0"
@@ -149,7 +147,6 @@ const Token = ({
                 50
                 <div className="buy-item-input-container">
                   <div className="with-buy-item-input">
-                    {/* <label className="form-label">Units</label> */}
                     <input
                       className="form-input"
                       placeholder="0"
@@ -178,7 +175,6 @@ const Token = ({
                 50
                 <div className="buy-item-input-container">
                   <div className="with-buy-item-input">
-                    {/* <label className="form-label">Units</label> */}
                     <input
                       className="form-input"
                       placeholder="0"
@@ -207,7 +203,6 @@ const Token = ({
                 50
                 <div className="buy-item-input-container">
                   <div className="with-buy-item-input">
-                    {/* <label className="form-label">Units</label> */}
                     <input
                       className="form-input"
                       placeholder="0"

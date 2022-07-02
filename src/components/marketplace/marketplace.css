@@ -1,10 +1,23 @@
-@media (min-width: 280px) {
-}
 
 @media (min-width: 320px) {
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
  .p1-for-centering { text-align:  center;}
- .col-for-centering { text-align: center;}
+ .order-dropdown {
+  margin-top: 12px;
+  margin-left: 8px;
+}
+.order-dropdown button {
+  font-size: 1.25em;
+}
+.col-for-mylokimons {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  align-items: end;
+}
+.display-style-btn {
+  margin-right: 0.5em;
+}
 }
 
 /* Small Devices, Tablets */
