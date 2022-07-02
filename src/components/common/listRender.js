@@ -8,12 +8,13 @@ const ListRender = ({ pageName, onSetDisplay, onSetOrder }) => {
   return (
     <div className="list-render">
       <div>
-        <Col xs sm={6}>
+        <Col xs sm={6} md={12}>
           <div className="p1 p1-for-centering green-glow">{pageName}</div>
         </Col>
         <Col
           xs
           sm={6}
+          md={12}
           className={
             pageName === 'My LokiMons' || pageName === 'My Shop' || pageName === 'Marketplace'
               ? 'col-for-mylokimons'

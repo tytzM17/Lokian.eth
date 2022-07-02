@@ -6,10 +6,6 @@
   margin: 1.5em 1.5em;
 }
 
-/* @media (min-width: 280px) { */
-  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
-/* } */
-
 @media (min-width: 320px) {
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
   .mon-320-scrn { margin: 0 }
@@ -19,12 +15,6 @@
 
 /* Small Devices, Tablets */
 @media only screen and (min-width: 768px) {
-  .order-dropdown {
-    position: absolute;
-    top: 0px;
-    left: 30%;
-  }
-
   .rpgui-button {
     background-size: 90% 100%;
   }
