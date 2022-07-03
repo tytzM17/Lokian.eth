@@ -18,7 +18,7 @@ const Share = ({
 }) => {
   return (
     <>
-      <div className="p1A green-glow">Share</div>
+      <div className="p1-share green-glow">Share</div>
 
       <div className="rpgui-container framed-grey vs-container" style={{ marginTop: '24px', marginBottom: '48px' }}>
         <div className="form-line-share">

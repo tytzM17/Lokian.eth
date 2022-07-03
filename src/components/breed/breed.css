@@ -1,16 +1,24 @@
 @media (min-width: 320px) {
-    .breed-btn { 
-        width: 90%;
-        margin-top: 9px;
-        margin-bottom: 9px;
-    }
-    .p1A {
-        margin-left: 38%;
-      }
+  .breed-btn {
+    width: 90%;
+    margin-top: 9px;
+    margin-bottom: 9px;
+  }
+  .p1A {
+    margin-left: 38%;
+  }
 }
 
 /* Small Devices, Tablets */
 @media only screen and (min-width: 768px) {
+  .breeding-area {
+    width: 48%;
+    margin-left: 27%;
+    margin-right: auto;
+  }
+  .breed-btn {
+    width: 95%;
+  }
 }
 
 /* Medium Devices, Desktops */

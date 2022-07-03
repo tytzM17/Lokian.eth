@@ -80,7 +80,7 @@ const Dojo = (params: Params) => {
         </Container>
       </div>
       <div className="fighting-area" style={{ marginTop: '9px' }}>
-        <div>
+        <div className='dojo-spar-mons-img'>
         {breedOption(parseInt(params.fightChoice1), params.cryptomons)}
         {breedOption(parseInt(params.fightChoice2), params.cryptomons)}
         </div>

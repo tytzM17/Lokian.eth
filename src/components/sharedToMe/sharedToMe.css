@@ -13,6 +13,9 @@
 
 /* Small Devices, Tablets */
 @media only screen and (min-width: 768px) {
+  .p1-shared-to-u {
+    margin-left: 35%;
+  }
 }
 
 /* Medium Devices, Desktops */

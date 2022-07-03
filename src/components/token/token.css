@@ -61,6 +61,9 @@
 
   .p1-token { margin-left: 35% }
   .titles-token { font-size:  1.12em; }
+  .token-input-btn {
+    background-size: 90% 100%;
+  }
 }
 
 /* Medium Devices, Desktops */

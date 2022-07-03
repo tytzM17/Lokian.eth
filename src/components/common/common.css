@@ -15,9 +15,9 @@
 
 /* Small Devices, Tablets */
 @media only screen and (min-width: 768px) {
-  .rpgui-button {
-    background-size: 90% 100%;
-  }
+  .mon-320-scrn { margin-right: 9px }
+  .my-figure-320-scrn { width: 14.5em }
+  .monBox-320-scrn { border-radius: 6px;}
 }
 
 /* Medium Devices, Desktops */

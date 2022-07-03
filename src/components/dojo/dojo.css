@@ -39,6 +39,14 @@
   .p1A {
     margin-left: 45%;
   }
+  .fighting-area {
+    width: 48%;
+    margin-left: 26%;
+    margin-right: auto;
+  }
+  .dojo-spar-mons-img {
+    padding-left: 7px;
+  }
 }
 
 /* Medium Devices, Desktops */

@@ -22,7 +22,7 @@ const Arena = () => {
         className="rpgui-container framed-grey table-container"
       >
         <Container fluid>
-          <Row>
+          <Row className='online-create-room-row'>
             <Col sm={12} xs={12} md={6} lg={6} xl={6}>
               <span className='online-count'>
                 Online: {online || '0'}

@@ -3,6 +3,16 @@
     width: 100%;
     margin-top: 16px;
   }
+  .p1-share {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    margin-left: 38%;
+    margin-right: auto;
+    width: 100%;
+    color: #00c853;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    font-size: 1.75em;
+  }
 }
 
 /* Small Devices, Tablets */
@@ -28,6 +38,9 @@
     margin-left: auto;
     margin-right: auto;
     width: 15em;
+  }
+  .p1-share {
+    margin-left: 43%;
   }
 }
 

@@ -20,6 +20,16 @@
     margin-right: auto;
     margin-top: 24px;
   }
+  .create-room-btn {
+    text-align: right;
+    margin: 0;
+  }
+  .online-count {
+    margin-left: 4px;
+  }
+  .online-create-room-row {
+    align-items: center;
+  }
 }
 
 /* Medium Devices, Desktops */
