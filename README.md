@@ -98,7 +98,7 @@ Finished
 - Add priceDesc and priceAsc in myShop and marketplace
 
 Ongoing
-- Fix UI, in different media queries or devices, 320(ok), 844, 1920
+- Fix UI, in different media queries or devices, 320(ok), 844(ok), 1920
 - Add onclick monster card, show modal with bigger card UI and monster info
 - Add multiplayer pvp, chat with moralis
 - Add skellies + armours + weapons mini pvp

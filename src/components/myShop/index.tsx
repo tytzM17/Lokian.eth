@@ -53,7 +53,7 @@ const MyShop = ({ myCryptomons, isRemoveFromSaleLoading, removeFromSale, nativeT
       )}
 
       {display === 'list' && (
-        <Table striped bordered hover variant="dark" responsive>
+        <Table striped bordered hover variant="dark" responsive className='mylokimons-table'>
           <thead>
             <tr>
               <th>ID</th>
@@ -75,7 +75,7 @@ const MyShop = ({ myCryptomons, isRemoveFromSaleLoading, removeFromSale, nativeT
                       {' '}
                       <div style={{ border: '2px solid gray', padding: '3px', borderRadius: '4px' }}>
                         <img
-                          className=""
+                          className="mylokimons-img"
                           src={MonImages[`${mon.species + 1 || 0}`]}
                           alt={mon?.species?.toString() || 'none'}
                           height="45"
@@ -88,7 +88,7 @@ const MyShop = ({ myCryptomons, isRemoveFromSaleLoading, removeFromSale, nativeT
                     <td>{`${formatUnits(mon?.price || 0)} ${nativeTok}`}</td>
                     <td>
                       <button
-                        className="rpgui-button"
+                        className="rpgui-button mylokimons-sell-btn"
                         type="button"
                         onClick={() => (mon?.id ? removeFromSale(mon?.id) : null)}
                       >

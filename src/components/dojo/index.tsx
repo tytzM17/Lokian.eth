@@ -48,7 +48,7 @@ const Dojo = (params: Params) => {
 
   return (
     <>
-      <div className="p1A green-glow">Dojo</div>
+      <div className="p1A p1-dojo green-glow">Dojo</div>
 
       <div className="rpgui-container framed-grey vs-container" style={{ marginTop: '24px' }}>
         <Container fluid>
@@ -86,7 +86,7 @@ const Dojo = (params: Params) => {
         </div>
 
             <div>
-            <Table striped bordered hover variant="dark" responsive style={{ marginTop: '8px' }}>
+            <Table striped bordered hover variant="dark" responsive style={{ marginTop: '8px' }} className='dojo-results-table'>
                 <thead>
                   <tr>
                     <th>Winner</th>

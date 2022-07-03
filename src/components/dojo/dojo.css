@@ -1,4 +1,4 @@
-.p1A {
+.p1-dojo {
   margin-top: 1.5em;
   margin-bottom: 1.5em;
   margin-left: 45%;
@@ -8,10 +8,12 @@
   text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
   font-size: 1.75em;
 }
-.col-text-center { text-align: center;}
+.col-text-center {
+  text-align: center;
+}
 
 @media (min-width: 320px) {
-  .p1A {
+  .p1-dojo {
     margin-left: 40%;
   }
   .fighting-area {
@@ -36,7 +38,7 @@
   .vs-container {
     width: 50%;
   }
-  .p1A {
+  .p1-dojo {
     margin-left: 45%;
   }
   .fighting-area {
@@ -55,4 +57,24 @@
 
 /* Large Devices, Wide Screens */
 @media only screen and (min-width: 1200px) {
+  .p1-dojo {
+    margin-left: 48%;
+  }
+  .vs-container {
+    width: 21%;
+    margin-left: 40%;
+    margin-right: auto;
+  }
+  .fighting-area {
+    width: 21%;
+    margin-left: 40%;
+    margin-right: auto;
+  }
+  .dojo-results-table {
+    width: 98%;
+    margin-left: 5px;
+  }
+  .dojo-spar-mons-img {
+    padding-left: 9px;
+  }
 }

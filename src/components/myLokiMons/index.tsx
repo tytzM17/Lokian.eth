@@ -53,7 +53,7 @@ const MyLokiMons = ({ myCryptomons, value, onHandleChange, isAddForSaleLoading, 
       )}
 
       {display === 'list' && (
-        <Table striped bordered hover variant="dark" responsive>
+        <Table striped bordered hover variant="dark" responsive className='mylokimons-table'>
           <thead>
             <tr>
               <th>ID</th>
@@ -75,7 +75,7 @@ const MyLokiMons = ({ myCryptomons, value, onHandleChange, isAddForSaleLoading, 
                       {' '}
                       <div style={{ border: '2px solid gray', padding: '3px', borderRadius: '4px' }}>
                         <img
-                          className=""
+                          className="mylokimons-img"
                           src={MonImages[`${parseInt(mon?.species?.toString()) + 1}`]}
                           alt={mon?.species?.toString()}
                           height="45"
@@ -95,7 +95,7 @@ const MyLokiMons = ({ myCryptomons, value, onHandleChange, isAddForSaleLoading, 
                     </td>
                     <td>
                       <button
-                        className="rpgui-button"
+                        className="rpgui-button mylokimons-sell-btn"
                         type="button"
                         onClick={() => (mon?.id ? addForSale(mon?.id, value) : null)}
                       >
