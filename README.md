@@ -96,12 +96,12 @@ Finished
 - Fix UI, shared to me page
 - List or grid display function (marketplace, myShop and myLokimons pages)
 - Add priceDesc and priceAsc in myShop and marketplace
+- Fix UI, in different media queries or devices, 320(ok), 844(ok), 1920(ok)
 
 Ongoing
-- Fix UI, in different media queries or devices, 320(ok), 844(ok), 1920
-- Add onclick monster card, show modal with bigger card UI and monster info
 - Add multiplayer pvp, chat with moralis
 - Add skellies + armours + weapons mini pvp
+- Add onclick monster card, show modal with bigger card UI and monster info
 
 Future
 - GameFi (staking)

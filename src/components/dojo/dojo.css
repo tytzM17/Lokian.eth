@@ -1,8 +1,6 @@
 .p1-dojo {
   margin-top: 1.5em;
-  margin-bottom: 1.5em;
-  margin-left: 45%;
-  margin-right: auto;
+  text-align: center;
   width: 100%;
   color: #00c853;
   text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
@@ -13,9 +11,6 @@
 }
 
 @media (min-width: 320px) {
-  .p1-dojo {
-    margin-left: 40%;
-  }
   .fighting-area {
     display: flex;
     flex-direction: column;
@@ -38,9 +33,6 @@
   .vs-container {
     width: 50%;
   }
-  .p1-dojo {
-    margin-left: 45%;
-  }
   .fighting-area {
     width: 48%;
     margin-left: 26%;
@@ -57,9 +49,6 @@
 
 /* Large Devices, Wide Screens */
 @media only screen and (min-width: 1200px) {
-  .p1-dojo {
-    margin-left: 48%;
-  }
   .vs-container {
     width: 21%;
     margin-left: 40%;

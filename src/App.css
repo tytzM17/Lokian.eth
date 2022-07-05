@@ -250,7 +250,6 @@ label {
 }
 
 .breeding-area,
-/* .fighting-area, */
 .sharing-area {
   display: block;
   width: 32.7em;
@@ -368,9 +367,7 @@ label {
     margin-right: auto;
   }
 
-  /* .with-buy-item, */
   .with-burn {
-    /* max-width: 61%; */
     max-width: 100%;
   }
 
@@ -463,7 +460,7 @@ label {
 @media only screen and (min-width: 1200px) {
   .skellies {
     display: flex;
-    width: 20%;
+    width: 100%;
   }
 
   .wallet-info-column {

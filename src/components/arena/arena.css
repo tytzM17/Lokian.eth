@@ -1,5 +1,14 @@
 
 @media (min-width: 320px) {
+  .p1-arena {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    text-align: center;
+    width: 100%;
+    color: #00c853;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    font-size: 1.75em;
+  }
   .create-room-btn {
     text-align: left;
     margin: 8px 0px 8px 0px;

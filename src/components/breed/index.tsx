@@ -16,7 +16,7 @@ const Breed = ({
 }) => {
   return (
     <>
-      <div className="p1A green-glow">Breed</div>
+      <div className="p1-breed green-glow">Breed</div>
 
       <div className="rpgui-container framed-grey vs-container" style={{ marginTop: '24px' }}>
         <Container fluid>
@@ -49,8 +49,10 @@ const Breed = ({
       </div>
 
       <div className="breeding-area" style={{ marginTop: '9px' }}>
+      <div className='breed-selected-mons-img'>
         {breedOption(breedChoice1, myCryptomons)}
         {breedOption(breedChoice2, myCryptomons)}
+        </div>
         {isBreedMonLoading ? (
           <button className="rpgui-button" type="button" style={{ width: '100%' }}>
             <Spinner color="#000" />

@@ -4,8 +4,14 @@
     margin-top: 9px;
     margin-bottom: 9px;
   }
-  .p1A {
-    margin-left: 38%;
+  .p1-breed {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    text-align: center;
+    width: 100%;
+    color: #00c853;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    font-size: 1.75em;
   }
 }
 
@@ -17,7 +23,7 @@
     margin-right: auto;
   }
   .breed-btn {
-    width: 95%;
+    width: 96%;
   }
 }
 
@@ -27,4 +33,15 @@
 
 /* Large Devices, Wide Screens */
 @media only screen and (min-width: 1200px) {
+  .breed-selected-mons-img {
+    padding-left: 9px;
+  }
+  .breed-btn {
+    width: 100%;
+  }
+  .breeding-area {
+    width: 21%;
+    margin-left: 40%;
+    margin-right: auto;
+  }
 }

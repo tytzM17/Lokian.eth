@@ -57,7 +57,7 @@ const Token = ({
                     <img className="monImg" src={MonImages['skellyrip']} alt="skeleton-people-1" />
                   </div>
                   <div className="give-to-skellies-input-btn">
-                    <div className="form-line with-burn">
+                    <div className="form-line with-burn burn-input">
                       <input
                         className="form-input"
                         placeholder="0"
@@ -65,7 +65,7 @@ const Token = ({
                         onChange={(e) => onHandleBurn(e)}
                       />
                     </div>
-                    <div className="form-line with-burn">
+                    <div className="form-line with-burn burn-btn">
                       <button
                         className="rpgui-button token-input-btn"
                         type="button"
