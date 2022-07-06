@@ -26,6 +26,12 @@
     overflow-x: scroll;
     border: 1px inset darkgray;
   }
+  .dojo-spar-mons-img {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 /* Small Devices, Tablets */
@@ -45,6 +51,12 @@
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width: 992px) {
+  .dojo-spar-mons-img {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
 }
 
 /* Large Devices, Wide Screens */
@@ -64,6 +76,9 @@
     margin-left: 5px;
   }
   .dojo-spar-mons-img {
-    padding-left: 9px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
 }
