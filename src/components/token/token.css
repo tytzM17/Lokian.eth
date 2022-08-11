@@ -39,15 +39,15 @@
 
   .buy-item-input-container {
     display: flex;
-    justify-content: start;
-    align-items: end;
+    justify-content: flex-start;
+    align-items: flex-end;
     margin-top: 12px;
   }
 
   .give-to-skellies-input-btn {
     display: flex;
     justify-content: center;
-    align-items: end;
+    align-items: flex-end;
   }
   .with-buy-item-input {
     width: 40%;

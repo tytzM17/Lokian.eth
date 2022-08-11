@@ -20,7 +20,7 @@ import { Lokimon } from '../models'
 import './common.css'
 
 // Add all 151 Cryptomon names in an array
-const names = [
+export const names = [
   'Dryad',
   'Hamadryad',
   'Leshy',
@@ -240,19 +240,13 @@ export const addForSaleDiv = (mon: Lokimon, value, handleChange, isAddForSaleLoa
   return (
     <div className="selling-div">
       <label className="add-for-sale-label">Set lokimons price:</label>
-      <input type="number" className="add-for-sale-input" value={value} onChange={(e) => handleChange(mon?.id, e)} />
+      <input type="number" className="add-for-sale-input" onChange={(e) => handleChange(mon?.id, e)} />
       {isAddForSaleLoading ? (
         <button className="rpgui-button" type="button" style={{ width: '100%' }}>
           <Spinner color="#000" />
         </button>
       ) : (
-        <button
-          className="rpgui-button"
-          type="button"
-          // style={{ float: 'right' }}
-          onClick={() => addForSale(mon?.id, value)}
-        >
-          {/* Add for sale */}
+        <button className="rpgui-button" type="button" onClick={() => addForSale(mon?.id, value)}>
           Sell
         </button>
       )}
@@ -274,11 +268,7 @@ export const removeFromSaleDiv = (mon: Lokimon, isRemoveFromSaleLoading, removeF
           <Spinner color="#000" />
         </button>
       ) : (
-        <button
-          className="rpgui-button"
-          type="button"
-          onClick={() => removeFromSale(mon?.id)}
-        >
+        <button className="rpgui-button" type="button" onClick={() => removeFromSale(mon?.id)}>
           Delist
           {isRemoveFromSaleLoading && <Spinner color="#000" />}
         </button>

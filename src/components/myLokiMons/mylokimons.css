@@ -1,5 +1,4 @@
 @media (min-width: 320px) {
-  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
   .order-dropdown {
     margin-top: 12px;
     margin-left: 8px;
@@ -11,7 +10,7 @@
     display: flex;
     justify-content: center;
     margin-top: 12px;
-    align-items: end;
+    align-items: flex-end;
     padding-left: 2px;
   }
   .display-style-btn {

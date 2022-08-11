@@ -100,7 +100,7 @@ const Arena = () => {
         </Container>
       </div>
 
-              {/* My Duels */}
+              {/* Rooms */}
               <div
         className="rpgui-container framed-grey table-container"
       >
@@ -108,7 +108,7 @@ const Arena = () => {
         <Row style={{marginBottom: '12px'}}>
             <Col sm={12} xs={12} md={6} lg={6} xl={6}>
               <span className="my-duels">
-                My Duels: {duels || '0'}
+                My Rooms: {duels || '0'}
               </span>
             </Col>
             <Col sm={12} xs={12} md={6} lg={6} xl={6}>

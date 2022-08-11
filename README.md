@@ -99,13 +99,16 @@ Finished
 - Fix UI, in different media queries or devices, 320(ok), 844(ok), 1920(ok)
 
 Ongoing
-- Add multiplayer pvp, chat with moralis
+- Add multiplayer pvp, chat 
+-- Create websocket mini server
+-- Start with chat functions
+-- Create room, leave, join functions
+-- Then add data for versus function like monster id,etc
+-- Other misc stuffs
+
 - Add skellies + armours + weapons mini pvp
 - Add onclick monster card, show modal with bigger card UI and monster info
 
-Future
-- GameFi (staking)
-- Metaverse, with duels or royal rumble
 
 
 

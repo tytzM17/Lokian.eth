@@ -7,7 +7,7 @@ import "./sharedToMe.css"
 const SharedToMe = ({ otherCryptomons, account, isStopSharingLoading, stopSharingFunc }) => {
   return (
     <>
-      <div className="p1-shared-to-u green-glow">Shared To You</div>
+      <div className="p1-shared-to-u green-glow">Shared To Me</div>
 
       <div className="rpgui-container framed-grey table-container">
         <Row>
