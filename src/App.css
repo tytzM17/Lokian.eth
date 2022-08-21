@@ -386,6 +386,30 @@ label {
   .navbar {
     padding: 0.5rem 0.25rem !important;
   }
+
+  .arena-chat-box {
+    position: absolute;
+    width: 100%;
+    bottom: 4%;
+    z-index: 999;
+  }
+
+  .arena-chat-box .rpgui-button.golden {
+    padding-top: 15px;
+  }
+
+  .arena-chat-controls {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 999;
+  }
+
+  .arena-chat-controls button {
+    height: 3.75em;
+  }
 }
 
 @media (min-width: 320px) {
@@ -438,8 +462,6 @@ label {
     text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
     font-size: 1.75em;
   }
-
-
 }
 
 /* Medium Devices, Desktops */

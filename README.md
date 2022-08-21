@@ -100,8 +100,8 @@ Finished
 
 Ongoing
 - Add multiplayer pvp, chat 
--- Create websocket mini server
--- Start with chat functions
+-- Create websocket mini server ..ok
+-- Chat ui ..ok , functions 
 -- Create room, leave, join functions
 -- Then add data for versus function like monster id,etc
 -- Other misc stuffs

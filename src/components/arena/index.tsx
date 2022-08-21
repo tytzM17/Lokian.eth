@@ -21,7 +21,6 @@ const Arena = () => {
 
     ws.onopen = function open() {
       console.log('connected')
-      ws.send(Date.now())
     }
 
     ws.onclose = function close() {
@@ -32,10 +31,6 @@ const Arena = () => {
       if (!data || !data.data) return
       const ndate: any = new Date(data.data)
       console.log(`Roundtrip time: ${Date.now() - ndate} ms`)
-
-      // setTimeout(function timeout() {
-      //   ws.send(Date.now())
-      // }, 5000)
     }
   }, [])
 
@@ -162,6 +157,18 @@ const Arena = () => {
             </Col>
           </Row>
         </Container>
+      </div>
+
+      {/* arena chat */}
+      <div className="arena-chat-box">
+      <button className="rpgui-button golden" type="button">ChatBox</button>
+      </div>
+
+      <div className="arena-chat-controls">
+        <input type="text" name="arenaChatInput" value="" placeholder="message" />
+        <button className="rpgui-button" type="button">
+          Send
+        </button>
       </div>
     </>
   )
