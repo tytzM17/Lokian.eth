@@ -397,6 +397,11 @@ label {
   .arena-chat-box .rpgui-button.golden {
     padding-top: 15px;
   }
+  .arena-chat-box textarea {
+      height: 100%;
+      display: var(--visible);
+  }
+      
 
   .arena-chat-controls {
     display: flex;

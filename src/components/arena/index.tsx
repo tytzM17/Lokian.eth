@@ -15,6 +15,7 @@ const btnStyle = {
 const Arena = () => {
   const [online, setOnline] = useState('6')
   const [duels, setDuels] = useState('1')
+  const [toggleChatbox, setToggleChatbox] = useState(false)
 
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:40510')
@@ -161,7 +162,23 @@ const Arena = () => {
 
       {/* arena chat */}
       <div className="arena-chat-box">
-      <button className="rpgui-button golden" type="button">ChatBox</button>
+        <button className="rpgui-button golden" type="button" onClick={() => setToggleChatbox(!toggleChatbox)}>
+          ChatBox
+        </button>
+        <textarea style={{ '--visible': toggleChatbox ? 'block': 'none' } as any} rows={6} cols={100}>
+          Bob The Destroyer likes to destroy stuff. Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to
+          destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The
+          Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.
+          Bob The Destroyer likes to destroy stuff. Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to
+          destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The
+          Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.
+          Bob The Destroyer likes to destroy stuff. Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to
+          destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The
+          Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.
+          Bob The Destroyer likes to destroy stuff. Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to
+          destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The
+          Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.
+        </textarea>
       </div>
 
       <div className="arena-chat-controls">
