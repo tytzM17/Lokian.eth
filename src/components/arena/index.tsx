@@ -16,24 +16,51 @@ const Arena = () => {
   const [online, setOnline] = useState('6')
   const [duels, setDuels] = useState('1')
   const [toggleChatbox, setToggleChatbox] = useState(false)
+  const [arenaChatMsgs, setArenaChatMsgs] = useState('')
+  const [arenaChatInput, setArenaChatInput] = useState('')
+  const [sendMsg, setSendMsg] = useState('')
+
+  const showMessage = (message: string) => {
+    let messages = arenaChatMsgs
+    messages += `\n${message}`
+    console.log(messages);
+    
+    setArenaChatMsgs(messages)
+  }
+
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:40510')
+    let ws = new WebSocket('ws://localhost:40510') 
 
     ws.onopen = function open() {
       console.log('connected')
+      console.log(sendMsg);
+      
+      if(sendMsg) {
+        ws.send(arenaChatInput)
+        showMessage(`ME: ${arenaChatInput}`)
+        // setSendMsg(false)
+      }
+  
+ 
     }
+
 
     ws.onclose = function close() {
       console.log('disconnected')
     }
 
     ws.onmessage = function incoming(data) {
+      console.log(data);
+      
       if (!data || !data.data) return
-      const ndate: any = new Date(data.data)
-      console.log(`Roundtrip time: ${Date.now() - ndate} ms`)
+      // const ndate: any = new Date(data.data)
+      // console.log(`Roundtrip time: ${Date.now() - ndate} ms`)
+      showMessage(`YOU: ${data.data}`)
     }
-  }, [])
+
+
+  }, [sendMsg])
 
   return (
     <>
@@ -165,25 +192,24 @@ const Arena = () => {
         <button className="rpgui-button golden" type="button" onClick={() => setToggleChatbox(!toggleChatbox)}>
           ChatBox
         </button>
-        <textarea style={{ '--visible': toggleChatbox ? 'block': 'none' } as any} rows={6} cols={100}>
-          Bob The Destroyer likes to destroy stuff. Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to
-          destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The
-          Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.
-          Bob The Destroyer likes to destroy stuff. Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to
-          destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The
-          Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.
-          Bob The Destroyer likes to destroy stuff. Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to
-          destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The
-          Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.
-          Bob The Destroyer likes to destroy stuff. Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to
-          destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.Bob The
-          Destroyer likes to destroy stuff.Bob The Destroyer likes to destroy stuff.
-        </textarea>
+        <textarea
+          className="arena-chat-textarea"
+          style={{ '--visible': toggleChatbox ? 'block' : 'none' } as any}
+          rows={6}
+          cols={100}
+          value={arenaChatMsgs}
+        ></textarea>
       </div>
 
       <div className="arena-chat-controls">
-        <input type="text" name="arenaChatInput" value="" placeholder="message" />
-        <button className="rpgui-button" type="button">
+        <input
+          onChange={(e) => setArenaChatInput(e.target?.value)}
+          type="text"
+          name="arenaChatInput"
+          placeholder="message"
+          value={arenaChatInput}
+        />
+        <button className="rpgui-button" type="button" onClick={() => setSendMsg(arenaChatInput)}>
           Send
         </button>
       </div>
