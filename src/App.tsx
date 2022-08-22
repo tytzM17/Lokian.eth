@@ -1225,7 +1225,7 @@ function App() {
               />
             }
           />
-          <Route path="/arena" element={<ArenaV2 />} />
+          <Route path="/arena" element={<ArenaV2 account={account} />} />
           <Route
             path="/share"
             element={

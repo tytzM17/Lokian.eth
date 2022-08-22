@@ -12,55 +12,60 @@ const btnStyle = {
   height: '38px',
 }
 
-const Arena = () => {
+const URL = 'ws://localhost:40510'
+
+const acctFormat = (acct) => {
+  if (!acct) return 'anonymous'
+  return `${acct.substring(0, 6)}`
+}
+
+const Arena = ({ account }) => {
   const [online, setOnline] = useState('6')
   const [duels, setDuels] = useState('1')
   const [toggleChatbox, setToggleChatbox] = useState(false)
   const [arenaChatMsgs, setArenaChatMsgs] = useState('')
   const [arenaChatInput, setArenaChatInput] = useState('')
-  const [sendMsg, setSendMsg] = useState('')
+  const [ws, setWs] = useState(new WebSocket(URL))
 
   const showMessage = (message: string) => {
     let messages = arenaChatMsgs
     messages += `\n${message}`
-    console.log(messages);
-    
+    console.log(messages)
+
     setArenaChatMsgs(messages)
   }
 
+  const sendMsg = () => {
+    if (!ws) return
+    ws.send(
+      JSON.stringify({
+        msg: arenaChatInput,
+        acct: acctFormat(account),
+      })
+    )
+    showMessage(`${acctFormat(account)}: ${arenaChatInput}`)
+  }
 
   useEffect(() => {
-    let ws = new WebSocket('ws://localhost:40510') 
-
     ws.onopen = function open() {
       console.log('connected')
-      console.log(sendMsg);
-      
-      if(sendMsg) {
-        ws.send(arenaChatInput)
-        showMessage(`ME: ${arenaChatInput}`)
-        // setSendMsg(false)
-      }
-  
- 
-    }
-
-
-    ws.onclose = function close() {
-      console.log('disconnected')
     }
 
     ws.onmessage = function incoming(data) {
-      console.log(data);
-      
+      console.log(data)
       if (!data || !data.data) return
-      // const ndate: any = new Date(data.data)
-      // console.log(`Roundtrip time: ${Date.now() - ndate} ms`)
-      showMessage(`YOU: ${data.data}`)
+
+      const parsed = JSON.parse(data.data)
+      showMessage(`${parsed?.acct}: ${parsed?.msg}`)
     }
 
-
-  }, [sendMsg])
+    return () => {
+      ws.onclose = () => {
+        console.log('WebSocket Disconnected')
+        setWs(new WebSocket(URL))
+      }
+    }
+  }, [ws.onmessage, ws.onopen, ws.onclose])
 
   return (
     <>
@@ -209,7 +214,7 @@ const Arena = () => {
           placeholder="message"
           value={arenaChatInput}
         />
-        <button className="rpgui-button" type="button" onClick={() => setSendMsg(arenaChatInput)}>
+        <button className="rpgui-button" type="button" onClick={() => sendMsg()}>
           Send
         </button>
       </div>
