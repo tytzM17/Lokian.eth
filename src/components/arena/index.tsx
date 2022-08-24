@@ -25,6 +25,8 @@ const Arena = ({ account }) => {
   const [toggleChatbox, setToggleChatbox] = useState(false)
   const [arenaChatMsgs, setArenaChatMsgs] = useState('')
   const [arenaChatInput, setArenaChatInput] = useState('')
+  const [roomCode, setRoomCode] = useState('')
+  const [lastMsg, setLastMsg] = useState('')
   const [ws, setWs] = useState(new WebSocket(URL))
 
   const showMessage = (message: string) => {
@@ -46,6 +48,23 @@ const Arena = ({ account }) => {
     showMessage(`${acctFormat(account)}: ${arenaChatInput}`)
   }
 
+  const createRoom = () => {
+    if (!ws) return
+    ws.send('{"type":"create"}')
+  }
+
+  const joinRoom = () => {
+    if (!ws) return
+    const code = roomCode
+    const obj = { type: 'join', params: { code } }
+    ws.send(JSON.stringify(obj))
+  }
+
+  const leaveRoom = () => {
+    if (!ws) return
+    ws.send('{"type":"leave"}')
+  }
+
   useEffect(() => {
     ws.onopen = function open() {
       console.log('connected')
@@ -57,6 +76,7 @@ const Arena = ({ account }) => {
 
       const parsed = JSON.parse(data.data)
       showMessage(`${parsed?.acct}: ${parsed?.msg}`)
+      setLastMsg(data.data)
     }
 
     return () => {
@@ -74,11 +94,14 @@ const Arena = ({ account }) => {
         <Container fluid>
           <Row className="online-create-room-row">
             <Col sm={12} xs={12} md={6} lg={6} xl={6}>
-              <span className="online-count">Online: {online || '0'}</span>
+              <span className="online-count">Online: {online || '0'}, 
+                 
+              </span>
+              <span>Last message: {lastMsg}</span>
             </Col>
             <Col sm={12} xs={12} md={6} lg={6} xl={6}>
               <div className="create-room-btn">
-                <button className="rpgui-button" type="button">
+                <button className="rpgui-button" type="button" onClick={() => createRoom()}>
                   <span style={{ fontSize: '18px' }}>+</span> Create Room
                 </button>
               </div>
@@ -92,7 +115,7 @@ const Arena = ({ account }) => {
                   <tr>
                     <th>ID</th>
                     <th>Players</th>
-                    <th>Rounds</th>
+                    <th>Code</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -104,10 +127,10 @@ const Arena = ({ account }) => {
                     <td>3</td>
                     <td>Waiting</td>
                     <td>
-                      <button className="rpgui-button" type="button" style={{ maxHeight: btnStyle.height }}>
+                      <button className="rpgui-button" type="button" onClick={() => leaveRoom()} style={{ maxHeight: btnStyle.height }} >
                         Leave
                       </button>
-                      <button className="rpgui-button" type="button" style={{ maxHeight: btnStyle.height }}>
+                      <button className="rpgui-button" type="button" onClick={() => joinRoom()} style={{ maxHeight: btnStyle.height }}>
                         Join
                       </button>
                     </td>
@@ -115,7 +138,7 @@ const Arena = ({ account }) => {
                   <tr>
                     <td>2</td>
                     <td>0x32345abcde, 0x42345abcde</td>
-                    <td>3</td>
+                    <td>123456</td>
                     <td>Waiting</td>
                     <td>
                       <button className="rpgui-button" type="button" style={{ maxHeight: btnStyle.height }}>
@@ -129,7 +152,7 @@ const Arena = ({ account }) => {
                   <tr>
                     <td>3</td>
                     <td>0x52345abcde, 0x62345abcde</td>
-                    <td>3</td>
+                    <td>12345</td>
                     <td>Waiting</td>
                     <td>
                       <button className="rpgui-button" type="button" style={{ maxHeight: btnStyle.height }}>
