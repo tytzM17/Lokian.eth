@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { Container, Row, Col, Table } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
 import './arena.css'
-import WebSocket from 'isomorphic-ws'
+// import WebSocket from 'isomorphic-ws'
 
 const btnStyle = {
   height: '38px',
@@ -15,18 +15,17 @@ const btnStyle = {
 const URL = 'ws://localhost:40510'
 
 const acctFormat = (acct) => {
-  if (!acct) return 'anonymous'
+  if (!acct) return
   return `${acct.substring(0, 6)}`
 }
 
 const Arena = ({ account }) => {
-  const [online, setOnline] = useState('6')
+  const [online, setOnline] = useState(0)
   const [duels, setDuels] = useState('1')
   const [toggleChatbox, setToggleChatbox] = useState(false)
   const [arenaChatMsgs, setArenaChatMsgs] = useState('')
   const [arenaChatInput, setArenaChatInput] = useState('')
   const [roomCode, setRoomCode] = useState('')
-  const [lastMsg, setLastMsg] = useState('')
   const [ws, setWs] = useState(new WebSocket(URL))
 
   const showMessage = (message: string) => {
@@ -41,6 +40,7 @@ const Arena = ({ account }) => {
     if (!ws) return
     ws.send(
       JSON.stringify({
+        type: 'chat',
         msg: arenaChatInput,
         acct: acctFormat(account),
       })
@@ -61,22 +61,34 @@ const Arena = ({ account }) => {
   }
 
   const leaveRoom = () => {
-    if (!ws) return
-    ws.send('{"type":"leave"}')
+    if (!ws) return 
+    ws.send('{"type":"leave"}')   
   }
 
   useEffect(() => {
     ws.onopen = function open() {
       console.log('connected')
+      if(ws)
+      ws.send(
+        JSON.stringify({
+          type: 'online',
+          msg: 'connected',
+          acct: acctFormat(account),
+        })
+      )
     }
 
     ws.onmessage = function incoming(data) {
-      console.log(data)
+      console.log('data',data);
+      
       if (!data || !data.data) return
 
       const parsed = JSON.parse(data.data)
-      showMessage(`${parsed?.acct}: ${parsed?.msg}`)
-      setLastMsg(data.data)
+      console.log(parsed);  
+      const showMsg = parsed?.type === 'info' ? `${parsed.type}: room ${parsed.params?.room}, clients ${parsed.params?.clients || ''}` : `${parsed?.acct}: ${parsed?.msg}`
+      showMessage(showMsg)
+      const _online = parsed?.type === 'online' ? parsed.online : 0
+      setOnline(_online)
     }
 
     return () => {
@@ -94,10 +106,7 @@ const Arena = ({ account }) => {
         <Container fluid>
           <Row className="online-create-room-row">
             <Col sm={12} xs={12} md={6} lg={6} xl={6}>
-              <span className="online-count">Online: {online || '0'}, 
-                 
-              </span>
-              <span>Last message: {lastMsg}</span>
+              <span className="online-count">Online: {online || '0'}</span>
             </Col>
             <Col sm={12} xs={12} md={6} lg={6} xl={6}>
               <div className="create-room-btn">
@@ -121,6 +130,9 @@ const Arena = ({ account }) => {
                   </tr>
                 </thead>
                 <tbody>
+                  {
+                    
+                  }
                   <tr>
                     <td>1</td>
                     <td>0x12345abcde, 0x22345abcde</td>
