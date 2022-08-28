@@ -61,34 +61,36 @@ const Arena = ({ account }) => {
   }
 
   const leaveRoom = () => {
-    if (!ws) return 
-    ws.send('{"type":"leave"}')   
+    if (!ws) return
+    ws.send('{"type":"leave"}')
   }
 
   useEffect(() => {
-    ws.onopen = function open() {
-      console.log('connected')
-      if(ws)
-      ws.send(
-        JSON.stringify({
-          type: 'online',
-          msg: 'connected',
-          acct: acctFormat(account),
-        })
-      )
+    ws.onopen = function open(data) {
+      console.log('connected', data)
+      if (ws)
+        ws.send(
+          JSON.stringify({
+            type: 'online',
+            msg: 'connected',
+            acct: acctFormat(account),
+          })
+        )
     }
 
     ws.onmessage = function incoming(data) {
-      console.log('data',data);
-      
+      console.log('data', data)
       if (!data || !data.data) return
-
       const parsed = JSON.parse(data.data)
-      console.log(parsed);  
-      const showMsg = parsed?.type === 'info' ? `${parsed.type}: room ${parsed.params?.room}, clients ${parsed.params?.clients || ''}` : `${parsed?.acct}: ${parsed?.msg}`
+      console.log('parsed', parsed)
+      const showMsg =
+        parsed?.type === 'info'
+          ? `${parsed.type}: room ${parsed.params?.room}, clients ${parsed.params?.clients || ''}`
+          : `${parsed?.acct}: ${parsed?.msg}`
       showMessage(showMsg)
-      const _online = parsed?.type === 'online' ? parsed.online : 0
-      setOnline(_online)
+
+      const _online = parsed?.type === 'online' ? parsed.online : null
+      if (_online) setOnline(_online)
     }
 
     return () => {
@@ -130,19 +132,27 @@ const Arena = ({ account }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {
-                    
-                  }
+                  {}
                   <tr>
                     <td>1</td>
                     <td>0x12345abcde, 0x22345abcde</td>
                     <td>3</td>
                     <td>Waiting</td>
                     <td>
-                      <button className="rpgui-button" type="button" onClick={() => leaveRoom()} style={{ maxHeight: btnStyle.height }} >
+                      <button
+                        className="rpgui-button"
+                        type="button"
+                        onClick={() => leaveRoom()}
+                        style={{ maxHeight: btnStyle.height }}
+                      >
                         Leave
                       </button>
-                      <button className="rpgui-button" type="button" onClick={() => joinRoom()} style={{ maxHeight: btnStyle.height }}>
+                      <button
+                        className="rpgui-button"
+                        type="button"
+                        onClick={() => joinRoom()}
+                        style={{ maxHeight: btnStyle.height }}
+                      >
                         Join
                       </button>
                     </td>
