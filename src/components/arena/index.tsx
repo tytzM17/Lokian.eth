@@ -21,18 +21,15 @@ const acctFormat = (acct) => {
 
 const Arena = ({ account }) => {
   const [online, setOnline] = useState(0)
-  const [duels, setDuels] = useState('1')
   const [toggleChatbox, setToggleChatbox] = useState(false)
   const [arenaChatMsgs, setArenaChatMsgs] = useState('')
   const [arenaChatInput, setArenaChatInput] = useState('')
-  const [roomCode, setRoomCode] = useState('')
+  const [rooms, setRooms] = useState([])
   const [ws, setWs] = useState(new WebSocket(URL))
 
   const showMessage = (message: string) => {
     let messages = arenaChatMsgs
     messages += `\n${message}`
-    console.log(messages)
-
     setArenaChatMsgs(messages)
   }
 
@@ -45,52 +42,86 @@ const Arena = ({ account }) => {
         acct: acctFormat(account),
       })
     )
-    showMessage(`${acctFormat(account)}: ${arenaChatInput}`)
+    showMessage(`YOU: ${arenaChatInput}`)
   }
 
   const createRoom = () => {
-    if (!ws) return
-    ws.send('{"type":"create"}')
+    const obj = { type: 'create', params: { creator: account } }
+    if (ws) ws.send(JSON.stringify(obj))
   }
 
-  const joinRoom = () => {
-    if (!ws) return
-    const code = roomCode
-    const obj = { type: 'join', params: { code } }
-    ws.send(JSON.stringify(obj))
+  const joinRoom = (roomCode: string) => {
+    if (ws) {
+      const obj = { type: 'join', params: { code: roomCode } }
+      ws.send(JSON.stringify(obj))
+    }
+  }
+
+  const startRoom = (roomCode: string) => {
+    if (ws) {
+      const obj = { type: 'start', params: { code: roomCode } }
+      ws.send(JSON.stringify(obj))
+    }
   }
 
   const leaveRoom = () => {
-    if (!ws) return
-    ws.send('{"type":"leave"}')
+    if (ws) ws.send('{"type":"leave"}')
   }
 
   useEffect(() => {
-    ws.onopen = function open(data) {
-      console.log('connected', data)
+    ws.onopen = function open() {
+      console.log('connected')
       if (ws)
         ws.send(
           JSON.stringify({
             type: 'online',
             msg: 'connected',
-            acct: acctFormat(account),
+            acct: account,
           })
         )
     }
 
     ws.onmessage = function incoming(data) {
-      console.log('data', data)
       if (!data || !data.data) return
       const parsed = JSON.parse(data.data)
-      console.log('parsed', parsed)
-      const showMsg =
-        parsed?.type === 'info'
-          ? `${parsed.type}: room ${parsed.params?.room}, clients ${parsed.params?.clients || ''}`
-          : `${parsed?.acct}: ${parsed?.msg}`
-      showMessage(showMsg)
 
-      const _online = parsed?.type === 'online' ? parsed.online : null
-      if (_online) setOnline(_online)
+      let chatMsg = ''
+      switch (parsed.type) {
+        case 'info':
+          console.log('info data', parsed)
+          break
+        case 'chat':
+          console.log('chat data', parsed)
+
+          chatMsg = `${parsed?.acct || 'unknown'}: ${parsed?.msg}`
+          break
+        case 'online':
+          const _online = parsed?.type === 'online' ? parsed.online : null
+          if (_online) setOnline(_online)
+          break
+        case 'create':
+          console.log('create data', parsed)
+          const prevRooms = [...rooms]
+          if (parsed?.params) prevRooms.push(parsed.params)
+          setRooms(prevRooms)
+          break
+        case 'join':
+          console.log('join data', parsed)
+          let updatedRooms = [...rooms]
+          updatedRooms = updatedRooms.map((room) => {
+            if ((room.room = parsed.params.room)) {
+              room['clients'] = parsed.params?.clients
+              return room
+            }
+          })
+          setRooms(updatedRooms)
+          break
+        case 'start':
+          console.log('start rooms data', parsed);
+          break
+      }
+
+      showMessage(chatMsg)
     }
 
     return () => {
@@ -125,66 +156,55 @@ const Arena = ({ account }) => {
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Players</th>
+                    <th>Owner</th>
                     <th>Code</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {}
-                  <tr>
-                    <td>1</td>
-                    <td>0x12345abcde, 0x22345abcde</td>
-                    <td>3</td>
-                    <td>Waiting</td>
-                    <td>
-                      <button
-                        className="rpgui-button"
-                        type="button"
-                        onClick={() => leaveRoom()}
-                        style={{ maxHeight: btnStyle.height }}
-                      >
-                        Leave
-                      </button>
-                      <button
-                        className="rpgui-button"
-                        type="button"
-                        onClick={() => joinRoom()}
-                        style={{ maxHeight: btnStyle.height }}
-                      >
-                        Join
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>0x32345abcde, 0x42345abcde</td>
-                    <td>123456</td>
-                    <td>Waiting</td>
-                    <td>
-                      <button className="rpgui-button" type="button" style={{ maxHeight: btnStyle.height }}>
-                        Leave
-                      </button>
-                      <button className="rpgui-button" type="button" style={{ maxHeight: btnStyle.height }}>
-                        Join
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>0x52345abcde, 0x62345abcde</td>
-                    <td>12345</td>
-                    <td>Waiting</td>
-                    <td>
-                      <button className="rpgui-button" type="button" style={{ maxHeight: btnStyle.height }}>
-                        Leave
-                      </button>
-                      <button className="rpgui-button" type="button" style={{ maxHeight: btnStyle.height }}>
-                        Join
-                      </button>
-                    </td>
-                  </tr>
+                  {rooms &&
+                    rooms.map((room, idx) => {
+                      return (
+                        <tr key={(room?.room || 'code') + '-' + idx}>
+                          <td>{idx + 1}</td>
+                          <td>{acctFormat(room?.creator)}</td>
+                          <td>{room?.room || ''}</td>
+                          <td>{room?.clients || '0'}/2</td>
+                          <td>
+                            <button
+                              className="rpgui-button"
+                              type="button"
+                              onClick={() => leaveRoom()}
+                              style={{ maxHeight: btnStyle.height }}
+                            >
+                              Leave
+                            </button>
+                            {room?.creator === account && (
+                              <button
+                                className="rpgui-button"
+                                type="button"
+                                onClick={() => startRoom(room?.room || '')}
+                                style={{ maxHeight: btnStyle.height }}
+                              >
+                                Start
+                              </button>
+                            )}
+
+                            {room?.creator !== account && (
+                              <button
+                                className="rpgui-button"
+                                type="button"
+                                onClick={() => joinRoom(room?.room || '')}
+                                style={{ maxHeight: btnStyle.height }}
+                              >
+                                Join
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                      )
+                    })}
                   {/* create pagination */}
                 </tbody>
               </Table>
@@ -194,7 +214,7 @@ const Arena = ({ account }) => {
       </div>
 
       {/* Rooms */}
-      <div className="rpgui-container framed-grey table-container">
+      {/* <div className="rpgui-container framed-grey table-container">
         <Container fluid>
           <Row style={{ marginBottom: '12px' }}>
             <Col sm={12} xs={12} md={6} lg={6} xl={6}>
@@ -235,7 +255,7 @@ const Arena = ({ account }) => {
             </Col>
           </Row>
         </Container>
-      </div>
+      </div> */}
 
       {/* arena chat */}
       <div className="arena-chat-box">

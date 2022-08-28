@@ -102,7 +102,7 @@ Finished
 
 Ongoing
 - Add multiplayer pvp, chat 
--- Create room, leave, join functions
+-- Create room..ok, join..ok, leave, start..  functions
 -- Then add data for versus function like monster id,etc
 -- Other misc stuffs
 
