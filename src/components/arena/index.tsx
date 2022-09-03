@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../../App.css'
-// import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 // import Spinner from '../spinner'
 import { Container, Row, Col, Table } from 'react-bootstrap'
@@ -16,7 +16,7 @@ const URL = 'ws://localhost:40510'
 
 const acctFormat = (acct) => {
   if (!acct) return
-  return `${acct.substring(0, 6)}`
+  return  `${acct.substring(0, 6)}...${acct.substring(acct.length - 4)}`
 }
 
 const Arena = ({ account }) => {
@@ -50,9 +50,9 @@ const Arena = ({ account }) => {
     if (ws) ws.send(JSON.stringify(obj))
   }
 
-  const joinRoom = (roomCode: string) => {
+  const joinRoom = (roomCode: string, creator: string) => {
     if (ws) {
-      const obj = { type: 'join', params: { code: roomCode } }
+      const obj = { type: 'join', params: { code: roomCode, player: account, creator } }
       ws.send(JSON.stringify(obj))
     }
   }
@@ -64,8 +64,15 @@ const Arena = ({ account }) => {
     }
   }
 
-  const leaveRoom = () => {
-    if (ws) ws.send('{"type":"leave"}')
+  const leaveRoom = (roomPlayers: string[], roomCreator: string, roomLeaver: string) => {
+    if (ws) {
+      let isCreator = false
+      if (account?.toString() === roomCreator) { isCreator = true }
+      const obj = { type: 'leave', params: { players: roomPlayers, isCreator, leaver: roomLeaver } }
+      if (roomPlayers.includes(account)) {
+        ws.send(JSON.stringify(obj))
+      }
+    }
   }
 
   useEffect(() => {
@@ -89,6 +96,7 @@ const Arena = ({ account }) => {
       switch (parsed.type) {
         case 'info':
           console.log('info data', parsed)
+          toast.error(parsed?.params?.msg || 'Error')
           break
         case 'chat':
           console.log('chat data', parsed)
@@ -109,15 +117,33 @@ const Arena = ({ account }) => {
           console.log('join data', parsed)
           let updatedRooms = [...rooms]
           updatedRooms = updatedRooms.map((room) => {
-            if ((room.room = parsed.params.room)) {
+            if (room.room === parsed?.params?.room) {
               room['clients'] = parsed.params?.clients
+              room['players'] = parsed.params?.players
               return room
             }
           })
           setRooms(updatedRooms)
           break
+        case 'leave':
+          console.log('leave data', parsed)
+          let leavedRooms = [...rooms]
+          if (parsed?.params?.isClosed) {
+            leavedRooms = leavedRooms.filter((room) => room.room !== parsed.params.room)
+            setRooms(leavedRooms)
+          } else {
+            leavedRooms = leavedRooms.map((room) => {
+              if (room.room === parsed?.params?.room) {
+                room['clients'] = parsed.params.clients
+                room['players'] = parsed.params.players
+                return room
+              }
+            })
+            setRooms(leavedRooms)
+          }
+          break
         case 'start':
-          console.log('start rooms data', parsed);
+          console.log('start rooms data', parsed)
           break
       }
 
@@ -156,7 +182,7 @@ const Arena = ({ account }) => {
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Owner</th>
+                    <th>Players</th>
                     <th>Code</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -168,14 +194,14 @@ const Arena = ({ account }) => {
                       return (
                         <tr key={(room?.room || 'code') + '-' + idx}>
                           <td>{idx + 1}</td>
-                          <td>{acctFormat(room?.creator)}</td>
+                          <td>{room?.players?.map((player: string) => acctFormat( player ))?.join(', ')}</td>
                           <td>{room?.room || ''}</td>
                           <td>{room?.clients || '0'}/2</td>
                           <td>
                             <button
                               className="rpgui-button"
                               type="button"
-                              onClick={() => leaveRoom()}
+                              onClick={() => leaveRoom(room?.players, room?.creator, account)}
                               style={{ maxHeight: btnStyle.height }}
                             >
                               Leave
@@ -195,7 +221,7 @@ const Arena = ({ account }) => {
                               <button
                                 className="rpgui-button"
                                 type="button"
-                                onClick={() => joinRoom(room?.room || '')}
+                                onClick={() => joinRoom(room?.room || '', room?.creator)}
                                 style={{ maxHeight: btnStyle.height }}
                               >
                                 Join
