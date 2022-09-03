@@ -64,12 +64,12 @@ const Arena = ({ account }) => {
     }
   }
 
-  const leaveRoom = (roomPlayers: string[], roomCreator: string, roomLeaver: string) => {
+  const leaveRoom = (roomPlayers: string[], roomCreator: string, roomLeaver: string, roomCode: string) => {
     if (ws) {
       let isCreator = false
       if (account?.toString() === roomCreator) { isCreator = true }
-      const obj = { type: 'leave', params: { players: roomPlayers, isCreator, leaver: roomLeaver } }
-      if (roomPlayers.includes(account)) {
+      const obj = { type: 'leave', params: { players: roomPlayers, isCreator, leaver: roomLeaver, code: roomCode } }
+      if (roomPlayers?.includes(account)) {
         ws.send(JSON.stringify(obj))
       }
     }
@@ -116,12 +116,13 @@ const Arena = ({ account }) => {
         case 'join':
           console.log('join data', parsed)
           let updatedRooms = [...rooms]
-          updatedRooms = updatedRooms.map((room) => {
-            if (room.room === parsed?.params?.room) {
+          updatedRooms.every((room) => {
+            if (room?.room === parsed?.params?.room) {
               room['clients'] = parsed.params?.clients
               room['players'] = parsed.params?.players
-              return room
+              return false
             }
+            return true
           })
           setRooms(updatedRooms)
           break
@@ -129,15 +130,16 @@ const Arena = ({ account }) => {
           console.log('leave data', parsed)
           let leavedRooms = [...rooms]
           if (parsed?.params?.isClosed) {
-            leavedRooms = leavedRooms.filter((room) => room.room !== parsed.params.room)
+            leavedRooms = leavedRooms.filter((room) => room?.room !== parsed.params.room)
             setRooms(leavedRooms)
           } else {
-            leavedRooms = leavedRooms.map((room) => {
-              if (room.room === parsed?.params?.room) {
+            leavedRooms.every((room) => {
+              if (room?.room === parsed?.params?.room) {
                 room['clients'] = parsed.params.clients
                 room['players'] = parsed.params.players
-                return room
+                return false
               }
+              return true
             })
             setRooms(leavedRooms)
           }
@@ -201,7 +203,7 @@ const Arena = ({ account }) => {
                             <button
                               className="rpgui-button"
                               type="button"
-                              onClick={() => leaveRoom(room?.players, room?.creator, account)}
+                              onClick={() => leaveRoom(room?.players, room?.creator, account, room?.room)}
                               style={{ maxHeight: btnStyle.height }}
                             >
                               Leave
