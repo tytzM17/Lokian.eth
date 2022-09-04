@@ -97,12 +97,13 @@ Finished
 - List or grid display function (marketplace, myShop and myLokimons pages)
 - Add priceDesc and priceAsc in myShop and marketplace
 - Fix UI, in different media queries or devices, 320(ok), 844(ok), 1920(ok)
--- Create websocket mini server ..ok
--- Chat ui ..ok , functions ..ok
+- Create websocket mini server ..ok
+- Chat ui ..ok , functions ..ok
+- Create room..ok, join..ok, leave..ok, 
 
 Ongoing
 - Add multiplayer pvp, chat 
--- Create room..ok, join..ok, leave..ok, start..  functions
+-- Create room UI.., start functions..ok  
 -- Then add data for versus function like monster id,etc
 -- Other misc stuffs
 

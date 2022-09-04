@@ -6,7 +6,9 @@ import 'react-toastify/dist/ReactToastify.css'
 import { Container, Row, Col, Table } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
 import './arena.css'
+import { RoomType, UseLocDiscon } from '../common/interfaces'
 // import WebSocket from 'isomorphic-ws'
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom'
 
 const btnStyle = {
   height: '38px',
@@ -14,12 +16,15 @@ const btnStyle = {
 
 const URL = 'ws://localhost:40510'
 
-const acctFormat = (acct) => {
+const acctFormat = (acct: string) => {
   if (!acct) return
-  return  `${acct.substring(0, 6)}...${acct.substring(acct.length - 4)}`
+  return `${acct.substring(0, 6)}...${acct.substring(acct.length - 4)}`
 }
 
-const Arena = ({ account }) => {
+const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
+  let navigate = useNavigate()
+  let useLoc: UseLocDiscon = useLocation()
+
   const [online, setOnline] = useState(0)
   const [toggleChatbox, setToggleChatbox] = useState(false)
   const [arenaChatMsgs, setArenaChatMsgs] = useState('')
@@ -57,23 +62,36 @@ const Arena = ({ account }) => {
     }
   }
 
-  const startRoom = (roomCode: string) => {
+  const startRoom = (room: RoomType) => {
+    if (!room || room.clients !== 2 || !room.clients) return
+
+    const path = '/arena/room/' + room?.room || ''
     if (ws) {
-      const obj = { type: 'start', params: { code: roomCode } }
+      const obj = { type: 'start', params: { room, path } }
       ws.send(JSON.stringify(obj))
     }
+
+    onStartedRoom(room)
   }
 
   const leaveRoom = (roomPlayers: string[], roomCreator: string, roomLeaver: string, roomCode: string) => {
     if (ws) {
       let isCreator = false
-      if (account?.toString() === roomCreator) { isCreator = true }
+      if (account?.toString() === roomCreator) {
+        isCreator = true
+      }
       const obj = { type: 'leave', params: { players: roomPlayers, isCreator, leaver: roomLeaver, code: roomCode } }
       if (roomPlayers?.includes(account)) {
         ws.send(JSON.stringify(obj))
       }
     }
   }
+
+  useEffect(() => {
+    if (!useLoc || !useLoc.state) return
+    // invoke leave room
+    leaveRoom(useLoc.state?.room?.players, useLoc.state?.room?.creator, useLoc.state?.leaver, useLoc.state?.room?.room)
+  }, [useLoc])
 
   useEffect(() => {
     ws.onopen = function open() {
@@ -143,9 +161,15 @@ const Arena = ({ account }) => {
             })
             setRooms(leavedRooms)
           }
+          onStartedRoom(null)
           break
         case 'start':
           console.log('start rooms data', parsed)
+          // if not creator, navigate to room path
+          if (parsed?.params?.room?.creator !== account) {
+            onStartedRoom(parsed?.params?.room)
+            navigate(parsed?.params?.path)
+          }
           break
       }
 
@@ -162,128 +186,99 @@ const Arena = ({ account }) => {
 
   return (
     <>
-      <div className="p1-arena green-glow">Arena</div>
-      <div className="rpgui-container framed-grey table-container">
-        <Container fluid>
-          <Row className="online-create-room-row">
-            <Col sm={12} xs={12} md={6} lg={6} xl={6}>
-              <span className="online-count">Online: {online || '0'}</span>
-            </Col>
-            <Col sm={12} xs={12} md={6} lg={6} xl={6}>
-              <div className="create-room-btn">
-                <button className="rpgui-button" type="button" onClick={() => createRoom()}>
-                  <span style={{ fontSize: '18px' }}>+</span> Create Room
-                </button>
-              </div>
-            </Col>
-          </Row>
-          <Row></Row>
-          <Row>
-            <Col>
-              <Table striped bordered hover variant="dark" responsive>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Players</th>
-                    <th>Code</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rooms &&
-                    rooms.map((room, idx) => {
-                      return (
-                        <tr key={(room?.room || 'code') + '-' + idx}>
-                          <td>{idx + 1}</td>
-                          <td>{room?.players?.map((player: string) => acctFormat( player ))?.join(', ')}</td>
-                          <td>{room?.room || ''}</td>
-                          <td>{room?.clients || '0'}/2</td>
-                          <td>
-                            <button
-                              className="rpgui-button"
-                              type="button"
-                              onClick={() => leaveRoom(room?.players, room?.creator, account, room?.room)}
-                              style={{ maxHeight: btnStyle.height }}
-                            >
-                              Leave
-                            </button>
-                            {room?.creator === account && (
-                              <button
-                                className="rpgui-button"
-                                type="button"
-                                onClick={() => startRoom(room?.room || '')}
-                                style={{ maxHeight: btnStyle.height }}
-                              >
-                                Start
-                              </button>
-                            )}
+      {hasStartedRoom ? (
+        <div className="rpgui-container framed-grey">
+          <Container fluid>
+            <Outlet />
+          </Container>
+        </div>
+      ) : (
+        <>
+          <div className="p1-arena green-glow">Arena</div>
+          <div className="rpgui-container framed-grey table-container">
+            <Container fluid>
+              <Row className="online-create-room-row">
+                <Col sm={12} xs={12} md={6} lg={6} xl={6}>
+                  <span className="online-count">Online: {online || '0'}</span>
+                </Col>
+                <Col sm={12} xs={12} md={6} lg={6} xl={6}>
+                  <div className="create-room-btn">
+                    <button className="rpgui-button" type="button" onClick={() => createRoom()}>
+                      <span style={{ fontSize: '18px' }}>+</span> Create Room
+                    </button>
+                  </div>
+                </Col>
+              </Row>
+              <Row></Row>
+              <Row>
+                <Col>
+                  <Table striped bordered hover variant="dark" responsive>
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Players</th>
+                        <th>Code</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rooms &&
+                        rooms.map((room, idx) => {
+                          return (
+                            <tr key={(room?.room || 'code') + '-' + idx}>
+                              <td>{idx + 1}</td>
+                              <td>{room?.players?.map((player: string) => acctFormat(player))?.join(', ')}</td>
+                              <td>{room?.room || ''}</td>
+                              <td>{room?.clients || 0}/2</td>
+                              <td>
+                                <button
+                                  className="rpgui-button"
+                                  type="button"
+                                  onClick={() => leaveRoom(room?.players, room?.creator, account, room?.room)}
+                                  style={{ maxHeight: btnStyle.height }}
+                                >
+                                  Leave
+                                </button>
+                                {room?.creator === account && (
+                                  <button
+                                    className="rpgui-button"
+                                    type="button"
+                                    onClick={() => startRoom(room)}
+                                    style={{ maxHeight: btnStyle.height }}
+                                    disabled={room.clients !== 2}
+                                  >
+                                    {room.clients !== 2 ? (
+                                      'Waiting'
+                                    ) : (
+                                      <Link to={'/arena/room/' + room?.room || ''}>Start</Link>
+                                    )}
+                                  </button>
+                                )}
 
-                            {room?.creator !== account && (
-                              <button
-                                className="rpgui-button"
-                                type="button"
-                                onClick={() => joinRoom(room?.room || '', room?.creator)}
-                                style={{ maxHeight: btnStyle.height }}
-                              >
-                                Join
-                              </button>
-                            )}
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  {/* create pagination */}
-                </tbody>
-              </Table>
-            </Col>
-          </Row>
-        </Container>
-      </div>
-
-      {/* Rooms */}
-      {/* <div className="rpgui-container framed-grey table-container">
-        <Container fluid>
-          <Row style={{ marginBottom: '12px' }}>
-            <Col sm={12} xs={12} md={6} lg={6} xl={6}>
-              <span className="my-duels">My Rooms: {duels || '0'}</span>
-            </Col>
-            <Col sm={12} xs={12} md={6} lg={6} xl={6}></Col>
-          </Row>
-
-          <Row>
-            <Col>
-              <Table striped bordered hover variant="dark" responsive>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Players</th>
-                    <th>Rounds</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>0x12345abcde, 0x22345abcde</td>
-                    <td>3</td>
-                    <td>Waiting</td>
-                    <td>
-                      <button className="rpgui-button" type="button" style={{ maxHeight: btnStyle.height }}>
-                        Leave
-                      </button>
-                      <button className="rpgui-button" type="button" style={{ maxHeight: btnStyle.height }}>
-                        Start
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Col>
-          </Row>
-        </Container>
-      </div> */}
+                                {room?.creator !== account && (
+                                  <button
+                                    className="rpgui-button"
+                                    type="button"
+                                    onClick={() => joinRoom(room?.room || '', room?.creator)}
+                                    style={{ maxHeight: btnStyle.height }}
+                                  >
+                                    Join
+                                  </button>
+                                )}
+                              </td>
+                            </tr>
+                          )
+                        })}
+                      {/* create pagination */}
+                    </tbody>
+                  </Table>
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        </>
+      )}
 
       {/* arena chat */}
       <div className="arena-chat-box">
@@ -298,7 +293,6 @@ const Arena = ({ account }) => {
           value={arenaChatMsgs}
         ></textarea>
       </div>
-
       <div className="arena-chat-controls">
         <input
           onChange={(e) => setArenaChatInput(e.target?.value)}

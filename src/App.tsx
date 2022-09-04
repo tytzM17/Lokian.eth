@@ -24,20 +24,6 @@ import { formatUnits, parseEther, formatEther } from '@ethersproject/units'
 import contrInterface from './interface.json' // Load contract json file
 import erc20Interface from './erc20Interface.json' // Load erc20 contract json file
 import nftInterface from './project.nft.abi.json'
-
-// Load all the background images for the 10 different Cryptomon types
-// import bg0 from './sprites-copy/background/0.png'
-// import bg1 from './sprites-copy/background/1.png'
-// import bg2 from './sprites-copy/background/2.png'
-// import bg3 from './sprites-copy/background/3.png'
-// import bg4 from './sprites-copy/background/4.png'
-// import bg5 from './sprites-copy/background/5.png'
-// import bg6 from './sprites-copy/background/6.png'
-// import bg7 from './sprites-copy/background/7.png'
-// import bg8 from './sprites-copy/background/8.png'
-// import bg9 from './sprites-copy/background/9.png'
-// import bg10 from './sprites-copy/background/10.png'
-
 import MonImages from './sprites-copy'
 
 // util
@@ -46,6 +32,8 @@ import txSuccess from './utils/txSuccess'
 import txFail from './utils/txFail'
 import Dojo from './components/dojo'
 import { names } from './components/common'
+import Room from './components/arena/room'
+import { RoomType } from './components/common/interfaces'
 
 enum ConnectorNames {
   Injected = 'Injected',
@@ -73,164 +61,6 @@ if (process && process.env) {
   ERC20_CONTRACT_ADDRESS = '0x4d8d24968458af521ef02aefD95f161dF3f9Ea01'
   ERC1155_CONTRACT_ADDRESS = '0x8227767903Fa90A90060E28a45506318E03997aD'
 }
-
-// Add background images in an array for easy access
-// const bg = [bg0, bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10]
-
-// Add all 151 Cryptomon names in an array
-// const names = [
-//   'Dryad',
-//   'Hamadryad',
-//   'Leshy',
-//   'Santelmo',
-//   'Cerberus',
-//   'Efreet',
-//   'Fastitocalon',
-//   'Aspidochelone',
-//   'Zaratan',
-//   'Arachne',
-//   'Jorogumo',
-//   'Tsuchigumo',
-//   'Pabilsag',
-//   'Girtablilu',
-//   'Selket',
-//   'Tsikavats',
-//   'Munnin',
-//   'Huginn',
-//   'Azeban',
-//   'Ratatoskr',
-//   'Stratim',
-//   'Navka',
-//   'Apep',
-//   'Nidhoggr',
-//   'Raiju',
-//   'Raijin',
-//   'Amphivena',
-//   'Basilisk',
-//   'Wolpertinger',
-//   'Ramidreju',
-//   'Echinemon',
-//   'Mujina',
-//   'Kamaitachi',
-//   'Lavellan',
-//   'Vila',
-//   'Huldra',
-//   'Chimera',
-//   'Kyuubi',
-//   'Nixie',
-//   'Tuathan',
-//   'Minyades',
-//   'Camazotz',
-//   'Curupira',
-//   'Penghou',
-//   'Ghillie_Dhu',
-//   'Myrmecoleon',
-//   'Myrmidon',
-//   'Mothman',
-//   'Moth_King',
-//   'Grootslang',
-//   'Yaoguai',
-//   'Cait_Sidhe',
-//   'Cath_Balug',
-//   'Nakki',
-//   'Kappa',
-//   'Satori',
-//   'Shojo',
-//   'Skohl',
-//   'Haet',
-//   'Vodyanoy',
-//   'Undine',
-//   'Melusine',
-//   'Vukodlak',
-//   'Chernobog',
-//   'Djinn',
-//   'Bauk',
-//   'Troll',
-//   'Jotun',
-//   'Spriggan',
-//   'Jubokko',
-//   'Kodama',
-//   'Bukavak',
-//   'Kraken',
-//   'Clayboy',
-//   'Met',
-//   'Emet',
-//   'Sleipnir',
-//   'Todorats',
-//   'Scylla',
-//   'Charybdis',
-//   'Brontes',
-//   'Arges',
-//   'Hraesvelgr',
-//   'Berunda',
-//   'Cockatrice',
-//   'Selkie',
-//   'Rusalka',
-//   'Tarasque',
-//   'Meretseger',
-//   'Carbuncle',
-//   'Shen',
-//   'Boogeyman',
-//   'Banshee',
-//   'Mare',
-//   'Dilong',
-//   'Incubus',
-//   'Succubus',
-//   'Cancer',
-//   'Karkinos',
-//   'Druk',
-//   'Shenlong',
-//   'Gan_Ceann',
-//   'Oni',
-//   'Tairanohone',
-//   'Gashadokuro',
-//   'Yeren',
-//   'Yeti',
-//   'Yowie',
-//   'Nezhit',
-//   'Chuma',
-//   'Sigbin',
-//   'Gargoyle',
-//   'Caladrius',
-//   'Umibozu',
-//   'Callisto',
-//   'Kelpie',
-//   'Makara',
-//   'Morgen',
-//   'Merrow',
-//   'Naiad',
-//   'Nereid',
-//   'Pixiu',
-//   'Khepri',
-//   'Likho',
-//   'kitsune',
-//   'Caorthannach',
-//   'Kaggen',
-//   'Audumbla',
-//   'Lochness',
-//   'Jormungandr',
-//   'Leviathan',
-//   'Doppelganger',
-//   'Skvader',
-//   'Fossegrim',
-//   'Valkyrie',
-//   'Basan',
-//   'Tsukumogami',
-//   'Luska',
-//   'Hydra',
-//   'Afanc',
-//   'Cetus',
-//   'Vedfolnir',
-//   'Baku',
-//   'Alkonost',
-//   'Quetzalcoatl',
-//   'Anzu',
-//   'Zmey',
-//   'Azhdaya',
-//   'Fafnir',
-//   'Baba_Yaga',
-//   'Baba_Roga',
-// ]
 
 async function getMons(_library, _account) {
   const contr = new Contract(CONTRACT_ADDRESS, contrInterface, _library.getSigner(_account))
@@ -275,7 +105,7 @@ function getErrorMessage(error: Error) {
   }
 }
 
-function App() {
+function App(props) {
   const [cryptomons, setCryptomons] = useState([])
   const [myCryptomons, setMyCryptomons] = useState([])
   const [otherCryptomons, setOtherCryptomons] = useState([])
@@ -311,6 +141,10 @@ function App() {
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
 
+  //  multiplayer
+  const [startedRoom, setStartedRoom] = useState(null)
+  const [disconAcct, setDisconAcct] = useState(null)
+
   // handle logic to recognize the connector currently being activated
   const [activatingConnector, setActivatingConnector] = React.useState<any>()
   useEffect(() => {
@@ -345,32 +179,32 @@ function App() {
 
     let mounted = true
 
-    ;(async function fightResults() {
-      const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+    // ;(async function fightResults() {
+    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
 
-      contr.on('FightResults', (_winnerId, _round) => {
-        if (mounted) {
-          const winId = BigNumber.from(_winnerId._hex).toNumber()
-          const round = BigNumber.from(_round._hex).toNumber()
-          setWinner(winId)
-          setRounds(round)
-          refreshMons()
-          setDisableFightBtn(false)
-        }
-      })
+    contr.on('FightResults', (_winnerId, _round) => {
+      if (mounted) {
+        const winId = BigNumber.from(_winnerId._hex).toNumber()
+        const round = BigNumber.from(_round._hex).toNumber()
+        setWinner(winId)
+        setRounds(round)
+        refreshMons()
+        setDisableFightBtn(false)
+      }
+    })
 
-      contr.on('Rewards', (_winnerId, _rewards) => {
-        if (mounted) {
-          const rewards = BigNumber.from(_rewards._hex).toNumber()
-          setRewards(rewards)
-          refreshMons()
-          setDisableFightBtn(false)
-        }
-      })
-    })()
+    contr.on('Rewards', (_winnerId, _rewards) => {
+      if (mounted) {
+        const rewards = BigNumber.from(_rewards._hex).toNumber()
+        setRewards(rewards)
+        refreshMons()
+        setDisableFightBtn(false)
+      }
+    })
+    // })()
 
     return () => {
-      const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+      // const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
       contr.off('FightResults', (_winnerId, _round) => {
         setDisableFightBtn(false)
       })
@@ -380,7 +214,7 @@ function App() {
 
       mounted = false
     }
-  }, [fightTxDone])
+  }, [fightTxDone, library, account])
 
   // Get items from nft contract
   useEffect(() => {
@@ -471,7 +305,9 @@ function App() {
       gasLimit: 120000,
     }
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const tx = await contr.addForSale(id, parseEther(price.toString()), overrides).catch((err) => setIsAddForSaleLoading(false))
+    const tx = await contr
+      .addForSale(id, parseEther(price.toString()), overrides)
+      .catch((err) => setIsAddForSaleLoading(false))
     const receipt = await tx?.wait()
     if (receipt && receipt.status === 1) {
       toast.success(`Success, Tx hash: ${receipt.transactionHash}`)
@@ -534,7 +370,11 @@ function App() {
       gasLimit: 120000,
     }
     try {
-      const tx = await contr.fight(id1, id2, overrides).catch((err) => setDisableFightBtn(false))
+      const tx = await contr?.fight(id1, id2, overrides)?.catch((err) => {
+        console.log('Fight error, ', err?.toString())
+        setDisableFightBtn(false)
+        setFightTxDone(false)
+      })
       const recpt = await tx?.wait()
       if (recpt && recpt.status) {
         setFightTxDone(true)
@@ -546,6 +386,7 @@ function App() {
       }
     } catch (error) {
       toast.error(`Fight function error: ${error.data?.message || ''}`)
+      setFightTxDone(false)
       setDisableFightBtn(false)
     }
   }
@@ -668,384 +509,7 @@ function App() {
       })
   }
 
-  // Components
-  // div that holds the name and id of each Cryptomon
-  // const nameDiv = (mon) => {
-  //   return (
-  //     <div>
-  //       <label className="monName">{names[mon?.species]}</label>
-  //       <label className="" style={{ float: 'right' }}>
-  //         {'#' + mon?.id}
-  //       </label>
-  //     </div>
-  //   )
-  // }
-
-  // Function that  returns the style of the background image according to Cryptomons' type
-  // const bgStyle = (Type) => ({
-  //   backgroundImage: 'url(' + bg[Type] + ')',
-  //   backgroundSize: '210px 240px',
-  // })
-
-  // div that holds the images (Cryptomon image and background image) of a Cryptomon
-  // const imgDiv = (mon) => {
-  //   return (
-  //     <div className="monBox" style={bgStyle(mon?.monType)}>
-  //       <img className="monImg" src={MonImages[`${parseInt(mon?.species) + 1}`]} alt={mon?.species} />
-  //     </div>
-  //   )
-  // }
-
-  // div that holds the stats of a Cryptomon
-  // const statDiv = (mon) => {
-  //   return (
-  //     <div className="stat-area">
-  //       <div className="stat-line">
-  //         <label className="stat-label">Hp: </label>
-  //         <StatBar percentage={(mon?.hp * 100) / 140} />
-  //       </div>
-  //       <div className="stat-line">
-  //         <label className="stat-label">Attack: </label>
-  //         <StatBar percentage={(mon?.atk * 100) / 140} />
-  //       </div>
-  //       <div className="stat-line">
-  //         <label className="stat-label">Defense: </label>
-  //         <StatBar percentage={(mon?.def * 100) / 140} />
-  //       </div>
-  //       <div className="stat-line">
-  //         <label className="stat-label">Speed: </label>
-  //         <StatBar percentage={(mon?.speed * 100) / 140} />
-  //       </div>
-  //     </div>
-  //   )
-  // }
-
-  // Create the div with add for sale button
-  // const addForSaleDiv = (mon, value) => {
-  //   return (
-  //     <div className="selling-div">
-  //       <label className="add-for-sale-label">Set lokimons price:</label>
-  //       <input type="number" className="add-for-sale-input" value={value} onChange={(e) => handleChange(mon?.id, e)} />
-  //       {isAddForSaleLoading ? (
-  //         <button className="rpgui-button" type="button" style={{ width: '100%' }}>
-  //           <Spinner color="#000" />
-  //         </button>
-  //       ) : (
-  //         <button
-  //           className="rpgui-button"
-  //           type="button"
-  //           style={{ float: 'right' }}
-  //           onClick={() => addForSale(mon?.id, value)}
-  //         >
-  //           Add for sale
-  //         </button>
-  //       )}
-  //     </div>
-  //   )
-  // }
-
-  // Create the div with remove from sale button
-  // const removeFromSaleDiv = (mon) => {
-  //   return (
-  //     <div className="selling-div">
-  //       <label className="remove-from-sale-label">
-  //         Price:
-  //         <br />
-  //         {formatUnits(mon?.price)}
-  //       </label>
-  //       {isRemoveFromSaleLoading ? (
-  //         <button className="rpgui-button" type="button" style={{ width: '100%' }}>
-  //           <Spinner color="#000" />
-  //         </button>
-  //       ) : (
-  //         <button
-  //           className="rpgui-button"
-  //           type="button"
-  //           style={{ float: 'right' }}
-  //           onClick={() => removeFromSale(mon?.id)}
-  //         >
-  //           Remove from sale
-  //           {isRemoveFromSaleLoading && <Spinner color="#000" />}
-  //         </button>
-  //       )}
-  //     </div>
-  //   )
-  // }
-
-  // Create the div with buy button
-  // const buyDiv = (mon) => {
-  //   return (
-  //     <div className="buying-div">
-  //       <div className="sale-price">
-  //         Price:
-  //         <br />
-  //         {formatUnits(mon?.price, 18)}
-  //       </div>
-  //       <div className="sale-owner">Creature Owner: {mon?.owner} </div>
-  //       {isBuyMonLoading ? (
-  //         <button className="rpgui-button" type="button" style={{ width: '100%' }}>
-  //           <Spinner color="#000" />
-  //         </button>
-  //       ) : (
-  //         <button
-  //           className="sale-btn rpgui-button"
-  //           type="button"
-  //           style={{ float: 'right' }}
-  //           onClick={() => buyMon(mon?.id, mon?.price)}
-  //         >
-  //           Buy
-  //         </button>
-  //       )}
-  //     </div>
-  //   )
-  // }
-
-  // Create the div with breed choice 1, choice 2 buttons
-  // const breedDiv = (mon) => {
-  //   return (
-  //     <div className="breed-choice-div">
-  //       <button
-  //         className="br-Choice-btn rpgui-button"
-  //         type="button"
-  //         style={{ float: 'right' }}
-  //         onClick={() => {
-  //           setBreedChoice1(mon?.id)
-  //         }}
-  //       >
-  //         Choice 1
-  //       </button>
-  //       <button
-  //         className="br-Choice-btn rpgui-button"
-  //         type="button"
-  //         style={{ float: 'right' }}
-  //         onClick={() => {
-  //           setBreedChoice2(mon?.id)
-  //         }}
-  //       >
-  //         Choice 2
-  //       </button>
-  //     </div>
-  //   )
-  // }
-
-  // const breedOption = (breedchoice) => {
-  //   if (breedchoice === null) {
-  //     return (
-  //       <div className="mon">
-  //         <figure className="my-figure">
-  //           <figcaption>
-  //             <div className="monBox">
-  //               {' '}
-  //               <img className="monImg" src={MonImages['0']} alt={'empty'} />
-  //             </div>
-  //           </figcaption>
-  //         </figure>
-  //       </div>
-  //     )
-  //   } else {
-  //     return cryptomons
-  //       .filter((mon) => mon.id === breedchoice)
-  //       .map((mon) => (
-  //         <React.Fragment key={mon.id}>
-  //           <div className="mon">
-  //             <figure className="my-figure">
-  //               {imgDiv(mon)}
-  //               <figcaption></figcaption>
-  //             </figure>
-  //           </div>
-  //         </React.Fragment>
-  //       ))
-  //   }
-  // }
-
-  // div with users Cryptomons
-  // const myCryptomonsDiv = myCryptomons
-  //   .filter((mon) => !mon.forSale)
-  //   .map((mon) => (
-  //     <React.Fragment key={mon.id}>
-  //       <div className="mon">
-  //         <figure className="my-figure">
-  //           {nameDiv(mon)}
-  //           {imgDiv(mon)}
-  //           <figcaption>{statDiv(mon)}</figcaption>
-  //         </figure>
-  //         {addForSaleDiv(mon, value)}
-  //       </div>
-  //     </React.Fragment>
-  //   ))
-
-  // div with user's Cryptomons that are for sale
-  // const forSaleCryptomons = myCryptomons
-  //   .filter((mon) => mon.forSale)
-  //   .map((mon) => (
-  //     <React.Fragment key={mon.id}>
-  //       <div className="mon">
-  //         <figure className="my-figure">
-  //           {nameDiv(mon)}
-  //           {imgDiv(mon)}
-  //           <figcaption>{statDiv(mon)}</figcaption>
-  //         </figure>
-  //         {removeFromSaleDiv(mon)}
-  //       </div>
-  //     </React.Fragment>
-  //   ))
-
-  // div with Cryptomons available for buy to the user
-  // const buyCryptomons = otherCryptomons
-  //   .filter((mon) => mon.forSale)
-  //   .map((mon) => (
-  //     <React.Fragment key={mon.id}>
-  //       <div className="mon">
-  //         <figure className="my-figure">
-  //           {nameDiv(mon)}
-  //           {imgDiv(mon)}
-  //           <figcaption>{statDiv(mon)}</figcaption>
-  //         </figure>
-  //         {buyDiv(mon)}
-  //       </div>
-  //     </React.Fragment>
-  //   ))
-
-  // div with user's Cryptomons that can be used for breeding
-  // const forBreedCryptomons = myCryptomons
-  //   .filter((mon) => !mon.forSale)
-  //   .map((mon) => (
-  //     <React.Fragment key={mon.id}>
-  //       <div className="mon">
-  //         <figure className="my-figure">
-  //           {nameDiv(mon)}
-  //           {imgDiv(mon)}
-  //           <figcaption>{statDiv(mon)}</figcaption>
-  //         </figure>
-  //         {breedDiv(mon)}
-  //       </div>
-  //     </React.Fragment>
-  //   ))
-
-  // const cond = (mon) =>
-  //   (mon.owner.toString().toLowerCase() === account?.toString()?.toLowerCase() && !mon.forSale) ||
-  //   (mon.sharedTo.toString().toLowerCase() === account?.toString()?.toLowerCase() &&
-  //     mon.owner.toString().toLowerCase() !== account?.toString()?.toLowerCase())
-
-  // div with user's Cryptomons that can be used to fight with
-  // const forFightWithCryptomons = myCryptomons.filter(cond).map((mon) => (
-  //   <React.Fragment key={mon.id}>
-  //     <div className="mon">
-  //       <figure className="my-figure">
-  //         {nameDiv(mon)}
-  //         {imgDiv(mon)}
-  //         <figcaption>{statDiv(mon)}</figcaption>
-  //       </figure>
-  //       <div className="fight-choice-div">
-  //         <button
-  //           className="fight-Choice-btn rpgui-button"
-  //           type="button"
-  //           style={{ float: 'right' }}
-  //           onClick={() => {
-  //             setFightChoice1(mon.id)
-  //           }}
-  //         >
-  //           Choice 1
-  //         </button>
-  //       </div>
-  //     </div>
-  //   </React.Fragment>
-  // ))
-
-  // div with Cryptomons that user can fight against
-  // const forFightAgainstCryptomons = otherCryptomons
-  //   .filter((mon) => !mon.forSale && mon.sharedTo.toLowerCase() !== account?.toString().toLowerCase())
-  //   .map((mon) => (
-  //     <React.Fragment key={mon.id}>
-  //       <div className="mon">
-  //         <figure className="my-figure">
-  //           {nameDiv(mon)}
-  //           {imgDiv(mon)}
-  //           <figcaption>{statDiv(mon)}</figcaption>
-  //         </figure>
-  //         <div className="fight-choice-div">
-  //           <button
-  //             className="fight-Choice-btn rpgui-button"
-  //             type="button"
-  //             style={{ float: 'right' }}
-  //             onClick={() => {
-  //               setFightChoice2(mon.id)
-  //             }}
-  //           >
-  //             Choice 2
-  //           </button>
-  //         </div>
-  //       </div>
-  //     </React.Fragment>
-  //   ))
-
-  // div with user's shared Cryptomons
-  // const sharedByMe = myCryptomons
-  //   .filter((mon) => mon.sharedTo.toLowerCase() !== account?.toString().toLocaleLowerCase() && !mon.forSale)
-  //   .map((mon) => (
-  //     <React.Fragment key={mon.id}>
-  //       <div className="mon">
-  //         <figure className="my-figure">
-  //           {nameDiv(mon)}
-  //           {imgDiv(mon)}
-  //           <figcaption>{statDiv(mon)}</figcaption>
-  //         </figure>
-  //         <div className="sharing-div">
-  //           <div className="shareTo-owner">Shared to address: {mon.sharedTo} </div>
-  //           {isStopSharingLoading ? (
-  //             <button className="rpgui-button" type="button" style={{ width: '100%' }}>
-  //               <Spinner color="#000" />
-  //             </button>
-  //           ) : (
-  //             <button
-  //               className="stop-sharing-btn rpgui-button"
-  //               type="button"
-  //               style={{ float: 'right' }}
-  //               onClick={() => stopSharing(mon.id)}
-  //             >
-  //               Stop sharing
-  //             </button>
-  //           )}
-  //         </div>
-  //       </div>
-  //     </React.Fragment>
-  //   ))
-
-  // div with Cryptomons shared to the user
-  // const sharedToMe = otherCryptomons
-  //   .filter((mon) => mon.sharedTo === account)
-  //   .map((mon) => (
-  //     <React.Fragment key={mon.id}>
-  //       <div className="mon">
-  //         <figure className="my-figure">
-  //           {nameDiv(mon)}
-  //           {imgDiv(mon)}
-  //           <figcaption>{statDiv(mon)}</figcaption>
-  //         </figure>
-  //         <div className="sharing-div">
-  //           <label className="shared-owner">Creature Owner: {mon.owner} </label>
-  //           {isStopSharingLoading ? (
-  //             <button className="rpgui-button" type="button" style={{ width: '100%' }}>
-  //               <Spinner color="#000" />
-  //             </button>
-  //           ) : (
-  //             <button
-  //               className="stop-sharing-btn rpgui-button"
-  //               type="button"
-  //               style={{ float: 'right' }}
-  //               onClick={() => stopSharing(mon.id)}
-  //             >
-  //               Stop sharing
-  //             </button>
-  //           )}
-  //         </div>
-  //       </div>
-  //     </React.Fragment>
-  //   ))
-
-  // Function that does all the rendering of the application
   return (
-    // Creation of the different tabs of the UI
     <div className="rpgui-content">
       <ToastContainer />
       <Router>
@@ -1149,7 +613,7 @@ function App() {
               <MyLokiMons
                 myCryptomons={myCryptomons}
                 value={value}
-                onHandleChange={(e) => handleChange(e)}
+                onHandleChange={(e: Event) => handleChange(e)}
                 isAddForSaleLoading={isAddForSaleLoading}
                 addForSale={addForSale}
               />
@@ -1161,7 +625,7 @@ function App() {
               <MyLokiMons
                 myCryptomons={myCryptomons}
                 value={value}
-                onHandleChange={(e) => handleChange(e)}
+                onHandleChange={(e: Event) => handleChange(e)}
                 isAddForSaleLoading={isAddForSaleLoading}
                 addForSale={addForSale}
               />
@@ -1225,7 +689,32 @@ function App() {
               />
             }
           />
-          <Route path="/arena" element={<ArenaV2 account={account} />} />
+          <Route
+            path="/arena"
+            element={
+              <ArenaV2
+                account={account}
+                hasStartedRoom={startedRoom}
+                onStartedRoom={(value: RoomType) => {
+                  setStartedRoom(value)
+                  setDisconAcct(null)
+                }}
+              />
+            }
+          >
+            <Route
+              path={'/arena/room/:code'}
+              element={
+                <Room
+                  room={startedRoom}
+                  onDisconnect={(room: RoomType) => {
+                    setStartedRoom(room)
+                  }}
+                  account={account}
+                />
+              }
+            />
+          </Route>
           <Route
             path="/share"
             element={
@@ -1276,7 +765,7 @@ function App() {
           />
         </Routes>
       </Router>
-      <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example"></Tabs>
+      {/* <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example"></Tabs> */}
     </div>
   )
 }
