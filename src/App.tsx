@@ -711,6 +711,12 @@ function App(props) {
                     setStartedRoom(room)
                   }}
                   account={account}
+                  fightChoice1={fightChoice1}
+                  fightChoice2={fightChoice2}
+                  setFightChoice1Func={setFightChoice1}
+                  setFightChoice2Func={setFightChoice2}
+                  cryptomons={cryptomons}
+                  monNames={names}
                 />
               }
             />
