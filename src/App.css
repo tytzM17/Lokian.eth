@@ -388,10 +388,12 @@ label {
   }
 
   .arena-chat-box {
-    position: absolute;
+    /* position: absolute; */
     width: 100%;
-    bottom: 4%;
+    /* bottom: 4%; */
     z-index: 999;
+    position: fixed;
+    bottom: 5%;
   }
 
   .arena-chat-box .rpgui-button.golden {

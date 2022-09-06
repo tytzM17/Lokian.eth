@@ -9,12 +9,19 @@ import './arena.css'
 import { RoomType, UseLocDiscon } from '../common/interfaces'
 // import WebSocket from 'isomorphic-ws'
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { ethers } from 'ethers'
 
 const btnStyle = {
   height: '38px',
 }
 
 const URL = 'ws://localhost:40510'
+
+const getAccount = async () => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const accounts = await provider?.listAccounts()
+  return accounts ? accounts[0] : null
+}
 
 const acctFormat = (acct: string) => {
   if (!acct) return
@@ -25,7 +32,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
   let navigate = useNavigate()
   let useLoc: UseLocDiscon = useLocation()
 
-  const [online, setOnline] = useState(0)
+  const [online, setOnline] = useState(null)
   const [toggleChatbox, setToggleChatbox] = useState(false)
   const [arenaChatMsgs, setArenaChatMsgs] = useState('')
   const [arenaChatInput, setArenaChatInput] = useState('')
@@ -87,6 +94,10 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
     }
   }
 
+  async function getMyAccount() {
+    return await getAccount()
+  }
+
   useEffect(() => {
     if (!useLoc || !useLoc.state) return
     // invoke leave room
@@ -96,14 +107,23 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
   useEffect(() => {
     ws.onopen = function open() {
       console.log('connected')
-      if (ws)
+      let _account = account
+
+      if (!_account) {
+        getMyAccount().then((result) => {
+          _account = result
+        })
+      }
+
+      if (ws) {
         ws.send(
           JSON.stringify({
             type: 'online',
             msg: 'connected',
-            acct: account,
+            acct: _account,
           })
         )
+      }
     }
 
     ws.onmessage = function incoming(data) {
@@ -122,8 +142,9 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
           chatMsg = `${parsed?.acct || 'unknown'}: ${parsed?.msg}`
           break
         case 'online':
-          const _online = parsed?.type === 'online' ? parsed.online : null
-          if (_online) setOnline(_online)
+          let _online = online
+          _online = parsed?.online
+          setOnline(_online)
           break
         case 'create':
           console.log('create data', parsed)
@@ -199,7 +220,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
             <Container fluid>
               <Row className="online-create-room-row">
                 <Col sm={12} xs={12} md={6} lg={6} xl={6}>
-                  <span className="online-count">Online: {online || '0'}</span>
+                  <span className="online-count">Online: {online}</span>
                 </Col>
                 <Col sm={12} xs={12} md={6} lg={6} xl={6}>
                   <div className="create-room-btn">

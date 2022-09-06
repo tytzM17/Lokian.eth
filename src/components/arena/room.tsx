@@ -25,7 +25,7 @@ const Room = ({ room, onDisconnect, account, fightChoice1, fightChoice2, monName
   }, [cryptomons, otherPlayer, room?.creator])
   
   return (
-    <>
+    <div className='room-container'>
       <div className="p1-arena green-glow">Room {room?.room}</div>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         {' '}
@@ -112,7 +112,7 @@ const Room = ({ room, onDisconnect, account, fightChoice1, fightChoice2, monName
           </Col>
         </Row>
       </div>
-    </>
+    </div>
   )
 }
 
