@@ -9,7 +9,8 @@ import './arena.css'
 import { RoomType, UseLocDiscon } from '../common/interfaces'
 // import WebSocket from 'isomorphic-ws'
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom'
-import { ethers } from 'ethers'
+// import { ethers } from 'ethers'
+import getAccount from '../../utils/getAccount'
 
 const btnStyle = {
   height: '38px',
@@ -17,18 +18,18 @@ const btnStyle = {
 
 const URL = 'ws://localhost:40510'
 
-const getAccount = async () => {
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const accounts = await provider?.listAccounts()
-  return accounts ? accounts[0] : null
-}
+// const getAccount = async () => {
+//   const provider = new ethers.providers.Web3Provider(window.ethereum)
+//   const accounts = await provider?.listAccounts()
+//   return accounts ? accounts[0] : null
+// }
 
 const acctFormat = (acct: string) => {
   if (!acct) return
   return `${acct.substring(0, 6)}...${acct.substring(acct.length - 4)}`
 }
 
-const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
+const Arena = ({ account, onStartedRoom, hasStartedRoom, otherPlayerReady, isAcceptedAndReadyPlayer }) => {
   let navigate = useNavigate()
   let useLoc: UseLocDiscon = useLocation()
 
@@ -99,12 +100,27 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
   }
 
   useEffect(() => {
+    if (!otherPlayerReady) return
+
+    const obj = { type: 'ready', params: { room: otherPlayerReady.room, otherPlayer: otherPlayerReady.otherPlayer } }
+    if (ws) {
+      if (otherPlayerReady.otherPlayer === account) {
+        ws.send(JSON.stringify(obj))
+      }
+    }
+  }, [otherPlayerReady])
+
+  useEffect(() => {
     if (!useLoc || !useLoc.state) return
     // invoke leave room
     leaveRoom(useLoc.state?.room?.players, useLoc.state?.room?.creator, useLoc.state?.leaver, useLoc.state?.room?.room)
   }, [useLoc])
 
   useEffect(() => {
+    let mounted = true
+
+    if (!mounted) return
+
     ws.onopen = function open() {
       console.log('connected')
       let _account = account
@@ -168,12 +184,14 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
         case 'leave':
           console.log('leave data', parsed)
           let leavedRooms = [...rooms]
+          let leaver = 'Player'
           if (parsed?.params?.isClosed) {
             leavedRooms = leavedRooms.filter((room) => room?.room !== parsed.params.room)
             setRooms(leavedRooms)
           } else {
             leavedRooms.every((room) => {
               if (room?.room === parsed?.params?.room) {
+                leaver = room.players?.filter((plyr: string) => !parsed.params.players?.includes(plyr))
                 room['clients'] = parsed.params.clients
                 room['players'] = parsed.params.players
                 return false
@@ -183,6 +201,11 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
             setRooms(leavedRooms)
           }
           onStartedRoom(null)
+          toast.error(leaver + ' Disconnected', {
+            autoClose: 5000,
+            closeOnClick: true,
+            pauseOnHover: true,
+          })
           break
         case 'start':
           console.log('start rooms data', parsed)
@@ -190,6 +213,15 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
           if (parsed?.params?.room?.creator !== account) {
             onStartedRoom(parsed?.params?.room)
             navigate(parsed?.params?.path)
+          }
+          break
+        case 'ready':
+          console.log('other player ready data', parsed)
+          // if not creator, navigate to room path
+          if (parsed?.params?.room?.creator === account) {
+            const isInRoom = rooms.find((room) => room?.room === parsed?.params?.room?.room)           
+            const isOtherPlayer = rooms.filter((room) => room?.players?.includes(parsed?.params?.otherPlayer))
+            isAcceptedAndReadyPlayer(isInRoom && isOtherPlayer)
           }
           break
       }
@@ -202,8 +234,10 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
         console.log('WebSocket Disconnected')
         setWs(new WebSocket(URL))
       }
+
+      mounted = false
     }
-  }, [ws.onmessage, ws.onopen, ws.onclose])
+  }, [ws.onmessage, ws.onopen, ws.onclose, account])
 
   return (
     <>

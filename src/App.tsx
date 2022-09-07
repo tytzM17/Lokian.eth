@@ -137,7 +137,9 @@ function App(props) {
   const [isBreedMonLoading, setIsBreedMonLoading] = useState(false)
   const [isBuyMonLoading, setIsBuyMonLoading] = useState(false)
   const [isAddForSaleLoading, setIsAddForSaleLoading] = useState(false)
-  const [isRemoveFromSaleLoading, setIsRemoveFromSaleLoading] = useState(false)
+  const [isRemoveFromSaleLoading, setIsRemoveFromSaleLoading] = useState(false) 
+  const [otherPlayerReady, setOtherPlayerReady] = useState(null)
+  const [acceptedAndReadyPlayer, setAcceptedAndReadyPlayer] = useState(false)
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
 
@@ -699,6 +701,8 @@ function App(props) {
                   setStartedRoom(value)
                   setDisconAcct(null)
                 }}
+                otherPlayerReady={otherPlayerReady}
+                isAcceptedAndReadyPlayer={(state: boolean) => setAcceptedAndReadyPlayer(state)}
               />
             }
           >
@@ -717,10 +721,15 @@ function App(props) {
                   setFightChoice2Func={setFightChoice2}
                   cryptomons={cryptomons}
                   monNames={names}
+                  acceptedAndReadyPlayer={acceptedAndReadyPlayer}
+                  onOtherPlayerReady={(room: RoomType, otherPlayer: string) => {
+                    setOtherPlayerReady({ room, otherPlayer })
+                  }}
                 />
               }
             />
           </Route>
+          {/* <Route path={'/arena/room'} element={<Room account={account} cryptomons={cryptomons} monNames={names} />} /> */}
           <Route
             path="/share"
             element={
