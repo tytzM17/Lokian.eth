@@ -103,12 +103,8 @@ Finished
 
 Ongoing
 - Add multiplayer pvp, chat 
--- Create room UI.., start functions..ok  
--- Then add data for versus function like monster id,etc
--- Other misc stuffs
+-- Breaking up app.tsx, Change report.pdf, Create room UI.., start functions..ok  
 
-- Add skellies + armours + weapons mini pvp
-- Add onclick monster card, show modal with bigger card UI and monster info
 
 
 

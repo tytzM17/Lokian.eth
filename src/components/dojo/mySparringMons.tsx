@@ -1,6 +1,6 @@
 import React from 'react'
 import { nameDiv, imgDiv, statDiv } from '../common'
-import { Lokimon } from '../models'
+import { Lokimon } from '../../models'
 
 const MySparringMons = ({ mons, setFightChoiceFunc, account, choice }) => {
   const yourLokimonsCond = (mon: Lokimon) =>

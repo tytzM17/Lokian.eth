@@ -16,20 +16,15 @@ const btnStyle = {
   height: '38px',
 }
 
+// change to server on internet
 const URL = 'ws://localhost:40510'
-
-// const getAccount = async () => {
-//   const provider = new ethers.providers.Web3Provider(window.ethereum)
-//   const accounts = await provider?.listAccounts()
-//   return accounts ? accounts[0] : null
-// }
 
 const acctFormat = (acct: string) => {
   if (!acct) return
   return `${acct.substring(0, 6)}...${acct.substring(acct.length - 4)}`
 }
 
-const Arena = ({ account, onStartedRoom, hasStartedRoom, otherPlayerReady, isAcceptedAndReadyPlayer }) => {
+const Arena = ({ account, onSetWs, onStartedRoom, hasStartedRoom, otherPlayerReady, isAcceptedAndReadyPlayer }) => {
   let navigate = useNavigate()
   let useLoc: UseLocDiscon = useLocation()
 
@@ -120,6 +115,8 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom, otherPlayerReady, isAcc
     let mounted = true
 
     if (!mounted) return
+
+    onSetWs(ws)
 
     ws.onopen = function open() {
       console.log('connected')
@@ -237,7 +234,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom, otherPlayerReady, isAcc
 
       mounted = false
     }
-  }, [ws.onmessage, ws.onopen, ws.onclose, account])
+  }, [ws, ws.onmessage, ws.onopen, ws.onclose, account])
 
   return (
     <>

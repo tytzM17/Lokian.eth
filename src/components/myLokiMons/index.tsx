@@ -4,7 +4,7 @@ import MonImages from '../../sprites-copy'
 import { nameDiv, imgDiv, statDiv, addForSaleDiv, monName } from '../common'
 import getMonsOrder from '../common/getMonsOrder'
 import ListRender from '../common/listRender'
-import { Lokimon } from '../models'
+import { Lokimon } from '../../models'
 import Spinner from '../spinner'
 import './mylokimons.css'
 

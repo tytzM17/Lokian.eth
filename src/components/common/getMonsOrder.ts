@@ -1,6 +1,6 @@
 import { formatUnits } from '@ethersproject/units'
 import { monName } from '.'
-import { Lokimon } from '../models'
+import { Lokimon } from '../../models'
 
 const getMonsOrder = (_orderBy: string, _myLokimons: Lokimon[]) => {
   if (!_orderBy) return

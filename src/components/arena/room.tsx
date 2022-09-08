@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Container, Row, Col, Table } from 'react-bootstrap'
-import { Lokimon } from '../models'
+import { Lokimon } from '../../models'
 import MyFightingMons from './myFightingMons'
 import { breedOption } from '../common'
 import getAccount from '../../utils/getAccount'
@@ -18,7 +18,7 @@ const Room = ({
   setFightChoice2Func,
   setFightChoice1Func,
   onOtherPlayerReady,
-  acceptedAndReadyPlayer
+  acceptedAndReadyPlayer,
 }) => {
   let navigate = useNavigate()
 

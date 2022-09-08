@@ -7,21 +7,33 @@
 }
 
 .generic-modal {
-  font-family: 'Press Start 2P',cursive;
+  font-family: 'Press Start 2P', cursive;
 }
 
 @media (min-width: 320px) {
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
-  .mon-320-scrn { margin: 0 }
-  .my-figure-320-scrn { width: 14.5em }
-  .monBox-320-scrn { border-radius: 6px;}
+  .mon-320-scrn {
+    margin: 0;
+  }
+  .my-figure-320-scrn {
+    width: 14.5em;
+  }
+  .monBox-320-scrn {
+    border-radius: 6px;
+  }
 }
 
 /* Small Devices, Tablets */
 @media only screen and (min-width: 768px) {
-  .mon-320-scrn { margin-right: 9px }
-  .my-figure-320-scrn { width: 14.5em }
-  .monBox-320-scrn { border-radius: 6px;}
+  .mon-320-scrn {
+    margin-right: 9px;
+  }
+  .my-figure-320-scrn {
+    width: 14.5em;
+  }
+  .monBox-320-scrn {
+    border-radius: 6px;
+  }
 }
 
 /* Medium Devices, Desktops */

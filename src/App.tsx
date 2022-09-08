@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react'
+// core
+import React, { useEffect, useState, createContext } from 'react'
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Nav, Navbar, NavDropdown, Tab, Tabs } from 'react-bootstrap'
-// import StatBar from './StatBar'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import { MyLokiMons, ArenaV2, Breed, MyShop, Marketplace, Spinner, Share, SharedToMe, Token } from './components'
+import MonImages from './sprites-copy'
 
 // Library to work with Ethereum like blockchain
 import { injected } from './wallet/connectors'
@@ -18,80 +15,34 @@ import {
 import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { Contract } from '@ethersproject/contracts'
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatUnits, parseEther, formatEther } from '@ethersproject/units'
+import { parseEther } from '@ethersproject/units'
+import { Web3Provider } from '@ethersproject/providers'
 
 // abis
-import contrInterface from './interface.json' // Load contract json file
-import erc20Interface from './erc20Interface.json' // Load erc20 contract json file
-import nftInterface from './project.nft.abi.json'
-import MonImages from './sprites-copy'
+import contrInterface from './abis/interface.json'
+import nftInterface from './abis/project.nft.abi.json'
 
-// util
-import { Web3Provider } from '@ethersproject/providers'
-import txSuccess from './utils/txSuccess'
-import txFail from './utils/txFail'
+// components
 import Dojo from './components/dojo'
 import { names } from './components/common'
 import Room from './components/arena/room'
 import { RoomType } from './components/common/interfaces'
+import { Nav, Navbar } from 'react-bootstrap'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { MyLokiMons, ArenaV2, Breed, MyShop, Marketplace, Spinner, Share, SharedToMe, Token } from './components'
+import { Account } from './components/core/Account'
 
+// utils
+import { approve, getMons, getTokenBalance, txSuccess, txFail } from './utils'
+
+// wallet
 enum ConnectorNames {
   Injected = 'Injected',
 }
-
 const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.Injected]: injected,
 }
-
-let CONTRACT_ADDRESS: string
-let ERC20_CONTRACT_ADDRESS: string
-let ERC1155_CONTRACT_ADDRESS: string
-if (process && process.env) {
-  CONTRACT_ADDRESS =
-    process.env.NODE_ENV === 'production'
-      ? process.env.REACT_APP_MAIN_CONTRACT_ADDRESS
-      : process.env.REACT_APP_TEST_CONTRACT_ADDRESS
-  ERC20_CONTRACT_ADDRESS =
-    process.env.NODE_ENV === 'production' ? process.env.REACT_APP_MAIN_ERC20 : process.env.REACT_APP_TEST_ERC20
-  ERC1155_CONTRACT_ADDRESS =
-    process.env.NODE_ENV === 'production' ? process.env.REACT_APP_MAIN_ERC1155 : process.env.REACT_APP_TEST_ERC1155
-} else {
-  // polygon mainnet
-  CONTRACT_ADDRESS = '0x5148A559cFaaEC1A915ae41e00A8Dd2Fa17ba64f'
-  ERC20_CONTRACT_ADDRESS = '0x4d8d24968458af521ef02aefD95f161dF3f9Ea01'
-  ERC1155_CONTRACT_ADDRESS = '0x8227767903Fa90A90060E28a45506318E03997aD'
-}
-
-async function getMons(_library, _account) {
-  const contr = new Contract(CONTRACT_ADDRESS, contrInterface, _library.getSigner(_account))
-  const totalMons = parseInt(await contr.totalMons())
-  return Promise.all([...Array(totalMons).keys()].map((id) => contr.mons(id)))
-}
-
-async function approve(_library, _account, _amount) {
-  const erc20Contr = new Contract(ERC20_CONTRACT_ADDRESS, erc20Interface, _library.getSigner(_account))
-  const newAmount = `${parseEther(_amount)}`
-  return await erc20Contr.approve(CONTRACT_ADDRESS, newAmount)
-}
-
-function Account() {
-  const { account } = useWeb3React()
-  return (
-    <span>
-      {account === null ? '-' : account ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}` : ''}
-    </span>
-  )
-}
-
-async function getTokenBalance(_library, _account) {
-  if (!_library || !_account) {
-    return
-  }
-  const erc20Contr = new Contract(ERC20_CONTRACT_ADDRESS, erc20Interface, _library.getSigner(_account))
-  const bal = await erc20Contr.balanceOf(_account)
-  return formatEther(BigNumber.from(bal?._hex).toBigInt())
-}
-
 function getErrorMessage(error: Error) {
   if (error instanceof NoEthereumProviderError) {
     return 'No Ethereum browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.'
@@ -105,7 +56,28 @@ function getErrorMessage(error: Error) {
   }
 }
 
-function App(props) {
+// contracts
+export let CONTRACT_ADDRESS: string
+export let ERC20_CONTRACT_ADDRESS: string
+let ERC1155_CONTRACT_ADDRESS: string
+
+function App() {
+  if (process && process.env) {
+    CONTRACT_ADDRESS =
+      process.env.NODE_ENV === 'production'
+        ? process.env.REACT_APP_MAIN_CONTRACT_ADDRESS
+        : process.env.REACT_APP_TEST_CONTRACT_ADDRESS
+    ERC20_CONTRACT_ADDRESS =
+      process.env.NODE_ENV === 'production' ? process.env.REACT_APP_MAIN_ERC20 : process.env.REACT_APP_TEST_ERC20
+    ERC1155_CONTRACT_ADDRESS =
+      process.env.NODE_ENV === 'production' ? process.env.REACT_APP_MAIN_ERC1155 : process.env.REACT_APP_TEST_ERC1155
+  } else {
+    // polygon mainnet
+    CONTRACT_ADDRESS = '0x5148A559cFaaEC1A915ae41e00A8Dd2Fa17ba64f'
+    ERC20_CONTRACT_ADDRESS = '0x4d8d24968458af521ef02aefD95f161dF3f9Ea01'
+    ERC1155_CONTRACT_ADDRESS = '0x8227767903Fa90A90060E28a45506318E03997aD'
+  }
+
   const [cryptomons, setCryptomons] = useState([])
   const [myCryptomons, setMyCryptomons] = useState([])
   const [otherCryptomons, setOtherCryptomons] = useState([])
@@ -137,7 +109,7 @@ function App(props) {
   const [isBreedMonLoading, setIsBreedMonLoading] = useState(false)
   const [isBuyMonLoading, setIsBuyMonLoading] = useState(false)
   const [isAddForSaleLoading, setIsAddForSaleLoading] = useState(false)
-  const [isRemoveFromSaleLoading, setIsRemoveFromSaleLoading] = useState(false) 
+  const [isRemoveFromSaleLoading, setIsRemoveFromSaleLoading] = useState(false)
   const [otherPlayerReady, setOtherPlayerReady] = useState(null)
   const [acceptedAndReadyPlayer, setAcceptedAndReadyPlayer] = useState(false)
   const context = useWeb3React<Web3Provider>()
@@ -145,7 +117,8 @@ function App(props) {
 
   //  multiplayer
   const [startedRoom, setStartedRoom] = useState(null)
-  const [disconAcct, setDisconAcct] = useState(null)
+  const [ws, setWs] = useState(null)
+  const WsContext = createContext(null)
 
   // handle logic to recognize the connector currently being activated
   const [activatingConnector, setActivatingConnector] = React.useState<any>()
@@ -434,25 +407,6 @@ function App(props) {
     }
   }
 
-  // Handlers for form inputs
-  function handleShareId(event) {
-    setShareId(event.target?.value)
-  }
-  function handleShareAddress(event) {
-    setShareAddress(event.target?.value)
-  }
-
-  function handleChange(event) {
-    setValue(event.target?.value)
-  }
-
-  function handleBuyItemAmount(event) {
-    setBuyItemAmount(event.target?.value)
-  }
-  function handleBurn(event) {
-    setBurnAmount(event.target?.value)
-  }
-
   async function buyItem(units: string, price: string, itemNumber: string, data: string = '0x00') {
     setDisableBuyItem(true)
     if (!units || !price || !itemNumber) {
@@ -509,6 +463,25 @@ function App(props) {
         toast.error(`Error: ${e?.message}`)
         setDisableBuyItem(false)
       })
+  }
+
+  // Handlers for form inputs
+  function handleShareId(event) {
+    setShareId(event.target?.value)
+  }
+  function handleShareAddress(event) {
+    setShareAddress(event.target?.value)
+  }
+
+  function handleChange(event) {
+    setValue(event.target?.value)
+  }
+
+  function handleBuyItemAmount(event) {
+    setBuyItemAmount(event.target?.value)
+  }
+  function handleBurn(event) {
+    setBurnAmount(event.target?.value)
   }
 
   return (
@@ -694,16 +667,19 @@ function App(props) {
           <Route
             path="/arena"
             element={
-              <ArenaV2
-                account={account}
-                hasStartedRoom={startedRoom}
-                onStartedRoom={(value: RoomType) => {
-                  setStartedRoom(value)
-                  setDisconAcct(null)
-                }}
-                otherPlayerReady={otherPlayerReady}
-                isAcceptedAndReadyPlayer={(state: boolean) => setAcceptedAndReadyPlayer(state)}
-              />
+              <WsContext.Provider value={ws}>
+                <ArenaV2
+                  onSetWs={(ws: object) => setWs(ws)}
+                  account={account}
+                  hasStartedRoom={startedRoom}
+                  onStartedRoom={(value: RoomType) => {
+                    setStartedRoom(value)
+                    // setDisconAcct(null)
+                  }}
+                  otherPlayerReady={otherPlayerReady}
+                  isAcceptedAndReadyPlayer={(state: boolean) => setAcceptedAndReadyPlayer(state)}
+                />
+              </WsContext.Provider>
             }
           >
             <Route

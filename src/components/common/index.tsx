@@ -12,11 +12,11 @@ import bg9 from '../../sprites-copy/background/9.png'
 import bg10 from '../../sprites-copy/background/10.png'
 
 import MonImages from '../../sprites-copy'
-import StatBar from '../../StatBar'
+import StatBar from '../core/StatBar'
 import Spinner from '../spinner'
 import { formatUnits } from '@ethersproject/units'
 import React from 'react'
-import { Lokimon } from '../models'
+import { Lokimon } from '../../models'
 import './common.css'
 
 // Add all 151 Cryptomon names in an array

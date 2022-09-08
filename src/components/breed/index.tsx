@@ -2,7 +2,7 @@ import React from 'react'
 import { nameDiv, imgDiv, statDiv, breedOption, breedDiv, monName } from '../common'
 import Spinner from '../spinner'
 import { Row, Col, Container } from 'react-bootstrap'
-import { Lokimon } from '../models'
+import { Lokimon } from '../../models'
 import './breed.css'
 
 const Breed = ({
