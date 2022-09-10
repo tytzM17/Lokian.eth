@@ -1,4 +1,5 @@
-export type Lokimon = {
+import { BigNumber } from "ethers"
+export interface Lokimon {
     id: number,
     atk: number,
     def: number, 
@@ -7,7 +8,22 @@ export type Lokimon = {
     hp:  number,
     monType: number,
     owner: string,
-    price: number,
+    price: BigInt,
+    sharedTo: string,
+    species: number,
+    speed: number
+} 
+
+export interface LokimonContract {
+    id: BigNumber,
+    atk: number,
+    def: number, 
+    evolve: boolean,
+    forSale: boolean,
+    hp:  number,
+    monType: number,
+    owner: string,
+    price: BigNumber,
     sharedTo: string,
     species: number,
     speed: number

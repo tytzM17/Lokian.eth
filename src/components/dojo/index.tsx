@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Row, Col, Table } from 'react-bootstrap'
+import { Lokimon } from '../../models'
 import { breedOption } from '../common'
 import Spinner from '../spinner'
 import './dojo.css'
@@ -8,17 +9,17 @@ import MySparringMons from './mySparringMons'
 interface Params {
   fightChoice1: string
   fightChoice2: string
-  cryptomons: any[]
+  cryptomons: Lokimon[]
   winner: number
   monNames: string[]
   fightTxDone: boolean
   rewards: number
   rounds: number
   disableFightBtn: boolean
-  fight: (fightChoice1: string, fightChoice2: string) => void
+  fight: (fightChoice1: number, fightChoice2: number) => void
   account: string
-  myCryptomons: any[]
-  otherCryptomons: any[]
+  myCryptomons: Lokimon[]
+  otherCryptomons: Lokimon[]
   setFightChoice1Func: any
   setFightChoice2Func: any
 }
@@ -90,7 +91,7 @@ const Dojo = (params: Params) => {
                 <thead>
                   <tr>
                     <th>Winner</th>
-                    <th>ID</th>
+                    <th>No.</th>
                     <th>Rounds</th>
                     <th>Rewards</th>
                   </tr>

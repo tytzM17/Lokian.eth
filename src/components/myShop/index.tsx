@@ -7,6 +7,7 @@ import { Table } from 'react-bootstrap'
 import MonImages from '../../sprites-copy'
 import Spinner from '../spinner'
 import { formatUnits } from '@ethersproject/units'
+import { BigNumber } from 'ethers'
 
 const MyShop = ({ myCryptomons, isRemoveFromSaleLoading, removeFromSale, nativeTok = '' }) => {
   const [display, setDisplay] = useState('grid')
@@ -67,7 +68,7 @@ const MyShop = ({ myCryptomons, isRemoveFromSaleLoading, removeFromSale, nativeT
           <tbody>
             {myLokimons &&
               myLokimons
-                .filter((mon: Lokimon) => !mon.forSale)
+                .filter((mon: Lokimon) => mon.forSale)
                 .map((mon: Lokimon) => (
                   <tr key={mon.id}>
                     <td>{mon?.id}</td>
@@ -85,7 +86,7 @@ const MyShop = ({ myCryptomons, isRemoveFromSaleLoading, removeFromSale, nativeT
                     </td>
                     <td>{monName(mon?.species) || ''} </td>
                     <td>{`HP ${mon?.hp}, ATK ${mon?.atk}, DEF ${mon?.def}, SPD ${mon?.speed}`}</td>
-                    <td>{`${formatUnits(mon?.price || 0)} ${nativeTok}`}</td>
+                    <td>{`${formatUnits(BigNumber.from(mon?.price || 0))} ${nativeTok}`}</td>
                     <td>
                       <button
                         className="rpgui-button mylokimons-sell-btn"

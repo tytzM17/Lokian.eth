@@ -8,10 +8,11 @@ import { Lokimon } from '../../models'
 import Spinner from '../spinner'
 import './mylokimons.css'
 
-const MyLokiMons = ({ myCryptomons, value, onHandleChange, isAddForSaleLoading, addForSale }) => {
+const MyLokiMons = ({ myCryptomons, isAddForSaleLoading, addForSale }) => {
   const [display, setDisplay] = useState('grid')
   const [orderBy, setOrderBy] = useState(null)
   const [myLokimons, setMyLokimons] = useState(myCryptomons)
+  const [price, setPrice] = useState(0)
 
   useEffect(() => {
     if (!myCryptomons) return
@@ -23,6 +24,12 @@ const MyLokiMons = ({ myCryptomons, value, onHandleChange, isAddForSaleLoading, 
     const _lokimons = getMonsOrder(orderBy, myLokimons)
     setMyLokimons([..._lokimons])
   }, [orderBy])
+
+  function handleChangePrice(event: React.ChangeEvent<HTMLInputElement>) {
+    const parsedValue = parseFloat(event?.target?.value) || 0
+    setPrice(parsedValue)
+  }
+
 
   return (
     <>
@@ -45,7 +52,7 @@ const MyLokiMons = ({ myCryptomons, value, onHandleChange, isAddForSaleLoading, 
                       {imgDiv(mon)}
                       <figcaption>{statDiv(mon)}</figcaption>
                     </figure>
-                    {addForSaleDiv(mon, value, onHandleChange, isAddForSaleLoading, addForSale)}
+                    {addForSaleDiv(mon, price, handleChangePrice, isAddForSaleLoading, addForSale)}
                   </div>
                 </React.Fragment>
               ))}
@@ -53,7 +60,7 @@ const MyLokiMons = ({ myCryptomons, value, onHandleChange, isAddForSaleLoading, 
       )}
 
       {display === 'list' && (
-        <Table striped bordered hover variant="dark" responsive className='mylokimons-table'>
+        <Table striped bordered hover variant="dark" responsive className="mylokimons-table">
           <thead>
             <tr>
               <th>ID</th>
@@ -89,15 +96,19 @@ const MyLokiMons = ({ myCryptomons, value, onHandleChange, isAddForSaleLoading, 
                       <input
                         type="number"
                         className="add-for-sale-input"
-                        value={value}
-                        onChange={(e) => onHandleChange(mon?.id, e)}
+                        value={price}
+                        onChange={(e) => {
+                          // onHandlePriceChange(e)
+                          handleChangePrice(e)
+                        }}
                       />
                     </td>
                     <td>
                       <button
                         className="rpgui-button mylokimons-sell-btn"
                         type="button"
-                        onClick={() => (mon?.id ? addForSale(mon?.id, value) : null)}
+                        value={price}
+                        onClick={() => addForSale(mon?.id, price)}
                       >
                         {isAddForSaleLoading ? <Spinner color="#000" /> : 'Sell'}
                       </button>

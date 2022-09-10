@@ -34,7 +34,19 @@ import { MyLokiMons, ArenaV2, Breed, MyShop, Marketplace, Spinner, Share, Shared
 import { Account } from './components/core/Account'
 
 // utils
-import { approve, getMons, getTokenBalance, txSuccess, txFail } from './utils'
+import { getTokenBalance } from './utils'
+import {
+  useFight,
+  useRefreshMons,
+  useAddForSale,
+  useBuyMon,
+  useRemoveFromSale,
+  useBreedMons,
+  useBuyItem,
+  useBurn,
+  useStartSharing,
+  useStopSharing,
+} from './app-functions'
 
 // wallet
 enum ConnectorNames {
@@ -78,10 +90,6 @@ function App() {
     ERC1155_CONTRACT_ADDRESS = '0x8227767903Fa90A90060E28a45506318E03997aD'
   }
 
-  const [cryptomons, setCryptomons] = useState([])
-  const [myCryptomons, setMyCryptomons] = useState([])
-  const [otherCryptomons, setOtherCryptomons] = useState([])
-  const [value, setValue] = useState(0) // Used in My Cryptomons tab for input in price text
   // Used in breeding tab
   const [breedChoice1, setBreedChoice1] = useState(null)
   const [breedChoice2, setBreedChoice2] = useState(null)
@@ -95,6 +103,8 @@ function App() {
   const [tokenBalance, setTokenBalance] = useState('0')
   const [fightTxDone, setFightTxDone] = useState(false)
   const [rewards, setRewards] = useState(0)
+
+  // Used in NFTs
   const [healingPotions, setHealingPotions] = useState(null)
   const [manaPotions, setManaPotions] = useState(null)
   const [magicPotions, setMagicPotions] = useState(null)
@@ -104,21 +114,37 @@ function App() {
   const [buyItemAmount, setBuyItemAmount] = useState('0')
   const [burnAmount, setBurnAmount] = useState('0')
   const [disableBuyItemBtn, setDisableBuyItem] = useState(false)
+
+  // Loading spinner state
   const [isShareLoading, setIsShareLoading] = useState(false)
   const [isStopSharingLoading, setIsStopSharingLoading] = useState(false)
   const [isBreedMonLoading, setIsBreedMonLoading] = useState(false)
   const [isBuyMonLoading, setIsBuyMonLoading] = useState(false)
-  const [isAddForSaleLoading, setIsAddForSaleLoading] = useState(false)
+  const [isAddForSaleLoading, setIsAddForSaleLoading] = useState<boolean>(false)
   const [isRemoveFromSaleLoading, setIsRemoveFromSaleLoading] = useState(false)
-  const [otherPlayerReady, setOtherPlayerReady] = useState(null)
-  const [acceptedAndReadyPlayer, setAcceptedAndReadyPlayer] = useState(false)
+
+  // wallet
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
+
+  // app function hooks
+  const { cryptomons, myCryptomons, otherCryptomons, resetMons, refreshMons } = useRefreshMons(library, account)
+  const { addForSale } = useAddForSale(library, account, setIsAddForSaleLoading, refreshMons)
+  const { removeFromSale } = useRemoveFromSale(library, account, setIsRemoveFromSaleLoading, refreshMons)
+  const { buyMon } = useBuyMon(library, account, setIsBuyMonLoading, refreshMons)
+  const { breedMons } = useBreedMons(library, account, setIsBreedMonLoading, refreshMons)
+  const { fight } = useFight(library, account, setDisableFightBtn, setFightTxDone)
+  const { buyItem } = useBuyItem(library, account, setDisableBuyItem, refreshMons)
+  const { burn } = useBurn(library, account, setDisableBuyItem, refreshMons)
+  const { startSharing } = useStartSharing(library, account, setIsShareLoading, refreshMons)
+  const { stopSharing } = useStopSharing(library, account, setIsStopSharingLoading, refreshMons)
 
   //  multiplayer
   const [startedRoom, setStartedRoom] = useState(null)
   const [ws, setWs] = useState(null)
   const WsContext = createContext(null)
+  const [otherPlayerReady, setOtherPlayerReady] = useState(null)
+  const [acceptedAndReadyPlayer, setAcceptedAndReadyPlayer] = useState(false)
 
   // handle logic to recognize the connector currently being activated
   const [activatingConnector, setActivatingConnector] = React.useState<any>()
@@ -154,7 +180,6 @@ function App() {
 
     let mounted = true
 
-    // ;(async function fightResults() {
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
 
     contr.on('FightResults', (_winnerId, _round) => {
@@ -176,10 +201,8 @@ function App() {
         setDisableFightBtn(false)
       }
     })
-    // })()
 
     return () => {
-      // const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
       contr.off('FightResults', (_winnerId, _round) => {
         setDisableFightBtn(false)
       })
@@ -227,260 +250,18 @@ function App() {
   // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
   useInactiveListener(!triedEager || !!activatingConnector)
 
-  // Change the list of created Crypromons saved in the state so UI refreshes after this call
-  async function refreshMons() {
-    if (!library || !account) return
-    await getMons(library, account)
-      .then((_mons) => {
-        const monsMap = _mons.map((mon) => ({
-          atk: mon.atk,
-          def: mon.def,
-          evolve: mon.evolve,
-          forSale: mon.forSale,
-          hp: mon.hp,
-          id: BigNumber.from(mon.id._hex).toNumber(),
-          monType: mon.monType,
-          owner: mon.owner,
-          price: BigNumber.from(mon.price._hex).toBigInt(),
-          sharedTo: mon.sharedTo,
-          species: mon.species,
-          speed: mon.speed,
-        }))
-        setCryptomons(monsMap)
-        setMyCryptomons(monsMap.filter((mon) => mon.owner === account))
-        setOtherCryptomons(monsMap.filter((mon) => mon.owner !== account))
-      })
-      .catch((err) => toast.error(err))
-  }
-
-  // Function that buys a Cryptomon through a smart contract function
-  async function buyMon(id, price) {
-    setIsBuyMonLoading(true)
-    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const newprice = `${BigInt(price)}`
-    let overrides = {
-      value: newprice,
-      gasLimit: 120000,
-    }
-
-    const tx = await contr.buyMon(id, overrides).catch((err) => setIsBuyMonLoading(false))
-    const recpt = await tx?.wait()
-    txSuccess(recpt, toast, refreshMons, (loadVal: boolean) => setIsBuyMonLoading(loadVal))
-    txFail(recpt, toast, (loadVal: boolean) => setIsBuyMonLoading(loadVal))
-  }
-
-  // Function that adds a Cryptomon for sale through a smart contract function
-  async function addForSale(id, price) {
-    setIsAddForSaleLoading(true)
-    if (price === 0 || price === '0') {
-      toast.error('🦄 Price is 0')
-      return
-    }
-    let overrides = {
-      gasLimit: 120000,
-    }
-    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const tx = await contr
-      .addForSale(id, parseEther(price.toString()), overrides)
-      .catch((err) => setIsAddForSaleLoading(false))
-    const receipt = await tx?.wait()
-    if (receipt && receipt.status === 1) {
-      toast.success(`Success, Tx hash: ${receipt.transactionHash}`)
-      refreshMons()
-      setIsAddForSaleLoading(false)
-    }
-    if (receipt && receipt.status === 0) {
-      toast.error(`Error, Tx hash: ${receipt.transactionHash}`)
-      setIsAddForSaleLoading(false)
-    }
-  }
-
-  // Function that removes a Cryptomon from sale through a smart contract function
-  async function removeFromSale(id: number) {
-    setIsRemoveFromSaleLoading(true)
-    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    let overrides = {
-      gasLimit: 120000,
-    }
-    const tx = await contr.removeFromSale(id, overrides).catch((err) => setIsRemoveFromSaleLoading(false))
-    const recpt = await tx?.wait()
-    if (recpt && recpt.status === 1) {
-      toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
-      refreshMons()
-      setIsRemoveFromSaleLoading(false)
-    }
-    if (recpt && recpt.status === 0) {
-      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
-      setIsRemoveFromSaleLoading(false)
-    }
-  }
-
-  // Function that breeds 2 Cryptomons through a smart contract function
-  async function breedMons(id1, id2) {
-    setIsBreedMonLoading(true)
-    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    const tx = await contr.breedMons(id1, id2).catch((err) => setIsBreedMonLoading(false))
-    const recpt = await tx?.wait()
-    if (recpt && recpt.status) {
-      toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
-      setIsBreedMonLoading(false)
-    }
-
-    if (recpt && !recpt.status) {
-      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
-      setIsBreedMonLoading(false)
-    }
-
-    await refreshMons()
-  }
-
-  // Function that allows 2 Cryptomons to fight through a smart contract function
-  async function fight(id1, id2) {
-    setDisableFightBtn(true)
-    if (id1 === null || id2 === null) {
-      return
-    }
-    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    let overrides = {
-      gasLimit: 120000,
-    }
-    try {
-      const tx = await contr?.fight(id1, id2, overrides)?.catch((err) => {
-        console.log('Fight error, ', err?.toString())
-        setDisableFightBtn(false)
-        setFightTxDone(false)
-      })
-      const recpt = await tx?.wait()
-      if (recpt && recpt.status) {
-        setFightTxDone(true)
-      }
-
-      if (recpt && !recpt.status) {
-        toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
-        setFightTxDone(false)
-      }
-    } catch (error) {
-      toast.error(`Fight function error: ${error.data?.message || ''}`)
-      setFightTxDone(false)
-      setDisableFightBtn(false)
-    }
-  }
-
-  // Function that starts sharing a Cryptomon to another address through a smart contract function
-  async function startSharing(id, address) {
-    setIsShareLoading(true)
-    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    let overrides = {
-      gasLimit: 120000,
-    }
-    const tx = await contr.startSharing(id, address, overrides).catch((err) => setIsShareLoading(false))
-    const recpt = await tx?.wait()
-    if (recpt && recpt.status) {
-      toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
-      refreshMons()
-      setIsShareLoading(false)
-    }
-    if (recpt && !recpt.status) {
-      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
-      setIsShareLoading(false)
-    }
-  }
-
-  // Function that stops sharing a Cryptomon with other addresses through a smart contrct function
-  async function stopSharing(id) {
-    setIsStopSharingLoading(true)
-    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    let overrides = {
-      gasLimit: 120000,
-    }
-    const tx = await contr.stopSharing(id, overrides).catch((err) => setIsStopSharingLoading(false))
-    const recpt = await tx?.wait()
-    if (recpt && recpt.status) {
-      toast.success(`Success, Tx hash: ${recpt.transactionHash}`)
-      refreshMons()
-      setIsStopSharingLoading(false)
-    }
-
-    if (recpt && !recpt.status) {
-      toast.error(`Error, Tx hash: ${recpt.transactionHash}`)
-      setIsStopSharingLoading(false)
-    }
-  }
-
-  async function buyItem(units: string, price: string, itemNumber: string, data: string = '0x00') {
-    setDisableBuyItem(true)
-    if (!units || !price || !itemNumber) {
-      return
-    }
-    let overrides = {
-      gasLimit: 120000,
-    }
-    const _price = parseEther(price)
-    const priceInWei = `${BigNumber.from(_price._hex).toBigInt()}`
-    approve(library, account, priceInWei)
-      .then(async (results) => {
-        if (results) {
-          const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-          const tx = await contr.buyItem(units, priceInWei, itemNumber, data, overrides)
-          const recpt = await tx?.wait()
-          txSuccess(recpt, toast, refreshMons)
-          txFail(recpt, toast)
-        } else {
-          toast.error(`Error in approving`)
-        }
-        setDisableBuyItem(false)
-      })
-      .catch((e) => {
-        toast.error(`Error: ${e?.message}`)
-        setDisableBuyItem(false)
-      })
-  }
-
-  async function burn(amount: string) {
-    setDisableBuyItem(true)
-    if (!amount) {
-      return
-    }
-    const _amount = parseEther(amount)
-    const amountInWei = `${BigNumber.from(_amount._hex).toBigInt()}`
-    let overrides = {
-      gasLimit: 120000,
-    }
-    approve(library, account, amountInWei)
-      .then(async (results) => {
-        if (results) {
-          const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-          const tx = await contr.burn(amountInWei, overrides)
-          const recpt = await tx.wait()
-          txSuccess(recpt, toast, refreshMons)
-          txFail(recpt, toast)
-        } else {
-          toast.error(`Error in approving`)
-        }
-        setDisableBuyItem(false)
-      })
-      .catch((e) => {
-        toast.error(`Error: ${e?.message}`)
-        setDisableBuyItem(false)
-      })
-  }
-
   // Handlers for form inputs
-  function handleShareId(event) {
+  function handleShareId(event: React.ChangeEvent<HTMLInputElement>) {
     setShareId(event.target?.value)
   }
-  function handleShareAddress(event) {
+  function handleShareAddress(event: React.ChangeEvent<HTMLInputElement>) {
     setShareAddress(event.target?.value)
   }
 
-  function handleChange(event) {
-    setValue(event.target?.value)
-  }
-
-  function handleBuyItemAmount(event) {
+  function handleBuyItemAmount(event: React.ChangeEvent<HTMLInputElement>) {
     setBuyItemAmount(event.target?.value)
   }
-  function handleBurn(event) {
+  function handleBurn(event: React.ChangeEvent<HTMLInputElement>) {
     setBurnAmount(event.target?.value)
   }
 
@@ -566,12 +347,9 @@ function App() {
                     className="rpgui-button"
                     onClick={() => {
                       deactivate()
-                      setCryptomons([])
-                      setMyCryptomons([])
-                      setOtherCryptomons([])
+                      resetMons()
                       setWinner(null)
                       setRounds(null)
-                      setValue(0)
                     }}
                   >
                     Logout
@@ -581,16 +359,15 @@ function App() {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
+
         <Routes>
           <Route
             path="/"
             element={
               <MyLokiMons
                 myCryptomons={myCryptomons}
-                value={value}
-                onHandleChange={(e: Event) => handleChange(e)}
                 isAddForSaleLoading={isAddForSaleLoading}
-                addForSale={addForSale}
+                addForSale={(id: number, price: number) => addForSale(id, price)}
               />
             }
           />
@@ -599,10 +376,8 @@ function App() {
             element={
               <MyLokiMons
                 myCryptomons={myCryptomons}
-                value={value}
-                onHandleChange={(e: Event) => handleChange(e)}
                 isAddForSaleLoading={isAddForSaleLoading}
-                addForSale={addForSale}
+                addForSale={(id: number, price: number) => addForSale(id, price)}
               />
             }
           />
@@ -674,7 +449,6 @@ function App() {
                   hasStartedRoom={startedRoom}
                   onStartedRoom={(value: RoomType) => {
                     setStartedRoom(value)
-                    // setDisconAcct(null)
                   }}
                   otherPlayerReady={otherPlayerReady}
                   isAcceptedAndReadyPlayer={(state: boolean) => setAcceptedAndReadyPlayer(state)}
@@ -705,7 +479,6 @@ function App() {
               }
             />
           </Route>
-          {/* <Route path={'/arena/room'} element={<Room account={account} cryptomons={cryptomons} monNames={names} />} /> */}
           <Route
             path="/share"
             element={
@@ -756,7 +529,6 @@ function App() {
           />
         </Routes>
       </Router>
-      {/* <Tabs defaultActiveKey="myCryptomons" id="uncontrolled-tab-example"></Tabs> */}
     </div>
   )
 }

@@ -41,6 +41,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Remaining Tasks
 
+Ongoing
+- Add multiplayer pvp, chat 
+-- Breaking up app.tsx ..ok, Change report.pdf, Create room UI.., start functions..ok  
+
 Finished
 - Change naming e.g. cryptoMons to creatures 6/28/2021
 - Change to 8bit theme for ui 07/02/2021
@@ -101,9 +105,7 @@ Finished
 - Chat ui ..ok , functions ..ok
 - Create room..ok, join..ok, leave..ok, 
 
-Ongoing
-- Add multiplayer pvp, chat 
--- Breaking up app.tsx, Change report.pdf, Create room UI.., start functions..ok  
+
 
 
 

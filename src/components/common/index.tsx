@@ -18,6 +18,7 @@ import { formatUnits } from '@ethersproject/units'
 import React from 'react'
 import { Lokimon } from '../../models'
 import './common.css'
+import { BigNumber } from 'ethers'
 
 // Add all 151 Cryptomon names in an array
 export const names = [
@@ -236,17 +237,17 @@ export const statDiv = (mon: Lokimon) => {
 }
 
 // Create the div with add for sale button
-export const addForSaleDiv = (mon: Lokimon, value, handleChange, isAddForSaleLoading, addForSale) => {
+export const addForSaleDiv = (mon: Lokimon, price: number, handleChangePrice, isAddForSaleLoading, addForSale) => {
   return (
     <div className="selling-div">
       <label className="add-for-sale-label">Set lokimons price:</label>
-      <input type="number" className="add-for-sale-input" onChange={(e) => handleChange(mon?.id, e)} />
+      <input type="number" className="add-for-sale-input" onChange={(e) => handleChangePrice(e)} />
       {isAddForSaleLoading ? (
         <button className="rpgui-button" type="button" style={{ width: '100%' }}>
           <Spinner color="#000" />
         </button>
       ) : (
-        <button className="rpgui-button" type="button" onClick={() => addForSale(mon?.id, value)}>
+        <button className="rpgui-button" type="button" onClick={() => addForSale(mon?.id, price)}>
           Sell
         </button>
       )}
@@ -255,13 +256,13 @@ export const addForSaleDiv = (mon: Lokimon, value, handleChange, isAddForSaleLoa
 }
 
 // Create the div with remove from sale button
-export const removeFromSaleDiv = (mon: Lokimon, isRemoveFromSaleLoading, removeFromSale) => {
+export const removeFromSaleDiv = (mon: Lokimon, isRemoveFromSaleLoading: boolean, removeFromSale) => {
   return (
     <div className="selling-div">
       <label className="remove-from-sale-label">
         Price:
         <br />
-        {formatUnits(mon?.price)}
+        {formatUnits(BigNumber.from(mon?.price))}
       </label>
       {isRemoveFromSaleLoading ? (
         <button className="rpgui-button" type="button" style={{ width: '100%' }}>
