@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Route } from 'react-router-dom'
 import { Token } from '../components'
 
@@ -9,14 +9,25 @@ const TokenRoute = ({
   healingPotions,
   manaPotions,
   magicPotions,
-  buyItemAmount,
-  handleBuyItemAmount,
+  // buyItemAmount,
+  // handleBuyItemAmount,
   buyItem,
   disableBuyItemBtn,
-  burnAmount,
+  // burnAmount,
   burn,
-  handleBurn,
+  // handleBurn,
 }) => {
+  const [burnAmount, setBurnAmount] = useState('0')
+  const [buyItemAmount, setBuyItemAmount] = useState('0')
+
+  function handleBuyItemAmount(event: React.ChangeEvent<HTMLInputElement>) {
+    setBuyItemAmount(event.target?.value)
+  }
+
+  function handleBurn(event: React.ChangeEvent<HTMLInputElement>) {
+    setBurnAmount(event.target?.value)
+  }
+
   return (
     <Route
       path="/token"
