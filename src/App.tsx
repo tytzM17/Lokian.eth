@@ -1,88 +1,107 @@
 // core
-import React, { useEffect, useState, createContext } from 'react'
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
-import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import MonImages from './sprites-copy'
+import React, { createContext, useState } from 'react'
+import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom'
+import './App.css'
+// import MonImages from './sprites-copy'
 
 // Library to work with Ethereum like blockchain
-import { injected } from './wallet/connectors'
-import { useEagerConnect, useInactiveListener } from './wallet/hooks'
-import {
-  NoEthereumProviderError,
-  UserRejectedRequestError as UserRejectedRequestErrorInjected,
-} from '@web3-react/injected-connector'
-import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
-import { Contract } from '@ethersproject/contracts'
-import { BigNumber } from '@ethersproject/bignumber'
-import { parseEther } from '@ethersproject/units'
 import { Web3Provider } from '@ethersproject/providers'
+import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
+// import {
+//   NoEthereumProviderError,
+//   UserRejectedRequestError as UserRejectedRequestErrorInjected,
+// } from '@web3-react/injected-connector'
+// import { injected } from './wallet/connectors'
+import { useEagerConnect, useInactiveListener } from './wallet/hooks'
 
 // abis
-import contrInterface from './abis/interface.json'
-import nftInterface from './abis/project.nft.abi.json'
 
 // components
-import Dojo from './components/dojo'
-import { names } from './components/common'
-import Room from './components/arena/room'
-import { RoomType } from './components/common/interfaces'
-import { Nav, Navbar } from 'react-bootstrap'
-import { ToastContainer, toast } from 'react-toastify'
+// import { Nav, Navbar } from 'react-bootstrap'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { MyLokiMons, ArenaV2, Breed, MyShop, Marketplace, Spinner, Share, SharedToMe, Token } from './components'
-import { Account } from './components/core/Account'
+// import { ArenaV2, Breed, Marketplace, MyLokiMons, MyShop, Share, SharedToMe, Spinner, Token } from './components'
+// import Room from './components/arena/room'
+// import { names } from './components/common'
+// import { RoomType } from './components/common/interfaces'
+// import { Account } from './components/core/Account'
+// import Dojo from './components/dojo'
 
 // utils
-import { getTokenBalance } from './utils'
 import {
+  useAddForSale,
+  useBreedMons,
+  useBurn,
+  useBuyItem,
+  useBuyMon,
   useFight,
   useRefreshMons,
-  useAddForSale,
-  useBuyMon,
   useRemoveFromSale,
-  useBreedMons,
-  useBuyItem,
-  useBurn,
   useStartSharing,
   useStopSharing,
 } from './app-functions'
+import { useContractEvents, useItemsFromNFT, useRecognizeConnector, useTokenBalance } from './hooks'
+import { getTokenBalance } from './utils'
+import Navigation from './Navigation'
+import NavWallet from './NavWallet'
+import {
+  RootRoute,
+  ArenaRoute,
+  BreedRoute,
+  DojoRoute,
+  MarketplaceRoute,
+  MyLokiMonsRoute,
+  MyShopRoute,
+  SharedToMeRoute,
+  ShareRoute,
+  TokenRoute,
+} from './routes'
 
 // wallet
-enum ConnectorNames {
-  Injected = 'Injected',
-}
-const connectorsByName: { [connectorName in ConnectorNames]: any } = {
-  [ConnectorNames.Injected]: injected,
-}
-function getErrorMessage(error: Error) {
-  if (error instanceof NoEthereumProviderError) {
-    return 'No Ethereum browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.'
-  } else if (error instanceof UnsupportedChainIdError) {
-    return "You're connected to an unsupported network."
-  } else if (error instanceof UserRejectedRequestErrorInjected) {
-    return 'Please authorize this website to access your Ethereum account.'
-  } else {
-    console.error(error)
-    return 'An unknown error occurred. Check the console for more details.'
-  }
-}
+// enum ConnectorNames {
+//   Injected = 'Injected',
+// }
+// const connectorsByName: { [connectorName in ConnectorNames]: any } = {
+//   [ConnectorNames.Injected]: injected,
+// }
+// function getErrorMessage(error: Error) {
+//   if (error instanceof NoEthereumProviderError) {
+//     return 'No Ethereum browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.'
+//   } else if (error instanceof UnsupportedChainIdError) {
+//     return "You're connected to an unsupported network."
+//   } else if (error instanceof UserRejectedRequestErrorInjected) {
+//     return 'Please authorize this website to access your Ethereum account.'
+//   } else {
+//     console.error(error)
+//     return 'An unknown error occurred. Check the console for more details.'
+//   }
+// }
 
 // contracts
 export let CONTRACT_ADDRESS: string
 export let ERC20_CONTRACT_ADDRESS: string
-let ERC1155_CONTRACT_ADDRESS: string
+export let ERC1155_CONTRACT_ADDRESS: string
 
 function App() {
   if (process && process.env) {
-    CONTRACT_ADDRESS =
-      process.env.NODE_ENV === 'production'
-        ? process.env.REACT_APP_MAIN_CONTRACT_ADDRESS
-        : process.env.REACT_APP_TEST_CONTRACT_ADDRESS
-    ERC20_CONTRACT_ADDRESS =
-      process.env.NODE_ENV === 'production' ? process.env.REACT_APP_MAIN_ERC20 : process.env.REACT_APP_TEST_ERC20
-    ERC1155_CONTRACT_ADDRESS =
-      process.env.NODE_ENV === 'production' ? process.env.REACT_APP_MAIN_ERC1155 : process.env.REACT_APP_TEST_ERC1155
+    if (process.env.NODE_ENV === 'production') {
+      CONTRACT_ADDRESS = process.env.REACT_APP_MAIN_CONTRACT_ADDRESS
+      ERC20_CONTRACT_ADDRESS = process.env.REACT_APP_MAIN_ERC20
+      ERC1155_CONTRACT_ADDRESS = process.env.REACT_APP_MAIN_ERC1155
+    } else {
+      CONTRACT_ADDRESS = process.env.REACT_APP_TEST_CONTRACT_ADDRESS
+      ERC20_CONTRACT_ADDRESS = process.env.REACT_APP_TEST_ERC20
+      ERC1155_CONTRACT_ADDRESS = process.env.REACT_APP_TEST_ERC1155
+    }
+    // CONTRACT_ADDRESS =
+    //   process.env.NODE_ENV === 'production'
+    //     ? process.env.REACT_APP_MAIN_CONTRACT_ADDRESS
+    //     : process.env.REACT_APP_TEST_CONTRACT_ADDRESS
+    // ERC20_CONTRACT_ADDRESS =
+    //   process.env.NODE_ENV === 'production' ? process.env.REACT_APP_MAIN_ERC20 : process.env.REACT_APP_TEST_ERC20
+    // ERC1155_CONTRACT_ADDRESS =
+    //   process.env.NODE_ENV === 'production' ? process.env.REACT_APP_MAIN_ERC1155 : process.env.REACT_APP_TEST_ERC1155
   } else {
     // polygon mainnet
     CONTRACT_ADDRESS = '0x5148A559cFaaEC1A915ae41e00A8Dd2Fa17ba64f'
@@ -96,24 +115,25 @@ function App() {
   // Used in fighting tab
   const [fightChoice1, setFightChoice1] = useState(null)
   const [fightChoice2, setFightChoice2] = useState(null)
-  const [winner, setWinner] = useState(null) // Used to display winner of the last fight
-  const [rounds, setRounds] = useState(null) // Used to display number of rounds the fight lasted
+  // const [winner, setWinner] = useState(null) // Used to display winner of the last fight
+  // const [rounds, setRounds] = useState(null) // Used to display number of rounds the fight lasted
   const [shareId, setShareId] = useState('') // Used in shareId form input field
   const [shareAddress, setShareAddress] = useState('') // Used in shareAddress form input field
-  const [tokenBalance, setTokenBalance] = useState('0')
+  // const [tokenBalance, setTokenBalance] = useState('0')
   const [fightTxDone, setFightTxDone] = useState(false)
-  const [rewards, setRewards] = useState(0)
+  // const [rewards, setRewards] = useState(0)
 
   // Used in NFTs
-  const [healingPotions, setHealingPotions] = useState(null)
-  const [manaPotions, setManaPotions] = useState(null)
-  const [magicPotions, setMagicPotions] = useState(null)
-  const [swords, setSwords] = useState(null)
-  const [shields, setShields] = useState(null)
+  // const [healingPotions, setHealingPotions] = useState(null)
+  // const [manaPotions, setManaPotions] = useState(null)
+  // const [magicPotions, setMagicPotions] = useState(null)
+  // const [swords, setSwords] = useState(null)
+  // const [shields, setShields] = useState(null)
+
   const [disableFightBtn, setDisableFightBtn] = useState(false)
-  const [buyItemAmount, setBuyItemAmount] = useState('0')
-  const [burnAmount, setBurnAmount] = useState('0')
-  const [disableBuyItemBtn, setDisableBuyItem] = useState(false)
+  // const [buyItemAmount, setBuyItemAmount] = useState('0')
+  // const [burnAmount, setBurnAmount] = useState('0')
+  const [disableBuyItemBtn, setDisableBuyItemBtn] = useState(false)
 
   // Loading spinner state
   const [isShareLoading, setIsShareLoading] = useState(false)
@@ -127,122 +147,142 @@ function App() {
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
 
-  // app function hooks
+  // app functions
   const { cryptomons, myCryptomons, otherCryptomons, resetMons, refreshMons } = useRefreshMons(library, account)
   const { addForSale } = useAddForSale(library, account, setIsAddForSaleLoading, refreshMons)
   const { removeFromSale } = useRemoveFromSale(library, account, setIsRemoveFromSaleLoading, refreshMons)
   const { buyMon } = useBuyMon(library, account, setIsBuyMonLoading, refreshMons)
   const { breedMons } = useBreedMons(library, account, setIsBreedMonLoading, refreshMons)
   const { fight } = useFight(library, account, setDisableFightBtn, setFightTxDone)
-  const { buyItem } = useBuyItem(library, account, setDisableBuyItem, refreshMons)
-  const { burn } = useBurn(library, account, setDisableBuyItem, refreshMons)
+  const { buyItem } = useBuyItem(library, account, setDisableBuyItemBtn, refreshMons)
+  const { burn } = useBurn(library, account, setDisableBuyItemBtn, refreshMons)
   const { startSharing } = useStartSharing(library, account, setIsShareLoading, refreshMons)
   const { stopSharing } = useStopSharing(library, account, setIsStopSharingLoading, refreshMons)
 
   //  multiplayer
-  const [startedRoom, setStartedRoom] = useState(null)
-  const [ws, setWs] = useState(null)
-  const WsContext = createContext(null)
-  const [otherPlayerReady, setOtherPlayerReady] = useState(null)
-  const [acceptedAndReadyPlayer, setAcceptedAndReadyPlayer] = useState(false)
+  // const [startedRoom, setStartedRoom] = useState(null)
+  // const [ws, setWs] = useState(null)
+  // const WsContext = createContext(null)
+  // const [otherPlayerReady, setOtherPlayerReady] = useState(null)
+  // const [acceptedAndReadyPlayer, setAcceptedAndReadyPlayer] = useState(false)
 
   // handle logic to recognize the connector currently being activated
-  const [activatingConnector, setActivatingConnector] = React.useState<any>()
-  useEffect(() => {
-    if (activatingConnector && activatingConnector === connector) {
-      setActivatingConnector(undefined)
-    }
-
-    refreshMons()
-  }, [activatingConnector, connector])
+  const { activatingConnector, setActivatingConnector } = useRecognizeConnector({ connector, refreshMons })
+  // const [activatingConnector, setActivatingConnector] = useState<any>()
+  // useEffect(() => {
+  //   if (activatingConnector && activatingConnector === connector) {
+  //     setActivatingConnector(undefined)
+  //   }
+  //   refreshMons()
+  // }, [activatingConnector, connector])
 
   // Get token balance of user
-  useEffect(() => {
-    let mounted = true
+  const { tokenBalance } = useTokenBalance({
+    account,
+    library,
+    disableBuyItemBtn,
+    disableFightBtn,
+    getTokenBalance,
+    refreshMons,
+  })
+  // useEffect(() => {
+  //   let mounted = true
 
-    getTokenBalance(library, account).then((res) => {
-      if (mounted) {
-        setTokenBalance(res)
-        refreshMons()
-      }
-    })
+  //   getTokenBalance(library, account).then((res) => {
+  //     if (mounted) {
+  //       setTokenBalance(res)
+  //       refreshMons()
+  //     }
+  //   })
 
-    return () => {
-      mounted = false
-    }
-  }, [account, library, disableBuyItemBtn, disableFightBtn])
+  //   return () => {
+  //     mounted = false
+  //   }
+  // }, [account, library, disableBuyItemBtn, disableFightBtn])
 
   // Get contract events
-  useEffect(() => {
-    if (!library || !account) {
-      return
-    }
+  const { winner, rounds, rewards, setWinner, setRounds } = useContractEvents({
+    fightTxDone,
+    library,
+    account,
+    refreshMons,
+    setDisableFightBtn,
+  })
+  // useEffect(() => {
+  //   if (!library || !account) {
+  //     return
+  //   }
 
-    let mounted = true
+  //   let mounted = true
 
-    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
+  //   const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
 
-    contr.on('FightResults', (_winnerId, _round) => {
-      if (mounted) {
-        const winId = BigNumber.from(_winnerId._hex).toNumber()
-        const round = BigNumber.from(_round._hex).toNumber()
-        setWinner(winId)
-        setRounds(round)
-        refreshMons()
-        setDisableFightBtn(false)
-      }
-    })
+  //   contr.on('FightResults', (_winnerId, _round) => {
+  //     if (mounted) {
+  //       const winId = BigNumber.from(_winnerId._hex).toNumber()
+  //       const round = BigNumber.from(_round._hex).toNumber()
+  //       setWinner(winId)
+  //       setRounds(round)
+  //       refreshMons()
+  //       setDisableFightBtn(false)
+  //     }
+  //   })
 
-    contr.on('Rewards', (_winnerId, _rewards) => {
-      if (mounted) {
-        const rewards = BigNumber.from(_rewards._hex).toNumber()
-        setRewards(rewards)
-        refreshMons()
-        setDisableFightBtn(false)
-      }
-    })
+  //   contr.on('Rewards', (_winnerId, _rewards) => {
+  //     if (mounted) {
+  //       const rewards = BigNumber.from(_rewards._hex).toNumber()
+  //       setRewards(rewards)
+  //       refreshMons()
+  //       setDisableFightBtn(false)
+  //     }
+  //   })
 
-    return () => {
-      contr.off('FightResults', (_winnerId, _round) => {
-        setDisableFightBtn(false)
-      })
-      contr.off('Rewards', (_winnerId, _round) => {
-        setDisableFightBtn(false)
-      })
+  //   return () => {
+  //     contr.off('FightResults', (_winnerId, _round) => {
+  //       setDisableFightBtn(false)
+  //     })
+  //     contr.off('Rewards', (_winnerId, _round) => {
+  //       setDisableFightBtn(false)
+  //     })
 
-      mounted = false
-    }
-  }, [fightTxDone, library, account])
+  //     mounted = false
+  //   }
+  // }, [fightTxDone, library, account])
 
   // Get items from nft contract
-  useEffect(() => {
-    if (!library || !account) {
-      return
-    }
+  const { healingPotions, magicPotions, manaPotions, swords, shields } = useItemsFromNFT({
+    library,
+    account,
+    disableBuyItemBtn,
+  })
+  // useEffect(() => {
+  //   if (!library || !account) {
+  //     return
+  //   }
 
-    let mounted = true
+  //   let mounted = true
 
-    ;(async function () {
-      if (mounted) {
-        const nftContr = new Contract(ERC1155_CONTRACT_ADDRESS, nftInterface, library.getSigner(account))
-        const healpot = await nftContr.balanceOf(account, 0)
-        const manapot = await nftContr.balanceOf(account, 1)
-        const magicpot = await nftContr.balanceOf(account, 2)
-        const _swords = await nftContr.balanceOf(account, 3)
-        const _shields = await nftContr.balanceOf(account, 4)
+  //   ;(async function () {
+  //     if (mounted) {
+  //       const nftContr = new Contract(ERC1155_CONTRACT_ADDRESS, nftInterface, library.getSigner(account))
+  //       const healpot = await nftContr.balanceOf(account, 0)
+  //       const manapot = await nftContr.balanceOf(account, 1)
+  //       const magicpot = await nftContr.balanceOf(account, 2)
+  //       const _swords = await nftContr.balanceOf(account, 3)
+  //       const _shields = await nftContr.balanceOf(account, 4)
 
-        setHealingPotions(BigNumber.from(healpot._hex).toBigInt())
-        setManaPotions(BigNumber.from(manapot._hex).toBigInt())
-        setMagicPotions(BigNumber.from(magicpot._hex).toBigInt())
-        setSwords(BigNumber.from(_swords._hex).toBigInt())
-        setShields(BigNumber.from(_shields._hex).toBigInt())
-      }
-    })()
+  //       setHealingPotions(BigNumber.from(healpot._hex).toBigInt())
+  //       setManaPotions(BigNumber.from(manapot._hex).toBigInt())
+  //       setMagicPotions(BigNumber.from(magicpot._hex).toBigInt())
+  //       setSwords(BigNumber.from(_swords._hex).toBigInt())
+  //       setShields(BigNumber.from(_shields._hex).toBigInt())
+  //     }
+  //   })()
 
-    return () => {
-      mounted = false
-    }
-  }, [library, account, disableBuyItemBtn])
+  //   return () => {
+  //     mounted = false
+  //   }
+  // }, [library, account, disableBuyItemBtn])
 
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
   const triedEager = useEagerConnect()
@@ -257,19 +297,92 @@ function App() {
   function handleShareAddress(event: React.ChangeEvent<HTMLInputElement>) {
     setShareAddress(event.target?.value)
   }
+  // function handleBuyItemAmount(event: React.ChangeEvent<HTMLInputElement>) {
+  //   setBuyItemAmount(event.target?.value)
+  // }
+  // function handleBurn(event: React.ChangeEvent<HTMLInputElement>) {
+  //   setBurnAmount(event.target?.value)
+  // }
 
-  function handleBuyItemAmount(event: React.ChangeEvent<HTMLInputElement>) {
-    setBuyItemAmount(event.target?.value)
+  const navWalletProps = {
+    activatingConnector,
+    setActivatingConnector,
+    connector,
+    triedEager,
+    error,
+    activate,
+    account,
+    active,
+    deactivate,
+    resetMons,
+    setWinner,
+    setRounds,
   }
-  function handleBurn(event: React.ChangeEvent<HTMLInputElement>) {
-    setBurnAmount(event.target?.value)
+  const breedRouteProps = {
+    myCryptomons,
+    isBreedMonLoading,
+    breedMons,
+    setBreedChoice1,
+    setBreedChoice2,
+    breedChoice1,
+    breedChoice2,
+  }
+  const dojoRouteProps = {
+    account,
+    fightChoice1,
+    fightChoice2,
+    setFightChoice1,
+    setFightChoice2,
+    cryptomons,
+    myCryptomons,
+    otherCryptomons,
+    winner,
+    fightTxDone,
+    rewards,
+    rounds,
+    disableFightBtn,
+    fight,
+  }
+  const arenaRouteProps = {
+    account,
+    fightChoice1,
+    fightChoice2,
+    setFightChoice1,
+    setFightChoice2,
+    cryptomons,
+  }
+  const shareRouteProps = {
+    myCryptomons,
+    shareId,
+    handleShareAddress,
+    handleShareId,
+    shareAddress,
+    isShareLoading,
+    startSharing,
+    account,
+    isStopSharingLoading,
+    stopSharing,
+  }
+  const tokenRouteProps = {
+    tokenBalance,
+    swords,
+    shields,
+    healingPotions,
+    manaPotions,
+    magicPotions,
+    buyItem,
+    disableBuyItemBtn,
+    burn,
   }
 
   return (
     <div className="rpgui-content">
       <ToastContainer />
       <Router>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
+        <Navigation error={error}>
+          <NavWallet {...navWalletProps} />
+        </Navigation>
+        {/* <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
           <Navbar.Brand as="li">
             <img alt="" src={MonImages['favicon32x32']} width="30" height="30" className="d-inline-block" />
             <Link to="/" className="LokiMons">
@@ -309,7 +422,6 @@ function App() {
               <Nav.Link as="li">{!!error && <h4>{getErrorMessage(error)}</h4>}</Nav.Link>
             </Nav>
             <Nav className="lokimons-nav-wallet">
-              {/* wallet info */}
               {Object.keys(connectorsByName).map((name, idx) => {
                 const currentConnector = connectorsByName[name]
                 const activating = currentConnector === activatingConnector
@@ -340,7 +452,6 @@ function App() {
                   </Nav.Link>
                 )
               })}
-              {/* wallet logout */}
               <Nav.Link as="li">
                 {(active || error) && (
                   <button
@@ -358,9 +469,40 @@ function App() {
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
-        </Navbar>
+        </Navbar> */}
 
         <Routes>
+          <RootRoute myCryptomons={myCryptomons} isAddForSaleLoading={isAddForSaleLoading} addForSale={addForSale} />
+          <MyLokiMonsRoute
+            myCryptomons={myCryptomons}
+            isAddForSaleLoading={isAddForSaleLoading}
+            addForSale={addForSale}
+          />
+          <MyShopRoute
+            myCryptomons={myCryptomons}
+            isRemoveFromSaleLoading={isRemoveFromSaleLoading}
+            removeFromSale={removeFromSale}
+            library={library}
+          />
+          <MarketplaceRoute
+            otherCryptomons={otherCryptomons}
+            isBuyMonLoading={isBuyMonLoading}
+            buyMon={buyMon}
+            library={library}
+          />
+          <BreedRoute {...breedRouteProps} />
+          <DojoRoute {...dojoRouteProps} />
+          <ArenaRoute {...arenaRouteProps} />
+          <ShareRoute {...shareRouteProps} />
+          <SharedToMeRoute
+            otherCryptomons={otherCryptomons}
+            account={account}
+            isStopSharingLoading={isStopSharingLoading}
+            stopSharing={stopSharing}
+          />
+          <TokenRoute {...tokenRouteProps} />
+        </Routes>
+        {/* <Routes>
           <Route
             path="/"
             element={
@@ -527,7 +669,7 @@ function App() {
               />
             }
           />
-        </Routes>
+        </Routes> */}
       </Router>
     </div>
   )

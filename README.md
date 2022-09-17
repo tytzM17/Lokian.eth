@@ -43,7 +43,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Ongoing
 - Add multiplayer pvp, chat 
--- Breaking up app.tsx ..ok, Change report.pdf, Create room UI.., start functions..ok  
+-- Breaking up app.tsx..ok, add lokimons report..ok, Create room UI.., start functions..ok  
 
 Finished
 - Change naming e.g. cryptoMons to creatures 6/28/2021
