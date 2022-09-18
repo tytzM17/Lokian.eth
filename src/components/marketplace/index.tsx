@@ -4,15 +4,20 @@ import MonImages from '../../sprites-copy'
 import { nameDiv, imgDiv, statDiv, buyDiv, monName } from '../common'
 import getMonsOrder from '../common/getMonsOrder'
 import ListRender from '../common/listRender'
-import { Lokimon } from '../../models'
+import { Lokimon, LokimonContract } from '../../models'
 import Spinner from '../spinner'
 import { Table } from 'react-bootstrap'
 import './marketplace.css'
+import { useBuyMon } from '../../app-functions'
+import { BigNumber } from 'ethers'
 
-const Marketplace = ({ otherCryptomons, isBuyMonLoading, buyMon, nativeTok = '' }) => {
+const Marketplace = ({ otherCryptomons, contract, refreshMons, nativeTok = '' }) => {
   const [display, setDisplay] = useState('grid')
   const [orderBy, setOrderBy] = useState(null)
   const [otherLokimons, setOtherLokimons] = useState(otherCryptomons)
+  const [isBuyMonLoading, setIsBuyMonLoading] = useState(false)
+
+  const { buyMon } = useBuyMon(contract, setIsBuyMonLoading, refreshMons)
 
   useEffect(() => {
     if (!otherCryptomons) return
@@ -69,9 +74,9 @@ const Marketplace = ({ otherCryptomons, isBuyMonLoading, buyMon, nativeTok = '' 
             {otherLokimons &&
               otherLokimons
                 .filter((mon: Lokimon) => !mon.forSale)
-                .map((mon: Lokimon) => (
-                  <tr key={mon.id}>
-                    <td>{mon?.id}</td>
+                .map((mon: Lokimon, idx: number) => (
+                  <tr key={'market' + idx}>
+                    <td>{mon?.id?.toString()}</td>
                     <td>
                       {' '}
                       <div style={{ border: '2px solid gray', padding: '3px', borderRadius: '4px' }}>
@@ -86,7 +91,7 @@ const Marketplace = ({ otherCryptomons, isBuyMonLoading, buyMon, nativeTok = '' 
                     </td>
                     <td>{monName(mon?.species) || ''} </td>
                     <td>{`HP ${mon?.hp}, ATK ${mon?.atk}, DEF ${mon?.def}, SPD ${mon?.speed}`}</td>
-                    <td>{`${formatUnits(mon?.price || 0)} ${nativeTok}`}</td>
+                    <td>{`${formatUnits(BigNumber.from(mon?.price || 0))} ${nativeTok}`}</td>
                     <td>
                       <button
                         className="rpgui-button mylokimons-sell-btn"

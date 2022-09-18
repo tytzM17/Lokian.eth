@@ -1,14 +1,10 @@
-import { Web3Provider } from '@ethersproject/providers'
 import { toast } from 'react-toastify'
 import { toastErrParams } from '../utils/toastErrParams'
 import { Contract } from '@ethersproject/contracts'
-import contrInterface from '../abis/interface.json'
 import { parseEther } from '@ethersproject/units'
-import { CONTRACT_ADDRESS } from '../App'
 
 const useAddForSale = (
-  library: Web3Provider,
-  account: string,
+  contr: Contract,
   setIsAddForSaleLoadingFunc: React.Dispatch<React.SetStateAction<boolean>>,
   refreshMons: () => void
 ) => {
@@ -22,9 +18,8 @@ const useAddForSale = (
     let overrides = {
       gasLimit: 120000,
     }
-    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library?.getSigner(account))
     const tx = await contr
-      .addForSale(id, parseEther(price?.toString()), overrides)
+      ?.addForSale(id, parseEther(price?.toString()), overrides)
       .catch(() => setIsAddForSaleLoadingFunc(false))
     const receipt = await tx?.wait()
     if (receipt && receipt.status === 1) {

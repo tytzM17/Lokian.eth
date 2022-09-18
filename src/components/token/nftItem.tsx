@@ -1,7 +1,7 @@
-import React from 'react'
 import { Row } from 'react-bootstrap'
 import { BigNumber } from '@ethersproject/bignumber'
 import './token.css'
+import React from 'react'
 
 const NftItem = ({ item, icon, slot }) => {
   const nftItem = BigNumber.from(item).toBigInt()

@@ -1,19 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { nameDiv, imgDiv, statDiv, breedOption, breedDiv, monName } from '../common'
 import Spinner from '../spinner'
 import { Row, Col, Container } from 'react-bootstrap'
 import { Lokimon } from '../../models'
 import './breed.css'
+import { useBreedMons } from '../../app-functions'
 
-const Breed = ({
-  myCryptomons,
-  breedChoice1,
-  breedChoice2,
-  isBreedMonLoading,
-  breedMons,
-  setBreedChoice1Func,
-  setBreedChoice2Func,
-}) => {
+const Breed = ({ myCryptomons, contract, refreshMons }) => {
+  const [breedChoice1, setBreedChoice1] = useState(null)
+  const [breedChoice2, setBreedChoice2] = useState(null)
+
+  const [isBreedMonLoading, setIsBreedMonLoading] = useState(false)
+
+  const { breedMons } = useBreedMons(contract, setIsBreedMonLoading, refreshMons)
+
   return (
     <>
       <div className="p1-breed green-glow">Breed</div>
@@ -49,9 +49,9 @@ const Breed = ({
       </div>
 
       <div className="breeding-area" style={{ marginTop: '9px' }}>
-      <div className='breed-selected-mons-img'>
-        {breedOption(breedChoice1, myCryptomons)}
-        {breedOption(breedChoice2, myCryptomons)}
+        <div className="breed-selected-mons-img">
+          {breedOption(breedChoice1, myCryptomons)}
+          {breedOption(breedChoice2, myCryptomons)}
         </div>
         {isBreedMonLoading ? (
           <button className="rpgui-button" type="button" style={{ width: '100%' }}>
@@ -87,7 +87,7 @@ const Breed = ({
                           {imgDiv(mon)}
                           <figcaption>{statDiv(mon)}</figcaption>
                         </figure>
-                        {breedDiv(mon, setBreedChoice1Func, setBreedChoice2Func)}
+                        {breedDiv(mon, setBreedChoice1, setBreedChoice2)}
                       </div>
                     </React.Fragment>
                   ))}

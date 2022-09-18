@@ -1,10 +1,14 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { nameDiv, imgDiv, statDiv } from '../common'
 import Spinner from '../spinner'
-import { Row, Col } from "react-bootstrap";
-import "./sharedToMe.css"
+import { Row, Col } from 'react-bootstrap'
+import './sharedToMe.css'
+import { useStopSharing } from '../../app-functions'
 
-const SharedToMe = ({ otherCryptomons, account, isStopSharingLoading, stopSharingFunc }) => {
+const SharedToMe = ({ otherCryptomons, account, library , refreshMons }) => {
+  const [isStopSharingLoading, setIsStopSharingLoading] = useState(false)
+  const { stopSharing } = useStopSharing(library, account, setIsStopSharingLoading, refreshMons)
+
   return (
     <>
       <div className="p1-shared-to-u green-glow">Shared To Me</div>
@@ -35,7 +39,7 @@ const SharedToMe = ({ otherCryptomons, account, isStopSharingLoading, stopSharin
                               className="stop-sharing-btn rpgui-button"
                               type="button"
                               style={{ float: 'right' }}
-                              onClick={() => stopSharingFunc(mon?.id)}
+                              onClick={() => stopSharing(mon?.id)}
                             >
                               Stop sharing
                             </button>

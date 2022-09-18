@@ -7,12 +7,16 @@ import ListRender from '../common/listRender'
 import { Lokimon } from '../../models'
 import Spinner from '../spinner'
 import './mylokimons.css'
+import { useAddForSale } from '../../app-functions'
 
-const MyLokiMons = ({ myCryptomons, isAddForSaleLoading, addForSale }) => {
+const MyLokiMons = ({ myCryptomons, contract, refreshMons }) => {
   const [display, setDisplay] = useState('grid')
   const [orderBy, setOrderBy] = useState(null)
   const [myLokimons, setMyLokimons] = useState(myCryptomons)
   const [price, setPrice] = useState(0)
+  const [isAddForSaleLoading, setIsAddForSaleLoading] = useState<boolean>(false)
+
+  const { addForSale } = useAddForSale(contract, setIsAddForSaleLoading, refreshMons)
 
   useEffect(() => {
     if (!myCryptomons) return

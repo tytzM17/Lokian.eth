@@ -1,12 +1,15 @@
 // core
 import 'bootstrap/dist/css/bootstrap.min.css'
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom'
 import './App.css'
 // import MonImages from './sprites-copy'
 
 // Library to work with Ethereum like blockchain
 import { Web3Provider } from '@ethersproject/providers'
+import { Contract } from '@ethersproject/contracts'
+import contrInterface from './abis/interface.json'
+
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 // import {
 //   NoEthereumProviderError,
@@ -29,34 +32,24 @@ import 'react-toastify/dist/ReactToastify.css'
 // import Dojo from './components/dojo'
 
 // utils
-import {
-  useAddForSale,
-  useBreedMons,
-  useBurn,
-  useBuyItem,
-  useBuyMon,
-  useFight,
-  useRefreshMons,
-  useRemoveFromSale,
-  useStartSharing,
-  useStopSharing,
-} from './app-functions'
-import { useContractEvents, useItemsFromNFT, useRecognizeConnector, useTokenBalance } from './hooks'
+import { useAddForSale, useFight, useRefreshMons, useRemoveFromSale } from './app-functions'
+import { useContractEvents, useRecognizeConnector, useTokenBalance } from './hooks'
 import { getTokenBalance } from './utils'
 import Navigation from './Navigation'
 import NavWallet from './NavWallet'
-import {
-  RootRoute,
-  ArenaRoute,
-  BreedRoute,
-  DojoRoute,
-  MarketplaceRoute,
-  MyLokiMonsRoute,
-  MyShopRoute,
-  SharedToMeRoute,
-  ShareRoute,
-  TokenRoute,
-} from './routes'
+// import {
+//   RootRoute,
+//   ArenaRoute,
+//   BreedRoute,
+//   DojoRoute,
+//   MarketplaceRoute,
+//   MyLokiMonsRoute,
+//   MyShopRoute,
+//   SharedToMeRoute,
+//   ShareRoute,
+//   TokenRoute,
+// } from './routes'
+import MenuRoutes from './MenuRoutes'
 
 // wallet
 // enum ConnectorNames {
@@ -79,46 +72,21 @@ import {
 // }
 
 // contracts
-export let CONTRACT_ADDRESS: string
-export let ERC20_CONTRACT_ADDRESS: string
-export let ERC1155_CONTRACT_ADDRESS: string
+export let CONTRACT_ADDRESS: string = process.env.REACT_APP_MAIN_CONTRACT_ADDRESS
+export let ERC20_CONTRACT_ADDRESS: string = process.env.REACT_APP_MAIN_ERC20
+export let ERC1155_CONTRACT_ADDRESS: string = process.env.REACT_APP_MAIN_ERC1155
 
 function App() {
-  if (process && process.env) {
-    if (process.env.NODE_ENV === 'production') {
-      CONTRACT_ADDRESS = process.env.REACT_APP_MAIN_CONTRACT_ADDRESS
-      ERC20_CONTRACT_ADDRESS = process.env.REACT_APP_MAIN_ERC20
-      ERC1155_CONTRACT_ADDRESS = process.env.REACT_APP_MAIN_ERC1155
-    } else {
-      CONTRACT_ADDRESS = process.env.REACT_APP_TEST_CONTRACT_ADDRESS
-      ERC20_CONTRACT_ADDRESS = process.env.REACT_APP_TEST_ERC20
-      ERC1155_CONTRACT_ADDRESS = process.env.REACT_APP_TEST_ERC1155
-    }
-    // CONTRACT_ADDRESS =
-    //   process.env.NODE_ENV === 'production'
-    //     ? process.env.REACT_APP_MAIN_CONTRACT_ADDRESS
-    //     : process.env.REACT_APP_TEST_CONTRACT_ADDRESS
-    // ERC20_CONTRACT_ADDRESS =
-    //   process.env.NODE_ENV === 'production' ? process.env.REACT_APP_MAIN_ERC20 : process.env.REACT_APP_TEST_ERC20
-    // ERC1155_CONTRACT_ADDRESS =
-    //   process.env.NODE_ENV === 'production' ? process.env.REACT_APP_MAIN_ERC1155 : process.env.REACT_APP_TEST_ERC1155
-  } else {
-    // polygon mainnet
-    CONTRACT_ADDRESS = '0x5148A559cFaaEC1A915ae41e00A8Dd2Fa17ba64f'
-    ERC20_CONTRACT_ADDRESS = '0x4d8d24968458af521ef02aefD95f161dF3f9Ea01'
-    ERC1155_CONTRACT_ADDRESS = '0x8227767903Fa90A90060E28a45506318E03997aD'
-  }
-
   // Used in breeding tab
-  const [breedChoice1, setBreedChoice1] = useState(null)
-  const [breedChoice2, setBreedChoice2] = useState(null)
+  // const [breedChoice1, setBreedChoice1] = useState(null)
+  // const [breedChoice2, setBreedChoice2] = useState(null)
   // Used in fighting tab
   const [fightChoice1, setFightChoice1] = useState(null)
   const [fightChoice2, setFightChoice2] = useState(null)
   // const [winner, setWinner] = useState(null) // Used to display winner of the last fight
   // const [rounds, setRounds] = useState(null) // Used to display number of rounds the fight lasted
-  const [shareId, setShareId] = useState('') // Used in shareId form input field
-  const [shareAddress, setShareAddress] = useState('') // Used in shareAddress form input field
+  // const [shareId, setShareId] = useState('') // Used in shareId form input field
+  // const [shareAddress, setShareAddress] = useState('') // Used in shareAddress form input field
   // const [tokenBalance, setTokenBalance] = useState('0')
   const [fightTxDone, setFightTxDone] = useState(false)
   // const [rewards, setRewards] = useState(0)
@@ -133,31 +101,51 @@ function App() {
   const [disableFightBtn, setDisableFightBtn] = useState(false)
   // const [buyItemAmount, setBuyItemAmount] = useState('0')
   // const [burnAmount, setBurnAmount] = useState('0')
-  const [disableBuyItemBtn, setDisableBuyItemBtn] = useState(false)
+  // const [disableBuyItemBtn, setDisableBuyItemBtn] = useState(false)
 
   // Loading spinner state
-  const [isShareLoading, setIsShareLoading] = useState(false)
-  const [isStopSharingLoading, setIsStopSharingLoading] = useState(false)
-  const [isBreedMonLoading, setIsBreedMonLoading] = useState(false)
-  const [isBuyMonLoading, setIsBuyMonLoading] = useState(false)
-  const [isAddForSaleLoading, setIsAddForSaleLoading] = useState<boolean>(false)
-  const [isRemoveFromSaleLoading, setIsRemoveFromSaleLoading] = useState(false)
+  // const [isShareLoading, setIsShareLoading] = useState(false)
+  // const [isStopSharingLoading, setIsStopSharingLoading] = useState(false)
+  // const [isBreedMonLoading, setIsBreedMonLoading] = useState(false)
+  // const [isBuyMonLoading, setIsBuyMonLoading] = useState(false)
+  // const [isAddForSaleLoading, setIsAddForSaleLoading] = useState<boolean>(false)
+  // const [isRemoveFromSaleLoading, setIsRemoveFromSaleLoading] = useState(false)
 
   // wallet
   const context = useWeb3React<Web3Provider>()
   const { connector, account, library, activate, deactivate, active, error } = context
 
+  const [mainContract, setMainContract] = useState(
+    new Contract(CONTRACT_ADDRESS, contrInterface, library?.getSigner(account))
+  )
+
+  useEffect(() => {
+    if (!process || !process.env) return
+    if (process.env.NODE_ENV !== 'production') {
+      CONTRACT_ADDRESS = process.env.REACT_APP_TEST_CONTRACT_ADDRESS
+      ERC20_CONTRACT_ADDRESS = process.env.REACT_APP_TEST_ERC20
+      ERC1155_CONTRACT_ADDRESS = process.env.REACT_APP_TEST_ERC1155
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!library || !account) return
+    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library?.getSigner(account))
+    if (!contr) return
+    setMainContract(contr)
+  }, [CONTRACT_ADDRESS])
+
   // app functions
   const { cryptomons, myCryptomons, otherCryptomons, resetMons, refreshMons } = useRefreshMons(library, account)
-  const { addForSale } = useAddForSale(library, account, setIsAddForSaleLoading, refreshMons)
-  const { removeFromSale } = useRemoveFromSale(library, account, setIsRemoveFromSaleLoading, refreshMons)
-  const { buyMon } = useBuyMon(library, account, setIsBuyMonLoading, refreshMons)
-  const { breedMons } = useBreedMons(library, account, setIsBreedMonLoading, refreshMons)
-  const { fight } = useFight(library, account, setDisableFightBtn, setFightTxDone)
-  const { buyItem } = useBuyItem(library, account, setDisableBuyItemBtn, refreshMons)
-  const { burn } = useBurn(library, account, setDisableBuyItemBtn, refreshMons)
-  const { startSharing } = useStartSharing(library, account, setIsShareLoading, refreshMons)
-  const { stopSharing } = useStopSharing(library, account, setIsStopSharingLoading, refreshMons)
+  // const { addForSale } = useAddForSale(library, account, setIsAddForSaleLoading, refreshMons)
+  // const { removeFromSale } = useRemoveFromSale(library, account, setIsRemoveFromSaleLoading, refreshMons)
+  // const { buyMon } = useBuyMon(library, account, setIsBuyMonLoading, refreshMons)
+  // const { breedMons } = useBreedMons(library, account, setIsBreedMonLoading, refreshMons)
+  const { fight } = useFight(mainContract, setDisableFightBtn, setFightTxDone)
+  // const { buyItem } = useBuyItem(library, account, setDisableBuyItemBtn, refreshMons)
+  // const { burn } = useBurn(library, account, setDisableBuyItemBtn, refreshMons)
+  // const { startSharing } = useStartSharing(library, account, setIsShareLoading, refreshMons)
+  // const { stopSharing } = useStopSharing(library, account, setIsStopSharingLoading, refreshMons)
 
   //  multiplayer
   // const [startedRoom, setStartedRoom] = useState(null)
@@ -249,12 +237,12 @@ function App() {
   //   }
   // }, [fightTxDone, library, account])
 
-  // Get items from nft contract
-  const { healingPotions, magicPotions, manaPotions, swords, shields } = useItemsFromNFT({
-    library,
-    account,
-    disableBuyItemBtn,
-  })
+  // // Get items from nft contract
+  // const { healingPotions, magicPotions, manaPotions, swords, shields } = useItemsFromNFT({
+  //   library,
+  //   account,
+  //   disableBuyItemBtn,
+  // })
   // useEffect(() => {
   //   if (!library || !account) {
   //     return
@@ -291,12 +279,12 @@ function App() {
   useInactiveListener(!triedEager || !!activatingConnector)
 
   // Handlers for form inputs
-  function handleShareId(event: React.ChangeEvent<HTMLInputElement>) {
-    setShareId(event.target?.value)
-  }
-  function handleShareAddress(event: React.ChangeEvent<HTMLInputElement>) {
-    setShareAddress(event.target?.value)
-  }
+  // function handleShareId(event: React.ChangeEvent<HTMLInputElement>) {
+  //   setShareId(event.target?.value)
+  // }
+  // function handleShareAddress(event: React.ChangeEvent<HTMLInputElement>) {
+  //   setShareAddress(event.target?.value)
+  // }
   // function handleBuyItemAmount(event: React.ChangeEvent<HTMLInputElement>) {
   //   setBuyItemAmount(event.target?.value)
   // }
@@ -318,24 +306,12 @@ function App() {
     setWinner,
     setRounds,
   }
-  const breedRouteProps = {
-    myCryptomons,
-    isBreedMonLoading,
-    breedMons,
-    setBreedChoice1,
-    setBreedChoice2,
-    breedChoice1,
-    breedChoice2,
-  }
-  const dojoRouteProps = {
-    account,
+
+  const fightRouteProps = {
     fightChoice1,
     fightChoice2,
     setFightChoice1,
     setFightChoice2,
-    cryptomons,
-    myCryptomons,
-    otherCryptomons,
     winner,
     fightTxDone,
     rewards,
@@ -343,36 +319,19 @@ function App() {
     disableFightBtn,
     fight,
   }
-  const arenaRouteProps = {
-    account,
-    fightChoice1,
-    fightChoice2,
-    setFightChoice1,
-    setFightChoice2,
-    cryptomons,
-  }
-  const shareRouteProps = {
+
+  const commonRouteProps = {
     myCryptomons,
-    shareId,
-    handleShareAddress,
-    handleShareId,
-    shareAddress,
-    isShareLoading,
-    startSharing,
-    account,
-    isStopSharingLoading,
-    stopSharing,
-  }
-  const tokenRouteProps = {
+    otherCryptomons,
+    cryptomons,
+    refreshMons,
+    resetMons,
     tokenBalance,
-    swords,
-    shields,
-    healingPotions,
-    manaPotions,
-    magicPotions,
-    buyItem,
-    disableBuyItemBtn,
-    burn,
+    mainContract,
+  }
+  const menuRouteProps = {
+    commonRouteProps,
+    fightRouteProps,
   }
 
   return (
@@ -382,96 +341,9 @@ function App() {
         <Navigation error={error}>
           <NavWallet {...navWalletProps} />
         </Navigation>
-        {/* <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
-          <Navbar.Brand as="li">
-            <img alt="" src={MonImages['favicon32x32']} width="30" height="30" className="d-inline-block" />
-            <Link to="/" className="LokiMons">
-              Lokian Monsters
-            </Link>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="mr-auto lokimons-nav">
-              <Nav.Link as="li">
-                <Link to="/myLokiMons">My LokiMons</Link>
-              </Nav.Link>
-              <Nav.Link as="li">
-                <Link to="/myShop">My Shop</Link>
-              </Nav.Link>
-              <Nav.Link as="li">
-                <Link to="/dojo">Dojo</Link>
-              </Nav.Link>
-              <Nav.Link as="li">
-                <Link to="/arena">Arena</Link>
-              </Nav.Link>
-              <Nav.Link as="li">
-                <Link to="/breed">Breed</Link>
-              </Nav.Link>
-              <Nav.Link as="li">
-                <Link to="/marketplace">Marketplace</Link>
-              </Nav.Link>
-              <Nav.Link as="li">
-                <Link to="/share">Share</Link>
-              </Nav.Link>
-              <Nav.Link as="li">
-                <Link to="/sharedToMe">Shared To Me</Link>
-              </Nav.Link>
-              <Nav.Link as="li">
-                <Link to="/token">Token</Link>
-              </Nav.Link>
-              <Nav.Link as="li">{!!error && <h4>{getErrorMessage(error)}</h4>}</Nav.Link>
-            </Nav>
-            <Nav className="lokimons-nav-wallet">
-              {Object.keys(connectorsByName).map((name, idx) => {
-                const currentConnector = connectorsByName[name]
-                const activating = currentConnector === activatingConnector
-                const connected = currentConnector === connector
-                const disabled = !triedEager || !!activatingConnector || connected || !!error
 
-                return (
-                  <Nav.Link key={name + idx} as="li">
-                    <button
-                      className="rpgui-button golden"
-                      type="button"
-                      style={{
-                        fontSize: '20px',
-                        paddingTop: '14px',
-                        width: '350px',
-                      }}
-                      onClick={() => {
-                        setActivatingConnector(currentConnector)
-                        activate(currentConnector)
-                      }}
-                      disabled={disabled}
-                      key={name}
-                    >
-                      {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
-                      <Account />
-                      <span>{!account ? 'Connect Wallet' : ''}</span>
-                    </button>
-                  </Nav.Link>
-                )
-              })}
-              <Nav.Link as="li">
-                {(active || error) && (
-                  <button
-                    className="rpgui-button"
-                    onClick={() => {
-                      deactivate()
-                      resetMons()
-                      setWinner(null)
-                      setRounds(null)
-                    }}
-                  >
-                    Logout
-                  </button>
-                )}
-              </Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar> */}
-
-        <Routes>
+        <MenuRoutes {...menuRouteProps} />
+        {/* <Routes>
           <RootRoute myCryptomons={myCryptomons} isAddForSaleLoading={isAddForSaleLoading} addForSale={addForSale} />
           <MyLokiMonsRoute
             myCryptomons={myCryptomons}
@@ -501,7 +373,7 @@ function App() {
             stopSharing={stopSharing}
           />
           <TokenRoute {...tokenRouteProps} />
-        </Routes>
+        </Routes> */}
         {/* <Routes>
           <Route
             path="/"

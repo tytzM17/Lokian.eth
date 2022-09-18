@@ -1,24 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 import MonImages from '../../sprites-copy'
 import { Container, Row, Col } from 'react-bootstrap'
 import './token.css'
 import NftItem from './nftItem'
+import { useBurn, useBuyItem } from '../../app-functions'
+import { useItemsFromNFT } from '../../hooks'
 
 const Token = ({
   tokenBalance,
-  swords,
-  shields,
-  healingPotions,
-  manaPotions,
-  magicPotions,
-  buyItemAmount,
-  onHandleBuyItemAmount,
-  buyItemFunc,
-  disableBuyItemBtn,
-  burnAmount,
-  burnFunc,
-  onHandleBurn,
+  library,
+  account,
+  refreshMons,
 }) => {
+  const [burnAmount, setBurnAmount] = useState('0')
+  const [buyItemAmount, setBuyItemAmount] = useState('0')
+  const [disableBuyItemBtn, setDisableBuyItemBtn] = useState(false)
+
+  const { buyItem } = useBuyItem(library, account, setDisableBuyItemBtn, refreshMons)
+  const { burn } = useBurn(library, account, setDisableBuyItemBtn, refreshMons)
+
+  // Get items from nft contract
+  const { healingPotions, magicPotions, manaPotions, swords, shields } = useItemsFromNFT({
+    library,
+    account,
+    disableBuyItemBtn,
+  })
+
+  function handleBuyItemAmount(event: React.ChangeEvent<HTMLInputElement>) {
+    setBuyItemAmount(event.target?.value)
+  }
+
+  function handleBurn(event: React.ChangeEvent<HTMLInputElement>) {
+    setBurnAmount(event.target?.value)
+  }
+
   return (
     <>
       <div className="p1-token green-glow">Your Tokens</div>
@@ -62,14 +77,14 @@ const Token = ({
                         className="form-input"
                         placeholder="0"
                         value={burnAmount}
-                        onChange={(e) => onHandleBurn(e)}
+                        onChange={(e) => handleBurn(e)}
                       />
                     </div>
                     <div className="form-line with-burn burn-btn">
                       <button
                         className="rpgui-button token-input-btn"
                         type="button"
-                        onClick={() => burnFunc(burnAmount)}
+                        onClick={() => burn(burnAmount)}
                         disabled={disableBuyItemBtn}
                       >
                         Give
@@ -97,14 +112,14 @@ const Token = ({
                       className="form-input"
                       placeholder="0"
                       value={buyItemAmount}
-                      onChange={(e) => onHandleBuyItemAmount(e)}
+                      onChange={(e) => handleBuyItemAmount(e)}
                     />
                   </div>
                   <div className="with-buy-item">
                     <button
                       className="rpgui-button token-input-btn"
                       type="button"
-                      onClick={() => buyItemFunc(buyItemAmount, '500', '3')}
+                      onClick={() => buyItem(buyItemAmount, '500', '3')}
                       disabled={disableBuyItemBtn}
                     >
                       Buy
@@ -124,14 +139,14 @@ const Token = ({
                       className="form-input"
                       placeholder="0"
                       value={buyItemAmount}
-                      onChange={(e) => onHandleBuyItemAmount(e)}
+                      onChange={(e) => handleBuyItemAmount(e)}
                     />
                   </div>
                   <div className="with-buy-item">
                     <button
                       className="rpgui-button token-input-btn"
                       type="button"
-                      onClick={() => buyItemFunc(buyItemAmount, '500', '4')}
+                      onClick={() => buyItem(buyItemAmount, '500', '4')}
                       disabled={disableBuyItemBtn}
                     >
                       Buy
@@ -151,7 +166,7 @@ const Token = ({
                       className="form-input"
                       placeholder="0"
                       value={buyItemAmount}
-                      onChange={(e) => onHandleBuyItemAmount(e)}
+                      onChange={(e) => handleBuyItemAmount(e)}
                     />
                   </div>
                   <div className="with-buy-item">
@@ -159,7 +174,7 @@ const Token = ({
                       className="rpgui-button token-input-btn"
                       type="button"
                       style={{ float: 'right' }}
-                      onClick={() => buyItemFunc(buyItemAmount, '50', '0')}
+                      onClick={() => buyItem(buyItemAmount, '50', '0')}
                       disabled={disableBuyItemBtn}
                     >
                       Buy
@@ -179,7 +194,7 @@ const Token = ({
                       className="form-input"
                       placeholder="0"
                       value={buyItemAmount}
-                      onChange={(e) => onHandleBuyItemAmount(e)}
+                      onChange={(e) => handleBuyItemAmount(e)}
                     />
                   </div>
                   <div className="with-buy-item">
@@ -187,7 +202,7 @@ const Token = ({
                       className="rpgui-button token-input-btn"
                       type="button"
                       style={{ float: 'right' }}
-                      onClick={() => buyItemFunc(buyItemAmount, '50', '1')}
+                      onClick={() => buyItem(buyItemAmount, '50', '1')}
                       disabled={disableBuyItemBtn}
                     >
                       Buy
@@ -207,7 +222,7 @@ const Token = ({
                       className="form-input"
                       placeholder="0"
                       value={buyItemAmount}
-                      onChange={(e) => onHandleBuyItemAmount(e)}
+                      onChange={(e) => handleBuyItemAmount(e)}
                     />
                   </div>
                   <div className="with-buy-item">
@@ -215,7 +230,7 @@ const Token = ({
                       className="rpgui-button token-input-btn"
                       type="button"
                       style={{ float: 'right' }}
-                      onClick={() => buyItemFunc(buyItemAmount, '50', '2')}
+                      onClick={() => buyItem(buyItemAmount, '50', '2')}
                       disabled={disableBuyItemBtn}
                     >
                       Buy

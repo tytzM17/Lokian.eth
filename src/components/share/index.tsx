@@ -1,21 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { nameDiv, imgDiv, statDiv } from '../common'
 import Spinner from '../spinner'
 import './share.css'
 import { Row, Col } from 'react-bootstrap'
+import { useStartSharing, useStopSharing } from '../../app-functions'
+import { Lokimon } from '../../models'
 
-const Share = ({
-  myCryptomons,
-  shareId,
-  onHandleShareId,
-  onHandleShareAddress,
-  shareAddress,
-  isShareLoading,
-  startSharingFunc,
-  account,
-  isStopSharingLoading,
-  stopSharingFunc,
-}) => {
+const Share = ({ myCryptomons, account, library, refreshMons }) => {
+  const [shareId, setShareId] = useState<string>('')
+  const [shareAddress, setShareAddress] = useState('')
+
+  const [isShareLoading, setIsShareLoading] = useState(false)
+  const [isStopSharingLoading, setIsStopSharingLoading] = useState(false)
+
+  const { startSharing } = useStartSharing(library, account, setIsShareLoading, refreshMons)
+  const { stopSharing } = useStopSharing(library, account, setIsStopSharingLoading, refreshMons)
+
+  function handleShareId(event: React.ChangeEvent<HTMLInputElement>) {
+    setShareId(event.target?.value)
+  }
+
+  function handleShareAddress(event: React.ChangeEvent<HTMLInputElement>) {
+    setShareAddress(event.target?.value)
+  }
+
   return (
     <>
       <div className="p1-share green-glow">Share</div>
@@ -23,11 +31,11 @@ const Share = ({
       <div className="rpgui-container framed-grey vs-container" style={{ marginTop: '24px', marginBottom: '48px' }}>
         <div className="form-line-share">
           <label className="form-label">Creature Id:</label>
-          <input className="form-input" value={shareId} onChange={(e) => onHandleShareId(e)} />
+          <input className="form-input" value={shareId} onChange={(e) => handleShareId(e)} />
         </div>
         <div className="form-line-share">
           <label className="form-label">Share to address:</label>
-          <input className="form-input" value={shareAddress} onChange={(e) => onHandleShareAddress(e)} />
+          <input className="form-input" value={shareAddress} onChange={(e) => handleShareAddress(e)} />
         </div>
         <div className="form-line-share">
           {isShareLoading ? (
@@ -35,7 +43,11 @@ const Share = ({
               <Spinner color="#000" />
             </button>
           ) : (
-            <button className="rpgui-button share-btn" type="button" onClick={() => startSharingFunc(shareId, shareAddress)}>
+            <button
+              className="rpgui-button share-btn"
+              type="button"
+              onClick={() => startSharing(parseInt(shareId), shareAddress)}
+            >
               Share
             </button>
           )}
@@ -54,9 +66,10 @@ const Share = ({
               {myCryptomons &&
                 myCryptomons
                   .filter(
-                    (mon) => mon.sharedTo.toLowerCase() !== account?.toString().toLocaleLowerCase() && !mon.forSale
+                    (mon: Lokimon) =>
+                      mon.sharedTo.toLowerCase() !== account?.toString().toLocaleLowerCase() && !mon.forSale
                   )
-                  .map((mon) => (
+                  .map((mon: Lokimon) => (
                     <React.Fragment key={mon.id}>
                       <div className="mon">
                         <figure className="my-figure">
@@ -75,7 +88,7 @@ const Share = ({
                               className="stop-sharing-btn rpgui-button"
                               type="button"
                               style={{ float: 'right' }}
-                              onClick={() => stopSharingFunc(mon.id)}
+                              onClick={() => stopSharing(mon.id)}
                             >
                               Stop sharing
                             </button>

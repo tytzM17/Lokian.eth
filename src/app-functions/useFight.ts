@@ -1,13 +1,9 @@
-import { Web3Provider } from '@ethersproject/providers'
 import { toast } from 'react-toastify'
 import { toastErrParams } from '../utils/toastErrParams'
 import { Contract } from '@ethersproject/contracts'
-import contrInterface from '../abis/interface.json'
-import { CONTRACT_ADDRESS } from '../App'
 
 const useFight = (
-  library: Web3Provider,
-  account: string,
+  contr: Contract,
   setDisableFightBtn: React.Dispatch<React.SetStateAction<boolean>>,
   setFightTxDone: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
@@ -16,7 +12,6 @@ const useFight = (
     if (id1 === null || id2 === null) {
       return
     }
-    const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
     let overrides = {
       gasLimit: 120000,
     }

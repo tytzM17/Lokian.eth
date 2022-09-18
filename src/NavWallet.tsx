@@ -5,7 +5,6 @@ import { Spinner } from './components'
 import { injected } from './wallet/connectors'
 
 const NavWallet = ({
-  // connectorsByName,
   activatingConnector,
   setActivatingConnector,
   connector,

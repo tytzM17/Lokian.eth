@@ -8,11 +8,15 @@ import MonImages from '../../sprites-copy'
 import Spinner from '../spinner'
 import { formatUnits } from '@ethersproject/units'
 import { BigNumber } from 'ethers'
+import { useRemoveFromSale } from '../../app-functions'
 
-const MyShop = ({ myCryptomons, isRemoveFromSaleLoading, removeFromSale, nativeTok = '' }) => {
+const MyShop = ({ myCryptomons, contract, refreshMons, nativeTok = '' }) => {
   const [display, setDisplay] = useState('grid')
   const [orderBy, setOrderBy] = useState(null)
   const [myLokimons, setMyLokimons] = useState(myCryptomons)
+  const [isRemoveFromSaleLoading, setIsRemoveFromSaleLoading] = useState(false)
+
+  const { removeFromSale } = useRemoveFromSale(contract, setIsRemoveFromSaleLoading, refreshMons)
 
   useEffect(() => {
     if (!myCryptomons) return
