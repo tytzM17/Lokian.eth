@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 
-const useTokenBalance = ({ account, library, disableBuyItemBtn, disableFightBtn, getTokenBalance, refreshMons }) => {
+const useTokenBalance = ({ account, library, getTokenBalance, refreshMons }) => {
   const [tokenBalance, setTokenBalance] = useState('0')
 
   useEffect(() => {
     let mounted = true
 
-    getTokenBalance(library, account).then((result) => {
+    getTokenBalance(library, account).then((result: any) => {
       if (mounted) {
         setTokenBalance(result)
         refreshMons()
@@ -16,7 +16,7 @@ const useTokenBalance = ({ account, library, disableBuyItemBtn, disableFightBtn,
     return () => {
       mounted = false
     }
-  }, [account, library, disableBuyItemBtn, disableFightBtn])
+  }, [account, library])
 
   return { tokenBalance }
 }

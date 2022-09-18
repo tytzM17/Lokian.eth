@@ -50,6 +50,7 @@ import NavWallet from './NavWallet'
 //   TokenRoute,
 // } from './routes'
 import MenuRoutes from './MenuRoutes'
+import { names } from './components/common'
 
 // wallet
 // enum ConnectorNames {
@@ -168,8 +169,6 @@ function App() {
   const { tokenBalance } = useTokenBalance({
     account,
     library,
-    disableBuyItemBtn,
-    disableFightBtn,
     getTokenBalance,
     refreshMons,
   })
@@ -328,6 +327,7 @@ function App() {
     resetMons,
     tokenBalance,
     mainContract,
+    names,
   }
   const menuRouteProps = {
     commonRouteProps,

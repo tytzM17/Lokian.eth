@@ -79,7 +79,7 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
             fightChoice1={fightRouteProps.fightChoice1}
             fightChoice2={fightRouteProps.fightChoice2}
             winner={fightRouteProps.winner}
-            monNames={fightRouteProps.names}
+            monNames={commonRouteProps.names}
             fightTxDone={fightRouteProps.fightTxDone}
             rewards={fightRouteProps.rewards}
             rounds={fightRouteProps.rounds}
@@ -119,7 +119,7 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
               setFightChoice1Func={fightRouteProps.setFightChoice1}
               setFightChoice2Func={fightRouteProps.setFightChoice2}
               cryptomons={commonRouteProps.cryptomons}
-              monNames={fightRouteProps.names}
+              monNames={commonRouteProps.names}
               acceptedAndReadyPlayer={acceptedAndReadyPlayer}
               onOtherPlayerReady={(room: RoomType, otherPlayer: string) => {
                 setOtherPlayerReady({ room, otherPlayer })

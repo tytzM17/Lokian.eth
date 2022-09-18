@@ -31,7 +31,7 @@ const Dojo = (params: Params) => {
   const [rewardAmount, setRewardAmount] = useState(0)
 
   useEffect(() => {
-    if (!params.fightTxDone) return
+    if (!params || !params.fight || !params.fightTxDone) return
     if (!params.winner || !params.cryptomons || !params.monNames) return
 
     const tie = params.winner == 12345678911 || params.winner == 12345678910
@@ -42,10 +42,10 @@ const Dojo = (params: Params) => {
     } else {
       setMatchWinner(params.monNames[winnerMon.species] ?? 'Tie')
       setWinnerID(params.winner.toString())
-      setMatches(params.rounds)
+      setMatches(params?.rounds)
       if (params.rewards) setRewardAmount(params.rewards)
     }
-  }, [params, params.fightTxDone])
+  }, [params, params?.fightTxDone])
 
   return (
     <>
@@ -61,7 +61,7 @@ const Dojo = (params: Params) => {
                     params.cryptomons.find((mon) => mon.id?.toString() === params.fightChoice1?.toString())?.species
                   ]
                 }{' '}
-                {params.fightChoice1 ? `no.${params.fightChoice1}` : params.fightChoice1 == '0' ? `no.${0}` : ''}
+                {params?.fightChoice1 ? `no.${params.fightChoice1}` : params?.fightChoice1 == '0' ? `no.${0}` : ''}
               </span>
             </Col>
             <Col xs md="12" className="col-text-center">
@@ -71,10 +71,10 @@ const Dojo = (params: Params) => {
               <span>
                 {
                   params.monNames[
-                    params.cryptomons.find((mon) => mon.id?.toString() === params.fightChoice2?.toString())?.species
+                    params.cryptomons.find((mon) => mon.id?.toString() === params?.fightChoice2?.toString())?.species
                   ]
                 }{' '}
-                {params.fightChoice2 ? `no.${params.fightChoice2}` : ''}
+                {params?.fightChoice2 ? `no.${params?.fightChoice2}` : ''}
               </span>
             </Col>
           </Row>
@@ -82,8 +82,8 @@ const Dojo = (params: Params) => {
       </div>
       <div className="fighting-area" style={{ marginTop: '9px' }}>
         <div className='dojo-spar-mons-img'>
-        {breedOption(parseInt(params.fightChoice1), params.cryptomons)}
-        {breedOption(parseInt(params.fightChoice2), params.cryptomons)}
+        {breedOption(parseInt(params?.fightChoice1), params.cryptomons)}
+        {breedOption(parseInt(params?.fightChoice2), params.cryptomons)}
         </div>
 
             <div>
@@ -108,7 +108,7 @@ const Dojo = (params: Params) => {
             </div>
 
           <div style={{marginBottom:'12px'}}>
-          {params.disableFightBtn ? (
+          {params?.disableFightBtn ? (
               <Spinner color="gray" style={{ marginLeft: '50%', marginRight: 'auto', padding: '8px' }} />
             ) : (
               <button
@@ -121,9 +121,9 @@ const Dojo = (params: Params) => {
                   setWinnerID('')
                   setMatches(0)
                   setRewardAmount(0)
-                  params.fight(params.fightChoice1, params.fightChoice2)
+                  params.fight(parseInt(params?.fightChoice1) || null, parseInt(params?.fightChoice2) || null)
                 }}
-                disabled={params.disableFightBtn}
+                disabled={params?.disableFightBtn}
               >
                 Start sparring!
               </button>
@@ -142,9 +142,9 @@ const Dojo = (params: Params) => {
           <Col xs md={12}>
             <div className="dojo-selection">
               <MySparringMons
-                mons={params.myCryptomons}
-                setFightChoiceFunc={params.setFightChoice1Func}
-                account={params.account}
+                mons={params?.myCryptomons}
+                setFightChoiceFunc={params?.setFightChoice1Func}
+                account={params?.account}
                 choice="1"
               />
             </div>
@@ -162,9 +162,9 @@ const Dojo = (params: Params) => {
           <Col xs md={12}>
             <div className="dojo-selection">
               <MySparringMons
-                mons={params.otherCryptomons}
-                setFightChoiceFunc={params.setFightChoice2Func}
-                account={params.account}
+                mons={params?.otherCryptomons}
+                setFightChoiceFunc={params?.setFightChoice2Func}
+                account={params?.account}
                 choice="2"
               />
             </div>
