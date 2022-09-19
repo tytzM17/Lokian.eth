@@ -103,7 +103,7 @@ const Room = ({
     show,
     handleClose: (state: boolean) => handleClose(state),
     title: 'Disconnect',
-    content: 'Are you sure ? This room will be disbanded or leaved.',
+    content: 'Are you sure ? This room will be disbanded or disconnected.',
   }
 
   const handleStartState = () => {

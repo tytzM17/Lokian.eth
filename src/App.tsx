@@ -32,23 +32,11 @@ import 'react-toastify/dist/ReactToastify.css'
 // import Dojo from './components/dojo'
 
 // utils
-import { useAddForSale, useFight, useRefreshMons, useRemoveFromSale } from './app-functions'
+import { useFight, useRefreshMons } from './app-functions'
 import { useContractEvents, useRecognizeConnector, useTokenBalance } from './hooks'
 import { getTokenBalance } from './utils'
 import Navigation from './Navigation'
 import NavWallet from './NavWallet'
-// import {
-//   RootRoute,
-//   ArenaRoute,
-//   BreedRoute,
-//   DojoRoute,
-//   MarketplaceRoute,
-//   MyLokiMonsRoute,
-//   MyShopRoute,
-//   SharedToMeRoute,
-//   ShareRoute,
-//   TokenRoute,
-// } from './routes'
 import MenuRoutes from './MenuRoutes'
 import { names } from './components/common'
 
@@ -329,6 +317,7 @@ function App() {
     mainContract,
     names,
   }
+
   const menuRouteProps = {
     commonRouteProps,
     fightRouteProps,

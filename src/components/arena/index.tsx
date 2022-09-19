@@ -125,15 +125,34 @@ const Arena = ({ account, onSetWs, onStartedRoom, hasStartedRoom, otherPlayerRea
       if (!_account) {
         getMyAccount().then((result) => {
           _account = result
+
+          if (ws) {
+            ws.send(
+              JSON.stringify({
+                type: 'online',
+                msg: 'connected',
+                acct: _account,
+              })
+            )
+          }
         })
       }
 
+      // if (ws) {
+      //   ws.send(
+      //     JSON.stringify({
+      //       type: 'online',
+      //       msg: 'connected',
+      //       acct: _account,
+      //     })
+      //   )
+      // }
+
+      // get created rooms 
       if (ws) {
-        ws.send(
+               ws.send(
           JSON.stringify({
-            type: 'online',
-            msg: 'connected',
-            acct: _account,
+            type: 'get_rooms',
           })
         )
       }
@@ -159,10 +178,21 @@ const Arena = ({ account, onSetWs, onStartedRoom, hasStartedRoom, otherPlayerRea
           _online = parsed?.online
           setOnline(_online)
           break
+        case 'get_rooms':
+          console.log('get rooms data', parsed);
+          // let initRooms = [...rooms]
+          // if (parsed?.rooms) {
+          //   initRooms = parsed.rooms
+          // }
+          // setRooms(initRooms)
+          break
         case 'create':
           console.log('create data', parsed)
           const prevRooms = [...rooms]
-          if (parsed?.params) prevRooms.push(parsed.params)
+          if (parsed?.params) {
+            // check if room exist then push
+            prevRooms.push(parsed.params)
+          }
           setRooms(prevRooms)
           break
         case 'join':
@@ -214,11 +244,10 @@ const Arena = ({ account, onSetWs, onStartedRoom, hasStartedRoom, otherPlayerRea
           break
         case 'ready':
           console.log('other player ready data', parsed)
-          // if not creator, navigate to room path
           if (parsed?.params?.room?.creator === account) {
-            const isInRoom = rooms.find((room) => room?.room === parsed?.params?.room?.room)           
-            const isOtherPlayer = rooms.filter((room) => room?.players?.includes(parsed?.params?.otherPlayer))
-            isAcceptedAndReadyPlayer(isInRoom && isOtherPlayer)
+            const isOnSameRoom = rooms.find((room) => room?.room === parsed?.params?.room?.room)
+            const hasOtherPlayer = rooms.filter((room) => room?.players?.includes(parsed?.params?.otherPlayer))
+            isAcceptedAndReadyPlayer(isOnSameRoom && hasOtherPlayer)
           }
           break
       }

@@ -95,7 +95,7 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
             <ArenaV2
               onSetWs={(ws: object) => setWs(ws)}
               account={commonRouteProps.account}
-              hasStartedRoom={startedRoom}
+              hasStartedRoom={!!startedRoom}
               onStartedRoom={(value: RoomType) => {
                 setStartedRoom(value)
               }}
