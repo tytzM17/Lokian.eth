@@ -9,8 +9,8 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
   const WsContext = createContext(null)
   const [ws, setWs] = useState(null)
   const [startedRoom, setStartedRoom] = useState(null)
-  const [otherPlayerReady, setOtherPlayerReady] = useState(null)
-  const [acceptedAndReadyPlayer, setAcceptedAndReadyPlayer] = useState(false)
+  // const [otherPlayerReady, setOtherPlayerReady] = useState(null)
+  // const [acceptedAndReadyPlayer, setAcceptedAndReadyPlayer] = useState(false)
 
   return (
     <Routes>
@@ -99,8 +99,8 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
               onStartedRoom={(value: RoomType) => {
                 setStartedRoom(value)
               }}
-              otherPlayerReady={otherPlayerReady}
-              isAcceptedAndReadyPlayer={(state: boolean) => setAcceptedAndReadyPlayer(state)}
+              // otherPlayerReady={otherPlayerReady}
+              // isAcceptedAndReadyPlayer={(state: boolean) => setAcceptedAndReadyPlayer(state)}
             />
           </WsContext.Provider>
         }
@@ -120,10 +120,10 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
               setFightChoice2Func={fightRouteProps.setFightChoice2}
               cryptomons={commonRouteProps.cryptomons}
               monNames={commonRouteProps.names}
-              acceptedAndReadyPlayer={acceptedAndReadyPlayer}
-              onOtherPlayerReady={(room: RoomType, otherPlayer: string) => {
-                setOtherPlayerReady({ room, otherPlayer })
-              }}
+              // acceptedAndReadyPlayer={acceptedAndReadyPlayer}
+              // onOtherPlayerReady={(room: RoomType, otherPlayer: string) => {
+              //   setOtherPlayerReady({ room, otherPlayer })
+              // }}
             />
           }
         />

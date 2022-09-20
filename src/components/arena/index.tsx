@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react'
 import './arena.css'
 import { RoomType, UseLocDiscon } from '../common/interfaces'
 // import WebSocket from 'isomorphic-ws'
-import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { Link, Outlet, useOutletContext, useNavigate, useLocation } from 'react-router-dom'
 // import { ethers } from 'ethers'
 import getAccount from '../../utils/getAccount'
 
@@ -19,12 +19,18 @@ const btnStyle = {
 // change to server on internet
 const URL = 'ws://localhost:40510'
 
+type ContextType = { ws: WebSocket | null };
+
 const acctFormat = (acct: string) => {
   if (!acct) return
   return `${acct.substring(0, 6)}...${acct.substring(acct.length - 4)}`
 }
 
-const Arena = ({ account, onSetWs, onStartedRoom, hasStartedRoom, otherPlayerReady, isAcceptedAndReadyPlayer }) => {
+export const useWs = () => {
+  return useOutletContext<ContextType>();
+}
+
+const Arena = ({ account, onSetWs, onStartedRoom, hasStartedRoom }) => {
   let navigate = useNavigate()
   let useLoc: UseLocDiscon = useLocation()
 
@@ -94,16 +100,16 @@ const Arena = ({ account, onSetWs, onStartedRoom, hasStartedRoom, otherPlayerRea
     return await getAccount()
   }
 
-  useEffect(() => {
-    if (!otherPlayerReady) return
+  // useEffect(() => {
+  //   if (!otherPlayerReady) return
 
-    const obj = { type: 'ready', params: { room: otherPlayerReady.room, otherPlayer: otherPlayerReady.otherPlayer } }
-    if (ws) {
-      if (otherPlayerReady.otherPlayer === account) {
-        ws.send(JSON.stringify(obj))
-      }
-    }
-  }, [otherPlayerReady])
+  //   const obj = { type: 'ready', params: { room: otherPlayerReady.room, otherPlayer: otherPlayerReady.otherPlayer } }
+  //   if (ws) {
+  //     if (otherPlayerReady.otherPlayer === account) {
+  //       ws.send(JSON.stringify(obj))
+  //     }
+  //   }
+  // }, [otherPlayerReady])
 
   useEffect(() => {
     if (!useLoc || !useLoc.state) return
@@ -242,14 +248,14 @@ const Arena = ({ account, onSetWs, onStartedRoom, hasStartedRoom, otherPlayerRea
             navigate(parsed?.params?.path)
           }
           break
-        case 'ready':
-          console.log('other player ready data', parsed)
-          if (parsed?.params?.room?.creator === account) {
-            const isOnSameRoom = rooms.find((room) => room?.room === parsed?.params?.room?.room)
-            const hasOtherPlayer = rooms.filter((room) => room?.players?.includes(parsed?.params?.otherPlayer))
-            isAcceptedAndReadyPlayer(isOnSameRoom && hasOtherPlayer)
-          }
-          break
+        // case 'ready':
+        //   console.log('other player ready data', parsed)
+        //   if (parsed?.params?.room?.creator === account) {
+        //     const isOnSameRoom = rooms.find((room) => room?.room === parsed?.params?.room?.room)
+        //     const hasOtherPlayer = rooms.filter((room) => room?.players?.includes(parsed?.params?.otherPlayer))
+        //     isAcceptedAndReadyPlayer(isOnSameRoom && hasOtherPlayer)
+        //   }
+        //   break
       }
 
       showMessage(chatMsg)
@@ -270,7 +276,7 @@ const Arena = ({ account, onSetWs, onStartedRoom, hasStartedRoom, otherPlayerRea
       {hasStartedRoom ? (
         <div className="rpgui-container framed-grey">
           <Container fluid>
-            <Outlet />
+            <Outlet context={{ ws }} />
           </Container>
         </div>
       ) : (

@@ -6,7 +6,9 @@ import MyFightingMons from './myFightingMons'
 import { breedOption } from '../common'
 import getAccount from '../../utils/getAccount'
 import GenericModal from '../common/genericModal'
-import { toast } from 'react-toastify'
+// import { toast } from 'react-toastify'
+import { useWs } from "./index";
+
 const Room = ({
   room,
   onDisconnect,
@@ -17,11 +19,11 @@ const Room = ({
   cryptomons,
   setFightChoice2Func,
   setFightChoice1Func,
-  onOtherPlayerReady,
-  acceptedAndReadyPlayer,
+  // onOtherPlayerReady,
+  // acceptedAndReadyPlayer,
 }) => {
   let navigate = useNavigate()
-
+  const { ws } = useWs()
   const [otherPlayer, setOtherPlayer] = useState(null)
   const [otherPlayerMons, setOtherPlayerMons] = useState(null)
   const [creatorMons, setCreatorMons] = useState(null)
@@ -66,24 +68,44 @@ const Room = ({
   const handleShow = () => setShow(true)
 
   const handleOtherPlayerReady = () => {
-    if (!otherPlayer) {
-      toast.error('Missing player', {
-        autoClose: 5000,
-        closeOnClick: true,
-        pauseOnHover: true,
-      })
-      return
+    if (!otherPlayer) return
+    
+    // onOtherPlayerReady(room, otherPlayer)
+    // setOtherPlayerReady((current) => !current)
+    if (!otherPlayerReady) return
+
+    const obj = { type: 'ready', params: { room, otherPlayer } }
+    if (ws) {
+      if (otherPlayer === account || otherPlayer === _account) {
+        ws.send(JSON.stringify(obj))
+      }
     }
 
-    onOtherPlayerReady(room, otherPlayer)
-
-    setOtherPlayerReady((current) => !current)
     setDisableBtn(true)
   }
 
   useEffect(() => {
-    console.log('other player is ready: ', otherPlayerReady)
-  }, [otherPlayerReady])
+    if (!ws) return
+
+    ws.onmessage = function incoming(data) {
+      if (!data || !data.data) return
+      const parsed = JSON.parse(data.data)
+    
+      switch (parsed.type) {
+        case 'ready':
+          console.log('other player ready data', parsed)
+          if (parsed?.params?.room?.creator === account) {
+            const isOnSameRoom = room?.room === parsed?.params?.room?.room
+            const hasOtherPlayer = room?.players?.includes(parsed?.params?.otherPlayer)
+            const _otherPlayerReady = isOnSameRoom && hasOtherPlayer
+            setOtherPlayerReady(current => _otherPlayerReady)
+          }
+          break
+      }
+    }
+  
+  }, [ws])
+  
 
   useEffect(() => {
     let mounted = true
@@ -106,7 +128,7 @@ const Room = ({
     content: 'Are you sure ? This room will be disbanded or disconnected.',
   }
 
-  const handleStartState = () => {
+  const handleFightStart = () => {
     alert('start fight, get choices to fight func in contract')
     setDisableBtn(false)
   }
@@ -132,13 +154,13 @@ const Room = ({
             {otherPlayerReady ? 'Waiting for start' : 'Ready'}
           </button>
         )}
-        {(_account === room?.creator) && acceptedAndReadyPlayer ? (
+        {(_account === room?.creator) && otherPlayerReady ? (
           <button
             className="rpgui-button"
             type="button"
             onClick={() => {
               console.log('start or wait')
-              handleStartState()
+              handleFightStart()
             }}
           >
             Start fight!
