@@ -7,7 +7,7 @@ import { breedOption } from '../common'
 import getAccount from '../../utils/getAccount'
 import GenericModal from '../common/genericModal'
 // import { toast } from 'react-toastify'
-import { useWs } from "./index";
+import { useWs } from './index'
 
 const Room = ({
   room,
@@ -69,7 +69,7 @@ const Room = ({
 
   const handleOtherPlayerReady = () => {
     if (!otherPlayer) return
-    
+
     // onOtherPlayerReady(room, otherPlayer)
     // setOtherPlayerReady((current) => !current)
     if (!otherPlayerReady) return
@@ -90,7 +90,7 @@ const Room = ({
     ws.onmessage = function incoming(data) {
       if (!data || !data.data) return
       const parsed = JSON.parse(data.data)
-    
+
       switch (parsed.type) {
         case 'ready':
           console.log('other player ready data', parsed)
@@ -98,14 +98,12 @@ const Room = ({
             const isOnSameRoom = room?.room === parsed?.params?.room?.room
             const hasOtherPlayer = room?.players?.includes(parsed?.params?.otherPlayer)
             const _otherPlayerReady = isOnSameRoom && hasOtherPlayer
-            setOtherPlayerReady(current => _otherPlayerReady)
+            setOtherPlayerReady((current) => _otherPlayerReady)
           }
           break
       }
     }
-  
   }, [ws])
-  
 
   useEffect(() => {
     let mounted = true
@@ -154,7 +152,7 @@ const Room = ({
             {otherPlayerReady ? 'Waiting for start' : 'Ready'}
           </button>
         )}
-        {(_account === room?.creator) && otherPlayerReady ? (
+        {_account === room?.creator && otherPlayerReady ? (
           <button
             className="rpgui-button"
             type="button"

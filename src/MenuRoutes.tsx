@@ -6,8 +6,8 @@ import { RoomType } from './components/common/interfaces'
 
 const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
   // arena
-  const WsContext = createContext(null)
-  const [ws, setWs] = useState(null)
+  // const WsContext = createContext(null)
+  // const [ws, setWs] = useState(null)
   const [startedRoom, setStartedRoom] = useState(null)
   // const [otherPlayerReady, setOtherPlayerReady] = useState(null)
   // const [acceptedAndReadyPlayer, setAcceptedAndReadyPlayer] = useState(false)
@@ -91,9 +91,9 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
       <Route
         path="/arena"
         element={
-          <WsContext.Provider value={ws}>
+          // <WsContext.Provider value={ws}>
             <ArenaV2
-              onSetWs={(ws: object) => setWs(ws)}
+              // onSetWs={(ws: object) => setWs(ws)}
               account={commonRouteProps.account}
               hasStartedRoom={!!startedRoom}
               onStartedRoom={(value: RoomType) => {
@@ -102,7 +102,7 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
               // otherPlayerReady={otherPlayerReady}
               // isAcceptedAndReadyPlayer={(state: boolean) => setAcceptedAndReadyPlayer(state)}
             />
-          </WsContext.Provider>
+          // </WsContext.Provider>
         }
       >
         <Route

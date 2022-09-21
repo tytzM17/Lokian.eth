@@ -19,7 +19,7 @@ const btnStyle = {
 // change to server on internet
 const URL = 'ws://localhost:40510'
 
-type ContextType = { ws: WebSocket | null };
+type ContextType = { ws: WebSocket | null }
 
 const acctFormat = (acct: string) => {
   if (!acct) return
@@ -27,19 +27,19 @@ const acctFormat = (acct: string) => {
 }
 
 export const useWs = () => {
-  return useOutletContext<ContextType>();
+  return useOutletContext<ContextType>()
 }
 
-const Arena = ({ account, onSetWs, onStartedRoom, hasStartedRoom }) => {
+const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
   let navigate = useNavigate()
   let useLoc: UseLocDiscon = useLocation()
 
-  const [online, setOnline] = useState(null)
-  const [toggleChatbox, setToggleChatbox] = useState(false)
-  const [arenaChatMsgs, setArenaChatMsgs] = useState('')
-  const [arenaChatInput, setArenaChatInput] = useState('')
-  const [rooms, setRooms] = useState([])
-  const [ws, setWs] = useState(new WebSocket(URL))
+  const [online, setOnline] = useState<number>(null)
+  const [toggleChatbox, setToggleChatbox] = useState<boolean>(false)
+  const [arenaChatMsgs, setArenaChatMsgs] = useState<string>('')
+  const [arenaChatInput, setArenaChatInput] = useState<string>('')
+  const [rooms, setRooms] = useState<RoomType[]>([])
+  const [ws, setWs] = useState<WebSocket>(new WebSocket(URL))
 
   const showMessage = (message: string) => {
     let messages = arenaChatMsgs
@@ -121,9 +121,6 @@ const Arena = ({ account, onSetWs, onStartedRoom, hasStartedRoom }) => {
     let mounted = true
 
     if (!mounted) return
-
-    onSetWs(ws)
-
     ws.onopen = function open() {
       console.log('connected')
       let _account = account
@@ -154,9 +151,9 @@ const Arena = ({ account, onSetWs, onStartedRoom, hasStartedRoom }) => {
       //   )
       // }
 
-      // get created rooms 
+      // get created rooms
       if (ws) {
-               ws.send(
+        ws.send(
           JSON.stringify({
             type: 'get_rooms',
           })
@@ -185,7 +182,7 @@ const Arena = ({ account, onSetWs, onStartedRoom, hasStartedRoom }) => {
           setOnline(_online)
           break
         case 'get_rooms':
-          console.log('get rooms data', parsed);
+          console.log('get rooms data', parsed)
           // let initRooms = [...rooms]
           // if (parsed?.rooms) {
           //   initRooms = parsed.rooms
