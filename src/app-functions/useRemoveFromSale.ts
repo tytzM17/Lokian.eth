@@ -14,7 +14,7 @@ const useRemoveFromSale = (
             const overrides = {
               gasLimit: 120000,
             }
-            const tx = await contr?.removeFromSale(id, overrides)?.catch((err: object) => {
+            const tx = await contr?.removeFromSale(id, overrides)?.catch((err) => {
               setIsRemoveFromSaleLoading(false)
               console.log(err);
             })

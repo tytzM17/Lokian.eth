@@ -372,7 +372,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
         </button>
         <textarea
           className="arena-chat-textarea"
-          style={{ '--visible': toggleChatbox ? 'block' : 'none' } as object}
+          style={{ '--visible': toggleChatbox ? 'block' : 'none' }}
           rows={6}
           cols={100}
           value={arenaChatMsgs}
