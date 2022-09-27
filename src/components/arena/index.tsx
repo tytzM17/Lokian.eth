@@ -31,8 +31,8 @@ export const useWs = () => {
 }
 
 const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
-  let navigate = useNavigate()
-  let useLoc: UseLocDiscon = useLocation()
+  const navigate = useNavigate()
+  const useLoc: UseLocDiscon = useLocation()
 
   const [online, setOnline] = useState<number>(null)
   const [toggleChatbox, setToggleChatbox] = useState<boolean>(false)
@@ -118,9 +118,6 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
   }, [useLoc])
 
   useEffect(() => {
-    let mounted = true
-
-    if (!mounted) return
     ws.onopen = function open() {
       console.log('connected')
       let _account = account
@@ -167,21 +164,21 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
 
       let chatMsg = ''
       switch (parsed.type) {
-        case 'info':
+        case 'info': {
           console.log('info data', parsed)
           toast.error(parsed?.params?.msg || 'Error')
           break
-        case 'chat':
+        }
+        case 'chat': {
           console.log('chat data', parsed)
 
           chatMsg = `${parsed?.acct || 'unknown'}: ${parsed?.msg}`
           break
+        }
         case 'online':
-          let _online = online
-          _online = parsed?.online
-          setOnline(_online)
+          setOnline(parsed?.online || online)
           break
-        case 'get_rooms':
+        case 'get_rooms': {
           console.log('get rooms data', parsed)
           // let initRooms = [...rooms]
           // if (parsed?.rooms) {
@@ -189,7 +186,8 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
           // }
           // setRooms(initRooms)
           break
-        case 'create':
+        }
+        case 'create': {
           console.log('create data', parsed)
           const prevRooms = [...rooms]
           if (parsed?.params) {
@@ -198,9 +196,10 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
           }
           setRooms(prevRooms)
           break
-        case 'join':
+        }
+        case 'join': {
           console.log('join data', parsed)
-          let updatedRooms = [...rooms]
+          const updatedRooms = [...rooms]
           updatedRooms.every((room) => {
             if (room?.room === parsed?.params?.room) {
               room['clients'] = parsed.params?.clients
@@ -211,9 +210,10 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
           })
           setRooms(updatedRooms)
           break
-        case 'leave':
+        }
+        case 'leave': {
           console.log('leave data', parsed)
-          let leavedRooms = [...rooms]
+          let leavedRooms: RoomType[] = [...rooms]
           let leaver = 'Player'
           if (parsed?.params?.isClosed) {
             leavedRooms = leavedRooms.filter((room) => room?.room !== parsed.params.room)
@@ -221,7 +221,8 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
           } else {
             leavedRooms.every((room) => {
               if (room?.room === parsed?.params?.room) {
-                leaver = room.players?.filter((plyr: string) => !parsed.params.players?.includes(plyr))
+                leaver = room.players?.filter((plyr: string) => !parsed.params.players?.includes(plyr))?.slice(0, 1)[0]
+                leaver = acctFormat(leaver)
                 room['clients'] = parsed.params.clients
                 room['players'] = parsed.params.players
                 return false
@@ -237,7 +238,8 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
             pauseOnHover: true,
           })
           break
-        case 'start':
+        }
+        case 'start': {
           console.log('start rooms data', parsed)
           // if not creator, navigate to room path
           if (parsed?.params?.room?.creator !== account) {
@@ -245,6 +247,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
             navigate(parsed?.params?.path)
           }
           break
+        }
         // case 'ready':
         //   console.log('other player ready data', parsed)
         //   if (parsed?.params?.room?.creator === account) {
@@ -263,8 +266,6 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
         console.log('WebSocket Disconnected')
         setWs(new WebSocket(URL))
       }
-
-      mounted = false
     }
   }, [ws, ws.onmessage, ws.onopen, ws.onclose, account])
 
@@ -371,7 +372,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
         </button>
         <textarea
           className="arena-chat-textarea"
-          style={{ '--visible': toggleChatbox ? 'block' : 'none' } as any}
+          style={{ '--visible': toggleChatbox ? 'block' : 'none' } as object}
           rows={6}
           cols={100}
           value={arenaChatMsgs}

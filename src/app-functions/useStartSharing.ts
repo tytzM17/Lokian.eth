@@ -14,10 +14,10 @@ const useStartSharing = (
   const startSharing = async (id: number, address: string) => {
     setIsShareLoading(true)
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    let overrides = {
+    const overrides = {
       gasLimit: 120000,
     }
-    const tx = await contr.startSharing(id, address, overrides).catch((err) => setIsShareLoading(false))
+    const tx = await contr.startSharing(id, address, overrides).catch(() => setIsShareLoading(false))
     const recpt = await tx?.wait()
     if (recpt && recpt.status) {
       toast.success(`Success, Tx hash: ${recpt.transactionHash}`, toastErrParams)

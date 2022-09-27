@@ -14,14 +14,14 @@ const useBuyItem = (
   setDisableBuyItem: React.Dispatch<React.SetStateAction<boolean>>,
   refreshMons: () => void
 ) => {
-  const buyItem = async (units: string, price: string, itemNumber: string, data: string = '0x00') => {
+  const buyItem = async (units: string, price: string, itemNumber: string, data = '0x00') => {
     setDisableBuyItem(true)
 
     if (!units || !price || !itemNumber) {
       return
     }
 
-    let overrides = {
+    const overrides = {
       gasLimit: 120000,
     }
 

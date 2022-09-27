@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 const useRecognizeConnector = ({ connector, refreshMons }) => {
-  const [activatingConnector, setActivatingConnector] = useState<any>()
+  const [activatingConnector, setActivatingConnector] = useState()
   useEffect(() => {
     if (activatingConnector && activatingConnector === connector) {
       setActivatingConnector(undefined)

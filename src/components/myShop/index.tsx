@@ -34,7 +34,7 @@ const MyShop = ({ myCryptomons, contract, refreshMons, nativeTok = '' }) => {
       <ListRender
         pageName={'My Shop'}
         onSetDisplay={(value: string) => setDisplay(value)}
-        onSetOrder={(evtKey: string, e: any) => setOrderBy(evtKey)}
+        onSetOrder={(evtKey: string) => setOrderBy(evtKey)}
       />
 
       {display === 'grid' && (

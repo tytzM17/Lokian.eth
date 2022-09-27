@@ -14,7 +14,7 @@ const useStopSharing = (
   const stopSharing = async (id: number) => {
     setIsStopSharingLoading(true)
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))
-    let overrides = {
+    const overrides = {
       gasLimit: 120000,
     }
     const tx = await contr.stopSharing(id, overrides).catch(() => setIsStopSharingLoading(false))

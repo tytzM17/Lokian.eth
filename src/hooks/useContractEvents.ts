@@ -6,7 +6,7 @@ import { BigNumber } from 'ethers'
 
 const useContractEvents = ({ fightTxDone, library, account, refreshMons, setDisableFightBtn }) => {
   const [rewards, setRewards] = useState(0)
-  const [winner, setWinner] = useState(null) 
+  const [winner, setWinner] = useState(null)
   const [rounds, setRounds] = useState(null)
 
   useEffect(() => {
@@ -35,15 +35,19 @@ const useContractEvents = ({ fightTxDone, library, account, refreshMons, setDisa
         setRewards(rewards)
         refreshMons()
         setDisableFightBtn(false)
+        console.log('rewards winner', _winnerId);
+        
       }
     })
 
     return () => {
       contr.off('FightResults', (_winnerId, _round) => {
         setDisableFightBtn(false)
+        console.log(_winnerId, _round);
       })
       contr.off('Rewards', (_winnerId, _round) => {
         setDisableFightBtn(false)
+        console.log(_winnerId, _round);
       })
 
       mounted = false

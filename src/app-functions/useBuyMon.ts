@@ -9,10 +9,10 @@ const useBuyMon = (
     refreshMons: () => void
 ) => {
 
-    const buyMon = async (id: number, price: BigInt) => {
+    const buyMon = async (id: number, price: bigint) => {
         setIsBuyMonLoading(true)
         const newprice = `${price}`
-        let overrides = {
+        const overrides = {
           value: newprice,
           gasLimit: 120000,
         }

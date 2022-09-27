@@ -14,7 +14,7 @@ interface UseLocDiscon {
   pathname: string,
   search: string,
   hash: string,
-  state: any,
+  state: object,
   key: string
 }
 

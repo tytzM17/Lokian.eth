@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Container, Row, Col, Table } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 import { Lokimon } from '../../models'
 import MyFightingMons from './myFightingMons'
 import { breedOption } from '../common'
@@ -22,19 +22,19 @@ const Room = ({
   // onOtherPlayerReady,
   // acceptedAndReadyPlayer,
 }) => {
-  let navigate = useNavigate()
+  const navigate = useNavigate()
   const { ws } = useWs()
   const [otherPlayer, setOtherPlayer] = useState(null)
   const [otherPlayerMons, setOtherPlayerMons] = useState(null)
   const [creatorMons, setCreatorMons] = useState(null)
-  const [_account, set_Account] = useState(account)
+  const [_account, setAccount] = useState(account)
 
   useEffect(() => {
     let mounted = true
     if (!account && mounted) {
       ;(async () => {
         const acct = await getAccount()
-        set_Account(acct)
+        setAccount(acct)
       })()
     }
 
@@ -72,7 +72,7 @@ const Room = ({
 
     // onOtherPlayerReady(room, otherPlayer)
     // setOtherPlayerReady((current) => !current)
-    if (!otherPlayerReady) return
+    // if (!otherPlayerReady) return
 
     const obj = { type: 'ready', params: { room, otherPlayer } }
     if (ws) {
@@ -81,7 +81,7 @@ const Room = ({
       }
     }
 
-    setDisableBtn(true)
+    // setDisableBtn(true)
   }
 
   useEffect(() => {
@@ -98,12 +98,12 @@ const Room = ({
             const isOnSameRoom = room?.room === parsed?.params?.room?.room
             const hasOtherPlayer = room?.players?.includes(parsed?.params?.otherPlayer)
             const _otherPlayerReady = isOnSameRoom && hasOtherPlayer
-            setOtherPlayerReady((current) => _otherPlayerReady)
+            setOtherPlayerReady(_otherPlayerReady)
           }
           break
       }
     }
-  }, [ws])
+  }, [ws, ws.onmessage])
 
   useEffect(() => {
     let mounted = true

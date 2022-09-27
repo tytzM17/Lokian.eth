@@ -24,7 +24,7 @@ const useBurn = (
     const _amount = parseEther(amount)
     const amountInWei = `${BigNumber.from(_amount._hex).toBigInt()}`
 
-    let overrides = {
+    const overrides = {
       gasLimit: 120000,
     }
 

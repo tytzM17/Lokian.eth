@@ -20,8 +20,8 @@ interface Params {
   account: string
   myCryptomons: Lokimon[]
   otherCryptomons: Lokimon[]
-  setFightChoice1Func: any
-  setFightChoice2Func: any
+  setFightChoice1Func: React.Dispatch<string>
+  setFightChoice2Func: React.Dispatch<string>
 }
 
 const Dojo = (params: Params) => {

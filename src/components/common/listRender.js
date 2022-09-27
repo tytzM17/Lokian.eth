@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Col, Row, Dropdown } from 'react-bootstrap'
+import { Button, Col, Dropdown } from 'react-bootstrap'
 import ListIcon from '../common/listIcon'
 import GridIcon from '../common/gridIcon'
 import './common.css'

@@ -1,8 +1,9 @@
-import React, { useState, createContext } from 'react'
+import React, { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { ArenaV2, Dojo, Breed, Marketplace, MyLokiMons, MyShop, Share, SharedToMe, Spinner, Token } from './components'
+import { ArenaV2, Dojo, Breed, Marketplace, MyLokiMons, MyShop, Share, SharedToMe, Token } from './components'
 import Room from './components/arena/room'
 import { RoomType } from './components/common/interfaces'
+import { Lokimon } from './models'
 
 const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
   // arena
@@ -18,7 +19,7 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
         path="/"
         element={
           <MyLokiMons
-            myCryptomons={commonRouteProps.myCryptomons}
+            myCryptomons={commonRouteProps.myCryptomons as Lokimon[]}
             contract={commonRouteProps.mainContract}
             refreshMons={commonRouteProps.refreshMons}
           />
@@ -95,7 +96,7 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
             <ArenaV2
               // onSetWs={(ws: object) => setWs(ws)}
               account={commonRouteProps.account}
-              hasStartedRoom={!!startedRoom}
+              hasStartedRoom={startedRoom}
               onStartedRoom={(value: RoomType) => {
                 setStartedRoom(value)
               }}

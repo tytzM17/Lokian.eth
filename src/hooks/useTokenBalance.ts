@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 
 const useTokenBalance = ({ account, library, getTokenBalance, refreshMons }) => {
   const [tokenBalance, setTokenBalance] = useState('0')
@@ -6,7 +6,7 @@ const useTokenBalance = ({ account, library, getTokenBalance, refreshMons }) => 
   useEffect(() => {
     let mounted = true
 
-    getTokenBalance(library, account).then((result: any) => {
+    getTokenBalance(library, account).then((result: SetStateAction<string>) => {
       if (mounted) {
         setTokenBalance(result)
         refreshMons()

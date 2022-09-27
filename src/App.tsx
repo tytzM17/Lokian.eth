@@ -1,7 +1,7 @@
 // core
 import 'bootstrap/dist/css/bootstrap.min.css'
-import React, { createContext, useEffect, useState } from 'react'
-import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
 import './App.css'
 // import MonImages from './sprites-copy'
 
@@ -10,7 +10,7 @@ import { Web3Provider } from '@ethersproject/providers'
 import { Contract } from '@ethersproject/contracts'
 import contrInterface from './abis/interface.json'
 
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@web3-react/core'
 // import {
 //   NoEthereumProviderError,
 //   UserRejectedRequestError as UserRejectedRequestErrorInjected,
@@ -316,6 +316,7 @@ function App() {
     tokenBalance,
     mainContract,
     names,
+    account,
   }
 
   const menuRouteProps = {

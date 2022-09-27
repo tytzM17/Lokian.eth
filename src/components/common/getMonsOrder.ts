@@ -5,7 +5,7 @@ import { Lokimon } from '../../models'
 const getMonsOrder = (_orderBy: string, _myLokimons: Lokimon[]) => {
   if (!_orderBy) return
 
-  let lokimons = _myLokimons
+  const lokimons = _myLokimons
 
   switch (_orderBy) {
     case 'nameAZ':

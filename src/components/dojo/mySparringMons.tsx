@@ -10,7 +10,7 @@ const MySparringMons = ({ mons, setFightChoiceFunc, account, choice }) => {
 
   const opponentCond = (mon: Lokimon) => !mon.forSale && mon.sharedTo.toLowerCase() !== account?.toString().toLowerCase()
   
-  let cond = choice === '1' ? yourLokimonsCond : opponentCond
+  const cond = choice === '1' ? yourLokimonsCond : opponentCond
 
   return (
     <>

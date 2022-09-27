@@ -4,7 +4,7 @@ import MonImages from '../../sprites-copy'
 import { nameDiv, imgDiv, statDiv, buyDiv, monName } from '../common'
 import getMonsOrder from '../common/getMonsOrder'
 import ListRender from '../common/listRender'
-import { Lokimon, LokimonContract } from '../../models'
+import { Lokimon } from '../../models'
 import Spinner from '../spinner'
 import { Table } from 'react-bootstrap'
 import './marketplace.css'
@@ -35,7 +35,7 @@ const Marketplace = ({ otherCryptomons, contract, refreshMons, nativeTok = '' })
       <ListRender
         pageName={'Marketplace'}
         onSetDisplay={(value: string) => setDisplay(value)}
-        onSetOrder={(evtKey: string, e: any) => setOrderBy(evtKey)}
+        onSetOrder={(evtKey: string) => setOrderBy(evtKey)}
       />
 
       {display === 'grid' && (

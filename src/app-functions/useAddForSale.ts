@@ -15,7 +15,7 @@ const useAddForSale = (
       setIsAddForSaleLoadingFunc(false)
       return
     }
-    let overrides = {
+    const overrides = {
       gasLimit: 120000,
     }
     const tx = await contr

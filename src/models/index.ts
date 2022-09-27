@@ -8,7 +8,7 @@ export interface Lokimon {
     hp:  number,
     monType: number,
     owner: string,
-    price: BigInt,
+    price: bigint,
     sharedTo: string,
     species: number,
     speed: number

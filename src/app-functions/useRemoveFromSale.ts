@@ -2,7 +2,6 @@ import React from 'react'
 import { toast } from 'react-toastify'
 import { toastErrParams } from '../utils/toastErrParams'
 import { Contract } from '@ethersproject/contracts'
-import contrInterface from '../abis/interface.json'
 
 const useRemoveFromSale = (
     contr: Contract,
@@ -12,10 +11,10 @@ const useRemoveFromSale = (
 
     const removeFromSale = async (id: number) => { 
             setIsRemoveFromSaleLoading(true)
-            let overrides = {
+            const overrides = {
               gasLimit: 120000,
             }
-            const tx = await contr?.removeFromSale(id, overrides)?.catch((err: any) => {
+            const tx = await contr?.removeFromSale(id, overrides)?.catch((err: object) => {
               setIsRemoveFromSaleLoading(false)
               console.log(err);
             })

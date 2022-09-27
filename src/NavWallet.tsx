@@ -21,7 +21,7 @@ const NavWallet = ({
   enum ConnectorNames {
     Injected = 'Injected',
   }
-  const connectorsByName: { [connectorName in ConnectorNames]: any } = {
+  const connectorsByName: { [connectorName in ConnectorNames] } = {
     [ConnectorNames.Injected]: injected,
   }
 
