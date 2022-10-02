@@ -11,9 +11,11 @@ import { RoomType, UseLocDiscon } from '../common/interfaces'
 import { Link, Outlet, useOutletContext, useNavigate, useLocation } from 'react-router-dom'
 // import { ethers } from 'ethers'
 import { getAccount, waitForWsConnection } from '../../utils'
+import { toastErrParams } from '../../utils/toastErrParams'
 
 const btnStyle = {
   height: '38px',
+  color: '#000',
 }
 
 // change to server on internet
@@ -30,7 +32,7 @@ export const useWs = () => {
   return useOutletContext<ContextType>()
 }
 
-const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
+const Arena = ({ account, onStartedRoom, hasStartedRoom, onDisbanded }) => {
   const navigate = useNavigate()
   const useLoc: UseLocDiscon = useLocation()
 
@@ -72,12 +74,12 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
   }
 
   const startRoom = (room: RoomType) => {
-    if (!room || room.clients !== 2 || !room.clients) return
+    if (!room || !room.clients || room.clients !== 2) return
 
     const path = '/arena/room/' + room?.room || ''
     const obj = { type: 'start', params: { room, path } }
 
-    waitForWsConnection(ws, (ws.send(JSON.stringify(obj)) as unknown) as VoidFunction, 1)
+    waitForWsConnection(ws, ws?.send(JSON.stringify(obj)), 1000)
 
     onStartedRoom(room)
   }
@@ -229,7 +231,10 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
           let leaver = 'Player'
           if (parsed?.params?.isClosed) {
             leavedRooms = leavedRooms.filter((room) => room?.room !== parsed.params.room)
+            leaver = 'Room owner '
             setRooms(leavedRooms)
+            // set disbanded
+            onDisbanded(true)
           } else {
             leavedRooms.every((room) => {
               if (room?.room === parsed?.params?.room) {
@@ -237,8 +242,8 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
                   ?.filter((plyr: string) => !parsed.params.players?.includes(plyr))
                   ?.slice(0, 1)[0]
                 leaver = getFirst7AndLast4CharOfAcct(leaver)
-                room['clients'] = parsed.params.clients
-                room['players'] = parsed.params.players
+                room['clients'] = parsed?.params?.clients
+                room['players'] = parsed?.params?.players
                 return false
               }
               return true
@@ -246,11 +251,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
             setRooms(leavedRooms)
           }
           onStartedRoom(null)
-          toast.error(leaver + ' Disconnected', {
-            autoClose: 5000,
-            closeOnClick: true,
-            pauseOnHover: true,
-          })
+          toast.error(leaver + ' disconnected at room ' + parsed?.params?.room, toastErrParams)
           break
         }
         case 'start': {
@@ -350,7 +351,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
                                     className='rpgui-button'
                                     type='button'
                                     onClick={() => startRoom(room)}
-                                    style={{ maxHeight: btnStyle.height }}
+                                    style={{ maxHeight: btnStyle.height, color: btnStyle.color }}
                                     disabled={room.clients !== 2}
                                   >
                                     {room.clients !== 2 ? (

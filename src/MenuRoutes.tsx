@@ -10,6 +10,7 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
   // const WsContext = createContext(null)
   // const [ws, setWs] = useState(null)
   const [startedRoom, setStartedRoom] = useState(null)
+  const [disbanded, setDisbanded] = useState(false)
   // const [otherPlayerReady, setOtherPlayerReady] = useState(null)
   // const [acceptedAndReadyPlayer, setAcceptedAndReadyPlayer] = useState(false)
 
@@ -96,10 +97,11 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
             <ArenaV2
               // onSetWs={(ws: object) => setWs(ws)}
               account={commonRouteProps.account}
-              hasStartedRoom={startedRoom}
+              hasStartedRoom={!!startedRoom}
               onStartedRoom={(value: RoomType) => {
                 setStartedRoom(value)
               }}
+              onDisbanded={(val: boolean) => setDisbanded(val)}
               // otherPlayerReady={otherPlayerReady}
               // isAcceptedAndReadyPlayer={(state: boolean) => setAcceptedAndReadyPlayer(state)}
             />
@@ -111,9 +113,10 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
           element={
             <Room
               room={startedRoom}
-              onDisconnect={(room: RoomType) => {
-                setStartedRoom(room)
+              onDisconnect={(value: RoomType) => {
+                setStartedRoom(value)
               }}
+              isDisbanded={disbanded}
               account={commonRouteProps.account}
               fightChoice1={fightRouteProps.fightChoice1}
               fightChoice2={fightRouteProps.fightChoice2}

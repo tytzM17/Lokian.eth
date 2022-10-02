@@ -1,4 +1,4 @@
-import { Web3Provider } from "@ethersproject/providers"
+import { Web3Provider } from '@ethersproject/providers'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface RoomType {
@@ -22,7 +22,7 @@ interface UseLocDiscon {
 }
 
 interface TokenBalanceParam {
-  account: string 
+  account: string
   library: Web3Provider
   getTokenBalance: AnyFunction
   refreshMons: AnyFunction

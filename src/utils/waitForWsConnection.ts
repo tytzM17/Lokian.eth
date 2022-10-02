@@ -1,15 +1,17 @@
-import { VoidFunction } from "../components/common/interfaces"
-
 /**
  * Recursively wait for websocket connection
- * 
+ *
  * @param  {WebSocket} ws
- * @param  {VoidFunction} callback
+ * @param  {any} callback
  * @param  {number} interval
+ * @return {void}
  */
-const waitForWsConnection = (ws: WebSocket, callback: VoidFunction, interval: number) => {
+
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const waitForWsConnection = (ws: WebSocket, callback: any, interval: number): void => {
   if (ws?.readyState === 1) {
-    callback()
+    if (callback) callback()
   } else {
     setTimeout(function () {
       waitForWsConnection(ws, callback, interval)

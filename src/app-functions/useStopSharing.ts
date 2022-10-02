@@ -4,13 +4,23 @@ import { toastErrParams } from '../utils/toastErrParams'
 import { Contract } from '@ethersproject/contracts'
 import contrInterface from '../abis/interface.json'
 import { CONTRACT_ADDRESS } from '../App'
+import { VoidFunction } from '../components/common/interfaces'
 
+/**
+ * User stops lokimon sharing
+ *
+ * @param  {Web3Provider} library
+ * @param  {string} account
+ * @param  {React.Dispatch<React.SetStateAction<boolean>>} setIsStopSharingLoading
+ * @param  {VoidFunction} refreshMons
+ * @return {Record<string, unknown} stopSharing
+ */
 const useStopSharing = (
   library: Web3Provider,
   account: string,
   setIsStopSharingLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  refreshMons: () => void
-) => {
+  refreshMons: VoidFunction,
+): Record<string, unknown> => {
   const stopSharing = async (id: number) => {
     setIsStopSharingLoading(true)
     const contr = new Contract(CONTRACT_ADDRESS, contrInterface, library.getSigner(account))

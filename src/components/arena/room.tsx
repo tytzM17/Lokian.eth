@@ -8,6 +8,7 @@ import getAccount from '../../utils/getAccount'
 import GenericModal from '../common/genericModal'
 // import { toast } from 'react-toastify'
 import { useWs } from './index'
+// import { waitForWsConnection } from '../../utils'
 
 const Room = ({
   room,
@@ -19,15 +20,16 @@ const Room = ({
   cryptomons,
   setFightChoice2Func,
   setFightChoice1Func,
+  isDisbanded,
   // onOtherPlayerReady,
   // acceptedAndReadyPlayer,
 }) => {
   const navigate = useNavigate()
   const { ws } = useWs()
-  const [otherPlayer, setOtherPlayer] = useState(null)
-  const [otherPlayerMons, setOtherPlayerMons] = useState(null)
-  const [creatorMons, setCreatorMons] = useState(null)
-  const [_account, setAccount] = useState(account)
+  const [otherPlayer, setOtherPlayer] = useState<string>(null)
+  const [otherPlayerMons, setOtherPlayerMons] = useState<Lokimon[]>(null)
+  const [creatorMons, setCreatorMons] = useState<Lokimon[]>(null)
+  const [_account, setAccount] = useState<string>(account)
 
   useEffect(() => {
     let mounted = true
@@ -65,10 +67,12 @@ const Room = ({
     setShow(false)
     setDisconConfirm(state)
   }
-  const handleShow = () => setShow(true)
+  const handleShow = () => {
+    setShow(true)
+  }
 
   const handleOtherPlayerReady = () => {
-    if (!otherPlayer) return
+    // if (!otherPlayer) return
 
     // onOtherPlayerReady(room, otherPlayer)
     // setOtherPlayerReady((current) => !current)
@@ -76,11 +80,11 @@ const Room = ({
 
     const obj = { type: 'ready', params: { room, otherPlayer } }
     if (ws) {
-      if (otherPlayer === account || otherPlayer === _account) {
+      if (otherPlayer === _account) {
         ws.send(JSON.stringify(obj))
+        // waitForWsConnection(ws, ws?.send(JSON.stringify(obj)), 1000)
       }
     }
-
     // setDisableBtn(true)
   }
 
@@ -91,7 +95,7 @@ const Room = ({
       if (!data || !data.data) return
       const parsed = JSON.parse(data.data)
 
-      switch (parsed.type) {
+      switch (parsed?.type) {
         case 'ready':
           console.log('other player ready data', parsed)
           if (parsed?.params?.room?.creator === account) {
@@ -119,6 +123,23 @@ const Room = ({
     }
   }, [disconConfirm])
 
+  useEffect(() => {
+    let mounted = true
+    if(!isDisbanded) {
+      return
+    }
+
+    if (mounted) {
+      onDisconnect(null)
+      navigate('/arena', { state: { room, leaver: otherPlayer } })
+    }
+  
+    return () => {
+      mounted = false
+    }
+  }, [isDisbanded])
+  
+
   const genericModalProps = {
     show,
     handleClose: (state: boolean) => handleClose(state),
@@ -132,18 +153,23 @@ const Room = ({
   }
 
   return (
-    <div className="room-container">
-      <div className="p1-arena green-glow">Room {room?.room}</div>
+    <div className='room-container'>
+      <div className='p1-arena green-glow'>Room {room?.room}</div>
       <GenericModal {...genericModalProps} />
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-        {' '}
-        <button disabled={disableBtn} className="rpgui-button" type="button" onClick={() => handleShow()}>
+        <button
+          disabled={disableBtn}
+          className='rpgui-button'
+          type='button'
+          onClick={() => handleShow()}
+        >
           {room?.creator === account ? 'Disband' : 'Disconnect'}
-        </button>{' '}
+        </button>
+
         {_account === otherPlayer && (
           <button
-            className="rpgui-button"
-            type="button"
+            className='rpgui-button'
+            type='button'
             onClick={() => {
               console.log('ready')
               handleOtherPlayerReady()
@@ -152,10 +178,11 @@ const Room = ({
             {otherPlayerReady ? 'Waiting for start' : 'Ready'}
           </button>
         )}
-        {_account === room?.creator && otherPlayerReady ? (
+
+        {_account === room?.creator && otherPlayerReady && (
           <button
-            className="rpgui-button"
-            type="button"
+            className='rpgui-button'
+            type='button'
             onClick={() => {
               console.log('start or wait')
               handleFightStart()
@@ -163,32 +190,42 @@ const Room = ({
           >
             Start fight!
           </button>
-        ) : (
-          ''
         )}
       </div>
 
       {/* upper isle */}
-      <div className="rpgui-container framed-grey vs-container" style={{ marginTop: '24px' }}>
+      <div className='rpgui-container framed-grey vs-container' style={{ marginTop: '24px' }}>
         <Container fluid>
           <Row>
-            <Col xs md="12" className="col-text-center">
+            <Col xs md='12' className='col-text-center'>
               Selected Lokimon
             </Col>
-            <Col xs="12" lg="12" className="col-text-center">
+            <Col xs='12' lg='12' className='col-text-center'>
               <span>
-                {monNames[cryptomons.find((mon: Lokimon) => mon.id?.toString() === fightChoice1?.toString())?.species]}{' '}
+                {
+                  monNames[
+                    cryptomons.find(
+                      (mon: Lokimon) => mon.id?.toString() === fightChoice1?.toString(),
+                    )?.species
+                  ]
+                }{' '}
                 {fightChoice1 ? `no.${fightChoice1}` : fightChoice1 == '0' ? `no.${0}` : ''}
               </span>
             </Col>
-            <Col xs="12" lg="12" className="col-text-center">
+            <Col xs='12' lg='12' className='col-text-center'>
               <span>
-                {monNames[cryptomons.find((mon: Lokimon) => mon.id?.toString() === fightChoice2?.toString())?.species]}{' '}
+                {
+                  monNames[
+                    cryptomons.find(
+                      (mon: Lokimon) => mon.id?.toString() === fightChoice2?.toString(),
+                    )?.species
+                  ]
+                }{' '}
                 {fightChoice2 ? `no.${fightChoice2}` : ''}
               </span>
             </Col>
           </Row>
-          <div className="dojo-spar-mons-img">
+          <div className='dojo-spar-mons-img'>
             {breedOption(parseInt(fightChoice1), cryptomons)}
             {breedOption(parseInt(fightChoice2), cryptomons)}
           </div>
@@ -198,7 +235,7 @@ const Room = ({
       {/* fight mons area, fight against area */}
 
       {_account === room?.creator && (
-        <div className="rpgui-container framed-grey table-container">
+        <div className='rpgui-container framed-grey table-container'>
           <Row>
             <Col xs md={12}>
               <div style={{ textAlign: 'center' }}>Player 1 Select</div>
@@ -206,12 +243,12 @@ const Room = ({
           </Row>
           <Row>
             <Col xs md={12}>
-              <div className="dojo-selection">
+              <div className='dojo-selection'>
                 <MyFightingMons
                   mons={creatorMons}
                   setFightChoiceFunc={setFightChoice1Func}
                   account={room?.creator}
-                  choice="1"
+                  choice='1'
                 />
               </div>
             </Col>
@@ -220,7 +257,7 @@ const Room = ({
       )}
 
       {_account === otherPlayer && (
-        <div className="rpgui-container framed-grey table-container">
+        <div className='rpgui-container framed-grey table-container'>
           <Row>
             <Col xs md={12}>
               <div style={{ textAlign: 'center' }}>Player 2 Select</div>
@@ -228,12 +265,12 @@ const Room = ({
           </Row>
           <Row>
             <Col xs md={12}>
-              <div className="dojo-selection">
+              <div className='dojo-selection'>
                 <MyFightingMons
                   mons={otherPlayerMons}
                   setFightChoiceFunc={setFightChoice2Func}
                   account={otherPlayer}
-                  choice="2"
+                  choice='2'
                 />
               </div>
             </Col>
