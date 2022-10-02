@@ -10,7 +10,7 @@ import { RoomType, UseLocDiscon } from '../common/interfaces'
 // import WebSocket from 'isomorphic-ws'
 import { Link, Outlet, useOutletContext, useNavigate, useLocation } from 'react-router-dom'
 // import { ethers } from 'ethers'
-import getAccount from '../../utils/getAccount'
+import { getAccount, waitForWsConnection } from '../../utils'
 
 const btnStyle = {
   height: '38px',
@@ -21,7 +21,7 @@ const URL = 'ws://localhost:40510'
 
 type ContextType = { ws: WebSocket | null }
 
-const acctFormat = (acct: string) => {
+const getFirst7AndLast4CharOfAcct = (acct: string) => {
   if (!acct) return
   return `${acct.substring(0, 6)}...${acct.substring(acct.length - 4)}`
 }
@@ -53,8 +53,8 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
       JSON.stringify({
         type: 'chat',
         msg: arenaChatInput,
-        acct: acctFormat(account),
-      })
+        acct: getFirst7AndLast4CharOfAcct(account),
+      }),
     )
     showMessage(`YOU: ${arenaChatInput}`)
   }
@@ -75,21 +75,28 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
     if (!room || room.clients !== 2 || !room.clients) return
 
     const path = '/arena/room/' + room?.room || ''
-    if (ws) {
-      const obj = { type: 'start', params: { room, path } }
-      ws.send(JSON.stringify(obj))
-    }
+    const obj = { type: 'start', params: { room, path } }
+
+    waitForWsConnection(ws, (ws.send(JSON.stringify(obj)) as unknown) as VoidFunction, 1)
 
     onStartedRoom(room)
   }
 
-  const leaveRoom = (roomPlayers: string[], roomCreator: string, roomLeaver: string, roomCode: string) => {
+  const leaveRoom = (
+    roomPlayers: string[],
+    roomCreator: string,
+    roomLeaver: string,
+    roomCode: string,
+  ) => {
     if (ws) {
       let isCreator = false
       if (account?.toString() === roomCreator) {
         isCreator = true
       }
-      const obj = { type: 'leave', params: { players: roomPlayers, isCreator, leaver: roomLeaver, code: roomCode } }
+      const obj = {
+        type: 'leave',
+        params: { players: roomPlayers, isCreator, leaver: roomLeaver, code: roomCode },
+      }
       if (roomPlayers?.includes(account)) {
         ws.send(JSON.stringify(obj))
       }
@@ -114,7 +121,12 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
   useEffect(() => {
     if (!useLoc || !useLoc.state) return
     // invoke leave room
-    leaveRoom(useLoc.state?.room?.players, useLoc.state?.room?.creator, useLoc.state?.leaver, useLoc.state?.room?.room)
+    leaveRoom(
+      useLoc.state?.room?.players,
+      useLoc.state?.room?.creator,
+      useLoc.state?.leaver,
+      useLoc.state?.room?.room,
+    )
   }, [useLoc])
 
   useEffect(() => {
@@ -132,7 +144,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
                 type: 'online',
                 msg: 'connected',
                 acct: _account,
-              })
+              }),
             )
           }
         })
@@ -153,7 +165,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
         ws.send(
           JSON.stringify({
             type: 'get_rooms',
-          })
+          }),
         )
       }
     }
@@ -221,8 +233,10 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
           } else {
             leavedRooms.every((room) => {
               if (room?.room === parsed?.params?.room) {
-                leaver = room.players?.filter((plyr: string) => !parsed.params.players?.includes(plyr))?.slice(0, 1)[0]
-                leaver = acctFormat(leaver)
+                leaver = room.players
+                  ?.filter((plyr: string) => !parsed.params.players?.includes(plyr))
+                  ?.slice(0, 1)[0]
+                leaver = getFirst7AndLast4CharOfAcct(leaver)
                 room['clients'] = parsed.params.clients
                 room['players'] = parsed.params.players
                 return false
@@ -272,23 +286,23 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
   return (
     <>
       {hasStartedRoom ? (
-        <div className="rpgui-container framed-grey">
+        <div className='rpgui-container framed-grey'>
           <Container fluid>
             <Outlet context={{ ws }} />
           </Container>
         </div>
       ) : (
         <>
-          <div className="p1-arena green-glow">Arena</div>
-          <div className="rpgui-container framed-grey table-container">
+          <div className='p1-arena green-glow'>Arena</div>
+          <div className='rpgui-container framed-grey table-container'>
             <Container fluid>
-              <Row className="online-create-room-row">
+              <Row className='online-create-room-row'>
                 <Col sm={12} xs={12} md={6} lg={6} xl={6}>
-                  <span className="online-count">Online: {online}</span>
+                  <span className='online-count'>Online: {online}</span>
                 </Col>
                 <Col sm={12} xs={12} md={6} lg={6} xl={6}>
-                  <div className="create-room-btn">
-                    <button className="rpgui-button" type="button" onClick={() => createRoom()}>
+                  <div className='create-room-btn'>
+                    <button className='rpgui-button' type='button' onClick={() => createRoom()}>
                       <span style={{ fontSize: '18px' }}>+</span> Create Room
                     </button>
                   </div>
@@ -297,7 +311,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
               <Row></Row>
               <Row>
                 <Col>
-                  <Table striped bordered hover variant="dark" responsive>
+                  <Table striped bordered hover variant='dark' responsive>
                     <thead>
                       <tr>
                         <th>ID</th>
@@ -313,22 +327,28 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
                           return (
                             <tr key={(room?.room || 'code') + '-' + idx}>
                               <td>{idx + 1}</td>
-                              <td>{room?.players?.map((player: string) => acctFormat(player))?.join(', ')}</td>
+                              <td>
+                                {room?.players
+                                  ?.map((player: string) => getFirst7AndLast4CharOfAcct(player))
+                                  ?.join(', ')}
+                              </td>
                               <td>{room?.room || ''}</td>
                               <td>{room?.clients || 0}/2</td>
                               <td>
                                 <button
-                                  className="rpgui-button"
-                                  type="button"
-                                  onClick={() => leaveRoom(room?.players, room?.creator, account, room?.room)}
+                                  className='rpgui-button'
+                                  type='button'
+                                  onClick={() =>
+                                    leaveRoom(room?.players, room?.creator, account, room?.room)
+                                  }
                                   style={{ maxHeight: btnStyle.height }}
                                 >
                                   Leave
                                 </button>
                                 {room?.creator === account && (
                                   <button
-                                    className="rpgui-button"
-                                    type="button"
+                                    className='rpgui-button'
+                                    type='button'
                                     onClick={() => startRoom(room)}
                                     style={{ maxHeight: btnStyle.height }}
                                     disabled={room.clients !== 2}
@@ -343,8 +363,8 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
 
                                 {room?.creator !== account && (
                                   <button
-                                    className="rpgui-button"
-                                    type="button"
+                                    className='rpgui-button'
+                                    type='button'
                                     onClick={() => joinRoom(room?.room || '', room?.creator)}
                                     style={{ maxHeight: btnStyle.height }}
                                   >
@@ -366,27 +386,31 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom }) => {
       )}
 
       {/* arena chat */}
-      <div className="arena-chat-box">
-        <button className="rpgui-button golden" type="button" onClick={() => setToggleChatbox(!toggleChatbox)}>
+      <div className='arena-chat-box'>
+        <button
+          className='rpgui-button golden'
+          type='button'
+          onClick={() => setToggleChatbox(!toggleChatbox)}
+        >
           ChatBox
         </button>
         <textarea
-          className="arena-chat-textarea"
-          style={{ '--visible': toggleChatbox ? 'block' : 'none' }}
+          className='arena-chat-textarea'
+          style={{ '--visible': toggleChatbox ? 'block' : 'none' } as unknown}
           rows={6}
           cols={100}
           value={arenaChatMsgs}
         ></textarea>
       </div>
-      <div className="arena-chat-controls">
+      <div className='arena-chat-controls'>
         <input
           onChange={(e) => setArenaChatInput(e.target?.value)}
-          type="text"
-          name="arenaChatInput"
-          placeholder="message"
+          type='text'
+          name='arenaChatInput'
+          placeholder='message'
           value={arenaChatInput}
         />
-        <button className="rpgui-button" type="button" onClick={() => sendMsg()}>
+        <button className='rpgui-button' type='button' onClick={() => sendMsg()}>
           Send
         </button>
       </div>
