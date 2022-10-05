@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { createContext, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { ArenaV2, Dojo, Breed, Marketplace, MyLokiMons, MyShop, Share, SharedToMe, Token } from './components'
 import Room from './components/arena/room'
@@ -7,8 +7,7 @@ import { Lokimon } from './models'
 
 const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
   // arena
-  // const WsContext = createContext(null)
-  // const [ws, setWs] = useState(null)
+  const WsContext = createContext(null)
   const [startedRoom, setStartedRoom] = useState(null)
   const [disbanded, setDisbanded] = useState(false)
   // const [otherPlayerReady, setOtherPlayerReady] = useState(null)
@@ -95,7 +94,6 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
         element={
           // <WsContext.Provider value={ws}>
             <ArenaV2
-              // onSetWs={(ws: object) => setWs(ws)}
               account={commonRouteProps.account}
               hasStartedRoom={!!startedRoom}
               onStartedRoom={(value: RoomType) => {

@@ -41,7 +41,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom, onDisbanded }) => {
   const [arenaChatMsgs, setArenaChatMsgs] = useState<string>('')
   const [arenaChatInput, setArenaChatInput] = useState<string>('')
   const [rooms, setRooms] = useState<RoomType[]>([])
-  const [ws, setWs] = useState<WebSocket>(new WebSocket(URL))
+  const [ws, setWs] = useState<WebSocket>(new WebSocket(URL)) 
 
   const showMessage = (message: string) => {
     let messages = arenaChatMsgs
@@ -63,7 +63,8 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom, onDisbanded }) => {
 
   const createRoom = () => {
     const obj = { type: 'create', params: { creator: account } }
-    if (ws) ws.send(JSON.stringify(obj))
+    waitForWsConnection(ws, ws?.send(JSON.stringify(obj)), 1000)
+    // if (ws) ws.send(JSON.stringify(obj))
   }
 
   const joinRoom = (roomCode: string, creator: string) => {
@@ -132,6 +133,8 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom, onDisbanded }) => {
   }, [useLoc])
 
   useEffect(() => {
+    if (!ws) return
+
     ws.onopen = function open() {
       console.log('connected')
       let _account = account
@@ -228,7 +231,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom, onDisbanded }) => {
         case 'leave': {
           console.log('leave data', parsed)
           let leavedRooms: RoomType[] = [...rooms]
-          let leaver = 'Player'
+          let leaver = 'Player '
           if (parsed?.params?.isClosed) {
             leavedRooms = leavedRooms.filter((room) => room?.room !== parsed.params.room)
             leaver = 'Room owner '
@@ -251,7 +254,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom, onDisbanded }) => {
             setRooms(leavedRooms)
           }
           onStartedRoom(null)
-          toast.error(leaver + ' disconnected at room ' + parsed?.params?.room, toastErrParams)
+          toast.error((leaver || 'Player ') + ' disconnected at room ' + parsed?.params?.room, toastErrParams)
           break
         }
         case 'start': {
@@ -263,14 +266,6 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom, onDisbanded }) => {
           }
           break
         }
-        // case 'ready':
-        //   console.log('other player ready data', parsed)
-        //   if (parsed?.params?.room?.creator === account) {
-        //     const isOnSameRoom = rooms.find((room) => room?.room === parsed?.params?.room?.room)
-        //     const hasOtherPlayer = rooms.filter((room) => room?.players?.includes(parsed?.params?.otherPlayer))
-        //     isAcceptedAndReadyPlayer(isOnSameRoom && hasOtherPlayer)
-        //   }
-        //   break
       }
 
       showMessage(chatMsg)

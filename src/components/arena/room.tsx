@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap'
 import { Lokimon } from '../../models'
 import MyFightingMons from './myFightingMons'
@@ -26,6 +26,7 @@ const Room = ({
 }) => {
   const navigate = useNavigate()
   const { ws } = useWs()
+
   const [otherPlayer, setOtherPlayer] = useState<string>(null)
   const [otherPlayerMons, setOtherPlayerMons] = useState<Lokimon[]>(null)
   const [creatorMons, setCreatorMons] = useState<Lokimon[]>(null)
@@ -54,6 +55,7 @@ const Room = ({
   useEffect(() => {
     if (!cryptomons || !otherPlayer || !room?.creator) return
     const _otherPlayerMons = cryptomons.filter((mon: Lokimon) => otherPlayer === mon.owner)
+  
     setOtherPlayerMons(_otherPlayerMons)
     setCreatorMons(cryptomons.filter((mon: Lokimon) => room.creator === mon.owner))
   }, [cryptomons, otherPlayer, room?.creator])
@@ -96,6 +98,18 @@ const Room = ({
       const parsed = JSON.parse(data.data)
 
       switch (parsed?.type) {
+        case 'leave':
+          console.log('leave data, room', parsed)
+          if (parsed?.params?.room === room?.room) {
+            if (parsed?.params?.isClosed) {
+              // room disbanded by owner
+              
+              // disconnect
+              onDisconnect(null)
+              navigate('/arena', { state: null })
+            }
+          }
+          break
         case 'ready':
           console.log('other player ready data', parsed)
           if (parsed?.params?.room?.creator === account) {
@@ -123,22 +137,21 @@ const Room = ({
     }
   }, [disconConfirm])
 
-  useEffect(() => {
-    let mounted = true
-    if(!isDisbanded) {
-      return
-    }
+  // useEffect(() => {
+  //   let mounted = true
+  //   if(!isDisbanded) {
+  //     return
+  //   }
 
-    if (mounted) {
-      onDisconnect(null)
-      navigate('/arena', { state: { room, leaver: otherPlayer } })
-    }
-  
-    return () => {
-      mounted = false
-    }
-  }, [isDisbanded])
-  
+  //   if (mounted) {
+  //     onDisconnect(null)
+  //     navigate('/arena', { state: { room, leaver: otherPlayer } })
+  //   }
+
+  //   return () => {
+  //     mounted = false
+  //   }
+  // }, [isDisbanded])
 
   const genericModalProps = {
     show,
@@ -154,6 +167,7 @@ const Room = ({
 
   return (
     <div className='room-container'>
+      {isDisbanded && <Navigate to='/arena' />}
       <div className='p1-arena green-glow'>Room {room?.room}</div>
       <GenericModal {...genericModalProps} />
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
