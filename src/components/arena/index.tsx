@@ -12,6 +12,7 @@ import { Link, Outlet, useOutletContext, useNavigate, useLocation } from 'react-
 // import { ethers } from 'ethers'
 import { getAccount, waitForWsConnection } from '../../utils'
 import { toastErrParams } from '../../utils/toastErrParams'
+import { totalmem } from 'os'
 
 const btnStyle = {
   height: '38px',
@@ -41,7 +42,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom, onDisbanded }) => {
   const [arenaChatMsgs, setArenaChatMsgs] = useState<string>('')
   const [arenaChatInput, setArenaChatInput] = useState<string>('')
   const [rooms, setRooms] = useState<RoomType[]>([])
-  const [ws, setWs] = useState<WebSocket>(new WebSocket(URL)) 
+  const [ws, setWs] = useState<WebSocket>(new WebSocket(URL))
 
   const showMessage = (message: string) => {
     let messages = arenaChatMsgs
@@ -123,13 +124,27 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom, onDisbanded }) => {
 
   useEffect(() => {
     if (!useLoc || !useLoc.state) return
-    // invoke leave room
-    leaveRoom(
-      useLoc.state?.room?.players,
-      useLoc.state?.room?.creator,
-      useLoc.state?.leaver,
-      useLoc.state?.room?.room,
-    )
+
+    if (useLoc.state.isDisbandedAndOtherPlayer) {
+      let leavedRooms = [...rooms]
+      const roomCode = useLoc.state.roomCode || null
+
+      if (!roomCode) {
+        console.log('Room code is missing', toastErrParams)
+        return
+      }
+
+      leavedRooms = leavedRooms.filter((room) => room.room !== roomCode)
+
+      setRooms(leavedRooms)
+    } else {
+      leaveRoom(
+        useLoc.state?.room?.players,
+        useLoc.state?.room?.creator,
+        useLoc.state?.leaver,
+        useLoc.state?.room?.room,
+      )
+    }
   }, [useLoc])
 
   useEffect(() => {
@@ -230,11 +245,12 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom, onDisbanded }) => {
         }
         case 'leave': {
           console.log('leave data', parsed)
-          let leavedRooms: RoomType[] = [...rooms]
+          let leavedRooms = [...rooms]
           let leaver = 'Player '
           if (parsed?.params?.isClosed) {
             leavedRooms = leavedRooms.filter((room) => room?.room !== parsed.params.room)
             leaver = 'Room owner '
+
             setRooms(leavedRooms)
             // set disbanded
             onDisbanded(true)
@@ -253,8 +269,15 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom, onDisbanded }) => {
             })
             setRooms(leavedRooms)
           }
-          onStartedRoom(null)
-          toast.error((leaver || 'Player ') + ' disconnected at room ' + parsed?.params?.room, toastErrParams)
+
+          if (parsed.params.players?.includes(account)) {
+            onStartedRoom(null)
+            toast.error(
+              (leaver || 'Player ') + ' disconnected at room ' + parsed?.params?.room,
+              toastErrParams,
+            )
+          }
+
           break
         }
         case 'start': {

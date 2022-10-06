@@ -55,7 +55,7 @@ const Room = ({
   useEffect(() => {
     if (!cryptomons || !otherPlayer || !room?.creator) return
     const _otherPlayerMons = cryptomons.filter((mon: Lokimon) => otherPlayer === mon.owner)
-  
+
     setOtherPlayerMons(_otherPlayerMons)
     setCreatorMons(cryptomons.filter((mon: Lokimon) => room.creator === mon.owner))
   }, [cryptomons, otherPlayer, room?.creator])
@@ -101,12 +101,11 @@ const Room = ({
         case 'leave':
           console.log('leave data, room', parsed)
           if (parsed?.params?.room === room?.room) {
-            if (parsed?.params?.isClosed) {
-              // room disbanded by owner
-              
-              // disconnect
+            if (parsed?.params?.isClosed && _account === otherPlayer) {
               onDisconnect(null)
-              navigate('/arena', { state: null })
+              navigate('/arena', {
+                state: { roomCode: parsed.params?.room , isDisbandedAndOtherPlayer: true },
+              })
             }
           }
           break

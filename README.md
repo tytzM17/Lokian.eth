@@ -42,8 +42,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Remaining Tasks
 
 Ongoing
-- Add multiplayer pvp, chat 
--- Breaking up app.tsx..ok, add lokimons report..ok, refactor routes.. ,Create room UI.., start functions..ok  
+- Add multiplayer pvp .., chat ..ok 
+-- multiplayer start fight functionality ..
+- Add staking 
 
 Finished
 - Change naming e.g. cryptoMons to creatures 6/28/2021
@@ -104,6 +105,7 @@ Finished
 - Create websocket mini server ..ok
 - Chat ui ..ok , functions ..ok
 - Create room..ok, join..ok, leave..ok, 
+- Breaking up app.tsx..ok, add lokimons report..ok, refactor routes..ok ,Create room UI..ok, start functions..ok  
 
 
 
