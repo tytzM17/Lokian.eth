@@ -346,13 +346,16 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom, onDisbanded }) => {
                           return (
                             <tr key={(room?.room || 'code') + '-' + idx}>
                               <td>{idx + 1}</td>
+
                               <td>
                                 {room?.players
                                   ?.map((player: string) => getFirst7AndLast4CharOfAcct(player))
                                   ?.join(', ')}
                               </td>
+
                               <td>{room?.room || ''}</td>
                               <td>{room?.clients || 0}/2</td>
+
                               <td>
                                 <button
                                   className='rpgui-button'
@@ -361,16 +364,18 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom, onDisbanded }) => {
                                     leaveRoom(room?.players, room?.creator, account, room?.room)
                                   }
                                   style={{ maxHeight: btnStyle.height }}
+                                  disabled={room.clients === 2}
                                 >
                                   Leave
                                 </button>
+
                                 {room?.creator === account && (
                                   <button
                                     className='rpgui-button'
                                     type='button'
                                     onClick={() => startRoom(room)}
                                     style={{ maxHeight: btnStyle.height, color: btnStyle.color }}
-                                    disabled={room.clients !== 2}
+                                    disabled={room.clients === 2}
                                   >
                                     {room.clients !== 2 ? (
                                       'Waiting'
@@ -386,6 +391,7 @@ const Arena = ({ account, onStartedRoom, hasStartedRoom, onDisbanded }) => {
                                     type='button'
                                     onClick={() => joinRoom(room?.room || '', room?.creator)}
                                     style={{ maxHeight: btnStyle.height }}
+                                    disabled={room.clients === 2}
                                   >
                                     Join
                                   </button>
