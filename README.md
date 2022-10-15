@@ -42,8 +42,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Remaining Tasks
 
 Ongoing
-- Add multiplayer pvp .., chat ..ok 
--- multiplayer start fight functionality ..
+- Multiplayer start fight functionality ..
+- Add wager system with lokians ERC20 token
 - Add staking 
 
 Finished
