@@ -7,7 +7,7 @@ import { Lokimon } from './models'
 
 const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
   // arena
-  const WsContext = createContext(null)
+  // const WsContext = createContext(null)
   const [startedRoom, setStartedRoom] = useState(null)
   const [disbanded, setDisbanded] = useState(false)
   // const [otherPlayerReady, setOtherPlayerReady] = useState(null)
@@ -95,17 +95,25 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
           // <WsContext.Provider value={ws}>
             <ArenaV2
               account={commonRouteProps.account}
-              hasStartedRoom={!!startedRoom}
-              onStartedRoom={(value: RoomType) => {
-                setStartedRoom(value)
-              }}
-              onDisbanded={(val: boolean) => setDisbanded(val)}
+              commonRouteProps={commonRouteProps}
+              fightRouteProps={fightRouteProps}
+              // hasStartedRoom={startedRoom}
+              // onStartedRoom={(value: RoomType) => {
+              //   setStartedRoom(value)
+              // }}
+              // onDisbanded={(val: boolean) => setDisbanded(val)}
               // otherPlayerReady={otherPlayerReady}
               // isAcceptedAndReadyPlayer={(state: boolean) => setAcceptedAndReadyPlayer(state)}
             />
           // </WsContext.Provider>
         }
-      >
+      />
+                {/* <Route
+          path={'/arena/room/'}
+          element={
+           <div>This room is empty...</div>
+          }
+        />
         <Route
           path={'/arena/room/:code'}
           element={
@@ -129,7 +137,7 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
             />
           }
         />
-      </Route>
+      </Route> */}
       <Route
         path="/share"
         element={

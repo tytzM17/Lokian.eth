@@ -6,6 +6,7 @@ interface RoomType {
   players: string[]
   creator: string
   clients: number
+  leaver?: string
 }
 
 interface DisconAcct {

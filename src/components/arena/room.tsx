@@ -6,10 +6,19 @@ import MyFightingMons from './myFightingMons'
 import { breedOption } from '../common'
 import getAccount from '../../utils/getAccount'
 import GenericModal from '../common/genericModal'
-// import { toast } from 'react-toastify'
-import { useWs } from './index'
+import { toast } from 'react-toastify'
+import { toastErrParams } from '../../utils/toastErrParams'
+import { getFirst7AndLast4CharOfAcct } from '.'
+// import { useWs } from './index'
 // import { waitForWsConnection } from '../../utils'
 
+
+/**
+ * Room UI
+ * 
+ * @param {Object} props
+ * @param {Object} props.room
+ */
 const Room = ({
   room,
   onDisconnect,
@@ -20,12 +29,13 @@ const Room = ({
   cryptomons,
   setFightChoice2Func,
   setFightChoice1Func,
-  isDisbanded,
+  // isDisbanded,
+  ws,
   // onOtherPlayerReady,
   // acceptedAndReadyPlayer,
 }) => {
   const navigate = useNavigate()
-  const { ws } = useWs()
+  // const { ws } = useWs()
 
   const [otherPlayer, setOtherPlayer] = useState<string>(null)
   const [otherPlayerMons, setOtherPlayerMons] = useState<Lokimon[]>(null)
@@ -99,14 +109,32 @@ const Room = ({
 
       switch (parsed?.type) {
         case 'leave':
-          console.log('leave data, room', parsed)
+          console.log('room leave data', parsed)
           if (parsed?.params?.room === room?.room) {
-            if (parsed?.params?.isClosed && _account === otherPlayer) {
-              onDisconnect(null)
-              navigate('/arena', {
-                state: { roomCode: parsed.params?.room , isDisbandedAndOtherPlayer: true },
-              })
-            }
+            // if (parsed?.params?.isClosed && _account === otherPlayer) {
+              // onDisconnect(null)
+
+            
+              
+     
+
+
+              toast.error(
+                parsed?.params?.isClosed ? 'Room owner disconnected at room ' + parsed?.params?.room :
+                getFirst7AndLast4CharOfAcct(parsed?.params?.leaver)  + ' disconnected at room ' + parsed?.params?.room,
+               toastErrParams,
+             )
+
+             
+             const roomToLeave = { ...room }
+             roomToLeave['leaver'] = getFirst7AndLast4CharOfAcct(_account)
+             onDisconnect(roomToLeave)
+        
+
+              // navigate('/arena', {
+              //   state: { roomCode: parsed.params?.room , isDisbandedAndOtherPlayer: true },
+              // })
+           // }
           }
           break
         case 'ready':
@@ -123,34 +151,21 @@ const Room = ({
   }, [ws, ws.onmessage])
 
   useEffect(() => {
-    let mounted = true
-    if (!disconConfirm) return
+    // let mounted = true
+    if (!disconConfirm || !ws) return
 
-    if (mounted) {
-      onDisconnect(null)
-      navigate('/arena', { state: { room, leaver: account } })
-    }
+    // if (mounted) {
+      const roomToLeave = { ...room }
+      roomToLeave['leaver'] = _account
+      onDisconnect(roomToLeave)
+      
+      // navigate('/arena', { state: { room, leaver: account } })
+    // }
 
-    return () => {
-      mounted = false
-    }
+    // ws,send to all connected , prompt and set start redirect to null or empty
+    
+
   }, [disconConfirm])
-
-  // useEffect(() => {
-  //   let mounted = true
-  //   if(!isDisbanded) {
-  //     return
-  //   }
-
-  //   if (mounted) {
-  //     onDisconnect(null)
-  //     navigate('/arena', { state: { room, leaver: otherPlayer } })
-  //   }
-
-  //   return () => {
-  //     mounted = false
-  //   }
-  // }, [isDisbanded])
 
   const genericModalProps = {
     show,
@@ -166,7 +181,7 @@ const Room = ({
 
   return (
     <div className='room-container'>
-      {isDisbanded && <Navigate to='/arena' />}
+      {/* {isDisbanded && <Navigate to='/arena' />} */}
       <div className='p1-arena green-glow'>Room {room?.room}</div>
       <GenericModal {...genericModalProps} />
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
