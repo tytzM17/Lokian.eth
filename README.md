@@ -23,7 +23,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
     **`npm install`** This installs all the necessary dependencies to build our application
 
-    **`sprites-copy to sprites`** In all files, change all occurences of sprites-copy to sprites.<br />
+    **`sprites to sprites-copy`** Rename folder sprites to sprites-copy. <br />
     
     **`npm start`** This runs the app in development mode.<br />
 
