@@ -36,15 +36,15 @@ export const useWs = () => {
 
 const Arena = ({
   account,
-  onStartedRoom,
-  hasStartedRoom,
-  onDisbanded,
-  history,
+  // onStartedRoom,
+  // hasStartedRoom,
+  // onDisbanded,
+  // history,
   fightRouteProps,
   commonRouteProps,
 }) => {
-  const navigate = useNavigate()
-  const useLoc: UseLocDiscon = useLocation()
+  // const navigate = useNavigate()
+  // const useLoc: UseLocDiscon = useLocation()
 
   const [online, setOnline] = useState<number>(null)
   const [toggleChatbox, setToggleChatbox] = useState<boolean>(false)
@@ -93,7 +93,7 @@ const Arena = ({
     }
   }
 
-  const [startedRoom, setStartedRoom] = useState(null)
+  const [startedRoom, setStartedRoom] = useState<RoomType>(null)
   // const [disbanded, setDisbanded] = useState(false)
 
   const startRoom = (room: RoomType) => {
@@ -125,7 +125,13 @@ const Arena = ({
 
       const obj = {
         type: 'leave',
-        params: { players: roomPlayers, isCreator, leaver: roomLeaver, code: roomCode },
+        params: { 
+          players: roomPlayers, 
+          isCreator, 
+          leaver: roomLeaver, 
+          code: roomCode,
+          creator: roomCreator, 
+        },
       }
 
       if (roomPlayers?.includes(account)) {
@@ -149,30 +155,30 @@ const Arena = ({
   //   }
   // }, [otherPlayerReady])
 
-  useEffect(() => {
-    if (!useLoc || !useLoc.state) return
+  // useEffect(() => {
+  //   if (!useLoc || !useLoc.state) return
 
-    if (useLoc.state.isDisbandedAndOtherPlayer) {
-      let leavedRooms = [...rooms]
-      const roomCode = useLoc.state.roomCode || null
+  //   if (useLoc.state.isDisbandedAndOtherPlayer) {
+  //     let leavedRooms = [...rooms]
+  //     const roomCode = useLoc.state.roomCode || null
 
-      if (!roomCode) {
-        console.log('Room code is missing', toastErrParams)
-        return
-      }
+  //     if (!roomCode) {
+  //       console.log('Room code is missing', toastErrParams)
+  //       return
+  //     }
 
-      leavedRooms = leavedRooms.filter((room) => room.room !== roomCode)
+  //     leavedRooms = leavedRooms.filter((room) => room.room !== roomCode)
 
-      setRooms(leavedRooms)
-    } else {
-      leaveRoom(
-        useLoc.state?.room?.players,
-        useLoc.state?.room?.creator,
-        useLoc.state?.leaver,
-        useLoc.state?.room?.room,
-      )
-    }
-  }, [useLoc])
+  //     setRooms(leavedRooms)
+  //   } else {
+  //     leaveRoom(
+  //       useLoc.state?.room?.players,
+  //       useLoc.state?.room?.creator,
+  //       useLoc.state?.leaver,
+  //       useLoc.state?.room?.room,
+  //     )
+  //   }
+  // }, [useLoc])
 
   const [startRedirect, setStartRedirect] = useState('')
 
@@ -224,6 +230,11 @@ const Arena = ({
       const parsed = JSON.parse(data.data)
 
       let chatMsg = ''
+
+      let prevRooms = rooms?.length ? [...rooms] : null
+
+
+
       switch (parsed.type) {
         case 'info': {
           console.log('info data', parsed)
@@ -239,81 +250,70 @@ const Arena = ({
         case 'online':
           setOnline(parsed?.online || online)
           break
+
+        case 'leave':
+        case 'join':
+        case 'create':
         case 'get_rooms': {
-          console.log('get rooms data', parsed)
-          // let initRooms = [...rooms]
-          // if (parsed?.rooms) {
-          //   initRooms = parsed.rooms
-          // }
-          // setRooms(initRooms)
-          break
-        }
-        case 'create': {
-          console.log('create data', parsed)
-          const prevRooms = [...rooms]
-          if (parsed?.params) {
-            // check if room exist then push
-            prevRooms.push(parsed.params)
-          }
-          setRooms(prevRooms)
-          break
-        }
-        case 'join': {
-          console.log('join data', parsed)
-          const updatedRooms = [...rooms]
-          updatedRooms.every((room) => {
-            if (room?.room === parsed?.params?.room) {
-              room['clients'] = parsed.params?.clients
-              room['players'] = parsed.params?.players
-              return false
-            }
-            return true
-          })
-          setRooms(updatedRooms)
-          break
-        }
-        case 'leave': {
-          console.log('leave data', parsed)
-          let leavedRooms = [...rooms]
-          let leaver = 'Player '
-          if (parsed?.params?.isClosed) {
-            leavedRooms = leavedRooms.filter((room) => room?.room !== parsed.params.room)
-            leaver = 'Room owner '
+          console.log(parsed)
 
-            setRooms(leavedRooms)
-            // set disbanded
-            // onDisbanded(true)
-            // setDisbanded(true)
-            setStartRedirect('')
-
-          } else {
-            leavedRooms.every((room, idx) => {
-              if (parsed?.params?.clients === 0) {
-                leavedRooms[idx] = undefined
-              }
-
-              if (room?.room === parsed?.params?.room) {
-                // leaver = room.players
-                //   ?.filter((plyr: string) => !parsed.params.players?.includes(plyr))
-                //   ?.slice(0, 1)[0]
+          if (parsed && parsed.allRooms) {
+        
+            const allRooms = Object.keys(parsed.allRooms)?.map(k => {
                
-                room['clients'] = parsed?.params?.clients
-                room['players'] = parsed?.params?.players
-                return false
+              const connectedRooms = parsed.allRooms[k]
+    
+              if (connectedRooms.length > 1) {
+
+
+
+              const formatRoom: RoomType = {
+                room: connectedRooms[1].params?.room,
+                players:  connectedRooms[1].params?.players,
+                creator: connectedRooms[1].params?.creator,
+                clients: connectedRooms[1].params?.clients,
+                leaver: connectedRooms[1]?.params?.leaver || '',
               }
 
+              return formatRoom
 
-              return true
-            })
+            } else {
 
+              const formatRoom: RoomType = {
+                room: connectedRooms[0]?.params?.room,
+                players: connectedRooms[0]?.params?.players,
+                creator: connectedRooms[0]?.params?.creator,
+                clients: connectedRooms[0]?.params?.clients,
+                leaver: connectedRooms[0]?.params?.leaver || '',
+              }
+    
+              return formatRoom
 
-            setRooms(leavedRooms)
+            }
+
+            }) || null
+    
+    
+            if (allRooms?.length) {
+              prevRooms = [
+                ...allRooms
+              ]
+            } else 
+            {
+              prevRooms = null
+            }
+    
           }
 
-          if (parsed.params.players?.includes(account)) {
-            // onStartedRoom(null)
+          if (parsed.type === 'leave' && parsed?.params?.players?.includes(account)) {
+            
+            if ((parsed?.params?.leaver !== parsed?.params?.creator) || parsed?.params?.isClosed) {
             setStartedRoom(null)
             setStartRedirect('')
+          }
+
+
+            let leaver = 'Player '
             leaver = getFirst7AndLast4CharOfAcct( parsed?.params?.leaver )
             toast.error(
               (leaver || 'Player ') + ' disconnected at room ' + parsed?.params?.room,
@@ -321,8 +321,128 @@ const Arena = ({
             )
           }
 
+  setRooms( prevRooms?.length ? prevRooms : null )
+                
           break
         }
+        // case 'create': {
+        //   console.log('create data', parsed)
+        //   // const prevRooms = [...rooms]
+        //   if (parsed?.params) {
+        //     // check if room exist then push
+        //     prevRooms.push(parsed.params)
+        //   }
+        //   setRooms(prevRooms)
+        //   break
+        // }
+//         case 'join': {
+//           console.log('join data', parsed)
+//           // const updatedRooms = [...prevRooms]
+//           // updatedRooms.every((room) => {
+//           //   if (room?.room === parsed?.params?.room) {
+//           //     room['clients'] = parsed.params?.clients
+//           //     room['players'] = parsed.params?.players
+//           //     return false
+//           //   }
+//           //   return true
+//           // })
+          
+//           // setRooms(updatedRooms)
+
+//           if (parsed && parsed.allRooms) {
+        
+//             const allRooms = Object.keys(parsed.allRooms).map(k => {
+              
+    
+              
+//               const connectedRooms = parsed.allRooms[k]
+    
+
+//               if (connectedRooms.length > 1) {
+
+//                 const formatRoom: RoomType = {
+//                   room: connectedRooms[1].params?.room,
+//                   players:  connectedRooms[1].params?.players,
+//                   creator: connectedRooms[1].params?.creator,
+//                   clients: connectedRooms[1].params?.clients,
+//                   leaver: connectedRooms[1]?.params?.leaver || '',
+//                 }
+          
+    
+//               return formatRoom
+
+//                         }     
+
+//             })
+    
+    
+//             if (allRooms.length) {
+//               prevRooms = [
+//                 ...allRooms
+//               ]
+//             }
+    
+//           }
+
+// if (prevRooms.length) {
+//   setRooms( prevRooms )
+// }
+
+//           break
+//         }
+        // case 'leave': {
+        //   console.log('leave data', parsed)
+        //    const prevRooms = [...rooms]
+        //   let leaver = 'Player '
+        //   if (parsed?.params?.isClosed) {
+        //     // leavedRooms = leavedRooms.filter((room) => room?.room !== parsed.params.room)
+        //     leaver = 'Room owner '
+
+        //     // setRooms(leavedRooms)
+        //     // set disbanded
+        //     // onDisbanded(true)
+        //     // setDisbanded(true)
+        //     setStartRedirect('')
+
+        //   } else {
+        //     leavedRooms.every((room, idx) => {
+        //       if (parsed?.params?.clients === 0) {
+        //         leavedRooms[idx] = undefined
+        //       }
+
+        //       if (room?.room === parsed?.params?.room) {
+        //         // leaver = room.players
+        //         //   ?.filter((plyr: string) => !parsed.params.players?.includes(plyr))
+        //         //   ?.slice(0, 1)[0]
+               
+        //         room['clients'] = parsed?.params?.clients
+        //         room['players'] = parsed?.params?.players
+        //         return false
+        //       }
+
+
+        //       return true
+        //     })
+
+
+        //     setRooms(leavedRooms)
+        //   }
+
+        //   if (parsed?.params?.players?.includes(account)) {
+        //     // onStartedRoom(null)
+        //     setStartedRoom(null)
+        //     setStartRedirect('')
+        //     leaver = getFirst7AndLast4CharOfAcct( parsed?.params?.leaver )
+        //     toast.error(
+        //       (leaver || 'Player ') + ' disconnected at room ' + parsed?.params?.room,
+        //       toastErrParams,
+        //     )
+        //   }
+
+        //   setRooms()
+
+        //   break
+        // }
         case 'start': {
           console.log('start rooms data', parsed)
           // if not creator, navigate to room path
@@ -353,11 +473,7 @@ setStartedRoom(parsed?.params?.room)
     }
   }, [ws, ws.onmessage, ws.onopen, ws.onclose, account])
 
-  useEffect(() => {
-    if (!startRedirect) return
 
-    // navigate(startRedirect)
-  }, [startRedirect])
 
 
 
@@ -383,7 +499,8 @@ setStartedRoom(parsed?.params?.room)
 
             setStartRedirect('')
 
-            if (roomToLeave) {
+            
+            if (roomToLeave && roomToLeave.isOtherPlayer) {
               leaveRoom(
                 roomToLeave.players,
                 roomToLeave.creator,
@@ -391,6 +508,34 @@ setStartedRoom(parsed?.params?.room)
                 roomToLeave.room
               )
             } 
+
+            else {
+// update the room list
+if (ws) {
+  // ws.send(
+  //   JSON.stringify({
+  //     type: 'get_rooms',
+  //   }),
+  // )
+
+  if (roomToLeave.leaver === roomToLeave.creator) {
+    leaveRoom(
+      roomToLeave.players,
+      roomToLeave.creator,
+      roomToLeave.leaver,
+      roomToLeave.room
+    )
+  }
+  else {
+
+  waitForWsConnection(ws,  ws.send(
+    JSON.stringify({
+      type: 'get_rooms',
+    })), 1000)
+  }
+}
+
+            }
               
 
           }}

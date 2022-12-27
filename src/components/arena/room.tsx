@@ -9,8 +9,16 @@ import GenericModal from '../common/genericModal'
 import { toast } from 'react-toastify'
 import { toastErrParams } from '../../utils/toastErrParams'
 import { getFirst7AndLast4CharOfAcct } from '.'
+import { RoomType } from '../common/interfaces'
 // import { useWs } from './index'
 // import { waitForWsConnection } from '../../utils'
+
+interface Ready {
+  monSelectedId?: string | number
+  otherPlayer?: string
+  room?: RoomType
+  creator?: string
+}
 
 
 /**
@@ -34,7 +42,7 @@ const Room = ({
   // onOtherPlayerReady,
   // acceptedAndReadyPlayer,
 }) => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   // const { ws } = useWs()
 
   const [otherPlayer, setOtherPlayer] = useState<string>(null)
@@ -75,6 +83,8 @@ const Room = ({
   const [otherPlayerReady, setOtherPlayerReady] = useState(false)
   const [disableBtn, setDisableBtn] = useState(false)
 
+  const [readyToStart, setReadyToStart] = useState('ready')
+
   const handleClose = (state: boolean) => {
     setShow(false)
     setDisconConfirm(state)
@@ -83,19 +93,18 @@ const Room = ({
     setShow(true)
   }
 
-  const handleOtherPlayerReady = () => {
-    // if (!otherPlayer) return
+  const handlePlayerReady = () => {
 
-    // onOtherPlayerReady(room, otherPlayer)
-    // setOtherPlayerReady((current) => !current)
-    // if (!otherPlayerReady) return
+    const paramObj: Ready = {
+      room, otherPlayer, monSelectedId: fightChoice2 || fightChoice1
+    }
 
-    const obj = { type: 'ready', params: { room, otherPlayer } }
+    const obj = { type: 'ready', params: paramObj }
     if (ws) {
-      if (otherPlayer === _account) {
+      // if (otherPlayer === _account) {
         ws.send(JSON.stringify(obj))
         // waitForWsConnection(ws, ws?.send(JSON.stringify(obj)), 1000)
-      }
+     // }
     }
     // setDisableBtn(true)
   }
@@ -114,10 +123,6 @@ const Room = ({
             // if (parsed?.params?.isClosed && _account === otherPlayer) {
               // onDisconnect(null)
 
-            
-              
-     
-
 
               toast.error(
                 parsed?.params?.isClosed ? 'Room owner disconnected at room ' + parsed?.params?.room :
@@ -128,6 +133,7 @@ const Room = ({
              
              const roomToLeave = { ...room }
              roomToLeave['leaver'] = getFirst7AndLast4CharOfAcct(_account)
+             roomToLeave['isOtherPlayer'] = _account === otherPlayer 
              onDisconnect(roomToLeave)
         
 
@@ -138,31 +144,46 @@ const Room = ({
           }
           break
         case 'ready':
-          console.log('other player ready data', parsed)
-          if (parsed?.params?.room?.creator === account) {
-            const isOnSameRoom = room?.room === parsed?.params?.room?.room
-            const hasOtherPlayer = room?.players?.includes(parsed?.params?.otherPlayer)
-            const _otherPlayerReady = isOnSameRoom && hasOtherPlayer
-            setOtherPlayerReady(_otherPlayerReady)
+          // console.log('other player ready data', parsed)
+          // if (parsed?.params?.room?.creator === account) {
+          //   const isOnSameRoom = room?.room === parsed?.params?.room?.room
+          //   const hasOtherPlayer = room?.players?.includes(parsed?.params?.otherPlayer)
+          //   const _otherPlayerReady = isOnSameRoom && hasOtherPlayer
+          //   setOtherPlayerReady(_otherPlayerReady)
+          // }
+
+          if (parsed?.params) {
+            parsed?.params?.forEach(player => {
+              if (player.account === account && player.isCreator) {
+                setReadyToStart('start fight')
+              } else {
+                setReadyToStart('waiting to start')
+              }
+            })
           }
           break
+
+         case 'fight':
+          if (parsed?.params) {
+            // run fight function here, fight func to call fight func at blockchain
+            // e.g. fight(parsed.params[0].monSelectedId, arsed.params[1].monSelectedId)
+          } else {
+            console.log('no fight players data returned');
+            
+          }
+          break 
       }
     }
   }, [ws, ws.onmessage])
 
   useEffect(() => {
-    // let mounted = true
     if (!disconConfirm || !ws) return
 
-    // if (mounted) {
       const roomToLeave = { ...room }
       roomToLeave['leaver'] = _account
-      onDisconnect(roomToLeave)
+      roomToLeave['isOtherPlayer'] = _account === otherPlayer 
       
-      // navigate('/arena', { state: { room, leaver: account } })
-    // }
-
-    // ws,send to all connected , prompt and set start redirect to null or empty
+      onDisconnect(roomToLeave)
     
 
   }, [disconConfirm])
@@ -175,13 +196,24 @@ const Room = ({
   }
 
   const handleFightStart = () => {
-    alert('start fight, get choices to fight func in contract')
+    console.log('start fight, get choices to fight func in contract')
     setDisableBtn(false)
+
+    // const paramObj: Ready = {
+    //   room, creator: room.creator || _account , monSelectedId: fightChoice1 
+    // }
+
+    if (ws) {
+      ws.send(JSON.stringify( {
+        type: 'fight',
+        params: {},
+      } ))
+    }
   }
 
   return (
     <div className='room-container'>
-      {/* {isDisbanded && <Navigate to='/arena' />} */}
+
       <div className='p1-arena green-glow'>Room {room?.room}</div>
       <GenericModal {...genericModalProps} />
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -194,26 +226,34 @@ const Room = ({
           {room?.creator === account ? 'Disband' : 'Disconnect'}
         </button>
 
-        {_account === otherPlayer && (
+        {/* {_account === otherPlayer && ( */}
           <button
             className='rpgui-button'
             type='button'
             onClick={() => {
-              console.log('ready')
-              handleOtherPlayerReady()
+              console.log('ready clicked')
+              if ( fightChoice1 || fightChoice2 ) {
+                handlePlayerReady()
+
+              } else {
+                toast.warn('Please select a Lokimon', toastErrParams)
+              }
             }}
           >
-            {otherPlayerReady ? 'Waiting for start' : 'Ready'}
-          </button>
-        )}
+            {/* {otherPlayerReady ? 'Waiting for start' : 'Ready'} */}
 
-        {_account === room?.creator && otherPlayerReady && (
+{readyToStart || 'ready'}!
+          </button>
+         {/* )} */}
+
+        {_account === room?.creator && readyToStart === 'start fight' && (
           <button
             className='rpgui-button'
             type='button'
             onClick={() => {
               console.log('start or wait')
               handleFightStart()
+        
             }}
           >
             Start fight!

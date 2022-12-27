@@ -8,8 +8,8 @@ import { Lokimon } from './models'
 const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
   // arena
   // const WsContext = createContext(null)
-  const [startedRoom, setStartedRoom] = useState(null)
-  const [disbanded, setDisbanded] = useState(false)
+  // const [startedRoom, setStartedRoom] = useState(null)
+  // const [disbanded, setDisbanded] = useState(false)
   // const [otherPlayerReady, setOtherPlayerReady] = useState(null)
   // const [acceptedAndReadyPlayer, setAcceptedAndReadyPlayer] = useState(false)
 

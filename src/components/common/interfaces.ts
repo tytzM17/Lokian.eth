@@ -7,6 +7,8 @@ interface RoomType {
   creator: string
   clients: number
   leaver?: string
+  isCreator?: string
+  isOtherPlayer?: boolean
 }
 
 interface DisconAcct {
