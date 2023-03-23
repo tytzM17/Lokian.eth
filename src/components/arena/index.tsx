@@ -42,6 +42,7 @@ const Arena = ({
   // history,
   fightRouteProps,
   commonRouteProps,
+  mainContract,
 }) => {
   // const navigate = useNavigate()
   // const useLoc: UseLocDiscon = useLocation()
@@ -233,8 +234,6 @@ const Arena = ({
 
       let prevRooms = rooms?.length ? [...rooms] : null
 
-
-
       switch (parsed.type) {
         case 'info': {
           console.log('info data', parsed)
@@ -325,138 +324,30 @@ const Arena = ({
                 
           break
         }
-        // case 'create': {
-        //   console.log('create data', parsed)
-        //   // const prevRooms = [...rooms]
-        //   if (parsed?.params) {
-        //     // check if room exist then push
-        //     prevRooms.push(parsed.params)
-        //   }
-        //   setRooms(prevRooms)
-        //   break
-        // }
-//         case 'join': {
-//           console.log('join data', parsed)
-//           // const updatedRooms = [...prevRooms]
-//           // updatedRooms.every((room) => {
-//           //   if (room?.room === parsed?.params?.room) {
-//           //     room['clients'] = parsed.params?.clients
-//           //     room['players'] = parsed.params?.players
-//           //     return false
-//           //   }
-//           //   return true
-//           // })
-          
-//           // setRooms(updatedRooms)
-
-//           if (parsed && parsed.allRooms) {
-        
-//             const allRooms = Object.keys(parsed.allRooms).map(k => {
-              
-    
-              
-//               const connectedRooms = parsed.allRooms[k]
-    
-
-//               if (connectedRooms.length > 1) {
-
-//                 const formatRoom: RoomType = {
-//                   room: connectedRooms[1].params?.room,
-//                   players:  connectedRooms[1].params?.players,
-//                   creator: connectedRooms[1].params?.creator,
-//                   clients: connectedRooms[1].params?.clients,
-//                   leaver: connectedRooms[1]?.params?.leaver || '',
-//                 }
-          
-    
-//               return formatRoom
-
-//                         }     
-
-//             })
-    
-    
-//             if (allRooms.length) {
-//               prevRooms = [
-//                 ...allRooms
-//               ]
-//             }
-    
-//           }
-
-// if (prevRooms.length) {
-//   setRooms( prevRooms )
-// }
-
-//           break
-//         }
-        // case 'leave': {
-        //   console.log('leave data', parsed)
-        //    const prevRooms = [...rooms]
-        //   let leaver = 'Player '
-        //   if (parsed?.params?.isClosed) {
-        //     // leavedRooms = leavedRooms.filter((room) => room?.room !== parsed.params.room)
-        //     leaver = 'Room owner '
-
-        //     // setRooms(leavedRooms)
-        //     // set disbanded
-        //     // onDisbanded(true)
-        //     // setDisbanded(true)
-        //     setStartRedirect('')
-
-        //   } else {
-        //     leavedRooms.every((room, idx) => {
-        //       if (parsed?.params?.clients === 0) {
-        //         leavedRooms[idx] = undefined
-        //       }
-
-        //       if (room?.room === parsed?.params?.room) {
-        //         // leaver = room.players
-        //         //   ?.filter((plyr: string) => !parsed.params.players?.includes(plyr))
-        //         //   ?.slice(0, 1)[0]
-               
-        //         room['clients'] = parsed?.params?.clients
-        //         room['players'] = parsed?.params?.players
-        //         return false
-        //       }
 
 
-        //       return true
-        //     })
-
-
-        //     setRooms(leavedRooms)
-        //   }
-
-        //   if (parsed?.params?.players?.includes(account)) {
-        //     // onStartedRoom(null)
-        //     setStartedRoom(null)
-        //     setStartRedirect('')
-        //     leaver = getFirst7AndLast4CharOfAcct( parsed?.params?.leaver )
-        //     toast.error(
-        //       (leaver || 'Player ') + ' disconnected at room ' + parsed?.params?.room,
-        //       toastErrParams,
-        //     )
-        //   }
-
-        //   setRooms()
-
-        //   break
-        // }
         case 'start': {
           console.log('start rooms data', parsed)
-          // if not creator, navigate to room path
-          // if (parsed?.params?.room?.creator !== account) {
-          // onStartedRoom(parsed?.params?.room)
-setStartedRoom(parsed?.params?.room)
-          //   setTimeout(() => {
-          //     // navigate('/next')
-          //     navigate(parsed?.params?.path, { replace: true })
-          //  }, 1000)
-
-          // navigate(parsed?.params?.path, { replace: true })
-          //  redirect(parsed?.params?.path)
+          setStartedRoom(parsed?.params?.room)
           setStartRedirect(parsed?.params?.path || '/arena/room')
+          break
+          
+        }
+
+        case 'ready': {
+          console.log('inside arena', parsed)
+
+          // if (parsed?.params?.playerType === 'creator') {
+          //   if (parsed.params?.readyPlayersData[parsed.params.room?.room]?.length === 2) {
+          //     setReadyToStart('start fight')
+          //   } else {
+          //     setReadyToStart('waiting for other player')
+          //   }
+          // }
+
+          // if (parsed?.params?.playerType === 'otherPlayer') {
+          //   setReadyToStart('waiting to start')
+          // }
 
           break
         }
@@ -548,6 +439,7 @@ if (ws) {
           cryptomons={commonRouteProps.cryptomons}
           monNames={commonRouteProps.names}
           ws={ws}
+          mainContract={mainContract}
         />
       )}
       {/* {hasStartedRoom ? ( */}

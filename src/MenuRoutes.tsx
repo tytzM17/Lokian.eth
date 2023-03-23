@@ -1,22 +1,27 @@
 import React, { createContext, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { ArenaV2, Dojo, Breed, Marketplace, MyLokiMons, MyShop, Share, SharedToMe, Token } from './components'
+import {
+  ArenaV2,
+  ArenaPeerJs,
+  Dojo,
+  Breed,
+  Marketplace,
+  MyLokiMons,
+  MyShop,
+  Share,
+  SharedToMe,
+  Token,
+  ArenaSocketIo,
+} from './components'
 import Room from './components/arena/room'
 import { RoomType } from './components/common/interfaces'
 import { Lokimon } from './models'
 
 const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
-  // arena
-  // const WsContext = createContext(null)
-  // const [startedRoom, setStartedRoom] = useState(null)
-  // const [disbanded, setDisbanded] = useState(false)
-  // const [otherPlayerReady, setOtherPlayerReady] = useState(null)
-  // const [acceptedAndReadyPlayer, setAcceptedAndReadyPlayer] = useState(false)
-
   return (
     <Routes>
       <Route
-        path="/"
+        path='/'
         element={
           <MyLokiMons
             myCryptomons={commonRouteProps.myCryptomons as Lokimon[]}
@@ -26,7 +31,7 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
         }
       />
       <Route
-        path="/myLokiMons"
+        path='/myLokiMons'
         element={
           <MyLokiMons
             myCryptomons={commonRouteProps.myCryptomons}
@@ -36,7 +41,7 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
         }
       />
       <Route
-        path="/myShop"
+        path='/myShop'
         element={
           <MyShop
             myCryptomons={commonRouteProps.myCryptomons}
@@ -47,7 +52,7 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
         }
       />
       <Route
-        path="/marketplace"
+        path='/marketplace'
         element={
           <Marketplace
             otherCryptomons={commonRouteProps.otherCryptomons}
@@ -58,7 +63,7 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
         }
       />
       <Route
-        path="/breed"
+        path='/breed'
         element={
           <Breed
             myCryptomons={commonRouteProps.myCryptomons}
@@ -68,7 +73,7 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
         }
       />
       <Route
-        path="/dojo"
+        path='/dojo'
         element={
           <Dojo
             myCryptomons={commonRouteProps.myCryptomons}
@@ -90,56 +95,30 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
         }
       />
       <Route
-        path="/arena"
+        path='/arena'
         element={
-          // <WsContext.Provider value={ws}>
-            <ArenaV2
-              account={commonRouteProps.account}
-              commonRouteProps={commonRouteProps}
-              fightRouteProps={fightRouteProps}
-              // hasStartedRoom={startedRoom}
-              // onStartedRoom={(value: RoomType) => {
-              //   setStartedRoom(value)
-              // }}
-              // onDisbanded={(val: boolean) => setDisbanded(val)}
-              // otherPlayerReady={otherPlayerReady}
-              // isAcceptedAndReadyPlayer={(state: boolean) => setAcceptedAndReadyPlayer(state)}
-            />
-          // </WsContext.Provider>
+          // <ArenaPeerJs
+          //   account={commonRouteProps.account}
+          //   fightChoice1={fightRouteProps.fightChoice1}
+          //   fightChoice2={fightRouteProps.fightChoice2}
+          //   setFightChoice1Func={fightRouteProps.setFightChoice1}
+          //   setFightChoice2Func={fightRouteProps.setFightChoice2}
+          //   cryptomons={commonRouteProps.cryptomons}
+          //   monNames={commonRouteProps.names}
+          // />
+          <ArenaSocketIo
+            account={commonRouteProps.account}
+            fightChoice1={fightRouteProps.fightChoice1}
+            fightChoice2={fightRouteProps.fightChoice2}
+            setFightChoice1Func={fightRouteProps.setFightChoice1}
+            setFightChoice2Func={fightRouteProps.setFightChoice2}
+            cryptomons={commonRouteProps.cryptomons}
+            monNames={commonRouteProps.names}
+          />
         }
       />
-                {/* <Route
-          path={'/arena/room/'}
-          element={
-           <div>This room is empty...</div>
-          }
-        />
-        <Route
-          path={'/arena/room/:code'}
-          element={
-            <Room
-              room={startedRoom}
-              onDisconnect={(value: RoomType) => {
-                setStartedRoom(value)
-              }}
-              isDisbanded={disbanded}
-              account={commonRouteProps.account}
-              fightChoice1={fightRouteProps.fightChoice1}
-              fightChoice2={fightRouteProps.fightChoice2}
-              setFightChoice1Func={fightRouteProps.setFightChoice1}
-              setFightChoice2Func={fightRouteProps.setFightChoice2}
-              cryptomons={commonRouteProps.cryptomons}
-              monNames={commonRouteProps.names}
-              // acceptedAndReadyPlayer={acceptedAndReadyPlayer}
-              // onOtherPlayerReady={(room: RoomType, otherPlayer: string) => {
-              //   setOtherPlayerReady({ room, otherPlayer })
-              // }}
-            />
-          }
-        />
-      </Route> */}
       <Route
-        path="/share"
+        path='/share'
         element={
           <Share
             myCryptomons={commonRouteProps.myCryptomons}
@@ -150,7 +129,7 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
         }
       />
       <Route
-        path="/sharedToMe"
+        path='/sharedToMe'
         element={
           <SharedToMe
             library={commonRouteProps.library}
@@ -161,7 +140,7 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
         }
       />
       <Route
-        path="/token"
+        path='/token'
         element={
           <Token
             tokenBalance={commonRouteProps.tokenBalance}

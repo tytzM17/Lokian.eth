@@ -32,7 +32,7 @@ export async function getTokenBalance(_library: Web3Provider, _account: string):
     return formatEther(BigNumber.from(bal?._hex).toBigInt())
   } catch (error) {
     console.log(error)
-    toast.error('Error!', toastErrParams)
+    toast.error('Error, please check the network', toastErrParams)
     return '0'
   }
 }

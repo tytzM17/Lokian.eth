@@ -108,6 +108,14 @@ Finished
 - Breaking up app.tsx..ok, add lokimons report..ok, refactor routes..ok ,Create room UI..ok, start functions..ok  
 
 
+TO-DO
+- socket.io multiplayer function
+- add zustand / redux
+- separate or extract large files 
+- create services for redux flow, fetch api/ rpc calls etc
+- upgrade bootstrap v4 to 5
+- fixes thru eslint
+
 
 
 

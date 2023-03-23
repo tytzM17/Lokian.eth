@@ -1,9 +1,10 @@
-require("@nomiclabs/hardhat-ethers");
+require('@nomiclabs/hardhat-ethers')
 // require("nomiclabs/hardhat-ethers");
 
 // require("@nomiclabs/hardhat-etherscan");
 
-const fs = require('fs');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const fs = require('fs')
 // const privateKey = fs.readFileSync(".secret").toString().trim();
 // const polygonScanApi = fs.readFileSync(".polygonScanApi").toString().trim();
 // const moonScanApi = fs.readFileSync(".moonscanApi").toString().trim();
@@ -16,8 +17,7 @@ const fs = require('fs');
 module.exports = {
   // defaultNetwork: "matic",
   networks: {
-    hardhat: {
-    },
+    hardhat: {},
     // mumbai: {
     //   url: "https://rpc-mumbai.maticvigil.com",
     //   accounts: [privateKey]
@@ -32,23 +32,23 @@ module.exports = {
     // },
     // moonbeam: {
     //   url: "https://rpc.api.moonbeam.network",
-    //   accounts: [privateKey],	
+    //   accounts: [privateKey],
     // },
     // bsc: {
     //   url: moralisNodes?.bscMainnet || "https://bsc-dataseed2.binance.org",
-    //   accounts: [privateKey],	
+    //   accounts: [privateKey],
     // },
     // astar: {
     //   url: bwareLabsNodes?.astarMainnet || "https://rpc.astar.network:8545",
-    //   accounts: [privateKey],	
+    //   accounts: [privateKey],
     // },
     // avax: {
     //   url: moralisNodes?.avaxMainnet || AVAX_URL,
-    //   accounts: [privateKey],	
+    //   accounts: [privateKey],
     // },
     // ftm: {
     //   url: moralisNodes?.ftmMainnet || "https://rpc2.fantom.network	",
-    //   accounts: [privateKey],	
+    //   accounts: [privateKey],
     // },
     // boba_rinkeby: {
     //   url: "https://rinkeby.boba.network",
@@ -65,12 +65,12 @@ module.exports = {
   //   }
   // },
   solidity: {
-    version: "0.8.4",
+    version: '0.8.4',
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200
-      }
-    }
-  }
+        runs: 200,
+      },
+    },
+  },
 }

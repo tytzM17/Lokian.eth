@@ -322,6 +322,7 @@ function App() {
   const menuRouteProps = {
     commonRouteProps,
     fightRouteProps,
+    mainContract,
   }
 
   return (

@@ -21,6 +21,7 @@
     "big-integer": "^1.6.48",
     "bootstrap": "^4.4.1",
     "bootstrap-icons": "^1.8.3",
+    "peerjs": "^1.4.7",
     "react": ">=16.8",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": ">=16.8",
@@ -30,7 +31,9 @@
     "ws": "^8.8.1"
   },
   "scripts": {
-    "start": "react-scripts start -FAST_REFRESH=true",
+    "start-fr": "react-scripts start -FAST_REFRESH=true",
+    "start-olps": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -54,6 +57,9 @@
     "@nomiclabs/hardhat-ethers": "^2.1.1",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
     "@openzeppelin/contracts": "^4.5.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^9.4.0",
+    "@testing-library/user-event": "^7.2.1",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
     "eslint-config-prettier": "^8.5.0",
@@ -65,14 +71,11 @@
     "ethers": "^5.7.0",
     "hardhat": "^2.9.2",
     "image-webpack-loader": "^7.0.1",
+    "jest": "26.6.0",
     "react-error-overlay": "6.0.9",
     "source-map-loader": "^1.0.0",
     "ts-loader": "^8.0.0",
-    "typescript": "^3.0.0",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^9.4.0",
-    "@testing-library/user-event": "^7.2.1",
-    "jest": "26.6.0"
+    "typescript": "^3.0.0"
   },
   "resolutions": {
     "//": "See https://github.com/facebook/create-react-app/issues/11773",
