@@ -1,29 +1,34 @@
 name: CI
-		on:
-      push:
-        branches:
-          - master
-		jobs:
-      build-and-deploy:
-        runs-on: ubuntu-latest
-        steps:
-        - name: Checkout
-          uses: actions/checkout@v3
 
-        - name: Build
-          run: |
-            npm install
-            npm run-script build
-          env:
-            REACT_APP_TEST_CONTRACT_ADDRESS: ${{ secrets.REACT_APP_TEST_CONTRACT_ADDRESS }}
-            REACT_APP_TEST_ERC20: ${{ secrets.REACT_APP_TEST_ERC20 }}
-            REACT_APP_TEST_ERC1155: ${{ secrets.REACT_APP_TEST_ERC1155 }}
-            REACT_APP_MAIN_CONTRACT_ADDRESS: ${{ secrets.REACT_APP_MAIN_CONTRACT_ADDRESS }}
-            REACT_APP_MAIN_ERC20: ${{ secrets.REACT_APP_MAIN_ERC20 }}
-            REACT_APP_MAIN_ERC1155: ${{ secrets.REACT_APP_MAIN_ERC1155 }}
+on:
+  push:
+    branches:
+      - master
+	  
+jobs:
+  build:
 
-        - name: Deploy
-          uses: JamesIves/github-pages-deploy-action@v4
-          with:
-            BRANCH: gh-pages
-            FOLDER: docs
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Build
+      run: |
+        npm install
+        npm run-script build
+      env:
+        REACT_APP_TEST_CONTRACT_ADDRESS: ${{ secrets.REACT_APP_TEST_CONTRACT_ADDRESS }}
+        REACT_APP_TEST_ERC20: ${{ secrets.REACT_APP_TEST_ERC20 }}
+        REACT_APP_TEST_ERC1155: ${{ secrets.REACT_APP_TEST_ERC1155 }}
+        REACT_APP_MAIN_CONTRACT_ADDRESS: ${{ secrets.REACT_APP_MAIN_CONTRACT_ADDRESS }}
+        REACT_APP_MAIN_ERC20: ${{ secrets.REACT_APP_MAIN_ERC20 }}
+        REACT_APP_MAIN_ERC1155: ${{ secrets.REACT_APP_MAIN_ERC1155 }}
+
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        BRANCH: gh-pages
+        FOLDER: build
