@@ -1,5 +1,5 @@
 export { default as ArenaV2 } from './arena'
-export { default as ArenaPeerJs } from './arenaPeerJs'
+// export { default as ArenaPeerJs } from './arenaPeerJs'
 export { default as ArenaSocketIo } from './arenaSocketIo'
 export { default as MyLokiMons } from './myLokiMons'
 export { default as Breed } from './breed'

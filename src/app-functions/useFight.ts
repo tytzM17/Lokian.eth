@@ -2,11 +2,15 @@ import { toast } from 'react-toastify'
 import { toastErrParams } from '../utils/toastErrParams'
 import { Contract } from '@ethersproject/contracts'
 
+type FightObj = {
+  fightObj: Promise<Any>
+}
+
 const useFight = (
   contr: Contract,
   setDisableFightBtn: React.Dispatch<React.SetStateAction<boolean>>,
   setFightTxDone: React.Dispatch<React.SetStateAction<boolean>>
-) => {
+): FightObj => {
   const fight = async (id1: number, id2: number) => {
     setDisableFightBtn(true)
     if (id1 === null || id2 === null) {

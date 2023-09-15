@@ -3,11 +3,15 @@ import { toast } from 'react-toastify'
 import { toastErrParams } from '../utils/toastErrParams'
 import { Contract } from '@ethersproject/contracts'
 
+type BreedMonsObj = {
+  breedMons: Promise<Any>
+}
+
 const useBreedMons = (
   contr: Contract,
   setIsBreedMonLoading: React.Dispatch<React.SetStateAction<boolean>>,
   refreshMons: () => void
-) => {
+): BreedMonsObj  => {
   const breedMons = async (id1: number, id2: number) => {
     setIsBreedMonLoading(true)
     const tx = await contr?.breedMons(id1, id2).catch(() => setIsBreedMonLoading(false))

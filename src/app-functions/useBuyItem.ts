@@ -8,12 +8,16 @@ import { parseEther } from '@ethersproject/units'
 import { BigNumber } from 'ethers'
 import { approve, txFail, txSuccess } from '../utils'
 
+type BuyItemObj = {
+  buyItem: Promise<Any>
+}
+
 const useBuyItem = (
   library: Web3Provider,
   account: string,
   setDisableBuyItem: React.Dispatch<React.SetStateAction<boolean>>,
   refreshMons: () => void
-) => {
+): BuyItemObj => {
   const buyItem = async (units: string, price: string, itemNumber: string, data = '0x00') => {
     setDisableBuyItem(true)
 

@@ -6,9 +6,18 @@ import 'react-toastify/dist/ReactToastify.css'
 import { Container, Row, Col, Table } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
 import './arena.css'
-import { RoomType, UseLocDiscon } from '../common/interfaces'
+import { 
+  RoomType, 
+  // UseLocDiscon 
+} from '../common/interfaces'
 // import WebSocket from 'isomorphic-ws'
-import { Link, Outlet, useOutletContext, useNavigate, useLocation } from 'react-router-dom'
+import { 
+  // Link, 
+  // Outlet, 
+  useOutletContext, 
+  // useNavigate, 
+  // useLocation 
+} from 'react-router-dom'
 // import { ethers } from 'ethers'
 import { getAccount, waitForWsConnection } from '../../utils'
 import { toastErrParams } from '../../utils/toastErrParams'
@@ -25,7 +34,7 @@ const URL = 'ws://localhost:40510'
 
 type ContextType = { ws: WebSocket | null }
 
-export const getFirst7AndLast4CharOfAcct = (acct: string) => {
+export const getFirst7AndLast4CharOfAcct = (acct: string): string => {
   if (!acct) return
   return `${acct.substring(0, 6)}...${acct.substring(acct.length - 4)}`
 }
@@ -450,7 +459,7 @@ if (ws) {
       {/* </div> */}
       {/* ) : (
         <> */}
-      <div className='p1-arena green-glow'>Arena</div>
+      <div className='p1-arena green-glow'>Coming Soon...</div>
 
       {
         startRedirect ? '' : (

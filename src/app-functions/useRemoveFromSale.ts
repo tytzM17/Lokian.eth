@@ -3,11 +3,15 @@ import { toast } from 'react-toastify'
 import { toastErrParams } from '../utils/toastErrParams'
 import { Contract } from '@ethersproject/contracts'
 
+type RemoveFromSaleObj = {
+removeFromSale: Promise<Any>
+}
+
 const useRemoveFromSale = (
     contr: Contract,
     setIsRemoveFromSaleLoading: React.Dispatch<React.SetStateAction<boolean>>,
     refreshMons: () => void
-) => {
+): RemoveFromSaleObj => {
 
     const removeFromSale = async (id: number) => { 
             setIsRemoveFromSaleLoading(true)
@@ -16,7 +20,7 @@ const useRemoveFromSale = (
             }
             const tx = await contr?.removeFromSale(id, overrides)?.catch((err) => {
               setIsRemoveFromSaleLoading(false)
-              console.log(err);
+              console.error(err);
             })
             const recpt = await tx?.wait()
 

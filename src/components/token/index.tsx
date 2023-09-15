@@ -101,7 +101,7 @@ const Token = ({
                 <span className="titles-token">Buy Items (NFT)</span>
               </div>
               <div className="sharing-area">
-                <div style={{ marginBottom: '24px' }}>Equipment</div>
+                <div style={{ marginBottom: '24px' }}>Equipment (cost)</div>
                 <span className="item-label">
                   <div className="rpgui-icon sword"></div> Sword
                 </span>{' '}

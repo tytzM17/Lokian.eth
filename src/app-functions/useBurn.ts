@@ -8,12 +8,16 @@ import { parseEther } from '@ethersproject/units'
 import { BigNumber } from 'ethers'
 import { approve, txFail, txSuccess } from '../utils'
 
+type BurnObj = {
+  burn: Promise<Any>
+}
+
 const useBurn = (
   library: Web3Provider,
   account: string,
   setDisableBuyItem: React.Dispatch<React.SetStateAction<boolean>>,
   refreshMons: () => void
-) => {
+): BurnObj => {
   const burn = async (amount: string) => {
     setDisableBuyItem(true)
 

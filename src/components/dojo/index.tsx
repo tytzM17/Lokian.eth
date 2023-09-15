@@ -123,9 +123,10 @@ const Dojo = (params: Params) => {
                   setRewardAmount(0)
                   params.fight(parseInt(params?.fightChoice1) || null, parseInt(params?.fightChoice2) || null)
                 }}
-                disabled={params?.disableFightBtn}
+                disabled={params?.disableFightBtn || (params.fightChoice1 === '' || params.fightChoice2 === '')
+                  || (!params.fightChoice1 || !params.fightChoice2)}
               >
-                Start sparring!
+                Fight!
               </button>
             )}
           </div>

@@ -1,8 +1,8 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
+  "name": "lokian-monsters",
+  "version": "0.1.1",
   "private": true,
-  "homepage": "/",
+  "homepage": "https://app.lokian.monster/",
   "dependencies": {
     "@ethersproject/bignumber": "^5.4.2",
     "@ethersproject/constants": "^5.5.0",
@@ -13,28 +13,27 @@
     "@types/node": "^16.10.3",
     "@types/react": "^17.0.27",
     "@types/react-dom": "^17.0.9",
-    "@web3-react/core": "latest",
-    "@web3-react/frame-connector": "latest",
-    "@web3-react/injected-connector": "latest",
-    "@web3-react/walletconnect-connector": "latest",
+    "@web3-react/core": "6.1.9",
+    "@web3-react/frame-connector": "6.0.9",
+    "@web3-react/injected-connector": "6.0.7",
+    "@web3-react/walletconnect-connector": "6.2.13",
     "axios": "^0.24.0",
     "big-integer": "^1.6.48",
     "bootstrap": "^4.4.1",
     "bootstrap-icons": "^1.8.3",
-    "peerjs": "^1.4.7",
     "react": ">=16.8",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": ">=16.8",
     "react-router-dom": "^6.3.0",
     "react-scripts": "4.0.1",
-    "react-toastify": "^7.0.3",
-    "ws": "^8.8.1"
+    "react-toastify": "^7.0.3"
   },
   "scripts": {
     "start-fr": "react-scripts start -FAST_REFRESH=true",
     "start-olps": "react-scripts --openssl-legacy-provider start",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-prod": "react-scripts build && mv build docs",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
@@ -54,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@nomiclabs/hardhat-ethers": "^2.1.1",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
     "@openzeppelin/contracts": "^4.5.0",
@@ -75,7 +75,8 @@
     "react-error-overlay": "6.0.9",
     "source-map-loader": "^1.0.0",
     "ts-loader": "^8.0.0",
-    "typescript": "^3.0.0"
+    "typescript": "^3.0.0",
+    "webpack-bundle-analyzer": "^4.9.0"
   },
   "resolutions": {
     "//": "See https://github.com/facebook/create-react-app/issues/11773",

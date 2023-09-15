@@ -1,0 +1,20 @@
+marketplace
+A user can add any of his Lokimons for sale and remove Lokimons that he has already indicated as selling from sale. All of the Lokimons that have been set for sale from different users are available for buy by the user at the price that they are for sale.
+
+myLokimons
+The main entity in our game is a Lokimon which is defined through the smart contract we created. Users of our game are essentially collectors of different Lokimons and they can display them and interact with them through a web interface. There are 151 different species of Lokimons that we have implemented and each one has a type attribute amongst plant, fire, water, bug, normal, poison, thunder, earth and psychic. There are also two special Lokimons with regards to type which we will introduce later. These two special Lokimons do not belong to one of the aforementioned types since they behave differently when breeding. Finally each Lokimon has four different stats, hp, attack, defense and speed which are randomly generated during the Lokimon’s creation. Our game has many different functionalities, which are described here in an implementation abstract way.
+
+breed
+Users can breed the different Lokimons they own to produce new ones. The breeding logic that we implemented is bound by the following rules:
+            1. If the two breeding Lokimons are of the same species then, if they are able to evolve, they produce an evolved Lokimon species.
+            2. If the two breeding Lokimons are of the same species but are not able to evolve, they produce a Lokimon of the same species.
+            3. If the two breeding Lokimons are of the same type but different species they produce a random unevolved Lokimon of the same species.
+            4. If the two breeding Lokimons are of different types they are incompatible and thus produce a Lokimon of ”LOCHNESS” species (seen as the worst monster in the popular franchise Pokemon from which we derived the artwork we used for our Lokimons).
+            5. If one of the breeding Lokimons is of ”DOPPELGANGER” species, then the result is of the same species as the other breeding Lokimon and breeding with a ”DOPPELGANGER” can act as a copy functionality.
+            6. Finally, when breeding with an ”SKVADER” species, which has 3 different evolutions, the result depends on the other breeding Cryptomon’s type. Breeding with a fire type produces EEVEE’s fire evolution species, breeding with a water type produces a water evolution species, breeding with a thunder type a produces a thunder evolution species and breeding with anything else produces an ”SKVADER” species.
+
+dojo
+A user can fight with his Lokimons, which he isn’t selling, against Lokimons of other users. The result of each fight is determined by the stats of each Lokimon. The fight is conducted in rounds and in each round the hp stat of a Lokimon is  reduced  by  the  calculated damage,  which  takes into account the attack and defense stats of the attacking and defending Lokimons respectively. In each round each Lokimon attacks once and the first to attack is the fastest one based on the two Lokimons speed stats. Finally, when a Cryptomon’s hp depletes it loses and we have a winner. The smart contract returns the winner of a fight and how many rounds a fight lasted.
+
+sharing
+Users are able to share each of their owned Lokimons that they are not selling to one other user by specifying his account address on the blockchain. Users can then use all of the Lokimons shared to them for fighting just like they can do with their own lokimons. Finally, a user can stop sharing one Lokimon that he has shared with a different user before by indicating this.

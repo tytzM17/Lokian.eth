@@ -1,13 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { toast } from 'react-toastify'
 import { toastErrParams } from '../utils/toastErrParams'
 import { Contract } from '@ethersproject/contracts'
 import { parseEther } from '@ethersproject/units'
 
+type AddForSaleObj = {
+  addForSale: Promise<Any>
+}
+
 const useAddForSale = (
   contr: Contract,
   setIsAddForSaleLoadingFunc: React.Dispatch<React.SetStateAction<boolean>>,
   refreshMons: () => void
-) => {
+): AddForSaleObj  => {
   const addForSale = async (id: number, price: number) => {
     setIsAddForSaleLoadingFunc(true)
     if (!price || !id || price === 0) {

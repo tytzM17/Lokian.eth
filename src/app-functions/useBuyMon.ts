@@ -3,11 +3,15 @@ import { toast } from 'react-toastify'
 import { Contract } from '@ethersproject/contracts'
 import { txFail, txSuccess } from '../utils'
 
+type BuyMonObj = {
+  buyMon: Promise<Any>
+}
+
 const useBuyMon = (
     contr: Contract,
     setIsBuyMonLoading: React.Dispatch<React.SetStateAction<boolean>>,
     refreshMons: () => void
-) => {
+): BuyMonObj => {
 
     const buyMon = async (id: number, price: bigint) => {
         setIsBuyMonLoading(true)

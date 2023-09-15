@@ -1,8 +1,11 @@
-import React, { createContext, useState } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import React
+// { createContext, useState } 
+from 'react'
 import { Routes, Route } from 'react-router-dom'
 import {
-  ArenaV2,
-  ArenaPeerJs,
+  // ArenaV2,
   Dojo,
   Breed,
   Marketplace,
@@ -13,11 +16,16 @@ import {
   Token,
   ArenaSocketIo,
 } from './components'
-import Room from './components/arena/room'
-import { RoomType } from './components/common/interfaces'
+// import Room from './components/arena/room'
+// import { RoomType } from './components/common/interfaces'
 import { Lokimon } from './models'
 
-const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
+type MenuRoutesProps = {
+  commonRouteProps: any,
+  fightRouteProps: any
+}
+
+const MenuRoutes = ({ commonRouteProps, fightRouteProps }: MenuRoutesProps): JSX.Element => {
   return (
     <Routes>
       <Route
@@ -97,15 +105,6 @@ const MenuRoutes = ({ commonRouteProps, fightRouteProps }) => {
       <Route
         path='/arena'
         element={
-          // <ArenaPeerJs
-          //   account={commonRouteProps.account}
-          //   fightChoice1={fightRouteProps.fightChoice1}
-          //   fightChoice2={fightRouteProps.fightChoice2}
-          //   setFightChoice1Func={fightRouteProps.setFightChoice1}
-          //   setFightChoice2Func={fightRouteProps.setFightChoice2}
-          //   cryptomons={commonRouteProps.cryptomons}
-          //   monNames={commonRouteProps.names}
-          // />
           <ArenaSocketIo
             account={commonRouteProps.account}
             fightChoice1={fightRouteProps.fightChoice1}

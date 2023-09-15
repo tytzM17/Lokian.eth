@@ -109,12 +109,10 @@ Finished
 
 
 TO-DO
-- socket.io multiplayer function
+- re-deploy with new ui
 - add zustand / redux
 - separate or extract large files 
-- create services for redux flow, fetch api/ rpc calls etc
-- upgrade bootstrap v4 to 5
-- fixes thru eslint
+- socket.io multiplayer function
 
 
 

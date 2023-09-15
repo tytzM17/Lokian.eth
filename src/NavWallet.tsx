@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+
 import { Nav } from 'react-bootstrap'
 import { Account } from './components/core/Account'
 import React from 'react'
@@ -17,7 +20,7 @@ const NavWallet = ({
   resetMons,
   setWinner,
   setRounds,
-}) => {
+}: Any): JSX.Element => {
   enum ConnectorNames {
     Injected = 'Injected',
   }

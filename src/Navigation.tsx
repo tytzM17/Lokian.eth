@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import React from 'react'
 import { Navbar, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
@@ -21,7 +23,7 @@ function getErrorMessage(error: Error) {
   }
 }
 
-const Navigation = ({ error, children }) => {
+const Navigation = ({ error, children }: Any): JSX.Element => {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
       <Navbar.Brand as="li">
@@ -43,7 +45,7 @@ const Navigation = ({ error, children }) => {
             <Link to="/dojo">Dojo</Link>
           </Nav.Link>
           <Nav.Link as="li">
-            <Link to="/arena">Arena</Link>
+            <Link to="/" disabled>PvP (soon)</Link>
           </Nav.Link>
           <Nav.Link as="li">
             <Link to="/breed">Breed</Link>

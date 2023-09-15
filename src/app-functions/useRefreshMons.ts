@@ -6,7 +6,11 @@ import { BigNumber } from 'ethers'
 import { Lokimon, LokimonContract } from '../models'
 import { toastErrParams } from '../utils/toastErrParams'
 
-const useRefreshMons = (library: Web3Provider, account: string) => {
+type RefreshMonsObj = {
+  refreshMonsObj: Promise<Any>
+}
+
+const useRefreshMons = (library: Web3Provider, account: string): RefreshMonsObj => {
   const [cryptomons, setCryptomons] = useState([])
   const [myCryptomons, setMyCryptomons] = useState([])
   const [otherCryptomons, setOtherCryptomons] = useState([])
