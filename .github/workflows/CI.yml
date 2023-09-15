@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - master
+      - main
+      - polygon-mumbai
 jobs:
   build:
 
