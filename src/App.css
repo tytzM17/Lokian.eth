@@ -1,5 +1,45 @@
+.LokiMons {
+  text-decoration: none !important;
+}
+.lokimons-nav li a,
+.lokimons-nav-wallet li button {
+  text-decoration: none !important;
+  font-size: 1.5em;
+  padding: 4px;
+}
+.lokimons-nav li:not(:last-child):hover {
+  text-decoration: none !important;
+  background: green !important;
+  border-radius: 3px;
+  filter: drop-shadow(8px 12px 20px green) invert(1%);
+}
+
+.rpgui-content {
+  /* padding: 12px 24px ; */
+  background-image: linear-gradient(to right top, #000000, #0e0c0e, #171618, #1c1d20, #212529);
+}
+
 .rpgui-content a {
-  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  color: #00c853 !important;
+  /* text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000; */
+}
+
+.navbar-dark .navbar-brand {
+  color: #fff !important;
+  font-size: initial;
+}
+
+.navbar-nav {
+  align-items: center;
+}
+
+.dropdown-menu {
+  background-color: #343a40 !important;
+}
+
+.dropdown-item:hover {
+  background: green !important;
+  filter: drop-shadow(8px 12px 20px green) invert(1%);
 }
 
 .App {
@@ -16,12 +56,11 @@
 }
 
 .p1 {
-  padding-top: 0.2em;
-  text-align: center;
-  color: #6c757d;
+  text-align: end;
   width: 100%;
-  color: #fff;
+  color: #00c853;
   text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  font-size: 1.75em;
 }
 
 .p2 {
@@ -29,7 +68,7 @@
   padding-bottom: 0.2em;
   text-align: center;
   font-size: calc(5px + 0.5vmin);
-  color: #e9e9e9;
+  color: #00c853;
   width: 100%;
   text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
 }
@@ -45,25 +84,38 @@
   color: white;
 }
 
+.nav-tabs {
+  margin-top: 4%;
+}
+
 .mon {
   display: block;
   float: left;
   padding: 0;
   margin: 2%;
   background-color: rgb(209, 203, 199) !important;
+  border-radius: 6px;
 }
 
 .monName {
-  font-weight: bold;
+  color: silver !important;
   text-shadow: 2px 2px #ffffff;
+  font-size: 0.85em !important;
+}
+
+label {
+  /* line-height: 18px !important; */
+  /* color:#6c757d !important */
+  font-size: 0.65em !important;
 }
 
 .my-figure {
-  border: 2px outset;
+  /* border: 2px outset; */
+  border-radius: 3px;
   margin: 0;
   padding: 3%;
   background-color: #ffe6b3;
-  background-image: url(./sprites/background/9.png);
+  background-image: url(./sprites-copy/background/9.png);
   width: 15em;
   background-size: 280px 200px;
 }
@@ -113,7 +165,6 @@
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 0.5em;
-  width: 100%;
 }
 
 .form-input {
@@ -152,12 +203,16 @@
 .selling-div,
 .buying-div,
 .sharing-div {
-  display: block;
+  display: flex;
+  flex-direction: column;
   margin-left: auto;
   margin-right: auto;
   margin-top: 1em;
-  border: 2px outset;
+  border-radius: 3px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
   width: 15em;
+  padding: 3px;
   background: linear-gradient(45deg, black, transparent);
 }
 
@@ -174,9 +229,7 @@
 .fightAgainst-area {
   display: inline-block;
   width: 50%;
-  border-right: 2px outset;
-  border-left: 2px outset;
-  border-top: 2px outset;
+  margin-top: 2%;
   height: 100%;
 }
 
@@ -197,7 +250,6 @@
 }
 
 .breeding-area,
-.fighting-area,
 .sharing-area {
   display: block;
   width: 32.7em;
@@ -210,25 +262,22 @@
 .sale-btn,
 .br-Choice-btn,
 .fight-Choice-btn,
-.breed-btn,
-.fight-btn,
-.stop-sharing-btn,
-.share-btn {
+.fight-btn {
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 15em;
+  height: 40px;
 }
 
 .rpgui-content {
-  overflow: auto !important;
+  overflow-y: auto !important;
 }
 
 .rpgui-content label,
 .rpgui-content li {
-  color: #fff;
   text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-  font-size: 0.65em;
+  font-size: 0.5em;
 }
 
 .rpgui-dropdown-buy-pack {
@@ -239,6 +288,10 @@
   background-color: rgb(34, 36, 37) !important;
   color: rgb(209, 203, 199) !important;
   border-color: rgb(123, 107, 101) !important;
+}
+
+.tab-content {
+  margin-top: 3%;
 }
 
 .nav-link.active {
@@ -260,6 +313,7 @@
   border-bottom-color: rgb(34, 36, 37) !important;
   border-left-color: rgb(222, 226, 230) !important;
   background-color: rgb(34, 36, 37) !important;
+  filter: drop-shadow(8px 12px 20px green) invert(1%);
 }
 
 .nav-link:hover {
@@ -274,20 +328,12 @@
 
 .nav {
   width: 100%;
-}
-
-.rpgui-content label {
-  line-height: 12px;
-  display: inline;
+  border-bottom-width: 0 !important;
 }
 
 .rpgui-content input,
 .rpgui-content textarea {
   background: linear-gradient(45deg, black, transparent);
-}
-
-.row {
-  align-items: center;
 }
 
 .wallet-buttons {
@@ -308,6 +354,10 @@
   justify-content: flex-end;
 }
 
+.green-glow {
+  filter: drop-shadow(8px 12px 20px green) invert(1%);
+}
+
 @media (min-width: 280px) {
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
   .skellies {
@@ -317,13 +367,8 @@
     margin-right: auto;
   }
 
-  .with-buy-item,
   .with-burn {
-    max-width: 61%;
-  }
-
-  .p1 {
-    max-width: 60%;
+    max-width: 100%;
   }
 
   .title-column,
@@ -337,6 +382,43 @@
     align-items: center;
     justify-content: flex-start;
   }
+
+  .navbar {
+    padding: 0.5rem 0.25rem !important;
+  }
+
+  .arena-chat-box {
+    /* position: absolute; */
+    width: 100%;
+    /* bottom: 4%; */
+    z-index: 999;
+    position: fixed;
+    bottom: 5%;
+  }
+
+  .arena-chat-box .rpgui-button.golden {
+    padding-top: 15px;
+  }
+  .arena-chat-box textarea {
+    height: 100%;
+  }
+  .arena-chat-textarea {
+      display: var(--visible);
+  }
+      
+
+  .arena-chat-controls {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 999;
+  }
+
+  .arena-chat-controls button {
+    height: 3.75em;
+  }
 }
 
 @media (min-width: 320px) {
@@ -346,15 +428,6 @@
     width: 100%;
     margin-left: 0;
     margin-right: auto;
-  }
-
-  .with-buy-item,
-  .with-burn {
-    max-width: 80%;
-  }
-
-  .p1 {
-    max-width: 80%;
   }
 
   .title-column,
@@ -375,8 +448,6 @@
   .skellies {
     display: flex;
     width: 20%;
-    margin-left: 25%;
-    margin-right: auto;
   }
 
   .title-column,
@@ -389,6 +460,17 @@
     align-items: center;
     justify-content: flex-start;
   }
+
+  .p1A {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    margin-left: 45%;
+    margin-right: auto;
+    width: 100%;
+    color: #00c853;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    font-size: 1.75em;
+  }
 }
 
 /* Medium Devices, Desktops */
@@ -396,8 +478,6 @@
   .skellies {
     display: flex;
     width: 20%;
-    margin-left: 40%;
-    margin-right: auto;
   }
 
   .wallet-info-column {
@@ -411,14 +491,9 @@
 @media only screen and (min-width: 1200px) {
   .skellies {
     display: flex;
-    width: 20%;
-    margin-left: 40%;
-    margin-right: auto;
+    width: 100%;
   }
 
-  .p1 {
-    max-width: 100%;
-  }
   .wallet-info-column {
     display: flex;
     align-items: center;

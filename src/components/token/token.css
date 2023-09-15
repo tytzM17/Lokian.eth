@@ -1,0 +1,89 @@
+.inventory-item-count {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 12px;
+}
+
+.token-input-btn {
+  height: 40px;
+}
+
+@media (min-width: 320px) {
+  .p1-token {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    width: 100%;
+    color: #00c853;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    font-size: 1.75em;
+    text-align: center;
+  }
+
+  .nft-item {
+    display: flex;
+    align-items: center;
+    width: 95%;
+  }
+
+  .nft-item div {
+    margin-right: 12px;
+    margin-left: 12px;
+  }
+
+  .nft-item-count {
+    overflow-x: auto;
+    margin-left: 8px;
+  }
+
+  .buy-item-input-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    margin-top: 12px;
+  }
+
+  .give-to-skellies-input-btn {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+  .with-buy-item-input {
+    width: 40%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .inventory-item-count p {
+    max-width: 85%;
+    overflow-x: auto;
+  }
+  .titles-token {
+    font-size: 1.12em;
+  }
+  .token-input-btn {
+    background-size: 90% 100%;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: 1200px) {
+  .buy-item-input-container {
+    margin-bottom: 12px;
+  }
+  .burn-input {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .burn-btn {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .sharing-area { width: 100% }
+  .give-to-skellies-input-btn { justify-content: flex-start;}
+}

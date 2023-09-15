@@ -1,0 +1,67 @@
+@media (min-width: 280px) {
+  .room-container {
+    margin-bottom: 45%;
+  }
+}
+
+@media (min-width: 320px) {
+  .p1-arena {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    text-align: center;
+    width: 100%;
+    color: #00c853;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    font-size: 1.75em;
+  }
+  .create-room-btn {
+    text-align: left;
+    margin: 8px 0px 8px 0px;
+  }
+  .online-count, .my-duels {
+    text-align: left;
+    font-size: 16px !important;
+  }
+  .room-container {
+    margin-bottom: 35%;
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+  .table-container {
+    position: relative;
+    width: 90%;
+    display: block;
+    margin-left: 5%;
+    margin-right: auto;
+    margin-top: 24px;
+  }
+  .create-room-btn {
+    text-align: right;
+    margin: 0;
+  }
+  .online-count {
+    margin-left: 4px;
+  }
+  .online-create-room-row {
+    align-items: center;
+  }
+  .room-container {
+    margin-bottom: 30%;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+  .room-container {
+    margin-bottom: 20%;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: 1200px) {
+  .room-container {
+    margin-bottom: 10%;
+  }
+}

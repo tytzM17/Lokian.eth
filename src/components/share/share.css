@@ -1,0 +1,49 @@
+@media (min-width: 320px) {
+  .share-btn {
+    width: 100%;
+    margin-top: 16px;
+  }
+  .p1-share {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    text-align: center;
+    width: 100%;
+    color: #00c853;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    font-size: 1.75em;
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+  .vs-container {
+    position: relative;
+    width: 50%;
+    display: block;
+    margin-left: 25%;
+    margin-right: auto;
+    margin-top: 24px;
+  }
+
+  .form-line-share {
+    display: grid;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5em;
+  }
+
+  .stop-sharing-btn {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15em;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: 1200px) {
+}

@@ -32,12 +32,15 @@ moralisNodes.json
 bwareLabsNodes.json
 .github
 package-lock.json
+.eslintcache
+hardhat.config.js
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+yarn.lock
 
-# arts
+# gfx
 /src/sprites-copy/*
 
 

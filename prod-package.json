@@ -1,0 +1,69 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://app.lokian.monster/",
+  "dependencies": {
+    "@ethersproject/bignumber": "^5.4.2",
+    "@ethersproject/constants": "^5.5.0",
+    "@ethersproject/contracts": "^5.4.1",
+    "@ethersproject/providers": "^5.1.2",
+    "@ethersproject/units": "^5.6.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0",
+    "@testing-library/user-event": "^7.2.1",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.3",
+    "@types/react": "^17.0.27",
+    "@web3-react/core": "latest",
+    "@web3-react/frame-connector": "latest",
+    "@web3-react/injected-connector": "latest",
+    "@web3-react/walletconnect-connector": "latest",
+    "axios": "^0.24.0",
+    "big-integer": "^1.6.48",
+    "bootstrap": "^4.4.1",
+    "react": ">=16.8",
+    "react-bootstrap": "^1.0.0-beta.16",
+    "react-dom": ">=16.8",
+    "react-scripts": "4.0.1",
+    "react-toastify": "^7.0.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "start-pc": "set PORT=8000 && react-scripts start",
+    "build": "react-scripts build && mv build docs",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-etherscan": "^3.0.3",
+    "@openzeppelin/contracts": "^4.5.0",
+    "hardhat": "^2.9.2",
+    "image-webpack-loader": "^7.0.1",
+    "react-error-overlay": "^6.0.9",
+    "source-map-loader": "^1.0.0",
+    "ts-loader": "^8.0.0",
+    "typescript": "^3.0.0"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 120
+  }
+}

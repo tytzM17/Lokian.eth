@@ -1,0 +1,68 @@
+@media (min-width: 320px) {
+  .order-dropdown {
+    margin-top: 12px;
+    margin-left: 8px;
+  }
+  .order-dropdown button {
+    font-size: 1.25em;
+  }
+  .col-for-mylokimons {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+    align-items: flex-end;
+    padding-left: 2px;
+  }
+  .display-style-btn {
+    margin-right: 0.5em;
+  }
+  .mylokimons-table {
+    margin-top: 12px;
+  }
+  .mylokimons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+  .add-for-sale-input {
+    margin-top: 6px;
+  }
+  .mylokimons-table {
+    margin-top: 18px;
+  }
+
+  .order-dropdown {
+    margin-top: 0px;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: 1200px) {
+  .mylokimons-table {
+    width: 90%;
+    margin-top: 12px;
+    margin-left: 5%;
+    margin-right: auto;
+  }
+  .mylokimons-sell-btn {
+    width: -webkit-fill-available;
+  }
+  .mylokimons-img {
+    margin-left: 25%;
+  }
+  .rpgui-content li {
+    font-size: 0.45em;
+  }
+  .list-render {
+      margin: 2.8em 1.5em;
+  }
+  .LokiMons { margin-left: 6px }
+}

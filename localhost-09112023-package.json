@@ -1,0 +1,83 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "/",
+  "dependencies": {
+    "@ethersproject/bignumber": "^5.4.2",
+    "@ethersproject/constants": "^5.5.0",
+    "@ethersproject/contracts": "^5.4.1",
+    "@ethersproject/providers": "^5.1.2",
+    "@ethersproject/units": "^5.6.0",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.3",
+    "@types/react": "^17.0.27",
+    "@types/react-dom": "^17.0.9",
+    "@web3-react/core": "6.1.9",
+    "@web3-react/frame-connector": "6.0.9",
+    "@web3-react/injected-connector": "6.0.7",
+    "@web3-react/walletconnect-connector": "6.2.13",
+    "axios": "^0.24.0",
+    "big-integer": "^1.6.48",
+    "bootstrap": "^4.4.1",
+    "bootstrap-icons": "^1.8.3",
+    "react": ">=16.8",
+    "react-bootstrap": "^1.0.0-beta.16",
+    "react-dom": ">=16.8",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "4.0.1",
+    "react-toastify": "^7.0.3"
+  },
+  "scripts": {
+    "start-fr": "react-scripts start -FAST_REFRESH=true",
+    "start-olps": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
+    "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.1.1",
+    "@nomiclabs/hardhat-etherscan": "^3.0.3",
+    "@openzeppelin/contracts": "^4.5.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^9.4.0",
+    "@testing-library/user-event": "^7.2.1",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^3.5.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.8",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "ethers": "^5.7.0",
+    "hardhat": "^2.9.2",
+    "image-webpack-loader": "^7.0.1",
+    "jest": "26.6.0",
+    "react-error-overlay": "6.0.9",
+    "source-map-loader": "^1.0.0",
+    "ts-loader": "^8.0.0",
+    "typescript": "^3.0.0",
+    "webpack-bundle-analyzer": "^4.9.0"
+  },
+  "resolutions": {
+    "//": "See https://github.com/facebook/create-react-app/issues/11773",
+    "react-error-overlay": "6.0.9"
+  }
+}

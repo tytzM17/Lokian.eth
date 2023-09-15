@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "downlevelIteration": true,
     "lib": [
       "dom",
       "dom.iterable",
@@ -19,15 +20,17 @@
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
   },
+  "types": ["node", "jest", "@testing-library/jest-dom"],
   "exclude": [
     "node_modules",
     "dist",
     "build",
     "cache",
     "contracts",
-    "scripts"
+    "scripts",
+    "docs",
   ],
   "include": [
     "**/*.ts",

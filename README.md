@@ -22,6 +22,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - In the project directory run:
 
     **`npm install`** This installs all the necessary dependencies to build our application
+
+    **`sprites to sprites-copy`** Rename folder sprites to sprites-copy. <br />
     
     **`npm start`** This runs the app in development mode.<br />
 
@@ -38,6 +40,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - LokianEth deployed to: 0x6d88cBBD35E19958eFB4500f93D346c126bB7Df2
 
 ## Remaining Tasks
+
+Ongoing
+- Multiplayer start fight functionality ..
+- Add wager system with lokians ERC20 token
+- Add staking 
 
 Finished
 - Change naming e.g. cryptoMons to creatures 6/28/2021
@@ -86,15 +93,29 @@ Finished
 - Deploy to evm compatible mainnets, polygon OK and moonbeam (mvp)
 - Provide liquidity on dexes first, sushiswap OK , quickswap, or uniswap.
 - Submit to dappradar, state of dapps, etc (mvp)
+- Fix fight function bug, fix overall UI
+- Create a pitch deck PDF file 
+- Add missing graphics for some lokimons
+- Change 'Fight' to 'Dojo', include in menu
+- Fix UI, e.g. a selection button for list or grid display
+- Fix UI, shared to me page
+- List or grid display function (marketplace, myShop and myLokimons pages)
+- Add priceDesc and priceAsc in myShop and marketplace
+- Fix UI, in different media queries or devices, 320(ok), 844(ok), 1920(ok)
+- Create websocket mini server ..ok
+- Chat ui ..ok , functions ..ok
+- Create room..ok, join..ok, leave..ok, 
+- Breaking up app.tsx..ok, add lokimons report..ok, refactor routes..ok ,Create room UI..ok, start functions..ok  
 
-Ongoing
-- marketing and partnership, e.g. astar, boba network, etc
-- improve graphics
 
-Future
-- GameFi (staking)
-- DAO
-- Metaverse, with duels or royal rumble
+TO-DO
+- re-deploy with new ui
+- add zustand / redux
+- separate or extract large files 
+- socket.io multiplayer function
+
+
+
 
 
 

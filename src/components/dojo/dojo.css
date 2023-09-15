@@ -1,0 +1,84 @@
+.p1-dojo {
+  margin-top: 1.5em;
+  text-align: center;
+  width: 100%;
+  color: #00c853;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  font-size: 1.75em;
+}
+.col-text-center {
+  text-align: center;
+}
+
+@media (min-width: 320px) {
+  .fighting-area {
+    display: flex;
+    flex-direction: column;
+  }
+  .vs-container {
+    position: relative;
+    width: 100%;
+    display: block;
+    margin-top: 24px;
+  }
+  .dojo-selection {
+    display: flex;
+    overflow-x: scroll;
+    border: 1px inset darkgray;
+  }
+  .dojo-spar-mons-img {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+  .vs-container {
+    width: 50%;
+  }
+  .fighting-area {
+    width: 48%;
+    margin-left: 26%;
+    margin-right: auto;
+  }
+  .dojo-spar-mons-img {
+    padding-left: 7px;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+  .dojo-spar-mons-img {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: 1200px) {
+  .vs-container {
+    width: 21%;
+    margin-left: 40%;
+    margin-right: auto;
+  }
+  .fighting-area {
+    width: 21%;
+    margin-left: 40%;
+    margin-right: auto;
+  }
+  .dojo-results-table {
+    width: 98%;
+    margin-left: 5px;
+  }
+  .dojo-spar-mons-img {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
