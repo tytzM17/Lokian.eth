@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: |
         npm install
-        npm run-script build
+        CI=false npm run-script build
       env:
         REACT_APP_TEST_CONTRACT_ADDRESS: ${{ secrets.REACT_APP_TEST_CONTRACT_ADDRESS }}
         REACT_APP_TEST_ERC20: ${{ secrets.REACT_APP_TEST_ERC20 }}
@@ -34,5 +34,5 @@ jobs:
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        BRANCH: master
+        BRANCH: gh-pages
         FOLDER: build
