@@ -29,8 +29,17 @@ export let CONTRACT_ADDRESS: string = process.env.REACT_APP_MAIN_CONTRACT_ADDRES
 export let ERC20_CONTRACT_ADDRESS: string = process.env.REACT_APP_MAIN_ERC20
 export let ERC1155_CONTRACT_ADDRESS: string = process.env.REACT_APP_MAIN_ERC1155
 
+// use for github pages default build and deploy workflow
+// export let MAIN_CONTRACT_ADDRESS: string = '0x5148A559cFaaEC1A915ae41e00A8Dd2Fa17ba64f'
+// export let MAIN_ERC20_CONTRACT_ADDRESS: string = '0x4d8d24968458af521ef02aefD95f161dF3f9Ea01'
+// export let MAIN_ERC1155_CONTRACT_ADDRESS: string = '0x8227767903Fa90A90060E28a45506318E03997aD'
+
+// export let TEST_CONTRACT_ADDRESS: string = '0xb1e821c9550463b0d3d2aA4846bE79D6aB5Ec6ea'
+// export let TEST_ERC20_CONTRACT_ADDRESS: string = '0x2683EbB22FE772dB15C09b99897bD38B2Bf2487E'
+// export let TEST_ERC1155_CONTRACT_ADDRESS: string = '0xC924448D65D0b20629eaAD25eE79bC2911E8690a'
+
+
 const App = (): JSX.Element => {
-  // Used in fighting tab
   const [fightChoice1, setFightChoice1] = useState(null)
   const [fightChoice2, setFightChoice2] = useState(null)
   const [fightTxDone, setFightTxDone] = useState(false)
@@ -50,7 +59,7 @@ const App = (): JSX.Element => {
       CONTRACT_ADDRESS = process.env.REACT_APP_TEST_CONTRACT_ADDRESS
       ERC20_CONTRACT_ADDRESS = process.env.REACT_APP_TEST_ERC20
       ERC1155_CONTRACT_ADDRESS = process.env.REACT_APP_TEST_ERC1155
-    }
+    } 
   }, [])
 
   useEffect(() => {
