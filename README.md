@@ -109,10 +109,10 @@ Finished
 
 
 TO-DO
-- re-deploy with new ui
+- re-deploy with new ui - ok - 09/21/2023
 - add zustand / redux
 - separate or extract large files 
-- socket.io multiplayer function
+- socket.io multiplayer function - ongoing
 
 
 
