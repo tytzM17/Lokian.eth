@@ -23,8 +23,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
     **`npm install`** This installs all the necessary dependencies to build our application
 
-    **`sprites to sprites-copy`** Rename folder sprites to sprites-copy. <br />
-    
     **`npm start`** This runs the app in development mode.<br />
 
 - Open [http://localhost:3000](http://localhost:3000) to view it in the browser. You can see all the Creatures owned by the current metamask account and play the game.
