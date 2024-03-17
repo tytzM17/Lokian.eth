@@ -38,6 +38,13 @@ export let ERC1155_CONTRACT_ADDRESS: string = process.env.REACT_APP_MAIN_ERC1155
 // export let TEST_ERC20_CONTRACT_ADDRESS: string = '0x2683EbB22FE772dB15C09b99897bD38B2Bf2487E'
 // export let TEST_ERC1155_CONTRACT_ADDRESS: string = '0xC924448D65D0b20629eaAD25eE79bC2911E8690a'
 
+// For Moralis auth
+import { createConfig, configureChains, WagmiConfig } from "wagmi";
+import { publicProvider } from "wagmi/providers/public";
+import { mainnet } from "wagmi/chains";
+
+import Signin from './signin';
+import User from './user';
 
 const App = (): JSX.Element => {
   const [fightChoice1, setFightChoice1] = useState(null)

@@ -8,6 +8,7 @@ import { Lokimon } from '../../models'
 import Spinner from '../spinner'
 import './mylokimons.css'
 import { useAddForSale } from '../../app-functions'
+import axios from 'axios';
 
 const MyLokiMons = ({ myCryptomons, contract, refreshMons }) => {
   const [display, setDisplay] = useState('grid')
@@ -34,9 +35,23 @@ const MyLokiMons = ({ myCryptomons, contract, refreshMons }) => {
     setPrice(parsedValue)
   }
 
+  // const [balances, setBalances] = useState({});
+
+  // useEffect(() => {
+  //   axios('http://localhost:4000/balances').then(({ data }) => {
+  //     setBalances(data);
+  //   });
+  // }, []); TEST OK!
+
 
   return (
     <>
+{/*  <div>
+      <h3>Wallet: {balances.address}</h3>
+      <h3>Native Balance: {balances.nativeBalance} ETH</h3>
+      <h3>Token Balances: {balances.tokenBalances}</h3>
+    </div>*/}
+
       <ListRender
         pageName={'My LokiMons'}
         onSetDisplay={(value: string) => setDisplay(value)}

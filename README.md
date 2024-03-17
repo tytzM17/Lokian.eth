@@ -21,9 +21,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Install the [metamask](https://metamask.io/) extension on your browser to handle your provate blockchain account. The project has been tested with the Chrome and Mozilla browsers.
 - In the project directory run:
 
+    **`use node v16.14.0 or below`** This version is needed to start without errors    
+ 
     **`npm install`** This installs all the necessary dependencies to build our application
-
-    **`sprites to sprites-copy`** Rename folder sprites to sprites-copy. <br />
     
     **`npm start`** This runs the app in development mode.<br />
 

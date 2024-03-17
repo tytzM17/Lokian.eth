@@ -43,4 +43,12 @@ yarn.lock
 # gfx
 # /src/sprites-copy/*
 
+DEADJOE
 
+*~
+
+/moralis-server
+/moralis-server/node_modules
+/moralis-server/index.js
+
+moralis-server-index.js
